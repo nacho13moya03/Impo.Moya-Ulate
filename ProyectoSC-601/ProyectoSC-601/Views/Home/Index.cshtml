@@ -1,0 +1,265 @@
+﻿@model ProyectoSC_601.Entities.InfoIndex
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@*BIENVENIDA*@
+<section id="hero" class="d-flex align-items-center justify-content-center">
+    <div class="container" data-aos="fade-up">
+
+        <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
+            <div class="col-xl-6 col-lg-8">
+                <h1>Importadora Moya y Ulate</h1>
+                <h2>Lentes que te hacen ver el mundo de una manera totalmente nueva, <span>¡Adquiere los tuyos!</span></h2>
+
+            </div>
+        </div>
+
+        <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-palette-line"></i>
+                    <h3>Todos los colores</h3>
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-pencil-ruler-2-line"></i>
+                    <h3>Todos los diseños</h3>
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-store-2-line"></i>
+                    <h3>Todas los marcas</h3>
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-menu-search-line"></i>
+                    <h3>Todas las categorías</h3>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+@*BIENVENIDA*@
+
+@*INFORMACION*@
+<main id="main">
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+            <div class="row">
+                <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
+                    <img src="~/Assets/img/about.jpg" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content" data-aos="fade-right" data-aos-delay="100">
+                    <h3>¿Por qué conformarte con una visión borrosa o lentes sin estilo?</h3>
+                    <p class="fst-italic">
+                        <br />
+                        <br />
+                        Conoce los beneficios de nuestros lentes:
+                    </p>
+                    <ul>
+                        <li><i class="ri-check-double-line"></i> Claridad excepcional: Experimenta la nitidez y el contraste que te permiten ver cada detalle.</li>
+                        <li><i class="ri-check-double-line"></i> Protección UV: Mantén tus ojos a salvo de los daños del sol con nuestros lentes de sol de alta protección UV.</li>
+                        <li><i class="ri-check-double-line"></i> Comodidad duradera: Diseñados para adaptarse a tu estilo de vida y mantener tus ojos cómodos durante todo el día.</li>
+                        <li><i class="ri-check-double-line"></i> Durabilidad: Fabricados con materiales de calidad que resisten el paso del tiempo.</li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+    @*INFORMACION*@
+
+    @*REDIRIGIR CATALOGO*@
+    <section id="cta" class="cta">
+        <div class="container" data-aos="zoom-in">
+
+            <div class="text-center">
+                <a class="cta-btn" @Html.ActionLink("Adquiere tus nuevos lentes", "Index_Prod", "Producto", new { area = "" }, new { @class = "nav-link" })</a>
+            </div>
+
+        </div>
+    </section>
+    @*REDIRIGIR CATALOGO*@
+
+    @*CONTADORES CALIDAD*@
+    <section id="counts" class="counts">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row no-gutters">
+                <div class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-lg-start" data-aos="fade-right" data-aos-delay="100"></div>
+                <div class="col-xl-7 ps-4 ps-lg-5 pe-4 pe-lg-1 d-flex align-items-stretch" data-aos="fade-left" data-aos-delay="100">
+                    <div class="content d-flex flex-column justify-content-center">
+                        <h3>Servicio de Calidad</h3>
+                        <div class="row">
+                            <div class="col-md-6 d-md-flex align-items-md-stretch">
+                                <div class="count-box">
+                                    <i class="bi bi-emoji-smile"></i>
+                                    <span data-purecounter-start="0" data-purecounter-end="@ViewBag.CantidadClientes" data-purecounter-duration="2" class="purecounter"></span>
+                                    <p><strong>Clientes</strong> registrados en nuestro sistema.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 d-md-flex align-items-md-stretch">
+                                <div class="count-box">
+                                    <i class="bi bi-shop"></i>
+                                    <span data-purecounter-start="0" data-purecounter-end="3" data-purecounter-duration="2" class="purecounter"></span>
+                                    <p><strong>Puntos de Venta</strong> donde se pueden obtener nuestros productos.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 d-md-flex align-items-md-stretch">
+                                <div class="count-box">
+                                    <i class="bi bi-clock"></i>
+                                    <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="4" class="purecounter"></span>
+                                    <p><strong>Años de Experiencia</strong> siendo una de las importadoras de lentes principales del país.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 d-md-flex align-items-md-stretch">
+                                <div class="count-box">
+                                    <i class="bi bi-bag"></i>
+                                    <span data-purecounter-start="0" data-purecounter-end="@ViewBag.CantidadVentas" data-purecounter-duration="4" class="purecounter"></span>
+                                    <p><strong>Ventas</strong> realizadas hasta el momento mediante el sistema.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @*CONTADORES CALIDAD*@
+
+    @*CARRUSEL*@
+    <section id="testimonials" class="testimonials">
+        <div class="container" data-aos="zoom-in">
+
+            <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper-wrapper">
+
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <br /><br />
+                            <h3>Importadora Moya y Ulate</h3>
+                            <br />
+                            <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                Mejora tu visión, mejora tu vida. ¡Consigue tus lentes ahora!
+                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                            </p>
+                            <br /><br />
+                        </div>
+                    </div><!-- End testimonial item -->
+
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <br /><br />
+                            <h3>Importadora Moya y Ulate</h3>
+                            <br />
+                            <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                Tus ojos merecen lo mejor. ¡Descubre nuestra gama de lentes hoy mismo!
+                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                            </p>
+                            <br /><br />
+                        </div>
+                    </div><!-- End testimonial item -->
+
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <br /><br />
+                            <h3>Importadora Moya y Ulate</h3>
+                            <br />
+                            <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                Ver bien es sentirse bien. ¡Renueva tu mirada con nuestros lentes!
+                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                            </p>
+                            <br /><br />
+                        </div>
+                    </div><!-- End testimonial item -->
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+    @*CARRUSEL*@
+
+    @*CONTACTO*@
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Contacto</h2>
+                <p>Contáctanos</p>
+            </div>
+            <div class="row mt-5">
+                <div class="col-lg-4">
+                    <div class="info">
+                        <div class="address">
+                            <i class="bi bi-geo-alt"></i>
+                            <h4>Ubicación:</h4>
+                            <p>Calle La Coyotera 800 Mts Oeste De La Entrada Barrio Latino, Alajuela Province, Grecia, Costa Rica</p>
+                        </div>
+                        <div class="email">
+                            <i class="bi bi-envelope"></i>
+                            <h4>Correo:</h4>
+                            <p>importadoraM&U@gmail.com</p>
+                        </div>
+                        <div class="phone">
+                            <i class="bi bi-phone"></i>
+                            <h4>Teléfono:</h4>
+                            <p>+506 8438 0251</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-8 mt-5 mt-lg-0">
+                    @if (ViewBag.MensajeExitoso != null)
+                    {
+                        <div class="alert alert-success" role="alert" style="text-align: center; margin: 10px!important;">
+                            @ViewBag.MensajeExitoso
+                        </div>
+                    }
+
+                    @if (ViewBag.MensajeNoExitoso != null)
+                    {
+                        <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px !important;">
+                            @ViewBag.MensajeNoExitoso
+                        </div>
+                    }
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "pt-3" }))
+                    {
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                @Html.TextBoxFor(m => m.Nombre_Completo, new { @class = "form-control", @placeholder = "Nombre Completo", @type = "text", required = "required" })
+                            </div>
+                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @placeholder = "Correo Electrónico", @type = "email", required = "required" })
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            @Html.TextBoxFor(m => m.Asunto, new { @class = "form-control", @placeholder = "Asunto", @type = "text", required = "required" })
+                        </div>
+                        <div class="form-group mt-3">
+                            @Html.TextAreaFor(m => m.Mensaje, new { rows = 5, cols = 20, @class = "form-control", @placeholder = "Mensaje", @type = "text", required = "required" })
+                        </div>
+
+                        <div class="text-center"><button type="submit" style="border-radius: 20px; border: 1px solid #6282a9; background-color: #6282a9; color: #FFFFFF;padding:10px;padding-left:20px;padding-right:20px; margin-top:15px; ">Enviar</button></div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+    @*CONTACTO*@
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="~/Assets/js/ContactoIndex.js"></script>

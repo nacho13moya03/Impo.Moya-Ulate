@@ -1,0 +1,18 @@
+﻿#TablaClientes_filter input[type="search"] {
+    width: 180px;
+    height: 30px;
+    margin-bottom: 7px;
+}
+
+#TablaClientes_filter input[type="search"]:focus {
+    box-shadow: none; /* Quitar la sombra al enfocar */
+    border-color: #6282a9;
+}
+
+#TablaClientes_paginate .paginate_button {
+    margin-top: 7px;
+}
+
+.table-info {
+    background-color: #cff4fc !important;
+}

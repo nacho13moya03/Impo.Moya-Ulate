@@ -1,0 +1,18 @@
+﻿#TablaProveedores_filter input[type="search"] {
+    width: 180px;
+    height: 30px;
+    margin-bottom: 7px;
+}
+
+    #TablaProveedores_filter input[type="search"]:focus {
+        box-shadow: none;
+        border-color: #6282a9;
+    }
+
+#TablaProveedores_paginate .paginate_button {
+    margin-top: 7px;
+}
+
+thead {
+    background-color: #6282a9 !important;
+}

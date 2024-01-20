@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ImportadoraMoyaUlateModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="ID_Cliente" />
+    </Key>
+    <Property Name="ID_Cliente" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ced_Cliente" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre_Cliente" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido_Cliente" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Correo_Cliente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Contrasenna_Cliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Direccion_Cliente" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Tel_Cliente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Est_Cliente" Type="Int32" Nullable="false" />
+    <Property Name="Rol_Cliente" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Estado" Relationship="Self.FK_Clientes_Estado" FromRole="Clientes" ToRole="Estado" />
+    <NavigationProperty Name="Roles" Relationship="Self.FK_Clientes_Roles" FromRole="Clientes" ToRole="Roles" />
+  </EntityType>
+  <EntityType Name="Empresa">
+    <Key>
+      <PropertyRef Name="ID_Empresa" />
+    </Key>
+    <Property Name="ID_Empresa" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_empresa" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Proveedores" Relationship="Self.FK_Proveedores_Empresa" FromRole="Empresa" ToRole="Proveedores" />
+  </EntityType>
+  <EntityType Name="Estado">
+    <Key>
+      <PropertyRef Name="ID_Estado" />
+    </Key>
+    <Property Name="ID_Estado" Type="Int32" Nullable="false" />
+    <Property Name="Tipo_Estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK_Clientes_Estado" FromRole="Estado" ToRole="Clientes" />
+    <NavigationProperty Name="Proveedores" Relationship="Self.FK_Proveedores_Estado" FromRole="Estado" ToRole="Proveedores" />
+  </EntityType>
+  <EntityType Name="Proveedores">
+    <Key>
+      <PropertyRef Name="ID_Proveedor" />
+    </Key>
+    <Property Name="ID_Proveedor" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_Proveedor" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido_Proveedor" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Cedula_Proveedor" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Direccion_Exacta" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado_Proveedor" Type="Int32" Nullable="false" />
+    <Property Name="Empresa" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Empresa1" Relationship="Self.FK_Proveedores_Empresa" FromRole="Proveedores" ToRole="Empresa" />
+    <NavigationProperty Name="Estado" Relationship="Self.FK_Proveedores_Estado" FromRole="Proveedores" ToRole="Estado" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="ID_Rol" />
+    </Key>
+    <Property Name="ID_Rol" Type="Int32" Nullable="false" />
+    <Property Name="Nombre_Rol" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Clientes" Relationship="Self.FK_Clientes_Roles" FromRole="Roles" ToRole="Clientes" />
+  </EntityType>
+  <EntityType Name="Ubicaciones">
+    <Key>
+      <PropertyRef Name="ID_Ubicacion" />
+    </Key>
+    <Property Name="ID_Ubicacion" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Tipo_Ubicacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Ubicacion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Clientes_Estado">
+    <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estado">
+        <PropertyRef Name="ID_Estado" />
+      </Principal>
+      <Dependent Role="Clientes">
+        <PropertyRef Name="Est_Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Clientes_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="ID_Rol" />
+      </Principal>
+      <Dependent Role="Clientes">
+        <PropertyRef Name="Rol_Cliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Proveedores_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+    <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="ID_Empresa" />
+      </Principal>
+      <Dependent Role="Proveedores">
+        <PropertyRef Name="Empresa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Proveedores_Estado">
+    <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+    <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estado">
+        <PropertyRef Name="ID_Estado" />
+      </Principal>
+      <Dependent Role="Proveedores">
+        <PropertyRef Name="Estado_Proveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ImportadoraMoyaUlateEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Clientes" EntityType="Self.Clientes" />
+    <EntitySet Name="Empresa" EntityType="Self.Empresa" />
+    <EntitySet Name="Estado" EntityType="Self.Estado" />
+    <EntitySet Name="Proveedores" EntityType="Self.Proveedores" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" />
+    <EntitySet Name="Ubicaciones" EntityType="Self.Ubicaciones" />
+    <AssociationSet Name="FK_Clientes_Estado" Association="Self.FK_Clientes_Estado">
+      <End Role="Estado" EntitySet="Estado" />
+      <End Role="Clientes" EntitySet="Clientes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Clientes_Roles" Association="Self.FK_Clientes_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Clientes" EntitySet="Clientes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Proveedores_Empresa" Association="Self.FK_Proveedores_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Proveedores" EntitySet="Proveedores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Proveedores_Estado" Association="Self.FK_Proveedores_Estado">
+      <End Role="Estado" EntitySet="Estado" />
+      <End Role="Proveedores" EntitySet="Proveedores" />
+    </AssociationSet>
+    <FunctionImport Name="ActualizarEstadoProveedorSP">
+      <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="ActualizarProveedorSP">
+      <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
+      <Parameter Name="Nombre_Proveedor" Mode="In" Type="String" />
+      <Parameter Name="Apellido_Proveedor" Mode="In" Type="String" />
+      <Parameter Name="Cedula_Proveedor" Mode="In" Type="String" />
+      <Parameter Name="Direccion_Exacta" Mode="In" Type="String" />
+      <Parameter Name="Empresa" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="EliminarProveedorSP">
+      <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="RegistrarProveedorSP">
+      <Parameter Name="Nombre_Proveedor" Mode="In" Type="String" />
+      <Parameter Name="Apellido_Proveedor" Mode="In" Type="String" />
+      <Parameter Name="Cedula_Proveedor" Mode="In" Type="String" />
+      <Parameter Name="Direccion_Exacta" Mode="In" Type="String" />
+      <Parameter Name="Estado_Proveedor" Mode="In" Type="Int32" />
+      <Parameter Name="Empresa" Mode="In" Type="Int64" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>

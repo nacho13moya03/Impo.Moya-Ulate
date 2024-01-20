@@ -1,0 +1,107 @@
+﻿@model ProyectoSC_601.Entities.InventarioEnt
+@{
+    ViewBag.Title = "ProductoDetalle";
+    <link href="~/Assets/css/style.css" rel="stylesheet">
+    <link href="~/Assets/css/productoDetalle.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
+}
+
+<!-- CATALOGO -->
+<section id="cata" class="py-5" style="padding-top: 6%!important;">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            @if (Model.Estado == 1)
+            {
+                <div class="col-lg-8 mb-5">
+                    <div class="card h-100 position-relative" style="height: 380px!important;padding:8%!important;">
+
+                        @if (Model.Cantidad <= 5)
+                        {
+                            <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; left: 0.5rem; z-index: 1; margin-top: 8% !important; margin-left: 8% !important; ">@Model.Cantidad Disponibles</div>
+                        }
+
+                        <div class="row">
+
+                            <div class="col-md-5">
+                                <div class="card-img-left">
+                                    <img src="@Model.Imagen" style="width:300px; height:225px;">
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-1 border-end"></div>
+
+                            <div class="col-md-6">
+                                <div class="card-body p-4">
+
+                                    <h3>@Model.Nombre</h3>
+
+                                    <p>@Model.Descripcion</p>
+
+                                    <p>₡@Model.Precio</p>
+
+                                    @if (Session["ID_Cliente"] != null)
+                                    {
+                                        <div style="display:flex;">
+                                            <p style="margin-top:2%;margin-right:4%;">Cantidad: </p>
+                                            <div class="col-3" style="text-align:right!important">
+                                                <input id=prd-@Model.ID_Producto type="number" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="text-center" style="margin-top:40px!important;">
+                                            <a class="btn  btn-outline-dark" href="@Url.Action("Catalogo", "Producto" )">Regresar</a>
+                                            <a class="btn" style="background-color: #354461; color: white; margin-left:2%;" onclick="RegistrarProducto(@Model.ID_Producto, @Model.Cantidad)">Agregar al Carrito</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div style="margin-top:60px!important;margin-left:2%!important;">
+                                            <a class="btn  btn-outline-dark" href="@Url.Action("Catalogo", "Producto" )">Regresar</a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<script>
+
+  function RegistrarProducto(ID_Producto, disponible) {
+      let cantidad = $("#prd-" + ID_Producto).val();
+
+      if (cantidad > disponible) {
+            Swal.fire({
+              title: 'Error en la Solicitud',
+                text: 'No hay suficiente cantidad disponible del producto',
+              icon: 'info',
+              confirmButtonColor: '#6282a9',
+              confirmButtonText: 'Ok'
+          });
+      }
+      else {
+
+            $.ajax({
+            url: '/Carrito/RegistrarCarrito',
+            type: "GET",
+            data:
+            {
+              "cantidad": cantidad,
+                "ID_Producto": ID_Producto
+            },
+            success: function (data) {
+               window.location.href = '@Url.Action("Catalogo", "Producto")';
+            }
+        });
+
+      }
+  }
+
+</script>

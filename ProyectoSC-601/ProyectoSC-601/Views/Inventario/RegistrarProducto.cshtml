@@ -1,0 +1,66 @@
+﻿@model ProyectoSC_601.Entities.InventarioEnt
+@{
+    ViewBag.Title = "RegistrarProducto";
+    Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
+    <link href="~/Assets/css/ProductosAdminStyle.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
+
+}
+
+<div class="container-xl px-4 mt-4">
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-8" style="margin-left:18%;margin-top:5%; margin-bottom:2%;">
+            <div class="card mb-4">
+                @if (ViewBag.Mensaje != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px !important;margin-bottom:-40px!important;">
+                        @ViewBag.Mensaje
+                    </div>
+                }
+                <div class="card-header">Agregar Producto</div>
+                <div class="card-body ">
+                    @using (Html.BeginForm("RegistrarProducto", "Inventario", FormMethod.Post, new { @class = "pt-3", @enctype = "multipart/form-data" }))
+                    {
+
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="categoria">Categoría</label>
+                                @Html.DropDownListFor(m => m.ID_Categoria, ViewBag.Categorias as List<SelectListItem>,"Seleccione una opción", new { @class = "form-control form-control-lg", required = "required" })
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="nombre">Nombre</label>
+                                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", @placeholder = "Nombre", @type = "text", required = "required" })
+                            </div>
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="descripcion">Descripción</label>
+                            @Html.TextAreaFor(m => m.Descripcion, new { rows = 3, cols = 20, @class = "form-control", @placeholder = "Descripción", @type = "text", required = "required" })
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="cantidad">Cantidad Disponible</label>
+                                @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", @placeholder = "Cantidad", @type = "number", required = "required" })
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="precio">Precio</label>
+                                @Html.TextBoxFor(m => m.Precio, new { @class = "form-control", @placeholder = "Precio", @type = "number", required = "required" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Imagen</label>
+                            <input type="file" class="form-control" id="ImgProducto" name="ImgProducto" required>
+                        </div>
+                        <div style="text-align:center;padding-top:4%;">
+                            <button class="btn btn-success" type="submit"> Registrar <i class="bi bi-pencil-square"></i></button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

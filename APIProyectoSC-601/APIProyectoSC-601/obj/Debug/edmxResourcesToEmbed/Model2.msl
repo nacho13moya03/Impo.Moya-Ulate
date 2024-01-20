@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ImportadoraMoyaUlateModel1StoreContainer" CdmEntityContainer="ImportadoraMoyaUlateEntities1">
+    <EntitySetMapping Name="Clientes">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel1.Clientes">
+        <MappingFragment StoreEntitySet="Clientes">
+          <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
+          <ScalarProperty Name="Ced_Cliente" ColumnName="Ced_Cliente" />
+          <ScalarProperty Name="Nombre_Cliente" ColumnName="Nombre_Cliente" />
+          <ScalarProperty Name="Apellido_Cliente" ColumnName="Apellido_Cliente" />
+          <ScalarProperty Name="Correo_Cliente" ColumnName="Correo_Cliente" />
+          <ScalarProperty Name="Contrasenna_Cliente" ColumnName="Contrasenna_Cliente" />
+          <ScalarProperty Name="Direccion_Cliente" ColumnName="Direccion_Cliente" />
+          <ScalarProperty Name="Tel_Cliente" ColumnName="Tel_Cliente" />
+          <ScalarProperty Name="Est_Cliente" ColumnName="Est_Cliente" />
+          <ScalarProperty Name="Rol_Cliente" ColumnName="Rol_Cliente" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Empresa">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel1.Empresa">
+        <MappingFragment StoreEntitySet="Empresa">
+          <ScalarProperty Name="ID_Empresa" ColumnName="ID_Empresa" />
+          <ScalarProperty Name="Nombre_empresa" ColumnName="Nombre_empresa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estado">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel1.Estado">
+        <MappingFragment StoreEntitySet="Estado">
+          <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
+          <ScalarProperty Name="Tipo_Estado" ColumnName="Tipo_Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Proveedores">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel1.Proveedores">
+        <MappingFragment StoreEntitySet="Proveedores">
+          <ScalarProperty Name="ID_Proveedor" ColumnName="ID_Proveedor" />
+          <ScalarProperty Name="Nombre_Proveedor" ColumnName="Nombre_Proveedor" />
+          <ScalarProperty Name="Apellido_Proveedor" ColumnName="Apellido_Proveedor" />
+          <ScalarProperty Name="Cedula_Proveedor" ColumnName="Cedula_Proveedor" />
+          <ScalarProperty Name="Direccion_Exacta" ColumnName="Direccion_Exacta" />
+          <ScalarProperty Name="Estado_Proveedor" ColumnName="Estado_Proveedor" />
+          <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel1.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
+          <ScalarProperty Name="Nombre_Rol" ColumnName="Nombre_Rol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ubicaciones">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel1.Ubicaciones">
+        <MappingFragment StoreEntitySet="Ubicaciones">
+          <ScalarProperty Name="ID_Ubicacion" ColumnName="ID_Ubicacion" />
+          <ScalarProperty Name="Tipo_Ubicacion" ColumnName="Tipo_Ubicacion" />
+          <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ActualizarEstadoProveedorSP" FunctionName="ImportadoraMoyaUlateModel1.Store.ActualizarEstadoProveedorSP" />
+    <FunctionImportMapping FunctionImportName="ActualizarProveedorSP" FunctionName="ImportadoraMoyaUlateModel1.Store.ActualizarProveedorSP" />
+    <FunctionImportMapping FunctionImportName="EliminarProveedorSP" FunctionName="ImportadoraMoyaUlateModel1.Store.EliminarProveedorSP" />
+    <FunctionImportMapping FunctionImportName="RegistrarProveedorSP" FunctionName="ImportadoraMoyaUlateModel1.Store.RegistrarProveedorSP" />
+  </EntityContainerMapping>
+</Mapping>

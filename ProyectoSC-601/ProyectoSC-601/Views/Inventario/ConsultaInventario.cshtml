@@ -1,0 +1,155 @@
+﻿@model IEnumerable<ProyectoSC_601.Entities.InventarioEnt>
+@{
+    ViewBag.Title = "ConsultaInventario";
+    Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
+    <link href="~/Assets/css/ProductosAdminStyle.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
+}
+<div class="container mt-5 pt-4">
+    <div class="row justify-content-center">
+        <div class="col-12 grid-margin stretch-card">
+            <br>
+            <br>
+            <br>
+            <div class="card" style="margin-bottom:80px;">
+                <div class="card-body">
+                    <div style="display:flex;">
+                        <h4 class="card-title">Productos Registrados</h4>
+                        <div style="margin-left:72%">
+                            <div style="display:flex;">
+                                <a class="btn btn-primary"  href="javascript:void(0);" onclick="MostrarTotalInventario()"><i style="color: white;" class="fa fa-eye fa-lg"></i></a>
+                                <a class="btn btn-primary" href="@Url.Action("RegistrarProducto","Inventario")" style="margin-left:5%;"><i style="color: white;" class="fa fa-plus fa-lg"></i></a>
+                            </div>
+                        </div>
+                        </div>
+                    <div class="table-responsive">
+                        <br><br>
+                        @if (ViewBag.Mensaje != null)
+                        {
+                            <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px !important;margin-bottom:-40px!important;">
+                                @ViewBag.Mensaje
+                            </div>
+                        }
+                        <table id="TablaInventario" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="background-color: #6282a9; color:white;">ID</th>
+                                    <th style="background-color: #6282a9;color:white; ">Categoría</th>
+                                    <th style="background-color: #6282a9;color:white; ">Nombre</th>
+                                    <th style="background-color: #6282a9;color:white;">Descripción</th>
+                                    <th style="background-color: #6282a9;color:white;">Cantidad</th>
+                                    <th style="background-color: #6282a9;color:white;">Precio</th>
+                                    <th style="background-color: #6282a9;color:white;">Imagen</th>
+                                    <th style="background-color: #6282a9;color:white;">Estado</th>
+                                    <th style="background-color: #6282a9;color:white;">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>@item.ID_Producto</td>
+                                        @if (item.ID_Categoria == 1)
+                                        {
+                                            <td>Hombre</td>
+                                        }
+                                        else if (item.ID_Categoria == 2)
+                                        {
+                                            <td>Mujer</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Niños</td>
+                                        }
+                                        <td>@item.Nombre</td>
+                                        <td>@item.Descripcion</td>
+                                        @if (item.Cantidad <= 5)
+                                        {
+                                            <td>@item.Cantidad <i style="color: red;" class="fa fa-info-circle fa-lg"></i></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.Cantidad</td>
+                                        }
+                                        <td>@item.Precio</td>
+                                        <td style="text-align:center"><img src="@item.Imagen" style="width:100px; height:70px"></td>
+                                        @if (item.Estado == 1)
+                                        {
+                                            <td><span class="badge bg-success">Activo</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><span class="badge bg-danger">Inactivo</span></td>
+                                        }
+                                        <td class="text-center">
+                                            <a href="@Url.Action("ActualizarEstadoProducto", "Inventario", new { q = item.ID_Producto })"><i style="color: #6282a9;" class="fa fa-exchange fa-lg"></i></a>
+                                            <a href="@Url.Action("ModificarProducto", "Inventario", new { q = item.ID_Producto })"><i style="color: forestgreen;padding-left: 10px;" class="fa fa-edit fa-lg"></i></a>
+                                            <a href="javascript:void(0);" onclick="confirmarEliminarProducto(@item.ID_Producto)"><i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Se agrega un data table para la consulta de clientes*@
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script>var $j = jQuery.noConflict();</script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $j(document).ready(function () {
+        $j('#TablaInventario').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            },
+            "pagingType": 'simple'
+        });
+
+    });
+</script>
+
+<script>
+    //Funcion para mostrar mensaje de alerta
+    function confirmarEliminarProducto(ID_Producto) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Si lo eliminas vas a perder la información relacionada a este producto',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#6282a9',
+            cancelButtonColor: '#354461',
+            confirmButtonText: 'Sí, Eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, redirige a la acción de inactivar cliente
+                window.location.href = '/Inventario/EliminarProducto?q=' + ID_Producto;
+            }
+        });
+    }
+</script>
+
+<script>
+    // Muestra el total del Inventario
+    function MostrarTotalInventario() {
+        Swal.fire({
+            title: 'Total del Inventario',
+            text: '₡ @ViewBag.TotalInventario',
+            icon: 'info',
+            confirmButtonColor: '#6282a9',
+            confirmButtonText: 'Ok'
+        });
+    }
+</script>

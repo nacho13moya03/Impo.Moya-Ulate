@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ImportadoraMoyaUlateModelStoreContainer" CdmEntityContainer="ImportadoraMoyaUlateEntities">
+    <EntitySetMapping Name="Carrito">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Carrito">
+        <MappingFragment StoreEntitySet="Carrito">
+          <ScalarProperty Name="ID_Carrito" ColumnName="ID_Carrito" />
+          <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+          <ScalarProperty Name="ID_Producto" ColumnName="ID_Producto" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="FechaCarrito" ColumnName="FechaCarrito" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categorias">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Categorias">
+        <MappingFragment StoreEntitySet="Categorias">
+          <ScalarProperty Name="ID_Categoria" ColumnName="ID_Categoria" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clientes">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Clientes">
+        <MappingFragment StoreEntitySet="Clientes">
+          <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
+          <ScalarProperty Name="Ced_Cliente" ColumnName="Ced_Cliente" />
+          <ScalarProperty Name="Nombre_Cliente" ColumnName="Nombre_Cliente" />
+          <ScalarProperty Name="Apellido_Cliente" ColumnName="Apellido_Cliente" />
+          <ScalarProperty Name="Correo_Cliente" ColumnName="Correo_Cliente" />
+          <ScalarProperty Name="Contrasenna_Cliente" ColumnName="Contrasenna_Cliente" />
+          <ScalarProperty Name="Direccion_Cliente" ColumnName="Direccion_Cliente" />
+          <ScalarProperty Name="Tel_Cliente" ColumnName="Tel_Cliente" />
+          <ScalarProperty Name="Est_Cliente" ColumnName="Est_Cliente" />
+          <ScalarProperty Name="Rol_Cliente" ColumnName="Rol_Cliente" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Empresa">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Empresa">
+        <MappingFragment StoreEntitySet="Empresa">
+          <ScalarProperty Name="ID_Empresa" ColumnName="ID_Empresa" />
+          <ScalarProperty Name="Nombre_empresa" ColumnName="Nombre_empresa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estado">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Estado">
+        <MappingFragment StoreEntitySet="Estado">
+          <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
+          <ScalarProperty Name="Tipo_Estado" ColumnName="Tipo_Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Factura_Detalle">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Factura_Detalle">
+        <MappingFragment StoreEntitySet="Factura_Detalle">
+          <ScalarProperty Name="ID_Detalle" ColumnName="ID_Detalle" />
+          <ScalarProperty Name="ID_Factura" ColumnName="ID_Factura" />
+          <ScalarProperty Name="ID_Producto" ColumnName="ID_Producto" />
+          <ScalarProperty Name="PrecioPagado" ColumnName="PrecioPagado" />
+          <ScalarProperty Name="CantidadPagado" ColumnName="CantidadPagado" />
+          <ScalarProperty Name="ImpuestoPagado" ColumnName="ImpuestoPagado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Factura_Encabezado">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Factura_Encabezado">
+        <MappingFragment StoreEntitySet="Factura_Encabezado">
+          <ScalarProperty Name="ID_Factura" ColumnName="ID_Factura" />
+          <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+          <ScalarProperty Name="FechaCompra" ColumnName="FechaCompra" />
+          <ScalarProperty Name="TotalCompra" ColumnName="TotalCompra" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Producto">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Producto">
+        <MappingFragment StoreEntitySet="Producto">
+          <ScalarProperty Name="ID_Producto" ColumnName="ID_Producto" />
+          <ScalarProperty Name="ID_Categoria" ColumnName="ID_Categoria" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Proveedores">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Proveedores">
+        <MappingFragment StoreEntitySet="Proveedores">
+          <ScalarProperty Name="ID_Proveedor" ColumnName="ID_Proveedor" />
+          <ScalarProperty Name="Nombre_Proveedor" ColumnName="Nombre_Proveedor" />
+          <ScalarProperty Name="Apellido_Proveedor" ColumnName="Apellido_Proveedor" />
+          <ScalarProperty Name="Cedula_Proveedor" ColumnName="Cedula_Proveedor" />
+          <ScalarProperty Name="Direccion_Exacta" ColumnName="Direccion_Exacta" />
+          <ScalarProperty Name="Estado_Proveedor" ColumnName="Estado_Proveedor" />
+          <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
+          <ScalarProperty Name="Nombre_Rol" ColumnName="Nombre_Rol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ActualizarCuentaClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCuentaClienteSP" />
+    <FunctionImportMapping FunctionImportName="ActualizarEstadoClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoClienteSP" />
+    <FunctionImportMapping FunctionImportName="ActualizarEstadoProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoProveedorSP" />
+    <FunctionImportMapping FunctionImportName="ActualizarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarProveedorSP" />
+    <FunctionImportMapping FunctionImportName="EliminarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarProveedorSP" />
+    <FunctionImportMapping FunctionImportName="InactivarClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.InactivarClienteSP" />
+    <FunctionImportMapping FunctionImportName="IniciarSesionSP" FunctionName="ImportadoraMoyaUlateModel.Store.IniciarSesionSP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ImportadoraMoyaUlateModel.IniciarSesionSP_Result">
+          <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
+          <ScalarProperty Name="Ced_Cliente" ColumnName="Ced_Cliente" />
+          <ScalarProperty Name="Nombre_Cliente" ColumnName="Nombre_Cliente" />
+          <ScalarProperty Name="Apellido_Cliente" ColumnName="Apellido_Cliente" />
+          <ScalarProperty Name="Correo_Cliente" ColumnName="Correo_Cliente" />
+          <ScalarProperty Name="Contrasenna_Cliente" ColumnName="Contrasenna_Cliente" />
+          <ScalarProperty Name="Direccion_Cliente" ColumnName="Direccion_Cliente" />
+          <ScalarProperty Name="Tel_Cliente" ColumnName="Tel_Cliente" />
+          <ScalarProperty Name="Est_Cliente" ColumnName="Est_Cliente" />
+          <ScalarProperty Name="Rol_Cliente" ColumnName="Rol_Cliente" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="PagarCarritoSP" FunctionName="ImportadoraMoyaUlateModel.Store.PagarCarritoSP" />
+    <FunctionImportMapping FunctionImportName="RecuperarCuentaClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.RecuperarCuentaClienteSP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ImportadoraMoyaUlateModel.RecuperarCuentaClienteSP_Result">
+          <ScalarProperty Name="Nombre_Cliente" ColumnName="Nombre_Cliente" />
+          <ScalarProperty Name="Apellido_Cliente" ColumnName="Apellido_Cliente" />
+          <ScalarProperty Name="Correo_Cliente" ColumnName="Correo_Cliente" />
+          <ScalarProperty Name="Contrasenna_Cliente" ColumnName="Contrasenna_Cliente" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="RegistrarClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarClienteSP" />
+    <FunctionImportMapping FunctionImportName="RegistrarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarProveedorSP" />
+  </EntityContainerMapping>
+</Mapping>

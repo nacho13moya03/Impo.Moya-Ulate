@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Importadora Moya y Ulate</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="~/Assets/img/favicon.png" rel="icon">
+    <link href="~/Assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- CSS Files -->
+    <link href="~/Assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="~/Assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/Assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/Assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/Assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="~/Assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="~/Assets/css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    @*HEADER*@
+
+    <header id="header" class="fixed-top ">
+        <div class="container d-flex align-items-center justify-content-lg-between">
+            <a class="logo me-auto me-lg-0"><img src="~/Assets/img/logo.png" alt="" class="img-fluid" style="height:90px;"></a>
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <li> <a class="nav-link scrollto active" @Html.ActionLink("Inicio", "IndexAdmin", "Home", new { area = "" }, new { @class = "nav-link" })</a></li>
+
+                    <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Inventario", "ConsultaInventario", "Inventario", new { area = "" }, new { @class = "nav-link" })</a></li>
+
+                    <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Proveedores", "ConsultaProveedores", "Proveedor", new { area = "" }, new { @class = "nav-link" })</a></li>
+
+                    <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Clientes", "GestionClientes", "Cliente", new { area = "" }, new { @class = "nav-link" })</a></li>
+
+                    <li><a class="nav-link scrollto" @Html.ActionLink("Facturación", "Facturacion", "Facturacion", new { area = "" }, new { @class = "nav-link" })</a></li>
+
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+           
+                @Html.ActionLink("Cerrar Sesión", "CerrarSesionCliente", "Cliente", new { area = "" }, new { @class = "get-started-btn scrollto nav-link" })
+        </div>
+    </header>
+    @*HEADER*@
+
+    @*MENU PRINCIPAL*@
+    @RenderBody()
+    @*MENU PRINCIPAL*@
+
+    @*FOOTER*@
+    <footer id="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-info">
+                            <h3>IMPORTADORA <span>MOYA </span> Y <span>ULATE </span></h3>
+                            <p>
+                                Grecia, Provincia Alajuela <br>
+                                Costa Rica<br><br>
+                                <strong>Teléfono:</strong> +506 8438 0251<br>
+                                <strong>Correo:</strong> importadoraM&U@gmail.com<br>
+                            </p>
+                            <div class="social-links mt-3">
+                                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                                <a href="#" class="whatsapp"><i class="bx bxl-whatsapp"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 footer-links" style="margin-top:6%;margin-left:8%;">
+                        <h4>Gestión de Recursos</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Gestionar Inventario", "ConsultaInventario", "Inventario", new { area = "" }, new { @class = "nav-link" })</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Gestionar Proveedores", "ConsultaProveedores", "Proveedor", new { area = "" }, new { @class = "nav-link" })</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Gestionar Clientes", "GestionClientes", "Cliente", new { area = "" }, new { @class = "nav-link" })</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Facturación", "Facturacion", "Facturacion",  new { area = "" }, new { @class = "nav-link" })</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Gp</span></strong>. All Rights Reserved
+            </div>
+        </div>
+    </footer>
+
+    @*FOOTER*@
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- JS Files -->
+    <script src="~/Assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="~/Assets/vendor/aos/aos.js"></script>
+    <script src="~/Assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/Assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="~/Assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="~/Assets/vendor/php-email-form/validate.js"></script>
+    <script src="~/Assets/js/main.js"></script>
+
+</body>
+
+</html>
+
+
