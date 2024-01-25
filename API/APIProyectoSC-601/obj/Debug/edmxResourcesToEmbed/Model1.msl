@@ -98,6 +98,8 @@
           <ScalarProperty Name="Direccion_Exacta" ColumnName="Direccion_Exacta" />
           <ScalarProperty Name="Estado_Proveedor" ColumnName="Estado_Proveedor" />
           <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

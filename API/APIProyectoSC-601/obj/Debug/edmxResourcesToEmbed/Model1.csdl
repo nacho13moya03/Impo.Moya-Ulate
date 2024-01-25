@@ -109,6 +109,8 @@
     <Property Name="Direccion_Exacta" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Estado_Proveedor" Type="Int32" Nullable="false" />
     <Property Name="Empresa" Type="Int64" Nullable="false" />
+    <Property Name="Telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Empresa1" Relationship="Self.FK_Proveedores_Empresa" FromRole="Proveedores" ToRole="Empresa" />
     <NavigationProperty Name="Estado" Relationship="Self.FK_Proveedores_Estado" FromRole="Proveedores" ToRole="Estado" />
   </EntityType>
@@ -329,6 +331,8 @@
       <Parameter Name="Cedula_Proveedor" Mode="In" Type="String" />
       <Parameter Name="Direccion_Exacta" Mode="In" Type="String" />
       <Parameter Name="Empresa" Mode="In" Type="Int64" />
+      <Parameter Name="Telefono" Mode="In" Type="String" />
+      <Parameter Name="Correo" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="EliminarProveedorSP">
       <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
@@ -362,6 +366,8 @@
       <Parameter Name="Direccion_Exacta" Mode="In" Type="String" />
       <Parameter Name="Estado_Proveedor" Mode="In" Type="Int32" />
       <Parameter Name="Empresa" Mode="In" Type="Int64" />
+      <Parameter Name="Telefono" Mode="In" Type="String" />
+      <Parameter Name="Correo" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="IniciarSesionSP_Result">
