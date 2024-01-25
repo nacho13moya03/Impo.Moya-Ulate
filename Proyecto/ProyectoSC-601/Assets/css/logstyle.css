@@ -11,13 +11,15 @@ body {
     align-items: center;
     flex-direction: column;
     font-family: 'Montserrat', sans-serif;
-    height: 100vh;
+    height: 90vh;
     margin: -20px 0 50px;
 }
 
 h1 {
     font-weight: bold;
     margin: 0;
+    margin-top: 3%;
+    margin-bottom: 2%;
 }
 
 h2 {
@@ -62,9 +64,10 @@ button {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     position: relative;
     overflow: hidden;
-    width: 768px;
+    width: 55%;
     max-width: 100%;
-    min-height: 480px;
+    min-height: 83%;
+    margin-top: 7.5%;
 }
 
 .form-container {
@@ -88,6 +91,11 @@ form {
     height: 100%;
     text-align: center;
 }
+
+    form *:not(label) {
+        justify-content: flex-start!important;
+    }
+
 
 input {
     background-color: #eee;
@@ -180,4 +188,39 @@ button:focus {
 button.ghost {
     background-color: transparent;
     border-color: #FFFFFF;
+}
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 90%;
+    }
+
+    .form-container {
+        width: 100%;
+    }
+
+    form {
+        width:50%;
+        padding: 0 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-top: 5%;
+        margin-bottom: 3%;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    input {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
 }

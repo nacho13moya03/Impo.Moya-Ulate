@@ -316,9 +316,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Carrito\" />
-    <Folder Include="Views\Cliente\" />
-    <Folder Include="Views\Facturacion\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\bootstrap.min.js.map" />

@@ -14,13 +14,19 @@
             </div>
         }
 
-        @using (Html.BeginForm("RecuperarCuentaCliente", "Cliente", FormMethod.Post, new { @class = "pt-3" }))
+        @using (Html.BeginForm("RecuperarCuentaCliente", "Cliente", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate" }))
         {
             <h1 style="font-size:30px!important;">Recuperar Cuenta</h1>
             <br />
-            @Html.TextBoxFor(m => m.Ced_Cliente, new { @placeholder = "Identificación", @type = "text", required = "required" })
+            <div style="align-self: flex-start;">
+                <label class="medium" for="identificacion">Identificación</label>
+            </div>
+            @Html.TextBoxFor(m => m.Ced_Cliente, new { @placeholder = "XXXXXXXXX", @type = "text", required = "required" })
+            <div style="align-self: flex-start;">
+                @Html.ValidationMessageFor(m => m.Ced_Cliente, "", new { @style = "color: red;" })
+            </div>
             <br />
-            <button type="submit">Recuperar</button>
+            <button type="submit" style=" margin-top: 8%;">Recuperar</button>
         }
     </div>
     <div class="overlay-container">

@@ -62,23 +62,32 @@ namespace ProyectoSC_601.Controllers
         [HttpPost]
         public ActionResult Login(ClienteEnt entidad)
         {
-            var respuesta = modelCliente.Login(entidad);
+            ModelState.Remove("Ced_Cliente");
+            if (ModelState.IsValid)  
+            {
+               
+                    var respuesta = modelCliente.Login(entidad);
 
-            if (respuesta != null && respuesta.Rol_Cliente==2)
-            {
-                Session["ID_Cliente"] = respuesta.ID_Cliente;
-                return RedirectToAction("Index", "Home");
-            }
-            else if (respuesta != null && respuesta.Rol_Cliente==1)
-            {
-                 Session["ID_Cliente"] = respuesta.ID_Cliente;
-                return RedirectToAction("IndexAdmin", "Home");
+                if (respuesta != null && respuesta.Rol_Cliente == 2)
+                {
+                    Session["ID_Cliente"] = respuesta.ID_Cliente;
+                    return RedirectToAction("Index", "Home");
+                }
+                else if (respuesta != null && respuesta.Rol_Cliente == 1)
+                {
+                    Session["ID_Cliente"] = respuesta.ID_Cliente;
+                    return RedirectToAction("IndexAdmin", "Home");
 
+                }
+                else
+                {
+                    ViewBag.MensajeNoExitoso = "Credenciales Inválidos";
+                    return View();
+                }
             }
-            else
-            {
-                ViewBag.MensajeNoExitoso = "Credenciales Inválidos";
-                return View();
+            
+            else { 
+                return View(entidad);
             }
         }
 
@@ -93,16 +102,27 @@ namespace ProyectoSC_601.Controllers
         [HttpPost]
         public ActionResult RecuperarCuentaCliente(ClienteEnt entidad)
         {
-            string respuesta = modelCliente.RecuperarCuentaCliente(entidad);
+            ModelState.Remove("Correo_Cliente");  
+            ModelState.Remove("Contrasenna_Cliente"); 
 
-            if (respuesta == "OK")
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Login", "Cliente");
+                string respuesta = modelCliente.RecuperarCuentaCliente(entidad);
+
+                if (respuesta == "OK")
+                {
+                    return RedirectToAction("Login", "Cliente");
+                }
+                else
+                {
+                    ViewBag.MensajeNoExitoso = "No se ha podido recuperar su información";
+                    return View();
+                }
+
             }
             else
             {
-                ViewBag.MensajeNoExitoso = "No se ha podido recuperar su información";
-                return View();
+                return View(entidad);
             }
         }
 
