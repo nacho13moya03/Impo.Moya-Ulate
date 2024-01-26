@@ -235,27 +235,25 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Proveedores](
-    [ID_Proveedor] [bigint] IDENTITY(1,1) NOT NULL,
-    [Nombre_Proveedor] [varchar](255) NOT NULL,
-    [Apellido_Proveedor] [varchar](255) NOT NULL,
-    [Cedula_Proveedor] [varchar](15) NOT NULL,
-    [Direccion_Exacta] [varchar](255) NOT NULL,
-    [Estado_Proveedor] [int] NOT NULL,
-    [Empresa] [bigint] NOT NULL,
-    [Telefono] [varchar](15) NOT NULL,
-    [Correo] [varchar](100) NOT NULL,
+	[ID_Proveedor] [bigint] IDENTITY(1,1) NOT NULL,
+	[Nombre_Proveedor] [varchar](255) NOT NULL,
+	[Apellido_Proveedor] [varchar](255) NOT NULL,
+	[Cedula_Proveedor] [varchar](15) NOT NULL,
+	[Direccion_Exacta] [varchar](255) NOT NULL,
+	[Estado_Proveedor] [int] NOT NULL,
+	[Empresa] [bigint] NOT NULL,
  CONSTRAINT [PK_Proveedores] PRIMARY KEY CLUSTERED 
 (
-    [ID_Proveedor] ASC
+	[ID_Proveedor] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY];
-
+) ON [PRIMARY]
+GO
 
 
 INSERT INTO [dbo].[Empresa] ([Nombre_empresa])
 VALUES 
     ('Escoja una opcion'),
-    ('Empresa 1'),
+    ('Empresa 1.'),
     ('Empresa 2');
 
 /****** Object:  Table [dbo].[Roles]    Script Date: 12/7/2023 5:38:49 PM ******/
@@ -409,9 +407,7 @@ CREATE PROCEDURE [dbo].[ActualizarProveedorSP]
     @Apellido_Proveedor VARCHAR(255),
     @Cedula_Proveedor VARCHAR(15),
     @Direccion_Exacta VARCHAR(255),
-    @Empresa BIGINT,
-    @Telefono VARCHAR(15),
-    @Correo VARCHAR(100)
+    @Empresa BIGINT
 AS
 BEGIN
     UPDATE dbo.Proveedores
@@ -420,13 +416,10 @@ BEGIN
         Apellido_Proveedor = @Apellido_Proveedor,
         Cedula_Proveedor = @Cedula_Proveedor,
         Direccion_Exacta = @Direccion_Exacta,
-        Empresa = @Empresa,
-        Telefono = @Telefono,
-        Correo = @Correo
+        Empresa = @Empresa
     WHERE ID_Proveedor = @ID_Proveedor;
 END;
 GO
-
 /****** Object:  StoredProcedure [dbo].[EliminarProveedorSP]    Script Date: 12/7/2023 5:38:49 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -585,9 +578,7 @@ CREATE PROCEDURE [dbo].[RegistrarProveedorSP]
     @Cedula_Proveedor varchar(25),
     @Direccion_Exacta varchar(255),
     @Estado_Proveedor int,
-    @Empresa bigint,
-    @Telefono varchar(15),
-    @Correo varchar(100)
+    @Empresa bigint
 AS
 BEGIN
     INSERT INTO [dbo].[Proveedores] (
@@ -596,9 +587,7 @@ BEGIN
         [Cedula_Proveedor],
         [Direccion_Exacta],
         [Estado_Proveedor],
-        [Empresa],
-        [Telefono],
-        [Correo]
+        [Empresa]
     )
     VALUES (
 		@Nombre_Proveedor,
@@ -606,8 +595,11 @@ BEGIN
         @Cedula_Proveedor,
         @Direccion_Exacta,
         1,
-        @Empresa,
-        @Telefono,
-        @Correo
+        @Empresa
     );
 END;
+GO
+USE [master]
+GO
+ALTER DATABASE [ImportadoraMoyaUlate] SET  READ_WRITE 
+GO

@@ -14,7 +14,5 @@ namespace ProyectoSC_601.Entities
         public string Direccion_Exacta { get; set; }
         public int Estado_Proveedor { get; set; }
         public long Empresa { get; set; }
-        public string Telefono { get; set; }
-        public string Correo { get; set; }
     }
 }

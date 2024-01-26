@@ -9,9 +9,9 @@
     <link href="~/Assets/css/ConsultaProveedor.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
-
 }
 
 
@@ -36,30 +36,22 @@
                             @TempData["ActualizacionExito"]
                         </div>
                     }
-                    <h4 class="card-title">
-                        Información de Proveedores
-                        <button id="btnExportExcel" class="btn btn-success float-end">
-                            Excel
-                        </button>
-                    </h4>
-
+                    <h4 class="card-title">Información de Proveedores</h4>
 
                     @if (Model.Count() > 0)
                     {
                         <div class="table-responsive">
                             <table id="TablaProveedores" class="table table-bordered table-hover">
-                                <thead>
+                                <thead class="table-primary">
                                     <tr>
                                         <th style="background-color: #6282a9; color:white;">Nombre</th>
                                         <th style="background-color: #6282a9; color:white;">Apellido</th>
                                         <th style="background-color: #6282a9; color:white;">Cédula</th>
                                         <th style="background-color: #6282a9; color:white;">Dirección</th>
                                         <th style="background-color: #6282a9; color:white;">Empresa</th>
-                                        <th style="background-color: #6282a9; color:white;">Teléfono</th>
-                                        <th style="background-color: #6282a9; color:white;">Correo</th>
                                         <th style="background-color: #6282a9; color:white;">Estado</th>
                                         <th style="background-color: #6282a9; color:white;">Opciones</th>
-
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -84,8 +76,6 @@
                                                     <span class="badge bg-warning">Empresa 2</span>
                                                 }
                                             </td>
-                                            <td>@item.Telefono</td>
-                                            <td>@item.Correo</td>
 
                                             @if (item.Estado_Proveedor == 1)
                                             {
@@ -95,15 +85,17 @@
                                             {
                                                 <td><span class="badge bg-danger">Inactivo</span></td>
                                             }
-                                            <td class="text-center">
-                                                <a href="@Url.Action("ActualizarEstadoProveedor", "Proveedor", new { q = item.ID_Proveedor })">
-                                                    <i class="fa fa-exchange fa-lg text-primary"></i>
-                                                </a>
-                                                <a href="@Url.Action("ActualizarProveedor", "Proveedor", new { q = item.ID_Proveedor })">
-                                                    <i class="fa fa-user fa-lg text-success" style="padding-left: 10px;"></i>
-                                                </a>
-                                                <a href="javascript:void(0);" onclick="confirmarEliminarProveedor(@item.ID_Proveedor)"><i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i></a>
-                                            </td>
+                                        <td class="text-center">
+                                            <a href="@Url.Action("ActualizarEstadoProveedor", "Proveedor", new { q = item.ID_Proveedor })">
+                                                <i class="fa fa-exchange fa-lg text-primary"></i>
+                                            </a>
+                                            <a href="@Url.Action("ActualizarProveedor", "Proveedor", new { q = item.ID_Proveedor })">
+                                                <i class="fa fa-user fa-lg text-success" style="padding-left: 10px;"></i>
+                                            </a>
+                                            <a href="javascript:void(0);" onclick="confirmarEliminarProveedor(@item.ID_Proveedor)"><i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i></a>
+                                        </td>
+
+                                         
                                         </tr>
                                     }
                                 </tbody>
@@ -131,70 +123,19 @@
 
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script>var $j = jQuery.noConflict();</script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-<!-- IMPORTANTE incluir esta librería para que los deje trabajar y descargar los archivos de Excel -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
-
-
-
 
 <script>
-    //Datatable de los proveedores
-    $j(document).ready(function () {
-        console.log('Inicializando DataTable');
-        var table = $j('#TablaProveedores').DataTable({
+    $(document).ready(function () {
+        $('#TablaProveedores').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
             },
             "pagingType": 'simple'
         });
-
-        //El evento del boton de Excel
-        $j('#btnExportExcel').on('click', function () {
-            exportToExcel(table);
-        });
-
-
-        function exportToExcel(table) {
-            // Tomar los encabezados del Datatable, a excepcion del de Opciones que no contiene información relevante 
-            var headers = table.columns().header().toArray().map(function (th) {
-                var columnHeader = $j(th).text().trim();
-                if (columnHeader !== 'Opciones') {
-                    return columnHeader;
-                }
-            }).filter(Boolean);
-
-            //Obtiene los datos de datatable filtrados
-            var data = table.rows({ search: 'applied' }).data().toArray().map(function (row) {
-                return row.map(function (cell, index) {
-                    var columnHeader = headers[index];
-                    if (columnHeader === 'Empresa' || columnHeader === 'Estado') {
-                        return $j(cell).text().trim();  // Obtiene solo el texto en las casillas de estado y empresa y elimina el html que suele aparecer para filtrar mejor la informacion
-                    }
-                    return cell;
-                });
-            });
-
-            //Crea un libro de Excel
-            var wb = XLSX.utils.book_new();
-            var wsData = [headers].concat(data.map(function (row) {
-                //Excluye la última columna (Opciones) de cada fila
-                return row.slice(0, -1);
-            }));
-            var ws = XLSX.utils.aoa_to_sheet(wsData);
-
-            //Añade la hoja al libro
-            XLSX.utils.book_append_sheet(wb, ws, 'Proveedores');
-
-            //Guarda el archivo y lo descarga
-            XLSX.writeFile(wb, 'Proveedores.xlsx');
-        }
     });
 </script>
-
-
 
 
 <script>
@@ -211,12 +152,10 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Si el usuario confirma, redirige a la acción de inactivar proveedores
+                // Si el usuario confirma, redirige a la acción de inactivar cliente
                 window.location.href = '/Proveedor/EliminarProveedor?q=' + ID_Proveedor;
             }
         });
     }
 </script>
-
-
 
