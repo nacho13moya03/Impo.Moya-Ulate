@@ -63,6 +63,18 @@ namespace APIProyectoSC_601.Controllers
             }
         }
 
+        //Conexion a procedimiento para registrar categorias
+        [HttpPost]
+        [Route("RegistrarCategoria")]
+        public long RegistrarCategoria(Producto categoria)
+        {
+            using (var context = new ImportadoraMoyaUlateEntities())
+            {
+                context.Producto.Add(categoria);
+                context.SaveChanges();
+                return categoria.ID_Categoria;
+            }
+        }
 
         //Conexion a procedimiento para registrar productos
         [HttpPost]
@@ -76,7 +88,6 @@ namespace APIProyectoSC_601.Controllers
                 return producto.ID_Producto;
             }
         }
-
 
         //Actualiza la ruta de la imagen del producto en la base de datos
         [HttpPut]

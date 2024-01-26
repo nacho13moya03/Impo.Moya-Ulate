@@ -16,7 +16,7 @@
     <Key>
       <PropertyRef Name="ID_Categoria" />
     </Key>
-    <Property Name="ID_Categoria" Type="Int32" Nullable="false" />
+    <Property Name="ID_Categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Nombre" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Categoria" FromRole="Categorias" ToRole="Producto" />
   </EntityType>
@@ -345,6 +345,9 @@
     </FunctionImport>
     <FunctionImport Name="RecuperarCuentaClienteSP" ReturnType="Collection(ImportadoraMoyaUlateModel.RecuperarCuentaClienteSP_Result)">
       <Parameter Name="Identificacion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="RegistrarCategoria">
+      <Parameter Name="Categoria" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="RegistrarClienteSP">
       <Parameter Name="Identificacion" Mode="In" Type="String" />

@@ -16,4 +16,5 @@ namespace ProyectoSC_601.Entities
         public string Imagen { get; set; }
         public int Estado { get; set; }
     }
+
 }

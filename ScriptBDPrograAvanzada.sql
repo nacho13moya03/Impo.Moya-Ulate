@@ -105,7 +105,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Categorias](
-	[ID_Categoria] [int] NOT NULL,
+	[ID_Categoria] [int] IDENTITY(1,1) NOT NULL,
 	[Nombre] [varchar](10) NOT NULL,
  CONSTRAINT [PK_Tbl_Categoria] PRIMARY KEY CLUSTERED 
 (
@@ -115,11 +115,11 @@ CREATE TABLE [dbo].[Categorias](
 GO
 
 
-INSERT INTO [dbo].[Categorias] ([ID_Categoria], [Nombre])
+INSERT INTO [dbo].[Categorias] ([Nombre])
 VALUES 
-    (1,'Hombre'),
-    (2,'Mujer'),
-    (3,'Niños');
+    ('Hombre'),
+    ('Mujer'),
+    ('Niños');
 
 /****** Object:  Table [dbo].[Clientes]    Script Date: 12/7/2023 5:38:49 PM ******/
 SET ANSI_NULLS ON
@@ -596,6 +596,24 @@ BEGIN
         @Direccion_Exacta,
         1,
         @Empresa
+    );
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[RegistrarCategoria]    Script Date: 12/7/2023 5:38:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[RegistrarCategoria]
+    @Categoria varchar(20)
+AS
+BEGIN
+    INSERT INTO [dbo].[Categorias] (
+        [Nombre]
+    )
+    VALUES (
+        @Categoria
     );
 END;
 GO

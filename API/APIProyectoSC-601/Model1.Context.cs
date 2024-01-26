@@ -167,6 +167,15 @@ namespace APIProyectoSC_601
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<RecuperarCuentaClienteSP_Result>("RecuperarCuentaClienteSP", identificacionParameter);
         }
     
+        public virtual int RegistrarCategoria(string categoria)
+        {
+            var categoriaParameter = categoria != null ?
+                new ObjectParameter("Categoria", categoria) :
+                new ObjectParameter("Categoria", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrarCategoria", categoriaParameter);
+        }
+    
         public virtual int RegistrarClienteSP(string identificacion, string nombre, string apellido, string correo, string contrasenna, string direccion, string telefono)
         {
             var identificacionParameter = identificacion != null ?

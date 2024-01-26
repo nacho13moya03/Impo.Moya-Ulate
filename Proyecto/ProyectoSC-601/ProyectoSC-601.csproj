@@ -377,6 +377,7 @@
     <Content Include="Views\Compras\ConsultaCompras.cshtml" />
     <Content Include="Views\Carrito\MetodoPago.cshtml" />
     <Content Include="Views\Shared\_Layout_Vacia.cshtml" />
+    <Content Include="Views\Inventario\ConsultarCategoria.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

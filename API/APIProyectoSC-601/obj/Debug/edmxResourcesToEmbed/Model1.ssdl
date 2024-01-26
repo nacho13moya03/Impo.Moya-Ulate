@@ -14,7 +14,7 @@
     <Key>
       <PropertyRef Name="ID_Categoria" />
     </Key>
-    <Property Name="ID_Categoria" Type="int" Nullable="false" />
+    <Property Name="ID_Categoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nombre" Type="varchar" MaxLength="10" Nullable="false" />
   </EntityType>
   <EntityType Name="Clientes">
@@ -268,6 +268,9 @@
   </Function>
   <Function Name="RecuperarCuentaClienteSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Identificacion" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="RegistrarCategoria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Categoria" Type="varchar" Mode="In" />
   </Function>
   <Function Name="RegistrarClienteSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Identificacion" Type="varchar" Mode="In" />
