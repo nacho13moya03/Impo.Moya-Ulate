@@ -76,6 +76,25 @@ namespace APIProyectoSC_601.Controllers
             }
         }
 
+        //Elimina la categoria en la base de datos
+        [HttpPut]
+        [Route("EliminarCategoria")]
+        public string EliminarCategoria(Producto categoria)
+        {
+            using (var context = new ImportadoraMoyaUlateEntities())
+            {
+                var categoriaAEliminar = context.Producto.Find(categoria.ID_Producto);
+
+                if (categoriaAEliminar != null)
+                {
+                    context.Producto.Remove(categoriaAEliminar);
+                    context.SaveChanges();
+                    return "OK";
+                }
+                return null;
+            }
+        }
+
         //Conexion a procedimiento para registrar productos
         [HttpPost]
         [Route("RegistrarProducto")]

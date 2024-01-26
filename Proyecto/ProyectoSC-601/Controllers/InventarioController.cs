@@ -141,5 +141,40 @@ namespace ProyectoSC_601.Controllers
             }
         }
 
+        // GET: Categoria
+        public ActionResult ConsultarCategoria()
+        {
+            return View();
+        }
+
+        //Registra una categoria 
+        [HttpPost]
+        public ActionResult RegistrarCategoria(HttpPostedFileBase ImgProducto, InventarioEnt entidad)
+        {
+            entidad.Imagen = string.Empty;
+            entidad.Estado = 1;
+
+            long ID_Producto = modelInventario.RegistrarProducto(entidad);
+
+            if (ID_Producto > 0)
+            {
+                string extension = Path.GetExtension(Path.GetFileName(ImgProducto.FileName));
+                string ruta = AppDomain.CurrentDomain.BaseDirectory + "Images\\" + ID_Producto + extension;
+                ImgProducto.SaveAs(ruta);
+
+                entidad.Imagen = "/Images/" + ID_Producto + extension;
+                entidad.ID_Producto = ID_Producto;
+
+                modelInventario.ActualizarRutaProducto(entidad);
+
+                return RedirectToAction("ConsultaInventario", "Inventario");
+            }
+            else
+            {
+                ViewBag.Mensaje = "No se ha podido registrar el producto";
+                return View();
+            }
+        }
+
     }
 }

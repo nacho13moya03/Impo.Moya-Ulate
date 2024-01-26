@@ -118,5 +118,29 @@ namespace ProyectoSC_601.Models
                 return res.Content.ReadFromJsonAsync<decimal>().Result;
             }
         }
+
+        //Funcion para registrar el producto
+        public long RegistrarCategoria(InventarioEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "RegistrarCategoria";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PostAsync(urlApi, jsonData).Result;
+                return res.Content.ReadFromJsonAsync<long>().Result;
+            }
+        }
+
+        //Funcion para eliminar un producto
+        public string EliminarCategoria(InventarioEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "EliminarCategoria";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PutAsync(urlApi, jsonData).Result;
+                return res.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
     }
 }
