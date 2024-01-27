@@ -23,34 +23,41 @@ namespace ProyectoSC_601.Controllers
         [HttpPost]
         public ActionResult RegistroCliente(ClienteEnt entidad)
         {
-            string cedulaExistente = modelCliente.ComprobarCedulaExistente(entidad);
-            if(cedulaExistente == "Existe")
+            if (ModelState.IsValid)
             {
-                ViewBag.MensajeNoExitoso = "El usuario ya está registrado";
-                return View();
-            }
-            else { 
-                string correoExistente = modelCliente.ComprobarCorreoExistenteCliente(entidad);
-                if (correoExistente == "Existe")
+                string cedulaExistente = modelCliente.ComprobarCedulaExistente(entidad);
+                if(cedulaExistente == "Existe")
                 {
-                    ViewBag.MensajeNoExitoso = "Ese correo está asociado a otra cuenta";
+                    ViewBag.MensajeNoExitoso = "El usuario ya está registrado";
                     return View();
-                } else {
-                    string respuesta = modelCliente.RegistroCliente(entidad);
+                }
+                else { 
+                    string correoExistente = modelCliente.ComprobarCorreoExistenteCliente(entidad);
+                    if (correoExistente == "Existe")
+                    {
+                        ViewBag.MensajeNoExitoso = "Ese correo está asociado a otra cuenta";
+                        return View();
+                    } else {
+                        string respuesta = modelCliente.RegistroCliente(entidad);
 
-                    if (respuesta == "OK")
-                    {
-                        ViewBag.MensajeExitoso = "La información se ha registrado exitosamente";
-                        return View();
-                    }
-                    else
-                    {
-                        ViewBag.MensajeNoExitoso = "No se ha podido registrar la información";
-                        return View();
+                        if (respuesta == "OK")
+                        {
+                            ViewBag.MensajeExitoso = "La información se ha registrado exitosamente";
+                            return View();
+                        }
+                        else
+                        {
+                            ViewBag.MensajeNoExitoso = "No se ha podido registrar la información";
+                            return View();
+                        }
                     }
                 }
             }
-        }
+            else
+                {
+                    return View(entidad);
+                }
+            }
 
         [HttpGet]
         public ActionResult Login()
@@ -63,6 +70,8 @@ namespace ProyectoSC_601.Controllers
         public ActionResult Login(ClienteEnt entidad)
         {
             ModelState.Remove("Ced_Cliente");
+            ModelState.Remove("Nombre_Cliente");
+            ModelState.Remove("Apellido_Cliente");
             if (ModelState.IsValid)  
             {
                

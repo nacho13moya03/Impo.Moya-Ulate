@@ -9,27 +9,58 @@
     <div class="form-container sign-up-container">
         @if (ViewBag.MensajeExitoso != null)
         {
-            <div class="alert alert-success" role="alert" style="text-align: center; margin: 10px!important;">
+            <div class="alert alert-success" role="alert" style="text-align: center; margin: 10px 10px -30px 10px;">
                 @ViewBag.MensajeExitoso
             </div>
         }
 
         @if (ViewBag.MensajeNoExitoso != null)
         {
-            <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px !important;">
+            <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px 10px -30px 10px;">
                 @ViewBag.MensajeNoExitoso
             </div>
         }
 
-        @using (Html.BeginForm("RegistroCliente", "Cliente", FormMethod.Post, new { @class = "pt-3" }))
+        @using (Html.BeginForm("RegistroCliente", "Cliente", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate" }))
         {
             <h1 style="font-size:30px!important;">Crear Cuenta</h1>
-            @Html.TextBoxFor(m => m.Ced_Cliente, new { @placeholder = "Identificación", @type = "text", required = "required" , onkeyup = "ConsultarNombreCliente();"})
-            @Html.TextBoxFor(m => m.Nombre_Cliente, new { @readOnly= "readOnly", @style= "background-color: #CBCBCB", @placeholder = "Nombre", @type = "text", required = "required" })
-            @Html.TextBoxFor(m => m.Apellido_Cliente, new { @readOnly = "readOnly", @style = "background-color: #CBCBCB", @placeholder = "Primer Apellido", @type = "text", required = "required" })
-            @Html.TextBoxFor(m => m.Correo_Cliente, new { @placeholder = "Correo Electrónico", @type = "email", required = "required" })
-            @Html.TextBoxFor(m => m.Contrasenna_Cliente, new { @placeholder = "Contraseña", @type = "password", required = "required" })
-            <br />
+
+            <div style="align-self: flex-start;">
+                <label class="medium" for="correo">Identificación</label>
+            </div>
+            @Html.TextBoxFor(m => m.Ced_Cliente, new { @placeholder = "XXXXXXXXX", @type = "text", required = "required", onkeyup = "ConsultarNombreCliente();" })
+            <div style="align-self: flex-start; margin-top:-8px!important;">
+                @Html.ValidationMessageFor(m => m.Ced_Cliente, "", new { @style = "color: red;" })
+            </div>
+            <div style="align-self: flex-start; margin-top: 3%;">
+                <label class="medium" for="correo">Nombre</label>
+            </div>
+            @Html.TextBoxFor(m => m.Nombre_Cliente, new { @readOnly = "readOnly", @style = "background-color: #CBCBCB",  @type = "text" })
+            <div style="align-self: flex-start; margin-top: -8px !important;">
+                @Html.ValidationMessageFor(m => m.Nombre_Cliente, "", new { @style = "color: red;" })
+            </div>
+            <div style="align-self: flex-start; margin-top: 3%;">
+                <label class="medium" for="correo">Primer Apellido</label>
+            </div>
+            @Html.TextBoxFor(m => m.Apellido_Cliente, new { @readOnly = "readOnly", @style = "background-color: #CBCBCB",  @type = "text"})
+            <div style="align-self: flex-start; margin-top: -8px !important;">
+                @Html.ValidationMessageFor(m => m.Apellido_Cliente, "", new { @style = "color: red;" })
+            </div>
+            <div style="align-self: flex-start; margin-top: 3%;">
+                <label class="medium" for="correo">Correo Electrónico</label>
+            </div>
+            @Html.TextBoxFor(m => m.Correo_Cliente, new { @placeholder = "usuario@ejemplo.com", @type = "email"})
+            <div style="align-self: flex-start; margin-top: -8px !important; ">
+                @Html.ValidationMessageFor(m => m.Correo_Cliente, "", new { @style = "color: red;" })
+            </div>
+            <div style="align-self: flex-start; margin-top: 3%;">
+                <label class="medium" for="correo">Contraseña</label>
+            </div>
+            @Html.TextBoxFor(m => m.Contrasenna_Cliente, new { @placeholder = "● ● ● ● ● ● ● ● ● ● ●", @type = "password"})
+            <div style="align-self: flex-start; margin-top: -8px !important;">
+                @Html.ValidationMessageFor(m => m.Contrasenna_Cliente, "", new { @style = "color: red;" })
+            </div>
+            <br /><br />
             <button type="submit">Registrarse</button>
             <br />
         }
