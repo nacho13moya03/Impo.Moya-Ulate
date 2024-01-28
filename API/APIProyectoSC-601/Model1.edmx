@@ -95,6 +95,8 @@
           <Property Name="Direccion_Exacta" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Estado_Proveedor" Type="int" Nullable="false" />
           <Property Name="Empresa" Type="bigint" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -257,6 +259,8 @@
           <Parameter Name="Cedula_Proveedor" Type="varchar" Mode="In" />
           <Parameter Name="Direccion_Exacta" Type="varchar" Mode="In" />
           <Parameter Name="Empresa" Type="bigint" Mode="In" />
+          <Parameter Name="Telefono" Type="varchar" Mode="In" />
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
         </Function>
         <Function Name="EliminarProveedorSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Proveedor" Type="bigint" Mode="In" />
@@ -293,6 +297,8 @@
           <Parameter Name="Direccion_Exacta" Type="varchar" Mode="In" />
           <Parameter Name="Estado_Proveedor" Type="int" Mode="In" />
           <Parameter Name="Empresa" Type="bigint" Mode="In" />
+          <Parameter Name="Telefono" Type="varchar" Mode="In" />
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="ImportadoraMoyaUlateModelStoreContainer">
           <EntitySet Name="Carrito" EntityType="Self.Carrito" Schema="dbo" store:Type="Tables" />
@@ -464,6 +470,8 @@
           <Property Name="Direccion_Exacta" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Estado_Proveedor" Type="Int32" Nullable="false" />
           <Property Name="Empresa" Type="Int64" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Empresa1" Relationship="Self.FK_Proveedores_Empresa" FromRole="Proveedores" ToRole="Empresa" />
           <NavigationProperty Name="Estado" Relationship="Self.FK_Proveedores_Estado" FromRole="Proveedores" ToRole="Estado" />
         </EntityType>
@@ -684,6 +692,8 @@
             <Parameter Name="Cedula_Proveedor" Mode="In" Type="String" />
             <Parameter Name="Direccion_Exacta" Mode="In" Type="String" />
             <Parameter Name="Empresa" Mode="In" Type="Int64" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="EliminarProveedorSP">
             <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
@@ -720,6 +730,8 @@
             <Parameter Name="Direccion_Exacta" Mode="In" Type="String" />
             <Parameter Name="Estado_Proveedor" Mode="In" Type="Int32" />
             <Parameter Name="Empresa" Mode="In" Type="Int64" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="IniciarSesionSP_Result">
@@ -843,6 +855,8 @@
                 <ScalarProperty Name="Direccion_Exacta" ColumnName="Direccion_Exacta" />
                 <ScalarProperty Name="Estado_Proveedor" ColumnName="Estado_Proveedor" />
                 <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -907,7 +921,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

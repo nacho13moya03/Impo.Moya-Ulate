@@ -90,6 +90,8 @@
     <Property Name="Direccion_Exacta" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="Estado_Proveedor" Type="int" Nullable="false" />
     <Property Name="Empresa" Type="bigint" Nullable="false" />
+    <Property Name="Telefono" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Correo" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -252,6 +254,8 @@
     <Parameter Name="Cedula_Proveedor" Type="varchar" Mode="In" />
     <Parameter Name="Direccion_Exacta" Type="varchar" Mode="In" />
     <Parameter Name="Empresa" Type="bigint" Mode="In" />
+    <Parameter Name="Telefono" Type="varchar" Mode="In" />
+    <Parameter Name="Correo" Type="varchar" Mode="In" />
   </Function>
   <Function Name="EliminarProveedorSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ID_Proveedor" Type="bigint" Mode="In" />
@@ -288,6 +292,8 @@
     <Parameter Name="Direccion_Exacta" Type="varchar" Mode="In" />
     <Parameter Name="Estado_Proveedor" Type="int" Mode="In" />
     <Parameter Name="Empresa" Type="bigint" Mode="In" />
+    <Parameter Name="Telefono" Type="varchar" Mode="In" />
+    <Parameter Name="Correo" Type="varchar" Mode="In" />
   </Function>
   <EntityContainer Name="ImportadoraMoyaUlateModelStoreContainer">
     <EntitySet Name="Carrito" EntityType="Self.Carrito" Schema="dbo" store:Type="Tables" />
