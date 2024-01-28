@@ -11,6 +11,8 @@ namespace APIProyectoSC_601.Controllers
 {
     public class InventarioController : ApiController
     {
+        Errores log = new Errores(@"D:\Proyectos\Impo.Moya-Ulate\Logs");
+
         //Devuelve una lista con todos los productos registrados en la base de datos
 
         [HttpGet]
@@ -25,8 +27,9 @@ namespace APIProyectoSC_601.Controllers
                     return context.Producto.ToList();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ConsultarInventario: " + ex.Message);
                 return new List<Producto>();
             }
            
@@ -57,8 +60,9 @@ namespace APIProyectoSC_601.Controllers
                     return categorias;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ConsultarCategorias: " + ex.Message);
                 return new List<System.Web.Mvc.SelectListItem>();
             }
         }
@@ -68,99 +72,173 @@ namespace APIProyectoSC_601.Controllers
         [Route("RegistrarCategoria")]
         public long RegistrarCategoria(Producto categoria)
         {
-            using (var context = new ImportadoraMoyaUlateEntities())
+            try
             {
-                context.Producto.Add(categoria);
-                context.SaveChanges();
-                return categoria.ID_Categoria;
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.Producto.Add(categoria);
+                    context.SaveChanges();
+                    return categoria.ID_Categoria;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en RegistrarCategoria: " + ex.Message);
+                return -1;
             }
         }
+
 
         //Elimina la categoria en la base de datos
         [HttpPut]
         [Route("EliminarCategoria")]
         public string EliminarCategoria(Producto categoria)
         {
-            using (var context = new ImportadoraMoyaUlateEntities())
+            try
             {
-                var categoriaAEliminar = context.Producto.Find(categoria.ID_Producto);
-
-                if (categoriaAEliminar != null)
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
-                    context.Producto.Remove(categoriaAEliminar);
-                    context.SaveChanges();
-                    return "OK";
+                    var categoriaAEliminar = context.Producto.Find(categoria.ID_Producto);
+
+                    if (categoriaAEliminar != null)
+                    {
+                        context.Producto.Remove(categoriaAEliminar);
+                        context.SaveChanges();
+                        return "OK";
+                    }
+                    return null;
                 }
-                return null;
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en EliminarCategoria: " + ex.Message);
+                return "Error: " + ex.Message;
             }
         }
+
 
         //Conexion a procedimiento para registrar productos
         [HttpPost]
         [Route("RegistrarProducto")]
         public long RegistrarProducto(Producto producto)
-        {  
-            using (var context = new ImportadoraMoyaUlateEntities())
+        {
+            try
             {
-                context.Producto.Add(producto);
-                context.SaveChanges();
-                return producto.ID_Producto;
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.Producto.Add(producto);
+                    context.SaveChanges();
+                    return producto.ID_Producto;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en RegistrarProducto: " + ex.Message);
+                return -1;
             }
         }
+
 
         //Actualiza la ruta de la imagen del producto en la base de datos
         [HttpPut]
         [Route("ActualizarRutaProducto")]
         public string ActualizarRutaProducto(Producto producto)
         {
-            using (var context = new ImportadoraMoyaUlateEntities())
+            try
             {
-                var datos = context.Producto.Where(x => x.ID_Producto == producto.ID_Producto).FirstOrDefault();
-                datos.Imagen = producto.Imagen;
-                context.SaveChanges();
-                return "OK";
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    var datos = context.Producto.Where(x => x.ID_Producto == producto.ID_Producto).FirstOrDefault();
+
+                    if (datos != null)
+                    {
+                        datos.Imagen = producto.Imagen;
+                        context.SaveChanges();
+                        return "OK";
+                    }
+                    else
+                    {
+                        return "Producto no encontrado";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ActualizarRutaProducto: " + ex.Message);
+                return "Error: " + ex.Message;
             }
         }
+
 
         //Actualiza el estado del producto en la base de datos
         [HttpPut]
         [Route("ActualizarEstadoProducto")]
         public string ActualizarEstadoProducto(Producto producto)
         {
-            using (var context = new ImportadoraMoyaUlateEntities())
+            try
             {
-                var datos = context.Producto.Where(x => x.ID_Producto == producto.ID_Producto).FirstOrDefault();
-                if (datos.Estado == 1)
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
-                    datos.Estado = 0;
+                    var datos = context.Producto.Where(x => x.ID_Producto == producto.ID_Producto).FirstOrDefault();
+
+                    if (datos != null)
+                    {
+                        if (datos.Estado == 1)
+                        {
+                            datos.Estado = 0;
+                        }
+                        else
+                        {
+                            datos.Estado = 1;
+                        }
+                        context.SaveChanges();
+                        return "OK";
+                    }
+                    else
+                    {
+                        // Puedes manejar el caso en que no se encuentre el producto.
+                        return "Producto no encontrado";
+                    }
                 }
-                else
-                {
-                    datos.Estado = 1;
-                }
-                context.SaveChanges();
-                return "OK";
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ActualizarEstadoProducto: " + ex.Message);
+                return "Error: " + ex.Message;
             }
         }
+
 
         //Elimina el producto en la base de datos
         [HttpPut]
         [Route("EliminarProducto")]
         public string EliminarProducto(Producto producto)
         {
-            using (var context = new ImportadoraMoyaUlateEntities())
+            try
             {
-                var productoAEliminar = context.Producto.Find(producto.ID_Producto);
-
-                if (productoAEliminar != null)
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
-                    context.Producto.Remove(productoAEliminar);
-                    context.SaveChanges();
-                    return "OK";
+                    var productoAEliminar = context.Producto.Find(producto.ID_Producto);
+
+                    if (productoAEliminar != null)
+                    {
+                        context.Producto.Remove(productoAEliminar);
+                        context.SaveChanges();
+                        return "OK";
+                    }
+                    else
+                    {
+                        return "Producto no encontrado";
+                    }
                 }
-                return null;
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en EliminarProducto: " + ex.Message);
+                return "Error: " + ex.Message;
             }
         }
+
 
         //Devuelve los datos de un producto segun su ID
         [HttpGet]
@@ -177,36 +255,54 @@ namespace APIProyectoSC_601.Controllers
                             select x).FirstOrDefault();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ConsultaProductoEspecifico: " + ex.Message);
                 return null;
             }
         }
+
 
         //Actualiza los datos del producto en la base de datos
         [HttpPut]
         [Route("ActualizarProducto")]
         public long ActualizarProducto(Producto producto)
         {
-            using (var context = new ImportadoraMoyaUlateEntities())
+            try
             {
-                var datos = context.Producto.Where(x => x.ID_Producto == producto.ID_Producto).FirstOrDefault();
-
-                if (!string.IsNullOrEmpty(producto.Imagen))
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
-                    datos.Imagen = producto.Imagen;
+                    var datos = context.Producto.Where(x => x.ID_Producto == producto.ID_Producto).FirstOrDefault();
+
+                    if (datos != null)
+                    {
+                        if (!string.IsNullOrEmpty(producto.Imagen))
+                        {
+                            datos.Imagen = producto.Imagen;
+                        }
+                        datos.ID_Categoria = producto.ID_Categoria;
+                        datos.Nombre = producto.Nombre;
+                        datos.Descripcion = producto.Descripcion;
+                        datos.Cantidad = producto.Cantidad;
+                        datos.Precio = producto.Precio;
+
+                        context.SaveChanges();
+
+                        return producto.ID_Producto;
+                    }
+                    else
+                    {
+                        return -1; 
+                    }
                 }
-                datos.ID_Categoria = producto.ID_Categoria;
-                datos.Nombre = producto.Nombre;
-                datos.Descripcion = producto.Descripcion;
-                datos.Cantidad = producto.Cantidad;
-                datos.Precio = producto.Precio;
-
-                context.SaveChanges();
-
-                return producto.ID_Producto;
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ActualizarProducto: " + ex.Message);
+                return -1;
             }
         }
+
 
         //Devuelve la cantidad total de los recursos del inventario
         [HttpGet]
@@ -221,10 +317,12 @@ namespace APIProyectoSC_601.Controllers
                     return context.Producto.Sum(x => x.Precio * x.Cantidad);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return 0;
+                log.Add("Error en TotalInventario: " + ex.Message);
+                return -1;
             }
         }
+
     }
 }

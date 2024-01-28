@@ -11,80 +11,120 @@ namespace APIProyectoSC_601.Controllers
 {
     public class CarritoController : ApiController
     {
+        Errores log = new Errores(@"D:\Proyectos\Impo.Moya-Ulate\Logs");
+
         [HttpPost]
         [Route("RegistrarCarrito")]
         public string RegistrarCarrito(Carrito carrito)
         {
-            using (var context = new ImportadoraMoyaUlateEntities())
+            try
             {
-                var datos = (from x in context.Carrito
-                             where x.ID_Usuario == carrito.ID_Usuario
-                                && x.ID_Producto == carrito.ID_Producto
-                             select x).FirstOrDefault();
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    var datos = (from x in context.Carrito
+                                 where x.ID_Usuario == carrito.ID_Usuario
+                                    && x.ID_Producto == carrito.ID_Producto
+                                 select x).FirstOrDefault();
 
-                if (datos == null)
-                {
-                    context.Carrito.Add(carrito);
-                    context.SaveChanges();
+                    if (datos == null)
+                    {
+                        context.Carrito.Add(carrito);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        datos.Cantidad = carrito.Cantidad;
+                        context.SaveChanges();
+                    }
+                    return "OK";
                 }
-                else
-                {
-                    datos.Cantidad = carrito.Cantidad;
-                    context.SaveChanges();
-                }
-                return "OK";
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en RegistrarCarrito: " + ex.Message);
+                return "Error: " + ex.Message;
             }
         }
+
 
         [HttpGet]
         [Route("ConsultarCarrito")]
         public object ConsultarCarrito(long q)
         {
-            using (var context = new ImportadoraMoyaUlateEntities())
+            try
             {
-                context.Configuration.LazyLoadingEnabled = false;
-                return (from x in context.Carrito
-                        join y in context.Producto on x.ID_Producto equals y.ID_Producto
-                        where x.ID_Usuario == q
-                        select new
-                        {
-                            x.ID_Carrito,
-                            x.ID_Usuario,
-                            x.ID_Producto,
-                            x.Cantidad,
-                            x.FechaCarrito,
-                            y.Nombre,
-                            y.Precio,
-                            SubTotal = (y.Precio * x.Cantidad),
-                            Impuesto = (y.Precio * x.Cantidad) * 0.13M,
-                            Total = (y.Precio * x.Cantidad) + (y.Precio * x.Cantidad) * 0.13M
-                        }).ToList();
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    return (from x in context.Carrito
+                            join y in context.Producto on x.ID_Producto equals y.ID_Producto
+                            where x.ID_Usuario == q
+                            select new
+                            {
+                                x.ID_Carrito,
+                                x.ID_Usuario,
+                                x.ID_Producto,
+                                x.Cantidad,
+                                x.FechaCarrito,
+                                y.Nombre,
+                                y.Precio,
+                                SubTotal = (y.Precio * x.Cantidad),
+                                Impuesto = (y.Precio * x.Cantidad) * 0.13M,
+                                Total = (y.Precio * x.Cantidad) + (y.Precio * x.Cantidad) * 0.13M
+                            }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ConsultarCarrito: " + ex.Message);
+                return "Error: " + ex.Message;
             }
         }
+
 
         [HttpDelete]
         [Route("EliminarRegistroCarrito")]
         public void EliminarRegistroCarrito(long q)
         {
-            using (var context = new ImportadoraMoyaUlateEntities())
+            try
             {
-                var datos = (from x in context.Carrito
-                             where x.ID_Carrito == q
-                             select x).FirstOrDefault();
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    var datos = (from x in context.Carrito
+                                 where x.ID_Carrito == q
+                                 select x).FirstOrDefault();
 
-                context.Carrito.Remove(datos);
-                context.SaveChanges();
+                    if (datos != null)
+                    {
+                        context.Carrito.Remove(datos);
+                        context.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en EliminarRegistroCarrito: " + ex.Message);
             }
         }
+
 
         [HttpPost]
         [Route("PagarCarrito")]
         public string PagarCarrito(Carrito carrito)
         {
-            using (var context = new ImportadoraMoyaUlateEntities())
+            try
             {
-                return context.PagarCarritoSP(carrito.ID_Usuario).FirstOrDefault();
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    return context.PagarCarritoSP(carrito.ID_Usuario).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en PagarCarrito: " + ex.Message);
+                return "Error: " + ex.Message;
             }
         }
+
     }
 }

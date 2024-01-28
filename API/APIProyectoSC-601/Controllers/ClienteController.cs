@@ -11,6 +11,8 @@ namespace APIProyectoSC_601.Controllers
 {
     public class ClienteController : ApiController
     {
+        Errores log = new Errores(@"D:\Proyectos\Impo.Moya-Ulate\Logs");
+
         //Se crea instancia para usar herramientas necesarias para enviar correo de recuperacion al cliente
         Utilitarios util = new Utilitarios();
 
@@ -32,8 +34,9 @@ namespace APIProyectoSC_601.Controllers
                     return "OK";
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en RegistroCliente: " + ex.Message);
                 return string.Empty;
             }
         }
@@ -50,8 +53,9 @@ namespace APIProyectoSC_601.Controllers
                     return context.IniciarSesionSP(entidad.Correo_Cliente, entidad.Contrasenna_Cliente).FirstOrDefault();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en Login: " + ex.Message);
                 return null;
             }
         }
@@ -84,8 +88,9 @@ namespace APIProyectoSC_601.Controllers
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en RecuperarCuentaCliente: " + ex.Message);
                 return string.Empty;
             }
         }
@@ -105,8 +110,9 @@ namespace APIProyectoSC_601.Controllers
                             select x).FirstOrDefault();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ConsultaClienteEspecifico: " + ex.Message);
                 return null;
             }
         }
@@ -124,8 +130,9 @@ namespace APIProyectoSC_601.Controllers
                     return "OK";
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ActualizarCuentaCliente: " + ex.Message);
                 return string.Empty;
             }
         }
@@ -135,11 +142,19 @@ namespace APIProyectoSC_601.Controllers
         [Route("InactivarCliente")]
         public void InactivarCliente(ClienteEnt entidad)
         {
-            using (var context = new ImportadoraMoyaUlateEntities())
+            try
             {
-                context.InactivarClienteSP(entidad.ID_Cliente);
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.InactivarClienteSP(entidad.ID_Cliente);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en InactivarCliente: " + ex.Message);
             }
         }
+
 
         //Devuelve todos los clientes registrados, solo rol de usuario
         [HttpGet]
@@ -155,8 +170,9 @@ namespace APIProyectoSC_601.Controllers
                             where x.Rol_Cliente == 2 select x).ToList();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ConsultarClientesAdministrador: " + ex.Message);
                 return null;
             }
         }
@@ -176,6 +192,7 @@ namespace APIProyectoSC_601.Controllers
             }
             catch (Exception ex)
             {
+                log.Add("Error en ActualizarEstadoCliente: " + ex.Message);
                 return $"Error al actualizar el estado del cliente: {ex.Message}";
             }
         }
@@ -206,8 +223,9 @@ namespace APIProyectoSC_601.Controllers
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ComprobarCorreoExistenteCliente: " + ex.Message);
                 return null;
             }
            
@@ -239,8 +257,9 @@ namespace APIProyectoSC_601.Controllers
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ComprobarCedulaExistente: " + ex.Message);
                 return null;
             }
 
@@ -259,8 +278,9 @@ namespace APIProyectoSC_601.Controllers
                     return context.Clientes.Count(x => x.Rol_Cliente == 2);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ContarClientes: " + ex.Message);
                 return 0; 
             }
         }

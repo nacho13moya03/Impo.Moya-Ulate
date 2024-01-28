@@ -27,7 +27,6 @@ namespace APIProyectoSC_601.Controllers
                 {
 
                     context.RegistrarProveedorSP(entidad.Nombre_Proveedor, entidad.Apellido_Proveedor, entidad.Cedula_Proveedor, entidad.Direccion_Exacta, entidad.Estado_Proveedor, entidad.Empresa, entidad.Telefono, entidad.Correo);
-                    log.Add("Error en RegistrarProveedor: ");
                     return "OK";
                 }
             }
@@ -145,7 +144,7 @@ namespace APIProyectoSC_601.Controllers
             }
             catch (Exception ex)
             {
-                log.Add("Error al actualizar el estado del proveedor: " + ex.Message);
+                log.Add("Error en ActualizarEstadoProveedor: " + ex.Message);
                 return $"Error al actualizar el estado del proveedor: {ex.Message}";
             }
         }
@@ -167,9 +166,9 @@ namespace APIProyectoSC_601.Controllers
                     return "OK";
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Add("Error en ActualizarProveedor: " + ex.Message);
                 return string.Empty;
             }
         }

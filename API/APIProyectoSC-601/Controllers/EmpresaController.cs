@@ -10,7 +10,7 @@ namespace APIProyectoSC_601.Controllers
 {
     public class EmpresaController : ApiController
     {
-
+        Errores log = new Errores(@"D:\Proyectos\Impo.Moya-Ulate\Logs");
         /*En este metodo post se van a hacer todos los registros de empresa
          procesa la solicitud de registro de una empresa, interactúa con la base de 
          datos a través de un procedimiento almacenado y devuelve un resultado indicando el éxito o fallo de la operación.*/
@@ -28,8 +28,9 @@ namespace APIProyectoSC_601.Controllers
                     return "OK";
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en RegistrarEmpresa: " + ex.Message);
                 return string.Empty;
             }
         }
@@ -51,8 +52,9 @@ namespace APIProyectoSC_601.Controllers
                     return "OK";
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ActualizarEmpresa: " + ex.Message);
                 return string.Empty;
             }
         }
@@ -84,8 +86,10 @@ namespace APIProyectoSC_601.Controllers
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en EliminarEmpresa: " + ex.Message);
+
                 return string.Empty;
             }
         }
@@ -103,8 +107,9 @@ namespace APIProyectoSC_601.Controllers
                             select x).ToList();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ConsultaEmpresas: " + ex.Message);
                 return new List<Empresa>();
             }
         }
@@ -123,8 +128,9 @@ namespace APIProyectoSC_601.Controllers
                             select x).FirstOrDefault();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ConsultaEmpresa: " + ex.Message);
                 return null;
             }
         }

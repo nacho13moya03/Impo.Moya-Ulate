@@ -11,6 +11,8 @@ namespace APIProyectoSC_601.Controllers
 {
     public class ContactoController : ApiController
     {
+        Errores log = new Errores(@"D:\Proyectos\Impo.Moya-Ulate\Logs");
+
         //Se crea instancia para usar herramientas necesarias para enviar correo de contactenos
         Utilitarios util = new Utilitarios();
 
@@ -41,8 +43,9 @@ namespace APIProyectoSC_601.Controllers
                 }
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en EnviarInformacion: " + ex.Message);
                 return string.Empty;
             }
         }

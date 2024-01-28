@@ -631,3 +631,72 @@ USE [master]
 GO
 ALTER DATABASE [ImportadoraMoyaUlate] SET  READ_WRITE 
 GO
+
+
+/*REGISTRAR EMPRESA*/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[RegistrarEmpresaSP]
+    @Nombre_empresa varchar(255),
+    @Descripcion varchar(255),
+    @Ubicacion varchar(255)
+AS
+BEGIN
+    INSERT INTO [dbo].[Empresa] (
+        [Nombre_empresa],
+        [Descripcion],
+        [Ubicacion]
+    )
+    VALUES (
+        @Nombre_empresa,
+        @Descripcion,
+        @Ubicacion
+    );
+END;
+GO
+
+
+/*ELIMINAR EMPRESA*/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[EliminarEmpresaSP]
+    @ID_Empresa bigint
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DELETE FROM dbo.Empresa WHERE ID_Empresa = @ID_Empresa;
+END
+GO
+
+/*ACTUALIZAR EMPRESA*/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[ActualizarEmpresaSP]
+    @ID_Empresa bigint,
+    @Nombre_empresa varchar(255),
+    @Descripcion varchar(255),
+    @Ubicacion varchar(255)
+AS
+BEGIN
+    UPDATE dbo.Empresa
+    SET
+        Nombre_empresa = @Nombre_empresa,
+        Descripcion = @Descripcion,
+        Ubicacion = @Ubicacion
+    WHERE ID_Empresa = @ID_Empresa;
+END;
+GO
+
