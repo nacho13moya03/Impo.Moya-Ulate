@@ -1,0 +1,97 @@
+﻿@model ProyectoSC_601.Entities.EmpresaEnt
+@{
+    ViewBag.Title = "RegistrarEmpresa";
+    Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
+}
+
+<div class="container-xl px-4 mt-4">
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-8" style="margin-left:18%;margin-top:5%; margin-bottom:2%;">
+            <div class="card mb-4">
+                @if (ViewBag.MensajeUsuario != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align:center; margin: 10px !important;">
+                        @ViewBag.MensajeUsuario
+                    </div>
+                }
+                <div class="card-header">Registrar Empresa</div>
+                <div class="card-body">
+                    @using (Html.BeginForm("RegistrarEmpresa", "Empresa", FormMethod.Post, new { @class = "pt-3", id = "registroForm" }))
+                    {
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small mb-1" for="nombre">Nombre</label>
+                                    @Html.TextBoxFor(m => m.Nombre_empresa, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
+                                    <div id="errorNombre" class="text-danger"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small mb-1" for="apellido">Descripción</label>
+                                    @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control", @placeholder = "Descripcion", @type = "text" })
+                                    <div id="errorDescripcion" class="text-danger"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="small mb-1" for="cedula">Ubicación</label>
+                            @Html.TextBoxFor(m => m.Ubicacion, new { @class = "form-control", @placeholder = "Ubicacion", @type = "text" })
+                            <div id="errorUbicacion" class="text-danger"></div>
+                        </div>
+                        <br />
+                        <div style="text-align:center;padding-top:4%;">
+                            <button class="btn btn-success" type="submit" onclick="return validarFormulario()">REGISTRAR<i class="bi bi-pencil-square"></i></button>
+                            <span class="px-2"></span>
+                            <a href="@Url.Action("ConsultaEmpresas", "Empresa")" class="btn btn-danger">
+                                <i class="fa fa-arrow-left"></i> Volver
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Validaciones de los campos en el formulario-->
+<script>
+    function validarFormulario() {
+        //Obtener los valores del formulario
+        var nombre = document.getElementById("Nombre_empresa").value;
+        var apellido = document.getElementById("Descripcion").value;
+        var cedula = document.getElementById("Ubicacion").value;
+
+        //Activar el evento si el campo esta vacio
+        document.getElementById("errorNombre").innerText = "";
+        document.getElementById("errorDescripcion").innerText = "";
+        document.getElementById("errorUbicacion").innerText = "";
+
+
+        var valid = true;
+
+        //Validar el nombre
+        if (nombre.trim() === "") {
+            document.getElementById("errorNombre").innerText = "Se necesita rellenar este campo";
+            valid = false;
+        }
+
+        //Validar el la descripción
+        if (apellido.trim() === "") {
+            document.getElementById("errorDescripcion").innerText = "Se necesita rellenar este campo";
+            valid = false;
+        }
+
+
+        //Validar la ubicación
+        if (cedula.trim() === "") {
+            document.getElementById("errorUbicacion").innerText = "Se necesita rellenar este campo";
+            valid = false;
+        }
+
+
+        return valid;
+    }
+</script>
+

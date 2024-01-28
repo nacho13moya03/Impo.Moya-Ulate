@@ -71,6 +71,27 @@ namespace APIProyectoSC_601
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizarCuentaClienteSP", identificacionParameter, nombreParameter, apellidoParameter, correoParameter, direccionParameter, telefonoParameter, codigoClienteParameter);
         }
     
+        public virtual int ActualizarEmpresaSP(Nullable<long> iD_Empresa, string nombre_empresa, string descripcion, string ubicacion)
+        {
+            var iD_EmpresaParameter = iD_Empresa.HasValue ?
+                new ObjectParameter("ID_Empresa", iD_Empresa) :
+                new ObjectParameter("ID_Empresa", typeof(long));
+    
+            var nombre_empresaParameter = nombre_empresa != null ?
+                new ObjectParameter("Nombre_empresa", nombre_empresa) :
+                new ObjectParameter("Nombre_empresa", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var ubicacionParameter = ubicacion != null ?
+                new ObjectParameter("Ubicacion", ubicacion) :
+                new ObjectParameter("Ubicacion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizarEmpresaSP", iD_EmpresaParameter, nombre_empresaParameter, descripcionParameter, ubicacionParameter);
+        }
+    
         public virtual int ActualizarEstadoClienteSP(Nullable<long> iD_Cliente)
         {
             var iD_ClienteParameter = iD_Cliente.HasValue ?
@@ -124,6 +145,15 @@ namespace APIProyectoSC_601
                 new ObjectParameter("Correo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizarProveedorSP", iD_ProveedorParameter, nombre_ProveedorParameter, apellido_ProveedorParameter, cedula_ProveedorParameter, direccion_ExactaParameter, empresaParameter, telefonoParameter, correoParameter);
+        }
+    
+        public virtual int EliminarEmpresaSP(Nullable<long> iD_Empresa)
+        {
+            var iD_EmpresaParameter = iD_Empresa.HasValue ?
+                new ObjectParameter("ID_Empresa", iD_Empresa) :
+                new ObjectParameter("ID_Empresa", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EliminarEmpresaSP", iD_EmpresaParameter);
         }
     
         public virtual int EliminarProveedorSP(Nullable<long> iD_Proveedor)
@@ -215,6 +245,23 @@ namespace APIProyectoSC_601
                 new ObjectParameter("Telefono", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrarClienteSP", identificacionParameter, nombreParameter, apellidoParameter, correoParameter, contrasennaParameter, direccionParameter, telefonoParameter);
+        }
+    
+        public virtual int RegistrarEmpresaSP(string nombre_empresa, string descripcion, string ubicacion)
+        {
+            var nombre_empresaParameter = nombre_empresa != null ?
+                new ObjectParameter("Nombre_empresa", nombre_empresa) :
+                new ObjectParameter("Nombre_empresa", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var ubicacionParameter = ubicacion != null ?
+                new ObjectParameter("Ubicacion", ubicacion) :
+                new ObjectParameter("Ubicacion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrarEmpresaSP", nombre_empresaParameter, descripcionParameter, ubicacionParameter);
         }
     
         public virtual int RegistrarProveedorSP(string nombre_Proveedor, string apellido_Proveedor, string cedula_Proveedor, string direccion_Exacta, Nullable<int> estado_Proveedor, Nullable<long> empresa, string telefono, string correo)

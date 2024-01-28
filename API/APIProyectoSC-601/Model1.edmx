@@ -43,6 +43,8 @@
           </Key>
           <Property Name="ID_Empresa" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre_empresa" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Ubicacion" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Estado">
           <Key>
@@ -246,6 +248,12 @@
           <Parameter Name="Telefono" Type="varchar" Mode="In" />
           <Parameter Name="CodigoCliente" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="ActualizarEmpresaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_Empresa" Type="bigint" Mode="In" />
+          <Parameter Name="Nombre_empresa" Type="varchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="Ubicacion" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="ActualizarEstadoClienteSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Cliente" Type="bigint" Mode="In" />
         </Function>
@@ -261,6 +269,9 @@
           <Parameter Name="Empresa" Type="bigint" Mode="In" />
           <Parameter Name="Telefono" Type="varchar" Mode="In" />
           <Parameter Name="Correo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="EliminarEmpresaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_Empresa" Type="bigint" Mode="In" />
         </Function>
         <Function Name="EliminarProveedorSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Proveedor" Type="bigint" Mode="In" />
@@ -289,6 +300,11 @@
           <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
           <Parameter Name="Direccion" Type="varchar" Mode="In" />
           <Parameter Name="Telefono" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="RegistrarEmpresaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre_empresa" Type="varchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="Ubicacion" Type="varchar" Mode="In" />
         </Function>
         <Function Name="RegistrarProveedorSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre_Proveedor" Type="varchar" Mode="In" />
@@ -406,6 +422,8 @@
           </Key>
           <Property Name="ID_Empresa" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre_empresa" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ubicacion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Proveedores" Relationship="Self.FK_Proveedores_Empresa" FromRole="Empresa" ToRole="Proveedores" />
         </EntityType>
         <EntityType Name="Estado">
@@ -679,6 +697,12 @@
             <Parameter Name="Telefono" Mode="In" Type="String" />
             <Parameter Name="CodigoCliente" Mode="In" Type="Int64" />
           </FunctionImport>
+          <FunctionImport Name="ActualizarEmpresaSP">
+            <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
+            <Parameter Name="Nombre_empresa" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Ubicacion" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="ActualizarEstadoClienteSP">
             <Parameter Name="ID_Cliente" Mode="In" Type="Int64" />
           </FunctionImport>
@@ -694,6 +718,9 @@
             <Parameter Name="Empresa" Mode="In" Type="Int64" />
             <Parameter Name="Telefono" Mode="In" Type="String" />
             <Parameter Name="Correo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="EliminarEmpresaSP">
+            <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="EliminarProveedorSP">
             <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
@@ -722,6 +749,11 @@
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Direccion" Mode="In" Type="String" />
             <Parameter Name="Telefono" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RegistrarEmpresaSP">
+            <Parameter Name="Nombre_empresa" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Ubicacion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="RegistrarProveedorSP">
             <Parameter Name="Nombre_Proveedor" Mode="In" Type="String" />
@@ -798,6 +830,8 @@
               <MappingFragment StoreEntitySet="Empresa">
                 <ScalarProperty Name="ID_Empresa" ColumnName="ID_Empresa" />
                 <ScalarProperty Name="Nombre_empresa" ColumnName="Nombre_empresa" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -869,9 +903,11 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="ActualizarCuentaClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCuentaClienteSP" />
+          <FunctionImportMapping FunctionImportName="ActualizarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEmpresaSP" />
           <FunctionImportMapping FunctionImportName="ActualizarEstadoClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoClienteSP" />
           <FunctionImportMapping FunctionImportName="ActualizarEstadoProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoProveedorSP" />
           <FunctionImportMapping FunctionImportName="ActualizarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarProveedorSP" />
+          <FunctionImportMapping FunctionImportName="EliminarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarEmpresaSP" />
           <FunctionImportMapping FunctionImportName="EliminarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarProveedorSP" />
           <FunctionImportMapping FunctionImportName="InactivarClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.InactivarClienteSP" />
           <FunctionImportMapping FunctionImportName="IniciarSesionSP" FunctionName="ImportadoraMoyaUlateModel.Store.IniciarSesionSP">
@@ -903,6 +939,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="RegistrarCategoria" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarCategoria" />
           <FunctionImportMapping FunctionImportName="RegistrarClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarClienteSP" />
+          <FunctionImportMapping FunctionImportName="RegistrarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarEmpresaSP" />
           <FunctionImportMapping FunctionImportName="RegistrarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarProveedorSP" />
         </EntityContainerMapping>
       </Mapping>

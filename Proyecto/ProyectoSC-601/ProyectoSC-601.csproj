@@ -157,12 +157,14 @@
     <Compile Include="Controllers\MetodoPagoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
+    <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Entities\CarritoEnt.cs" />
     <Compile Include="Entities\FacturaEnt.cs" />
     <Compile Include="Entities\InventarioEnt.cs" />
     <Compile Include="Entities\ClienteEnt.cs" />
     <Compile Include="Entities\InfoIndex.cs" />
+    <Compile Include="Entities\EmpresaEnt.cs" />
     <Compile Include="Entities\ProveedorEnt.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -173,6 +175,7 @@
     <Compile Include="Models\IndexModel.cs" />
     <Compile Include="Models\ProductoModel.cs" />
     <Compile Include="Models\ClienteModel.cs" />
+    <Compile Include="Models\EmpresaModel.cs" />
     <Compile Include="Models\ProveedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -379,6 +382,9 @@
     <Content Include="Views\Shared\_Layout_Vacia.cshtml" />
     <Content Include="Views\Inventario\ConsultarCategoria.cshtml" />
     <Content Include="Views\Inventario\RegistrarCategoria.cshtml" />
+    <Content Include="Views\Empresa\RegistrarEmpresa.cshtml" />
+    <Content Include="Views\Empresa\ConsultaEmpresas.cshtml" />
+    <Content Include="Views\Empresa\ActualizarEmpresa.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

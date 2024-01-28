@@ -67,6 +67,7 @@ namespace ProyectoSC_601.Models
                 {
                     var urlApi = rutaServidor + "ConsultaProveedores";
                     var res = client.GetAsync(urlApi).Result;
+
                     return res.Content.ReadFromJsonAsync<List<ProveedorEnt>>().Result;
                 }
             }

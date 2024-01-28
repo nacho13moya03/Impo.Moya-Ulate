@@ -1,7 +1,6 @@
-﻿@model IEnumerable<ProyectoSC_601.Entities.ProveedorEnt>
-
+﻿@model IEnumerable<ProyectoSC_601.Entities.EmpresaEnt>
 @{
-    ViewBag.Title = "ConsultaProveedores";
+    ViewBag.Title = "ConsultarEmpresas";
     ViewBag.Mensaje = TempData["Mensaje"];
     Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
     <link href="~/Assets/css/perfilClienteStyle.css" rel="stylesheet">
@@ -11,11 +10,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
-
-}
-
-@{
-    var empresas = ViewBag.combo as List<SelectListItem>;
 }
 
 <div class="container mt-5 pt-4">
@@ -40,60 +34,35 @@
                         </div>
                     }
                     <h4 class="card-title">
-                        Información de Proveedores
+                        Información de Empresas
                     </h4>
                     <div class="table-responsive">
                         @if (Model.Count() > 0)
                         {
 
-                            <table id="TablaProveedores" class="table table-bordered table-hover">
+                            <table id="TablaEmpresa" class="table table-bordered table-hover">
                                 <thead class="table-info">
                                     <tr>
+                                        <th style="background-color: #6282a9; color:white;">ID</th>
                                         <th style="background-color: #6282a9; color:white;">Nombre</th>
-                                        <th style="background-color: #6282a9; color:white;">Apellido</th>
-                                        <th style="background-color: #6282a9; color:white;">Cédula</th>
-                                        <th style="background-color: #6282a9; color:white;">Dirección</th>
-                                        <th style="background-color: #6282a9; color:white;">Empresa</th>
-                                        <th style="background-color: #6282a9; color:white;">Teléfono</th>
-                                        <th style="background-color: #6282a9; color:white;">Correo</th>
-                                        <th style="background-color: #6282a9; color:white;">Estado</th>
+                                        <th style="background-color: #6282a9; color:white;">Descripción</th>
+                                        <th style="background-color: #6282a9; color:white;">Ubicación</th>
                                         <th style="background-color: #6282a9; color:white;">Opciones</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>@item.Nombre_Proveedor</td>
-                                            <td>@item.Apellido_Proveedor</td>
-                                            <td>@item.Cedula_Proveedor</td>
-                                            <td>@item.Direccion_Exacta</td>
-                                            <!--Obtener el nombre en vez del ID-->
-                                            @{
-                                                var idEmpresa = item.Empresa; 
-                                                var nombreEmpresa = empresas.FirstOrDefault(e => e.Value == idEmpresa.ToString())?.Text;
-                                            }
-                                            <td>@nombreEmpresa</td>
-                                            <td>@item.Telefono</td>
-                                            <td>@item.Correo</td>
-
-                                            @if (item.Estado_Proveedor == 1)
-                                            {
-                                                <td><span class="badge bg-success">Activo</span></td>
-                                            }
-                                            else
-                                            {
-                                                <td><span class="badge bg-danger">Inactivo</span></td>
-                                            }
+                                            <td>@item.ID_Empresa</td>
+                                            <td>@item.Nombre_empresa</td>
+                                            <td>@item.Descripcion</td>
+                                            <td>@item.Ubicacion</td>
                                             <td class="text-center">
-                                                <a href="@Url.Action("ActualizarEstadoProveedor", "Proveedor", new { q = item.ID_Proveedor })">
-                                                    <i class="fa fa-exchange fa-lg text-primary"></i>
-                                                </a>
-                                                <a href="@Url.Action("ActualizarProveedor", "Proveedor", new { q = item.ID_Proveedor })">
+                                                <a href="@Url.Action("ActualizarEmpresa", "Empresa", new { q = item.ID_Empresa })">
                                                     <i class="fa fa-user fa-lg text-success" style="padding-left: 10px;"></i>
                                                 </a>
-                                                <a href="javascript:void(0);" onclick="confirmarEliminarProveedor(@item.ID_Proveedor)"><i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i></a>
+                                                <a href="javascript:void(0);" onclick="confirmarEliminarEmpresa(@item.ID_Empresa)"><i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i></a>
                                             </td>
                                         </tr>
                                     }
@@ -103,13 +72,13 @@
                         else
                         {
                             <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
-                                No hay proveedores registrados en este momento
+                                No hay empresas registradas en este momento
                             </div>
                         }
                         <br>
                         <div class="text-center mt-4">
-                            <a href="@Url.Action("RegistrarProveedor", "Proveedor")" class="btn btn-success">
-                                <i class="fa fa-plus"></i> Agregar proveedor
+                            <a href="@Url.Action("RegistrarEmpresa", "Empresa")" class="btn btn-success">
+                                <i class="fa fa-plus"></i> Agregar empresa
                             </a>
                         </div>
                     </div>
@@ -142,7 +111,7 @@
 <script>
     //Datatable de los proveedores
     $j(document).ready(function () {
-        var table = $j('#TablaProveedores').DataTable({
+        var table = $j('#TablaEmpresa').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
             },
@@ -152,38 +121,38 @@
                 {
                     extend: 'copy',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        columns: [0, 1, 2, 3]
                     }
                 },
                 {
                     extend: 'csv',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        columns: [0, 1, 2, 3]
                     }
                 },
                 {
                     extend: 'excel',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        columns: [0, 1, 2, 3]
                     }
                 },
                 {
                     extend: 'pdf',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        columns: [0, 1, 2, 3]
                     }
                 },
                 {
                     extend: 'print',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        columns: [0, 1, 2, 3]
                     }
                 }
             ]
         });
 
         // Ajustar los botones de exportación
-        table.buttons().container().prependTo('#TablaProveedores_wrapper .dataTables_filter');
+        table.buttons().container().prependTo('#TablaEmpresa_wrapper .dataTables_filter');
     });
 </script>
 
@@ -192,10 +161,10 @@
 
 <script>
     //Funcion para mostrar mensaje de alerta
-    function confirmarEliminarProveedor(ID_Proveedor) {
+    function confirmarEliminarEmpresa(ID_Empresa) {
         Swal.fire({
             title: '¿Estás seguro?',
-            text: 'El proveedor se eliminará permanentemente',
+            text: 'La empresa se eliminará permanentemente',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#6282a9',
@@ -205,8 +174,10 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 // Si el usuario confirma, redirige a la acción de inactivar proveedores
-                window.location.href = '/Proveedor/EliminarProveedor?q=' + ID_Proveedor;
+                window.location.href = '/Empresa/EliminarEmpresa?q=' + ID_Empresa;
             }
         });
     }
 </script>
+
+

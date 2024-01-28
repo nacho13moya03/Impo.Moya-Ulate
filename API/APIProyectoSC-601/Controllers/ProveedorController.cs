@@ -1,6 +1,7 @@
 ﻿using APIProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,6 +11,7 @@ namespace APIProyectoSC_601.Controllers
 {
     public class ProveedorController : ApiController
     {
+        Errores log = new Errores(@"D:\Proyectos\Impo.Moya-Ulate\Logs");
 
         /*En este metodo post se van a hacer todos los registros de proveedor
          procesa la solicitud de registro de un proveedor, interactúa con la base de 
@@ -25,16 +27,19 @@ namespace APIProyectoSC_601.Controllers
                 {
 
                     context.RegistrarProveedorSP(entidad.Nombre_Proveedor, entidad.Apellido_Proveedor, entidad.Cedula_Proveedor, entidad.Direccion_Exacta, entidad.Estado_Proveedor, entidad.Empresa, entidad.Telefono, entidad.Correo);
+                    log.Add("Error en RegistrarProveedor: ");
                     return "OK";
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                // Registrar el error en el log
+                log.Add("Error en RegistrarProveedor: " + ex.Message);
                 return string.Empty;
             }
         }
 
-
+        
 
         /*Esto una lista de elementos SelectListItem que sirve para poblar un cuadro de 
          selección HTML en una interfaz de usuario, permitiendo al usuario elegir una empresa de una lista predefinida.*/
@@ -63,14 +68,15 @@ namespace APIProyectoSC_601.Controllers
                     return combo;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ConsultarEmpresas: " + ex.Message);
                 // Devuelve una lista vacía en caso de error.
                 return new List<System.Web.Mvc.SelectListItem>();
             }
         }
 
-
+        
 
         /*lista de objetos Proveedores que representan la información de todos los proveedores almacenados en la base de datos. 
          Si se produce alguna excepción durante la consulta, devuelve una lista vacía.*/
@@ -88,8 +94,9 @@ namespace APIProyectoSC_601.Controllers
                             select x).ToList();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ConsultaProveedores: " + ex.Message);
                 return new List<Proveedores>();
             }
         }
@@ -112,8 +119,9 @@ namespace APIProyectoSC_601.Controllers
                             select x).FirstOrDefault();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error en ConsultaProveedor: " + ex.Message);
                 return null;
             }
         }
@@ -137,6 +145,7 @@ namespace APIProyectoSC_601.Controllers
             }
             catch (Exception ex)
             {
+                log.Add("Error al actualizar el estado del proveedor: " + ex.Message);
                 return $"Error al actualizar el estado del proveedor: {ex.Message}";
             }
         }
@@ -160,6 +169,7 @@ namespace APIProyectoSC_601.Controllers
             }
             catch (Exception)
             {
+
                 return string.Empty;
             }
         }
@@ -191,8 +201,9 @@ namespace APIProyectoSC_601.Controllers
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                log.Add("Error al EliminarProveedor: " + ex.Message);
                 return string.Empty;
             }
         }

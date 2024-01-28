@@ -70,6 +70,7 @@ namespace ProyectoSC_601.Controllers
             try
             {
                 var datos = modelProveedor.ConsultaProveedores();
+                ViewBag.combo = modelProveedor.ConsultarEmpresas();
                 return View(datos);
             }
             catch (Exception ex)

@@ -38,6 +38,8 @@
     </Key>
     <Property Name="ID_Empresa" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nombre_empresa" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Ubicacion" Type="varchar" MaxLength="255" Nullable="false" />
   </EntityType>
   <EntityType Name="Estado">
     <Key>
@@ -241,6 +243,12 @@
     <Parameter Name="Telefono" Type="varchar" Mode="In" />
     <Parameter Name="CodigoCliente" Type="bigint" Mode="In" />
   </Function>
+  <Function Name="ActualizarEmpresaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID_Empresa" Type="bigint" Mode="In" />
+    <Parameter Name="Nombre_empresa" Type="varchar" Mode="In" />
+    <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+    <Parameter Name="Ubicacion" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="ActualizarEstadoClienteSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ID_Cliente" Type="bigint" Mode="In" />
   </Function>
@@ -256,6 +264,9 @@
     <Parameter Name="Empresa" Type="bigint" Mode="In" />
     <Parameter Name="Telefono" Type="varchar" Mode="In" />
     <Parameter Name="Correo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="EliminarEmpresaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID_Empresa" Type="bigint" Mode="In" />
   </Function>
   <Function Name="EliminarProveedorSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ID_Proveedor" Type="bigint" Mode="In" />
@@ -284,6 +295,11 @@
     <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
     <Parameter Name="Direccion" Type="varchar" Mode="In" />
     <Parameter Name="Telefono" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="RegistrarEmpresaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Nombre_empresa" Type="varchar" Mode="In" />
+    <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+    <Parameter Name="Ubicacion" Type="varchar" Mode="In" />
   </Function>
   <Function Name="RegistrarProveedorSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Nombre_Proveedor" Type="varchar" Mode="In" />

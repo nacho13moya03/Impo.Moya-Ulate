@@ -45,6 +45,8 @@
     </Key>
     <Property Name="ID_Empresa" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Nombre_empresa" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Ubicacion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Proveedores" Relationship="Self.FK_Proveedores_Empresa" FromRole="Empresa" ToRole="Proveedores" />
   </EntityType>
   <EntityType Name="Estado">
@@ -318,6 +320,12 @@
       <Parameter Name="Telefono" Mode="In" Type="String" />
       <Parameter Name="CodigoCliente" Mode="In" Type="Int64" />
     </FunctionImport>
+    <FunctionImport Name="ActualizarEmpresaSP">
+      <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
+      <Parameter Name="Nombre_empresa" Mode="In" Type="String" />
+      <Parameter Name="Descripcion" Mode="In" Type="String" />
+      <Parameter Name="Ubicacion" Mode="In" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="ActualizarEstadoClienteSP">
       <Parameter Name="ID_Cliente" Mode="In" Type="Int64" />
     </FunctionImport>
@@ -333,6 +341,9 @@
       <Parameter Name="Empresa" Mode="In" Type="Int64" />
       <Parameter Name="Telefono" Mode="In" Type="String" />
       <Parameter Name="Correo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="EliminarEmpresaSP">
+      <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
     </FunctionImport>
     <FunctionImport Name="EliminarProveedorSP">
       <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
@@ -361,6 +372,11 @@
       <Parameter Name="Contrasenna" Mode="In" Type="String" />
       <Parameter Name="Direccion" Mode="In" Type="String" />
       <Parameter Name="Telefono" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="RegistrarEmpresaSP">
+      <Parameter Name="Nombre_empresa" Mode="In" Type="String" />
+      <Parameter Name="Descripcion" Mode="In" Type="String" />
+      <Parameter Name="Ubicacion" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="RegistrarProveedorSP">
       <Parameter Name="Nombre_Proveedor" Mode="In" Type="String" />
