@@ -361,7 +361,7 @@
     <Content Include="Views\Proveedor\RegistrarProveedor.cshtml" />
     <Content Include="Views\Proveedor\ConsultaProveedores.cshtml" />
     <Content Include="Views\Proveedor\ActualizarProveedor.cshtml" />
-    <Content Include="Views\Usuario\GestionClientes.cshtml" />
+    <Content Include="Views\Usuario\GestionUsuarios.cshtml" />
     <Content Include="Views\Producto\Catalogo.cshtml" />
     <Content Include="Views\Compartido\Acerca.cshtml" />
     <Content Include="Views\Compartido\Contacto.cshtml" />
@@ -388,7 +388,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
     <Folder Include="Views\Categoria\" />
     <Folder Include="Views\MetodoPago\" />
   </ItemGroup>

@@ -208,5 +208,7 @@
     <FunctionImportMapping FunctionImportName="RegistrarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarEmpresaSP" />
     <FunctionImportMapping FunctionImportName="RegistrarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarProveedorSP" />
     <FunctionImportMapping FunctionImportName="RegistrarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarUsuarioSP" />
+    <FunctionImportMapping FunctionImportName="ActualizarEstadoUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoUsuarioSP" />
+    <FunctionImportMapping FunctionImportName="ActualizarRolUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarRolUsuarioSP" />
   </EntityContainerMapping>
 </Mapping>

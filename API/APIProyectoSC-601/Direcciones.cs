@@ -28,5 +28,8 @@ namespace APIProyectoSC_601
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
+        public virtual Canton Canton { get; set; }
+        public virtual Distrito Distrito { get; set; }
+        public virtual Provincia Provincia { get; set; }
     }
 }

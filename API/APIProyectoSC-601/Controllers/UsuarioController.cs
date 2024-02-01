@@ -214,6 +214,92 @@ namespace APIProyectoSC_601.Controllers
 
         }
 
+        //Devuelve todos los clientes registrados, solo rol de usuario
+        [HttpGet]
+        [Route("ConsultarUsuariosAdministrador")]
+        public List<UsuarioEnt> ConsultarUsuariosAdministrador(long idUsuario)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    return (from u in context.Usuario
+                            join i in context.Identificacion on u.ID_Identificacion equals i.ID_Identificacion
+                            join d in context.Direcciones on u.ID_Direccion equals d.ID_Direccion into direccionJoin
+                            from dir in direccionJoin.DefaultIfEmpty() // Left join for Direcciones
+                            join p in context.Provincia on (dir != null ? dir.ID_Provincia : (int?)null) equals p.ID_Provincia into provinciaJoin
+                            from prov in provinciaJoin.DefaultIfEmpty() // Left join for Provincia
+                            join c in context.Canton on (dir != null ? dir.ID_Canton : (int?)null) equals c.ID_Canton into cantonJoin
+                            from cant in cantonJoin.DefaultIfEmpty() // Left join for Canton
+                            join dis in context.Distrito on (dir != null ? dir.ID_Distrito : (int?)null) equals dis.ID_Distrito into distritoJoin
+                            from dist in distritoJoin.DefaultIfEmpty() // Left join for Distrito
+                            where u.ID_Usuario != idUsuario
+                            select new UsuarioEnt
+                            {
+                                ID_Usuario = u.ID_Usuario,
+                                Nombre_Identificacion = i.Nombre,
+                                Identificacion_Usuario = u.Identificacion_Usuario,
+                                Nombre_Usuario = u.Nombre_Usuario,
+                                Apellido_Usuario = u.Apellido_Usuario,
+                                Correo_Usuario = u.Correo_Usuario,
+                                Nombre_Provincia = prov != null ? prov.Nombre : "",
+                                Nombre_Canton = cant != null ? cant.Nombre : "",
+                                Nombre_Distrito = dist != null ? dist.Nombre : "",
+                                Direccion_Exacta = dir != null ? dir.Direccion_Exacta : "",
+                                Telefono_Usuario = u.Telefono_Usuario,
+                                ID_Estado = u.ID_Estado,
+                                ID_Rol = u.ID_Rol,
+                            }).ToList();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ConsultarUsuariosAdministrador: " + ex.Message);
+                return null;
+            }
+        }
+
+        // Permite al administrador cambiar el estado del cliente (activar o inactivar)
+        [HttpPut]
+        [Route("ActualizarEstadoUsuario")]
+        public string ActualizarEstadoUsuario(UsuarioEnt entidad)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.ActualizarEstadoUsuarioSP(entidad.ID_Usuario);
+                    return "OK";
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ActualizarEstadoUsuario: " + ex.Message);
+                return $"Error al actualizar el estado del usuario: {ex.Message}";
+            }
+        }
+
+        [HttpPut]
+        [Route("ActualizarRolUsuario")]
+        public string ActualizarRolUsuario(UsuarioEnt entidad)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.ActualizarRolUsuarioSP(entidad.ID_Usuario);
+                    return "OK";
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ActualizarRolUsuario: " + ex.Message);
+                return $"Error al actualizar el rol del usuario: {ex.Message}";
+            }
+        }
+
         //Devuelve los datos de la entidad basados en la cedula recibida
         /*      [HttpGet]
               [Route("ConsultaClienteEspecifico")]
@@ -275,46 +361,7 @@ namespace APIProyectoSC_601.Controllers
               }
 
 
-              //Devuelve todos los clientes registrados, solo rol de usuario
-              [HttpGet]
-              [Route("ConsultarClientesAdministrador")]
-              public List<Clientes> ConsultarClientesAdministrador()
-              {
-                  try
-                  {
-                      using (var context = new ImportadoraMoyaUlateEntities())
-                      {
-                          context.Configuration.LazyLoadingEnabled = false;
-                          return (from x in context.Clientes
-                                  where x.Rol_Cliente == 2 select x).ToList();
-                      }
-                  }
-                  catch (Exception ex)
-                  {
-                      log.Add("Error en ConsultarClientesAdministrador: " + ex.Message);
-                      return null;
-                  }
-              }
-
-              // Permite al administrador cambiar el estado del cliente (activar o inactivar)
-              [HttpPut]
-              [Route("ActualizarEstadoCliente")]
-              public string ActualizarEstadoCliente(UsuarioEnt entidad)
-              {
-                  try
-                  {
-                      using (var context = new ImportadoraMoyaUlateEntities())
-                      {
-                          context.ActualizarEstadoClienteSP(entidad.ID_Cliente);
-                          return "OK";
-                      }
-                  }
-                  catch (Exception ex)
-                  {
-                      log.Add("Error en ActualizarEstadoCliente: " + ex.Message);
-                      return $"Error al actualizar el estado del cliente: {ex.Message}";
-                  }
-              }
+              
 
               
 

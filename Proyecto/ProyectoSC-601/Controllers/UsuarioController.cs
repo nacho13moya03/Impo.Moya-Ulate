@@ -91,7 +91,7 @@ namespace ProyectoSC_601.Controllers
                 }
                 else if (respuesta != null && respuesta.ID_Rol == 1)
                 {
-                    Session["ID_Cliente"] = respuesta.ID_Usuario;
+                    Session["ID_Usuario"] = respuesta.ID_Usuario;
                     return RedirectToAction("IndexAdmin", "Home");
 
                 }
@@ -144,102 +144,124 @@ namespace ProyectoSC_601.Controllers
             }
         }
 
-        //Devuelve la vista de perfil con los datos del cliente
-      /*  [HttpGet]
-        public ActionResult PerfilCliente()
+        //Muestra los datos de todos los clientes en el administrador
+        [HttpGet]
+        public ActionResult GestionUsuarios()
         {
-            long q = long.Parse(Session["ID_Cliente"].ToString());
-            var datos = modelUsuario.ConsultaClienteEspecifico(q);
-            Session["ID_Cliente"] = datos.ID_Cliente;
+            long idUsuario = long.Parse(Session["ID_Usuario"].ToString());
+            var datos = modelUsuario.ConsultarUsuariosAdministrador(idUsuario);
             return View(datos);
         }
-      */
-        //Actualiza los datos del cliente
-       /* [HttpPost]
-        public ActionResult PerfilCliente(UsuarioEnt entidad)
-        {
-            string cedulaExistente = modelUsuario.ComprobarCedulaExistente(entidad);
-            if (cedulaExistente == "Existe")
-            {
-                ViewBag.MensajeNoExitoso = "El usuario ya está registrado";
-                long q = long.Parse(Session["ID_Cliente"].ToString());
-                var datos = modelUsuario.ConsultaClienteEspecifico(q);
-                Session["ID_Cliente"] = datos.ID_Cliente;
-                return View(datos);
-            }
-            else
-            {
-                string correoExistente = modelUsuario.ComprobarCorreoExistenteCliente(entidad);
-                if (correoExistente == "Existe")
-                {
-                    ViewBag.MensajeNoExitoso = "Ese correo está asociado a otra cuenta";
-                    long q = long.Parse(Session["ID_Cliente"].ToString());
-                    var datos = modelUsuario.ConsultaClienteEspecifico(q);
-                    Session["ID_Cliente"] = datos.ID_Cliente;
-                    return View(datos);
-                }
-                else
-                {
-                    string respuesta = modelUsuario.ActualizarCuentaCliente(entidad);
 
-                    if (respuesta == "OK")
-                    {
-                        return RedirectToAction("PerfilCliente", "Cliente");
-                    }
-                    else
-                    {
-                        ViewBag.MensajeNoExitoso = "No se ha podido actualizar su información";
-                        return View();
-                    }
-                }
-            }
-        }*/
+        //Devuelve la vista de perfil con los datos del cliente
+        /*  [HttpGet]
+          public ActionResult PerfilCliente()
+          {
+              long q = long.Parse(Session["ID_Cliente"].ToString());
+              var datos = modelUsuario.ConsultaClienteEspecifico(q);
+              Session["ID_Cliente"] = datos.ID_Cliente;
+              return View(datos);
+          }
+        */
+        //Actualiza los datos del cliente
+        /* [HttpPost]
+         public ActionResult PerfilCliente(UsuarioEnt entidad)
+         {
+             string cedulaExistente = modelUsuario.ComprobarCedulaExistente(entidad);
+             if (cedulaExistente == "Existe")
+             {
+                 ViewBag.MensajeNoExitoso = "El usuario ya está registrado";
+                 long q = long.Parse(Session["ID_Cliente"].ToString());
+                 var datos = modelUsuario.ConsultaClienteEspecifico(q);
+                 Session["ID_Cliente"] = datos.ID_Cliente;
+                 return View(datos);
+             }
+             else
+             {
+                 string correoExistente = modelUsuario.ComprobarCorreoExistenteCliente(entidad);
+                 if (correoExistente == "Existe")
+                 {
+                     ViewBag.MensajeNoExitoso = "Ese correo está asociado a otra cuenta";
+                     long q = long.Parse(Session["ID_Cliente"].ToString());
+                     var datos = modelUsuario.ConsultaClienteEspecifico(q);
+                     Session["ID_Cliente"] = datos.ID_Cliente;
+                     return View(datos);
+                 }
+                 else
+                 {
+                     string respuesta = modelUsuario.ActualizarCuentaCliente(entidad);
+
+                     if (respuesta == "OK")
+                     {
+                         return RedirectToAction("PerfilCliente", "Cliente");
+                     }
+                     else
+                     {
+                         ViewBag.MensajeNoExitoso = "No se ha podido actualizar su información";
+                         return View();
+                     }
+                 }
+             }
+         }*/
 
         //Inactiva el usuario segun el id del cliente recibido
-      /*  [HttpGet]
-        public ActionResult InactivarCliente(long q)
-        {
-            var entidad = new UsuarioEnt();
-            entidad.ID_Cliente = q;
-            modelUsuario.InactivarCliente(entidad);
-            return RedirectToAction("CerrarSesionCliente", "Cliente");
+        /* [HttpGet]
+          public ActionResult InactivarCliente(long q)
+          {
+              var entidad = new UsuarioEnt();
+              entidad.ID_Cliente = q;
+              modelUsuario.InactivarCliente(entidad);
+              return RedirectToAction("CerrarSesionCliente", "Cliente");
 
-        }
-      */
-         //Limpia los datos de la sesion y lo redirije al index
+          }
+        */
+        //Limpia los datos de la sesion y lo redirije al index
         [HttpGet]
-        public ActionResult CerrarSesionCliente()
+        public ActionResult CerrarSesionUsuario()
         {
             Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
-        //Muestra los datos de todos los clientes en el administrador
-      /*  [HttpGet]
-        public ActionResult GestionClientes()
-        {
-            var datos = modelUsuario.ConsultarClientesAdministrador();
-            return View(datos);
-        }
+        
 
-        //Cambia el estado del cliente desde el admnistrador
+      //Cambia el estado del cliente desde el admnistrador
         [HttpGet]
-        public ActionResult ActualizarEstadoCliente(long q)
+        public ActionResult ActualizarEstadoUsuario(long q)
         {
             var entidad = new UsuarioEnt();
-            entidad.ID_Cliente = q;
+            entidad.ID_Usuario = q;
 
-            string respuesta = modelUsuario.ActualizarEstadoCliente(entidad);
+            string respuesta = modelUsuario.ActualizarEstadoUsuario(entidad);
 
             if (respuesta == "OK")
             {
-                return RedirectToAction("GestionClientes", "Cliente");
+                return RedirectToAction("GestionUsuarios", "Usuario");
             }
             else
             {
-                ViewBag.Mensaje = "No se ha podido cambiar el estado del cliente";
+                ViewBag.Mensaje = "No se ha podido cambiar el estado del usuario";
                 return View();
             }
-        }*/
+        }
+
+        [HttpGet]
+        public ActionResult ActualizarRolUsuario(long q)
+        {
+            var entidad = new UsuarioEnt();
+            entidad.ID_Usuario = q;
+
+            string respuesta = modelUsuario.ActualizarRolUsuario(entidad);
+
+            if (respuesta == "OK")
+            {
+                return RedirectToAction("GestionUsuarios", "Usuario");
+            }
+            else
+            {
+                ViewBag.Mensaje = "No se ha podido cambiar el rol del usuario";
+                return View();
+            }
+        }
     }
 }

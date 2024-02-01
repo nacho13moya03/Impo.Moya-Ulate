@@ -9,6 +9,7 @@
     <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Provincia" Relationship="Self.FK_Canton_Provincia" FromRole="Canton" ToRole="Provincia" />
     <NavigationProperty Name="Distrito" Relationship="Self.FK_Distrito_Canton" FromRole="Canton" ToRole="Distrito" />
+    <NavigationProperty Name="Direcciones" Relationship="ImportadoraMoyaUlateModel.FK_Direccion_Canton" FromRole="Canton" ToRole="Direcciones" />
   </EntityType>
   <EntityType Name="Carrito">
     <Key>
@@ -40,6 +41,9 @@
     <Property Name="ID_Distrito" Type="Int32" Nullable="false" />
     <Property Name="Direccion_Exacta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Direccion" FromRole="Direcciones" ToRole="Usuario" />
+    <NavigationProperty Name="Canton" Relationship="ImportadoraMoyaUlateModel.FK_Direccion_Canton" FromRole="Direcciones" ToRole="Canton" />
+    <NavigationProperty Name="Distrito" Relationship="ImportadoraMoyaUlateModel.FK_Direccion_Distrito" FromRole="Direcciones" ToRole="Distrito" />
+    <NavigationProperty Name="Provincia" Relationship="ImportadoraMoyaUlateModel.FK_Direccion_Provincia" FromRole="Direcciones" ToRole="Provincia" />
   </EntityType>
   <EntityType Name="Distrito">
     <Key>
@@ -51,6 +55,7 @@
     <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Canton" Relationship="Self.FK_Distrito_Canton" FromRole="Distrito" ToRole="Canton" />
     <NavigationProperty Name="Provincia" Relationship="Self.FK_Distrito_Provincia" FromRole="Distrito" ToRole="Provincia" />
+    <NavigationProperty Name="Direcciones" Relationship="ImportadoraMoyaUlateModel.FK_Direccion_Distrito" FromRole="Distrito" ToRole="Direcciones" />
   </EntityType>
   <EntityType Name="Empresa">
     <Key>
@@ -145,6 +150,7 @@
     <Property Name="Nombre" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Canton" Relationship="Self.FK_Canton_Provincia" FromRole="Provincia" ToRole="Canton" />
     <NavigationProperty Name="Distrito" Relationship="Self.FK_Distrito_Provincia" FromRole="Provincia" ToRole="Distrito" />
+    <NavigationProperty Name="Direcciones" Relationship="ImportadoraMoyaUlateModel.FK_Direccion_Provincia" FromRole="Provincia" ToRole="Direcciones" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -509,6 +515,24 @@
       <Parameter Name="Contrasenna" Mode="In" Type="String" />
       <Parameter Name="Telefono" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="ActualizarEstadoUsuarioSP">
+      <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <AssociationSet Name="FK_Direccion_Canton" Association="ImportadoraMoyaUlateModel.FK_Direccion_Canton">
+      <End Role="Canton" EntitySet="Canton" />
+      <End Role="Direcciones" EntitySet="Direcciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Direccion_Distrito" Association="ImportadoraMoyaUlateModel.FK_Direccion_Distrito">
+      <End Role="Distrito" EntitySet="Distrito" />
+      <End Role="Direcciones" EntitySet="Direcciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Direccion_Provincia" Association="ImportadoraMoyaUlateModel.FK_Direccion_Provincia">
+      <End Role="Provincia" EntitySet="Provincia" />
+      <End Role="Direcciones" EntitySet="Direcciones" />
+    </AssociationSet>
+    <FunctionImport Name="ActualizarRolUsuarioSP">
+      <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="IniciarSesionSP_Result">
     <Property Type="Int64" Name="ID_Usuario" Nullable="false" />
@@ -538,6 +562,42 @@
       </Principal>
       <Dependent Role="Usuario">
         <PropertyRef Name="ID_Identificacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Direccion_Canton">
+    <End Type="ImportadoraMoyaUlateModel.Canton" Role="Canton" Multiplicity="1" />
+    <End Type="ImportadoraMoyaUlateModel.Direcciones" Role="Direcciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Canton">
+        <PropertyRef Name="ID_Canton" />
+      </Principal>
+      <Dependent Role="Direcciones">
+        <PropertyRef Name="ID_Canton" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Direccion_Distrito">
+    <End Type="ImportadoraMoyaUlateModel.Distrito" Role="Distrito" Multiplicity="1" />
+    <End Type="ImportadoraMoyaUlateModel.Direcciones" Role="Direcciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Distrito">
+        <PropertyRef Name="ID_Distrito" />
+      </Principal>
+      <Dependent Role="Direcciones">
+        <PropertyRef Name="ID_Distrito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Direccion_Provincia">
+    <End Type="ImportadoraMoyaUlateModel.Provincia" Role="Provincia" Multiplicity="1" />
+    <End Type="ImportadoraMoyaUlateModel.Direcciones" Role="Direcciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provincia">
+        <PropertyRef Name="ID_Provincia" />
+      </Principal>
+      <Dependent Role="Direcciones">
+        <PropertyRef Name="ID_Provincia" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

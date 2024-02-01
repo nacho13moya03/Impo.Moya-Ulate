@@ -18,6 +18,7 @@ namespace APIProyectoSC_601
         public Canton()
         {
             this.Distrito = new HashSet<Distrito>();
+            this.Direcciones = new HashSet<Direcciones>();
         }
     
         public int ID_Provincia { get; set; }
@@ -27,5 +28,7 @@ namespace APIProyectoSC_601
         public virtual Provincia Provincia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Distrito> Distrito { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Direcciones> Direcciones { get; set; }
     }
 }

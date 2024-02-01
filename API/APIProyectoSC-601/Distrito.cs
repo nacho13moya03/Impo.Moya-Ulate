@@ -14,6 +14,12 @@ namespace APIProyectoSC_601
     
     public partial class Distrito
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Distrito()
+        {
+            this.Direcciones = new HashSet<Direcciones>();
+        }
+    
         public int ID_Provincia { get; set; }
         public int ID_Canton { get; set; }
         public int ID_Distrito { get; set; }
@@ -21,5 +27,7 @@ namespace APIProyectoSC_601
     
         public virtual Canton Canton { get; set; }
         public virtual Provincia Provincia { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Direcciones> Direcciones { get; set; }
     }
 }

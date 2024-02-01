@@ -84,6 +84,39 @@ namespace ProyectoSC_601.Models
             }
         }
 
+        //Funcion para consultar todos los clientes por parte del administrador
+        public List<UsuarioEnt> ConsultarUsuariosAdministrador(long idUsuario)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ConsultarUsuariosAdministrador?idUsuario=" + idUsuario;
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<List<UsuarioEnt>>().Result;
+            }
+        }
+
+        //Funcion para cambiar el estado del cliente por parte del administrador
+        public string ActualizarEstadoUsuario(UsuarioEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ActualizarEstadoUsuario";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PutAsync(urlApi, jsonData).Result;
+                return res.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
+        public string ActualizarRolUsuario(UsuarioEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ActualizarRolUsuario";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PutAsync(urlApi, jsonData).Result;
+                return res.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
         //Funcion para mostrar los datos del cliente logueado en el perfil
         /* public UsuarioEnt ConsultaClienteEspecifico(long q)
          {
@@ -118,28 +151,9 @@ namespace ProyectoSC_601.Models
              }
          }
 
-         //Funcion para consultar todos los clientes por parte del administrador
-         public List<UsuarioEnt> ConsultarClientesAdministrador()
-         {
-             using (var client = new HttpClient())
-             {
-                 var urlApi = rutaServidor + "ConsultarClientesAdministrador";
-                 var res = client.GetAsync(urlApi).Result;
-                 return res.Content.ReadFromJsonAsync<List<UsuarioEnt>>().Result;
-             }
-         }
+         
 
-         //Funcion para cambiar el estado del cliente por parte del administrador
-         public string ActualizarEstadoCliente(UsuarioEnt entidad)
-         {
-             using (var client = new HttpClient())
-             {
-                 var urlApi = rutaServidor + "ActualizarEstadoCliente";
-                 var jsonData = JsonContent.Create(entidad);
-                 var res = client.PutAsync(urlApi, jsonData).Result;
-                 return res.Content.ReadFromJsonAsync<string>().Result;
-             }
-         }
+         
 
          */
     }

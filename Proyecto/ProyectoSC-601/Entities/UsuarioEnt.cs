@@ -15,6 +15,7 @@ namespace ProyectoSC_601.Entities
 
         [Required(ErrorMessage = "Debe seleccionar una opción.")]
         public int ID_Identificacion { get; set; }
+        public string Nombre_Identificacion { get; set; }
 
         [Required(ErrorMessage = "Este campo es obligatorio.")]
         [CustomIdentificacion(ErrorMessage = "La identificación no cumple con los requisitos según el tipo seleccionado.")]
@@ -42,9 +43,14 @@ namespace ProyectoSC_601.Entities
 
         public string Contrasenna_Usuario { get; set; }
         public int ID_Direccion { get; set; }
+        public string Nombre_Provincia { get; set; }
+        public string Nombre_Canton { get; set; }
+        public string Nombre_Distrito { get; set; }
+        public string Direccion_Exacta { get; set; }
         public string Telefono_Usuario { get; set; }
         public int ID_Estado { get; set; }
         public int ID_Rol { get; set; }
+
     }
 }
 

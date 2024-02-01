@@ -255,5 +255,23 @@ namespace APIProyectoSC_601
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrarUsuarioSP", tipoParameter, identificacionParameter, nombreParameter, apellidoParameter, correoParameter, contrasennaParameter, telefonoParameter);
         }
+    
+        public virtual int ActualizarEstadoUsuarioSP(Nullable<long> iD_Usuario)
+        {
+            var iD_UsuarioParameter = iD_Usuario.HasValue ?
+                new ObjectParameter("ID_Usuario", iD_Usuario) :
+                new ObjectParameter("ID_Usuario", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizarEstadoUsuarioSP", iD_UsuarioParameter);
+        }
+    
+        public virtual int ActualizarRolUsuarioSP(Nullable<long> iD_Usuario)
+        {
+            var iD_UsuarioParameter = iD_Usuario.HasValue ?
+                new ObjectParameter("ID_Usuario", iD_Usuario) :
+                new ObjectParameter("ID_Usuario", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizarRolUsuarioSP", iD_UsuarioParameter);
+        }
     }
 }

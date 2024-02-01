@@ -37,6 +37,9 @@
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Factura_Encabezado_Usuario" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Usuario_Rol" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Usuario_Identificacion" />
+        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Direccion_Canton" />
+        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Direccion_Distrito" />
+        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Direccion_Provincia" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
