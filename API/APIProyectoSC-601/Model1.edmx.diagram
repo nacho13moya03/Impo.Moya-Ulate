@@ -4,28 +4,39 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ff5d5c1831df45e88cdb626ed617785b" Name="Diagram1">
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Carrito" Width="1.5" PointX="8.25" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Categorias" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Clientes" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Empresa" Width="1.5" PointX="3.75" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Estado" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Factura_Detalle" Width="1.5" PointX="8.25" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Factura_Encabezado" Width="1.5" PointX="5.25" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Producto" Width="1.5" PointX="6" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Proveedores" Width="1.5" PointX="6" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Roles" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Carrito_Clientes" ManuallyRouted="false" />
+      <Diagram DiagramId="b2dd3d980fe94845a8d81192e9e66740" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Canton" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Carrito" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Categorias" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Direcciones" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Distrito" Width="1.5" PointX="12.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Empresa" Width="1.5" PointX="3.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Estado" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Factura_Detalle" Width="1.5" PointX="8.5" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Factura_Encabezado" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Identificacion" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Producto" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Proveedores" Width="1.5" PointX="6" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Provincia" Width="1.5" PointX="7.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Roles" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.sysdiagrams" Width="1.5" PointX="10.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Usuario" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Canton_Provincia" ManuallyRouted="false" />
+        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Distrito_Canton" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Carrito_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Carrito_Usuario" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Producto_Categoria" ManuallyRouted="false" />
-        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Clientes_Estado" ManuallyRouted="false" />
-        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Clientes_Roles" ManuallyRouted="false" />
-        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Factura_Encabezado_Clientes" ManuallyRouted="false" />
+        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Usuario_Direccion" ManuallyRouted="false" />
+        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Distrito_Provincia" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Proveedores_Empresa" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Producto_Estado" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Proveedores_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Usuario_Estado" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Factura_Detalle_Factura_Encabezado" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Factura_Detalle_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Factura_Encabezado_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Usuario_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Usuario_Identificacion" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -11,7 +11,7 @@ body {
     align-items: center;
     flex-direction: column;
     font-family: 'Montserrat', sans-serif;
-    height: 95vh;
+    height: 124vh;
     margin: -20px 0 50px;
 }
 
@@ -65,7 +65,7 @@ button {
     overflow: hidden;
     width: 55%;
     max-width: 100%;
-    min-height: 98%;
+    min-height: 95%;
     margin-top: 7%;
     margin-bottom: 2%;
 }
@@ -108,6 +108,13 @@ input {
     input:focus {
         border: 1px solid #6282a9;
     }
+
+
+    input[disabled] {
+        background-color: #BCBCBC;
+    }
+
+
 
 .overlay {
     background: -webkit-linear-gradient(to right, #6282a9, #354461) !important;

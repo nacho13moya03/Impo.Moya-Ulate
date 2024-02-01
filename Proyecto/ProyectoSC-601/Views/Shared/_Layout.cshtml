@@ -48,7 +48,7 @@
 
                     <li><a class="nav-link scrollto" @Html.ActionLink("Catálogo", "Catalogo", "Producto", new { area = "" }, new { @class = "nav-link" })</a></li>
 
-                    @if(Session["ID_Cliente"] != null)
+                    @if(Session["ID_Usuario"] != null)
                     {
                         @Html.ActionLink("Carrito", "carrito", "carrito", new { area = "" }, new { @class = "nav-link scrollto" })
                     }
@@ -56,13 +56,13 @@
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
-            @if (Session["ID_Cliente"] != null)
+            @if (Session["ID_Usuario"] != null)
             {
-                @Html.ActionLink("Perfil", "PerfilCliente", "Cliente", new { area = "" }, new { @class = "get-started-btn scrollto nav-link" })
+                @Html.ActionLink("Perfil", "PerfilCliente", "Usuario", new { area = "" }, new { @class = "get-started-btn scrollto nav-link" })
             }
             else
             {
-                @Html.ActionLink("Iniciar Sesión", "Login", "Cliente", new { area = "" }, new { @class = "get-started-btn scrollto nav-link" })
+                @Html.ActionLink("Iniciar Sesión", "Login", "Usuario", new { area = "" }, new { @class = "get-started-btn scrollto nav-link" })
             }
 
         </div>

@@ -159,23 +159,29 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Canton.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Carrito.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Categorias.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Clientes.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\CarritoController.cs" />
     <Compile Include="Controllers\Errores.cs" />
     <Compile Include="Controllers\FacturacionController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
-    <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\ContactoController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
+    <Compile Include="Direcciones.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Distrito.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Empresa.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -186,7 +192,7 @@
     <Compile Include="Entities\ProveedorEnt.cs" />
     <Compile Include="Entities\Utilitarios.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Entities\ClienteEnt.cs" />
+    <Compile Include="Entities\UsuarioEnt.cs" />
     <Compile Include="Estado.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -198,6 +204,9 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Identificacion.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="IniciarSesionSP_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -224,10 +233,19 @@
     <Compile Include="Proveedores.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="RecuperarCuentaClienteSP_Result.cs">
+    <Compile Include="Provincia.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RecuperarCuentaUsuarioSP_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Roles.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Usuario.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -4,7 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ImportadoraMoyaUlateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ImportadoraMoyaUlateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Canton">
+          <Key>
+            <PropertyRef Name="ID_Canton" />
+          </Key>
+          <Property Name="ID_Provincia" Type="int" Nullable="false" />
+          <Property Name="ID_Canton" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Carrito">
           <Key>
             <PropertyRef Name="ID_Carrito" />
@@ -19,23 +27,27 @@
           <Key>
             <PropertyRef Name="ID_Categoria" />
           </Key>
-          <Property Name="ID_Categoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Categoria" Type="int" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <EntityType Name="Clientes">
+        <EntityType Name="Direcciones">
           <Key>
-            <PropertyRef Name="ID_Cliente" />
+            <PropertyRef Name="ID_Direccion" />
           </Key>
-          <Property Name="ID_Cliente" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Ced_Cliente" Type="varchar" MaxLength="25" Nullable="false" />
-          <Property Name="Nombre_Cliente" Type="varchar" MaxLength="60" Nullable="false" />
-          <Property Name="Apellido_Cliente" Type="varchar" MaxLength="70" Nullable="false" />
-          <Property Name="Correo_Cliente" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Contrasenna_Cliente" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Direccion_Cliente" Type="varchar" MaxLength="500" />
-          <Property Name="Tel_Cliente" Type="varchar" MaxLength="20" />
-          <Property Name="Est_Cliente" Type="int" Nullable="false" />
-          <Property Name="Rol_Cliente" Type="int" Nullable="false" />
+          <Property Name="ID_Direccion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Provincia" Type="int" Nullable="false" />
+          <Property Name="ID_Canton" Type="int" Nullable="false" />
+          <Property Name="ID_Distrito" Type="int" Nullable="false" />
+          <Property Name="Direccion_Exacta" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Distrito">
+          <Key>
+            <PropertyRef Name="ID_Distrito" />
+          </Key>
+          <Property Name="ID_Provincia" Type="int" Nullable="false" />
+          <Property Name="ID_Canton" Type="int" Nullable="false" />
+          <Property Name="ID_Distrito" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -73,6 +85,13 @@
           <Property Name="FechaCompra" Type="datetime" Nullable="false" />
           <Property Name="TotalCompra" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="Identificacion">
+          <Key>
+            <PropertyRef Name="ID_Identificacion" />
+          </Key>
+          <Property Name="ID_Identificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityType Name="Producto">
           <Key>
             <PropertyRef Name="ID_Producto" />
@@ -100,6 +119,13 @@
           <Property Name="Telefono" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="Correo" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="Provincia">
+          <Key>
+            <PropertyRef Name="ID_Provincia" />
+          </Key>
+          <Property Name="ID_Provincia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="ID_Rol" />
@@ -107,15 +133,41 @@
           <Property Name="ID_Rol" Type="int" Nullable="false" />
           <Property Name="Nombre_Rol" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Carrito_Clientes">
-          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
-          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+          </Key>
+          <Property Name="ID_Usuario" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Identificacion" Type="int" Nullable="false" />
+          <Property Name="Identificacion_Usuario" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Nombre_Usuario" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Apellido_Usuario" Type="varchar" MaxLength="70" />
+          <Property Name="Correo_Usuario" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Contrasenna_Usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Direccion" Type="int" />
+          <Property Name="Telefono_Usuario" Type="varchar" MaxLength="20" />
+          <Property Name="ID_Estado" Type="int" Nullable="false" />
+          <Property Name="ID_Rol" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Canton_Provincia">
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
+          <End Role="Canton" Type="Self.Canton" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Clientes">
-              <PropertyRef Name="ID_Cliente" />
+            <Principal Role="Provincia">
+              <PropertyRef Name="ID_Provincia" />
             </Principal>
-            <Dependent Role="Carrito">
-              <PropertyRef Name="ID_Usuario" />
+            <Dependent Role="Canton">
+              <PropertyRef Name="ID_Provincia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -131,27 +183,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Clientes_Estado">
-          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
-          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+        <Association Name="FK_Carrito_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Estado">
-              <PropertyRef Name="ID_Estado" />
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID_Usuario" />
             </Principal>
-            <Dependent Role="Clientes">
-              <PropertyRef Name="Est_Cliente" />
+            <Dependent Role="Carrito">
+              <PropertyRef Name="ID_Usuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Clientes_Roles">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+        <Association Name="FK_Distrito_Canton">
+          <End Role="Canton" Type="Self.Canton" Multiplicity="1" />
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Roles">
-              <PropertyRef Name="ID_Rol" />
+            <Principal Role="Canton">
+              <PropertyRef Name="ID_Canton" />
             </Principal>
-            <Dependent Role="Clientes">
-              <PropertyRef Name="Rol_Cliente" />
+            <Dependent Role="Distrito">
+              <PropertyRef Name="ID_Canton" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Distrito_Provincia">
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provincia">
+              <PropertyRef Name="ID_Provincia" />
+            </Principal>
+            <Dependent Role="Distrito">
+              <PropertyRef Name="ID_Provincia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -179,12 +243,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Factura_Encabezado_Clientes">
-          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+        <Association Name="FK_Factura_Encabezado_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="Factura_Encabezado" Type="Self.Factura_Encabezado" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Clientes">
-              <PropertyRef Name="ID_Cliente" />
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID_Usuario" />
             </Principal>
             <Dependent Role="Factura_Encabezado">
               <PropertyRef Name="ID_Usuario" />
@@ -239,23 +303,59 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="ActualizarCuentaClienteSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Identificacion" Type="varchar" Mode="In" />
-          <Parameter Name="Nombre" Type="varchar" Mode="In" />
-          <Parameter Name="Apellido" Type="varchar" Mode="In" />
-          <Parameter Name="Correo" Type="varchar" Mode="In" />
-          <Parameter Name="Direccion" Type="varchar" Mode="In" />
-          <Parameter Name="Telefono" Type="varchar" Mode="In" />
-          <Parameter Name="CodigoCliente" Type="bigint" Mode="In" />
-        </Function>
+        <Association Name="FK_Usuario_Direccion">
+          <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Direcciones">
+              <PropertyRef Name="ID_Direccion" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ID_Direccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="ID_Estado" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ID_Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Identificacion">
+          <End Role="Identificacion" Type="Self.Identificacion" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Identificacion">
+              <PropertyRef Name="ID_Identificacion" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ID_Identificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Rol">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID_Rol" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ID_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="ActualizarEmpresaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Empresa" Type="bigint" Mode="In" />
           <Parameter Name="Nombre_empresa" Type="varchar" Mode="In" />
           <Parameter Name="Descripcion" Type="varchar" Mode="In" />
           <Parameter Name="Ubicacion" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="ActualizarEstadoClienteSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID_Cliente" Type="bigint" Mode="In" />
         </Function>
         <Function Name="ActualizarEstadoProveedorSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Proveedor" Type="bigint" Mode="In" />
@@ -276,9 +376,6 @@
         <Function Name="EliminarProveedorSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Proveedor" Type="bigint" Mode="In" />
         </Function>
-        <Function Name="InactivarClienteSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CodigoCliente" Type="bigint" Mode="In" />
-        </Function>
         <Function Name="IniciarSesionSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="varchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
@@ -286,20 +383,11 @@
         <Function Name="PagarCarritoSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Usuario" Type="bigint" Mode="In" />
         </Function>
-        <Function Name="RecuperarCuentaClienteSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Identificacion" Type="varchar" Mode="In" />
+        <Function Name="RecuperarCuentaUsuarioSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
         </Function>
         <Function Name="RegistrarCategoria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Categoria" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="RegistrarClienteSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Identificacion" Type="varchar" Mode="In" />
-          <Parameter Name="Nombre" Type="varchar" Mode="In" />
-          <Parameter Name="Apellido" Type="varchar" Mode="In" />
-          <Parameter Name="Correo" Type="varchar" Mode="In" />
-          <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
-          <Parameter Name="Direccion" Type="varchar" Mode="In" />
-          <Parameter Name="Telefono" Type="varchar" Mode="In" />
         </Function>
         <Function Name="RegistrarEmpresaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre_empresa" Type="varchar" Mode="In" />
@@ -316,32 +404,51 @@
           <Parameter Name="Telefono" Type="varchar" Mode="In" />
           <Parameter Name="Correo" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="RegistrarUsuarioSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tipo" Type="int" Mode="In" />
+          <Parameter Name="Identificacion" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Apellido" Type="varchar" Mode="In" />
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+          <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
+          <Parameter Name="Telefono" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="ImportadoraMoyaUlateModelStoreContainer">
+          <EntitySet Name="Canton" EntityType="Self.Canton" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrito" EntityType="Self.Carrito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Direcciones" EntityType="Self.Direcciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Distrito" EntityType="Self.Distrito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Factura_Detalle" EntityType="Self.Factura_Detalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Factura_Encabezado" EntityType="Self.Factura_Encabezado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Identificacion" EntityType="Self.Identificacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Provincia" EntityType="Self.Provincia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Carrito_Clientes" Association="Self.FK_Carrito_Clientes">
-            <End Role="Clientes" EntitySet="Clientes" />
-            <End Role="Carrito" EntitySet="Carrito" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Canton_Provincia" Association="Self.FK_Canton_Provincia">
+            <End Role="Provincia" EntitySet="Provincia" />
+            <End Role="Canton" EntitySet="Canton" />
           </AssociationSet>
           <AssociationSet Name="FK_Carrito_Producto" Association="Self.FK_Carrito_Producto">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="Carrito" EntitySet="Carrito" />
           </AssociationSet>
-          <AssociationSet Name="FK_Clientes_Estado" Association="Self.FK_Clientes_Estado">
-            <End Role="Estado" EntitySet="Estado" />
-            <End Role="Clientes" EntitySet="Clientes" />
+          <AssociationSet Name="FK_Carrito_Usuario" Association="Self.FK_Carrito_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Carrito" EntitySet="Carrito" />
           </AssociationSet>
-          <AssociationSet Name="FK_Clientes_Roles" Association="Self.FK_Clientes_Roles">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="Clientes" EntitySet="Clientes" />
+          <AssociationSet Name="FK_Distrito_Canton" Association="Self.FK_Distrito_Canton">
+            <End Role="Canton" EntitySet="Canton" />
+            <End Role="Distrito" EntitySet="Distrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Distrito_Provincia" Association="Self.FK_Distrito_Provincia">
+            <End Role="Provincia" EntitySet="Provincia" />
+            <End Role="Distrito" EntitySet="Distrito" />
           </AssociationSet>
           <AssociationSet Name="FK_Factura_Detalle_Factura_Encabezado" Association="Self.FK_Factura_Detalle_Factura_Encabezado">
             <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
@@ -351,8 +458,8 @@
             <End Role="Producto" EntitySet="Producto" />
             <End Role="Factura_Detalle" EntitySet="Factura_Detalle" />
           </AssociationSet>
-          <AssociationSet Name="FK_Factura_Encabezado_Clientes" Association="Self.FK_Factura_Encabezado_Clientes">
-            <End Role="Clientes" EntitySet="Clientes" />
+          <AssociationSet Name="FK_Factura_Encabezado_Usuario" Association="Self.FK_Factura_Encabezado_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
           </AssociationSet>
           <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
@@ -371,12 +478,37 @@
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Proveedores" EntitySet="Proveedores" />
           </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Direccion" Association="Self.FK_Usuario_Direccion">
+            <End Role="Direcciones" EntitySet="Direcciones" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Estado" Association="Self.FK_Usuario_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Identificacion" Association="Self.FK_Usuario_Identificacion">
+            <End Role="Identificacion" EntitySet="Identificacion" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ImportadoraMoyaUlateModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Canton">
+          <Key>
+            <PropertyRef Name="ID_Canton" />
+          </Key>
+          <Property Name="ID_Provincia" Type="Int32" Nullable="false" />
+          <Property Name="ID_Canton" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Provincia" Relationship="Self.FK_Canton_Provincia" FromRole="Canton" ToRole="Provincia" />
+          <NavigationProperty Name="Distrito" Relationship="Self.FK_Distrito_Canton" FromRole="Canton" ToRole="Distrito" />
+        </EntityType>
         <EntityType Name="Carrito">
           <Key>
             <PropertyRef Name="ID_Carrito" />
@@ -386,35 +518,38 @@
           <Property Name="ID_Producto" Type="Int64" Nullable="false" />
           <Property Name="Cantidad" Type="Int32" Nullable="false" />
           <Property Name="FechaCarrito" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Clientes" Relationship="Self.FK_Carrito_Clientes" FromRole="Carrito" ToRole="Clientes" />
           <NavigationProperty Name="Producto" Relationship="Self.FK_Carrito_Producto" FromRole="Carrito" ToRole="Producto" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Carrito_Usuario" FromRole="Carrito" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Categorias">
           <Key>
             <PropertyRef Name="ID_Categoria" />
           </Key>
-          <Property Name="ID_Categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Categoria" Type="Int32" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Categoria" FromRole="Categorias" ToRole="Producto" />
         </EntityType>
-        <EntityType Name="Clientes">
+        <EntityType Name="Direcciones">
           <Key>
-            <PropertyRef Name="ID_Cliente" />
+            <PropertyRef Name="ID_Direccion" />
           </Key>
-          <Property Name="ID_Cliente" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Ced_Cliente" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Nombre_Cliente" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Apellido_Cliente" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Correo_Cliente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Contrasenna_Cliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Direccion_Cliente" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Tel_Cliente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Est_Cliente" Type="Int32" Nullable="false" />
-          <Property Name="Rol_Cliente" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Carrito" Relationship="Self.FK_Carrito_Clientes" FromRole="Clientes" ToRole="Carrito" />
-          <NavigationProperty Name="Estado" Relationship="Self.FK_Clientes_Estado" FromRole="Clientes" ToRole="Estado" />
-          <NavigationProperty Name="Roles" Relationship="Self.FK_Clientes_Roles" FromRole="Clientes" ToRole="Roles" />
-          <NavigationProperty Name="Factura_Encabezado" Relationship="Self.FK_Factura_Encabezado_Clientes" FromRole="Clientes" ToRole="Factura_Encabezado" />
+          <Property Name="ID_Direccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Provincia" Type="Int32" Nullable="false" />
+          <Property Name="ID_Canton" Type="Int32" Nullable="false" />
+          <Property Name="ID_Distrito" Type="Int32" Nullable="false" />
+          <Property Name="Direccion_Exacta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Direccion" FromRole="Direcciones" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Distrito">
+          <Key>
+            <PropertyRef Name="ID_Distrito" />
+          </Key>
+          <Property Name="ID_Provincia" Type="Int32" Nullable="false" />
+          <Property Name="ID_Canton" Type="Int32" Nullable="false" />
+          <Property Name="ID_Distrito" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Canton" Relationship="Self.FK_Distrito_Canton" FromRole="Distrito" ToRole="Canton" />
+          <NavigationProperty Name="Provincia" Relationship="Self.FK_Distrito_Provincia" FromRole="Distrito" ToRole="Provincia" />
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -432,9 +567,9 @@
           </Key>
           <Property Name="ID_Estado" Type="Int32" Nullable="false" />
           <Property Name="Tipo_Estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Clientes" Relationship="Self.FK_Clientes_Estado" FromRole="Estado" ToRole="Clientes" />
           <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Estado" FromRole="Estado" ToRole="Producto" />
           <NavigationProperty Name="Proveedores" Relationship="Self.FK_Proveedores_Estado" FromRole="Estado" ToRole="Proveedores" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Estado" FromRole="Estado" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Factura_Detalle">
           <Key>
@@ -457,8 +592,16 @@
           <Property Name="ID_Usuario" Type="Int64" Nullable="false" />
           <Property Name="FechaCompra" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TotalCompra" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <NavigationProperty Name="Clientes" Relationship="Self.FK_Factura_Encabezado_Clientes" FromRole="Factura_Encabezado" ToRole="Clientes" />
           <NavigationProperty Name="Factura_Detalle" Relationship="Self.FK_Factura_Detalle_Factura_Encabezado" FromRole="Factura_Encabezado" ToRole="Factura_Detalle" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Factura_Encabezado_Usuario" FromRole="Factura_Encabezado" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Identificacion">
+          <Key>
+            <PropertyRef Name="ID_Identificacion" />
+          </Key>
+          <Property Name="ID_Identificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="ImportadoraMoyaUlateModel.FK_Usuario_Identificacion" FromRole="Identificacion" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
@@ -493,23 +636,76 @@
           <NavigationProperty Name="Empresa1" Relationship="Self.FK_Proveedores_Empresa" FromRole="Proveedores" ToRole="Empresa" />
           <NavigationProperty Name="Estado" Relationship="Self.FK_Proveedores_Estado" FromRole="Proveedores" ToRole="Estado" />
         </EntityType>
+        <EntityType Name="Provincia">
+          <Key>
+            <PropertyRef Name="ID_Provincia" />
+          </Key>
+          <Property Name="ID_Provincia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Canton" Relationship="Self.FK_Canton_Provincia" FromRole="Provincia" ToRole="Canton" />
+          <NavigationProperty Name="Distrito" Relationship="Self.FK_Distrito_Provincia" FromRole="Provincia" ToRole="Distrito" />
+        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="ID_Rol" />
           </Key>
           <Property Name="ID_Rol" Type="Int32" Nullable="false" />
           <Property Name="Nombre_Rol" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Clientes" Relationship="Self.FK_Clientes_Roles" FromRole="Roles" ToRole="Clientes" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Rol" FromRole="Roles" ToRole="Usuario" />
         </EntityType>
-        <Association Name="FK_Carrito_Clientes">
-          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
-          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+          </Key>
+          <Property Name="ID_Usuario" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Identificacion" Type="Int32" Nullable="false" />
+          <Property Name="Identificacion_Usuario" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre_Usuario" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellido_Usuario" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Correo_Usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contrasenna_Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Direccion" Type="Int32" />
+          <Property Name="Telefono_Usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Estado" Type="Int32" Nullable="false" />
+          <Property Name="ID_Rol" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Carrito" Relationship="Self.FK_Carrito_Usuario" FromRole="Usuario" ToRole="Carrito" />
+          <NavigationProperty Name="Direcciones" Relationship="Self.FK_Usuario_Direccion" FromRole="Usuario" ToRole="Direcciones" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Usuario_Estado" FromRole="Usuario" ToRole="Estado" />
+          <NavigationProperty Name="Factura_Encabezado" Relationship="Self.FK_Factura_Encabezado_Usuario" FromRole="Usuario" ToRole="Factura_Encabezado" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Usuario_Rol" FromRole="Usuario" ToRole="Roles" />
+          <NavigationProperty Name="Identificacion" Relationship="ImportadoraMoyaUlateModel.FK_Usuario_Identificacion" FromRole="Usuario" ToRole="Identificacion" />
+        </EntityType>
+        <Association Name="FK_Canton_Provincia">
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
+          <End Role="Canton" Type="Self.Canton" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Clientes">
-              <PropertyRef Name="ID_Cliente" />
+            <Principal Role="Provincia">
+              <PropertyRef Name="ID_Provincia" />
             </Principal>
-            <Dependent Role="Carrito">
-              <PropertyRef Name="ID_Usuario" />
+            <Dependent Role="Canton">
+              <PropertyRef Name="ID_Provincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Distrito_Canton">
+          <End Role="Canton" Type="Self.Canton" Multiplicity="1" />
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Canton">
+              <PropertyRef Name="ID_Canton" />
+            </Principal>
+            <Dependent Role="Distrito">
+              <PropertyRef Name="ID_Canton" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -525,6 +721,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Carrito_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Carrito">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Producto_Categoria">
           <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
@@ -537,39 +745,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Clientes_Estado">
-          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
-          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+        <Association Name="FK_Usuario_Direccion">
+          <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Estado">
-              <PropertyRef Name="ID_Estado" />
+            <Principal Role="Direcciones">
+              <PropertyRef Name="ID_Direccion" />
             </Principal>
-            <Dependent Role="Clientes">
-              <PropertyRef Name="Est_Cliente" />
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ID_Direccion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Clientes_Roles">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+        <Association Name="FK_Distrito_Provincia">
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Roles">
-              <PropertyRef Name="ID_Rol" />
+            <Principal Role="Provincia">
+              <PropertyRef Name="ID_Provincia" />
             </Principal>
-            <Dependent Role="Clientes">
-              <PropertyRef Name="Rol_Cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Factura_Encabezado_Clientes">
-          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
-          <End Role="Factura_Encabezado" Type="Self.Factura_Encabezado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clientes">
-              <PropertyRef Name="ID_Cliente" />
-            </Principal>
-            <Dependent Role="Factura_Encabezado">
-              <PropertyRef Name="ID_Usuario" />
+            <Dependent Role="Distrito">
+              <PropertyRef Name="ID_Provincia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -609,6 +805,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Usuario_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="ID_Estado" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ID_Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Factura_Detalle_Factura_Encabezado">
           <End Role="Factura_Encabezado" Type="Self.Factura_Encabezado" Multiplicity="1" />
           <End Role="Factura_Detalle" Type="Self.Factura_Detalle" Multiplicity="*" />
@@ -633,40 +841,74 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Factura_Encabezado_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Factura_Encabezado" Type="Self.Factura_Encabezado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Factura_Encabezado">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Rol">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID_Rol" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ID_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ImportadoraMoyaUlateEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Canton" EntityType="Self.Canton" />
           <EntitySet Name="Carrito" EntityType="Self.Carrito" />
           <EntitySet Name="Categorias" EntityType="Self.Categorias" />
-          <EntitySet Name="Clientes" EntityType="Self.Clientes" />
+          <EntitySet Name="Direcciones" EntityType="Self.Direcciones" />
+          <EntitySet Name="Distrito" EntityType="Self.Distrito" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" />
           <EntitySet Name="Estado" EntityType="Self.Estado" />
           <EntitySet Name="Factura_Detalle" EntityType="Self.Factura_Detalle" />
           <EntitySet Name="Factura_Encabezado" EntityType="Self.Factura_Encabezado" />
+          <EntitySet Name="Identificacion" EntityType="Self.Identificacion" />
           <EntitySet Name="Producto" EntityType="Self.Producto" />
           <EntitySet Name="Proveedores" EntityType="Self.Proveedores" />
+          <EntitySet Name="Provincia" EntityType="Self.Provincia" />
           <EntitySet Name="Roles" EntityType="Self.Roles" />
-          <AssociationSet Name="FK_Carrito_Clientes" Association="Self.FK_Carrito_Clientes">
-            <End Role="Clientes" EntitySet="Clientes" />
-            <End Role="Carrito" EntitySet="Carrito" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Canton_Provincia" Association="Self.FK_Canton_Provincia">
+            <End Role="Provincia" EntitySet="Provincia" />
+            <End Role="Canton" EntitySet="Canton" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Distrito_Canton" Association="Self.FK_Distrito_Canton">
+            <End Role="Canton" EntitySet="Canton" />
+            <End Role="Distrito" EntitySet="Distrito" />
           </AssociationSet>
           <AssociationSet Name="FK_Carrito_Producto" Association="Self.FK_Carrito_Producto">
             <End Role="Producto" EntitySet="Producto" />
+            <End Role="Carrito" EntitySet="Carrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Carrito_Usuario" Association="Self.FK_Carrito_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Carrito" EntitySet="Carrito" />
           </AssociationSet>
           <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
             <End Role="Categorias" EntitySet="Categorias" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
-          <AssociationSet Name="FK_Clientes_Estado" Association="Self.FK_Clientes_Estado">
-            <End Role="Estado" EntitySet="Estado" />
-            <End Role="Clientes" EntitySet="Clientes" />
+          <AssociationSet Name="FK_Usuario_Direccion" Association="Self.FK_Usuario_Direccion">
+            <End Role="Direcciones" EntitySet="Direcciones" />
+            <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <AssociationSet Name="FK_Clientes_Roles" Association="Self.FK_Clientes_Roles">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="Clientes" EntitySet="Clientes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Factura_Encabezado_Clientes" Association="Self.FK_Factura_Encabezado_Clientes">
-            <End Role="Clientes" EntitySet="Clientes" />
-            <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
+          <AssociationSet Name="FK_Distrito_Provincia" Association="Self.FK_Distrito_Provincia">
+            <End Role="Provincia" EntitySet="Provincia" />
+            <End Role="Distrito" EntitySet="Distrito" />
           </AssociationSet>
           <AssociationSet Name="FK_Proveedores_Empresa" Association="Self.FK_Proveedores_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
@@ -680,6 +922,10 @@
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Proveedores" EntitySet="Proveedores" />
           </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Estado" Association="Self.FK_Usuario_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
           <AssociationSet Name="FK_Factura_Detalle_Factura_Encabezado" Association="Self.FK_Factura_Detalle_Factura_Encabezado">
             <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
             <End Role="Factura_Detalle" EntitySet="Factura_Detalle" />
@@ -688,26 +934,22 @@
             <End Role="Producto" EntitySet="Producto" />
             <End Role="Factura_Detalle" EntitySet="Factura_Detalle" />
           </AssociationSet>
-          <FunctionImport Name="ActualizarCuentaClienteSP">
-            <Parameter Name="Identificacion" Mode="In" Type="String" />
-            <Parameter Name="Nombre" Mode="In" Type="String" />
-            <Parameter Name="Apellido" Mode="In" Type="String" />
-            <Parameter Name="Correo" Mode="In" Type="String" />
-            <Parameter Name="Direccion" Mode="In" Type="String" />
-            <Parameter Name="Telefono" Mode="In" Type="String" />
-            <Parameter Name="CodigoCliente" Mode="In" Type="Int64" />
-          </FunctionImport>
+          <AssociationSet Name="FK_Factura_Encabezado_Usuario" Association="Self.FK_Factura_Encabezado_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
           <FunctionImport Name="ActualizarEmpresaSP">
             <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
             <Parameter Name="Nombre_empresa" Mode="In" Type="String" />
             <Parameter Name="Descripcion" Mode="In" Type="String" />
             <Parameter Name="Ubicacion" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ActualizarEstadoClienteSP">
-            <Parameter Name="ID_Cliente" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="ActualizarEstadoProveedorSP">
-            <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
+          <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="ActualizarProveedorSP">
             <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
@@ -720,35 +962,23 @@
             <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="EliminarEmpresaSP">
-            <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
+          <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="EliminarProveedorSP">
-            <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="InactivarClienteSP">
-            <Parameter Name="CodigoCliente" Mode="In" Type="Int64" />
+          <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="IniciarSesionSP" ReturnType="Collection(ImportadoraMoyaUlateModel.IniciarSesionSP_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PagarCarritoSP" ReturnType="Collection(String)">
-            <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
+          <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="RecuperarCuentaClienteSP" ReturnType="Collection(ImportadoraMoyaUlateModel.RecuperarCuentaClienteSP_Result)">
-            <Parameter Name="Identificacion" Mode="In" Type="String" />
+          <FunctionImport Name="RecuperarCuentaUsuarioSP" ReturnType="Collection(ImportadoraMoyaUlateModel.RecuperarCuentaUsuarioSP_Result)">
+          <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="RegistrarCategoria">
-            <Parameter Name="Categoria" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="RegistrarClienteSP">
-            <Parameter Name="Identificacion" Mode="In" Type="String" />
-            <Parameter Name="Nombre" Mode="In" Type="String" />
-            <Parameter Name="Apellido" Mode="In" Type="String" />
-            <Parameter Name="Correo" Mode="In" Type="String" />
-            <Parameter Name="Contrasenna" Mode="In" Type="String" />
-            <Parameter Name="Direccion" Mode="In" Type="String" />
-            <Parameter Name="Telefono" Mode="In" Type="String" />
+          <Parameter Name="Categoria" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="RegistrarEmpresaSP">
             <Parameter Name="Nombre_empresa" Mode="In" Type="String" />
@@ -765,31 +995,66 @@
             <Parameter Name="Telefono" Mode="In" Type="String" />
             <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
+          <AssociationSet Name="FK_Usuario_Identificacion" Association="ImportadoraMoyaUlateModel.FK_Usuario_Identificacion">
+            <End Role="Identificacion" EntitySet="Identificacion" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <FunctionImport Name="RegistrarUsuarioSP">
+            <Parameter Name="tipo" Mode="In" Type="Int32" />
+            <Parameter Name="Identificacion" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Contrasenna" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="IniciarSesionSP_Result">
-          <Property Type="Int64" Name="ID_Cliente" Nullable="false" />
-          <Property Type="String" Name="Ced_Cliente" Nullable="false" MaxLength="25" />
-          <Property Type="String" Name="Nombre_Cliente" Nullable="false" MaxLength="60" />
-          <Property Type="String" Name="Apellido_Cliente" Nullable="false" MaxLength="70" />
-          <Property Type="String" Name="Correo_Cliente" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Contrasenna_Cliente" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Direccion_Cliente" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="Tel_Cliente" Nullable="true" MaxLength="20" />
-          <Property Type="Int32" Name="Est_Cliente" Nullable="false" />
-          <Property Type="Int32" Name="Rol_Cliente" Nullable="false" />
+          <Property Type="Int64" Name="ID_Usuario" Nullable="false" />
+          <Property Type="Int32" Name="ID_Identificacion" Nullable="false" />
+          <Property Type="String" Name="Identificacion_Usuario" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="Nombre_Usuario" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Apellido_Usuario" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="Correo_Usuario" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Contrasenna_Usuario" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ID_Direccion" Nullable="true" />
+          <Property Type="String" Name="Telefono_Usuario" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="ID_Estado" Nullable="false" />
+          <Property Type="Int32" Name="ID_Rol" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="RecuperarCuentaClienteSP_Result">
-          <Property Type="String" Name="Nombre_Cliente" Nullable="false" MaxLength="60" />
-          <Property Type="String" Name="Apellido_Cliente" Nullable="false" MaxLength="70" />
-          <Property Type="String" Name="Correo_Cliente" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Contrasenna_Cliente" Nullable="false" MaxLength="50" />
+        <ComplexType Name="RecuperarCuentaUsuarioSP_Result">
+          <Property Type="String" Name="Nombre_Usuario" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Apellido_Usuario" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="Correo_Usuario" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Contrasenna_Usuario" Nullable="false" MaxLength="50" />
         </ComplexType>
+        <Association Name="FK_Usuario_Identificacion">
+          <End Type="ImportadoraMoyaUlateModel.Identificacion" Role="Identificacion" Multiplicity="1" />
+          <End Type="ImportadoraMoyaUlateModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Identificacion">
+              <PropertyRef Name="ID_Identificacion" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ID_Identificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ImportadoraMoyaUlateModelStoreContainer" CdmEntityContainer="ImportadoraMoyaUlateEntities">
+          <EntitySetMapping Name="Canton">
+            <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Canton">
+              <MappingFragment StoreEntitySet="Canton">
+                <ScalarProperty Name="ID_Provincia" ColumnName="ID_Provincia" />
+                <ScalarProperty Name="ID_Canton" ColumnName="ID_Canton" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Carrito">
             <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Carrito">
               <MappingFragment StoreEntitySet="Carrito">
@@ -809,19 +1074,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Clientes">
-            <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Clientes">
-              <MappingFragment StoreEntitySet="Clientes">
-                <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
-                <ScalarProperty Name="Ced_Cliente" ColumnName="Ced_Cliente" />
-                <ScalarProperty Name="Nombre_Cliente" ColumnName="Nombre_Cliente" />
-                <ScalarProperty Name="Apellido_Cliente" ColumnName="Apellido_Cliente" />
-                <ScalarProperty Name="Correo_Cliente" ColumnName="Correo_Cliente" />
-                <ScalarProperty Name="Contrasenna_Cliente" ColumnName="Contrasenna_Cliente" />
-                <ScalarProperty Name="Direccion_Cliente" ColumnName="Direccion_Cliente" />
-                <ScalarProperty Name="Tel_Cliente" ColumnName="Tel_Cliente" />
-                <ScalarProperty Name="Est_Cliente" ColumnName="Est_Cliente" />
-                <ScalarProperty Name="Rol_Cliente" ColumnName="Rol_Cliente" />
+          <EntitySetMapping Name="Direcciones">
+            <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Direcciones">
+              <MappingFragment StoreEntitySet="Direcciones">
+                <ScalarProperty Name="ID_Direccion" ColumnName="ID_Direccion" />
+                <ScalarProperty Name="ID_Provincia" ColumnName="ID_Provincia" />
+                <ScalarProperty Name="ID_Canton" ColumnName="ID_Canton" />
+                <ScalarProperty Name="ID_Distrito" ColumnName="ID_Distrito" />
+                <ScalarProperty Name="Direccion_Exacta" ColumnName="Direccion_Exacta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Distrito">
+            <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Distrito">
+              <MappingFragment StoreEntitySet="Distrito">
+                <ScalarProperty Name="ID_Provincia" ColumnName="ID_Provincia" />
+                <ScalarProperty Name="ID_Canton" ColumnName="ID_Canton" />
+                <ScalarProperty Name="ID_Distrito" ColumnName="ID_Distrito" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -865,6 +1135,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Identificacion">
+            <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Identificacion">
+              <MappingFragment StoreEntitySet="Identificacion">
+                <ScalarProperty Name="ID_Identificacion" ColumnName="ID_Identificacion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Producto">
             <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Producto">
               <MappingFragment StoreEntitySet="Producto">
@@ -894,6 +1172,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Provincia">
+            <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Provincia">
+              <MappingFragment StoreEntitySet="Provincia">
+                <ScalarProperty Name="ID_Provincia" ColumnName="ID_Provincia" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Roles">
               <MappingFragment StoreEntitySet="Roles">
@@ -902,45 +1188,71 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="ActualizarCuentaClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCuentaClienteSP" />
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+                <ScalarProperty Name="ID_Identificacion" ColumnName="ID_Identificacion" />
+                <ScalarProperty Name="Identificacion_Usuario" ColumnName="Identificacion_Usuario" />
+                <ScalarProperty Name="Nombre_Usuario" ColumnName="Nombre_Usuario" />
+                <ScalarProperty Name="Apellido_Usuario" ColumnName="Apellido_Usuario" />
+                <ScalarProperty Name="Correo_Usuario" ColumnName="Correo_Usuario" />
+                <ScalarProperty Name="Contrasenna_Usuario" ColumnName="Contrasenna_Usuario" />
+                <ScalarProperty Name="ID_Direccion" ColumnName="ID_Direccion" />
+                <ScalarProperty Name="Telefono_Usuario" ColumnName="Telefono_Usuario" />
+                <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
+                <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="ActualizarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEmpresaSP" />
-          <FunctionImportMapping FunctionImportName="ActualizarEstadoClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoClienteSP" />
           <FunctionImportMapping FunctionImportName="ActualizarEstadoProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoProveedorSP" />
           <FunctionImportMapping FunctionImportName="ActualizarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarProveedorSP" />
           <FunctionImportMapping FunctionImportName="EliminarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarEmpresaSP" />
           <FunctionImportMapping FunctionImportName="EliminarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarProveedorSP" />
-          <FunctionImportMapping FunctionImportName="InactivarClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.InactivarClienteSP" />
           <FunctionImportMapping FunctionImportName="IniciarSesionSP" FunctionName="ImportadoraMoyaUlateModel.Store.IniciarSesionSP">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ImportadoraMoyaUlateModel.IniciarSesionSP_Result">
-                <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
-                <ScalarProperty Name="Ced_Cliente" ColumnName="Ced_Cliente" />
-                <ScalarProperty Name="Nombre_Cliente" ColumnName="Nombre_Cliente" />
-                <ScalarProperty Name="Apellido_Cliente" ColumnName="Apellido_Cliente" />
-                <ScalarProperty Name="Correo_Cliente" ColumnName="Correo_Cliente" />
-                <ScalarProperty Name="Contrasenna_Cliente" ColumnName="Contrasenna_Cliente" />
-                <ScalarProperty Name="Direccion_Cliente" ColumnName="Direccion_Cliente" />
-                <ScalarProperty Name="Tel_Cliente" ColumnName="Tel_Cliente" />
-                <ScalarProperty Name="Est_Cliente" ColumnName="Est_Cliente" />
-                <ScalarProperty Name="Rol_Cliente" ColumnName="Rol_Cliente" />
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+                <ScalarProperty Name="ID_Identificacion" ColumnName="ID_Identificacion" />
+                <ScalarProperty Name="Identificacion_Usuario" ColumnName="Identificacion_Usuario" />
+                <ScalarProperty Name="Nombre_Usuario" ColumnName="Nombre_Usuario" />
+                <ScalarProperty Name="Apellido_Usuario" ColumnName="Apellido_Usuario" />
+                <ScalarProperty Name="Correo_Usuario" ColumnName="Correo_Usuario" />
+                <ScalarProperty Name="Contrasenna_Usuario" ColumnName="Contrasenna_Usuario" />
+                <ScalarProperty Name="ID_Direccion" ColumnName="ID_Direccion" />
+                <ScalarProperty Name="Telefono_Usuario" ColumnName="Telefono_Usuario" />
+                <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
+                <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PagarCarritoSP" FunctionName="ImportadoraMoyaUlateModel.Store.PagarCarritoSP" />
-          <FunctionImportMapping FunctionImportName="RecuperarCuentaClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.RecuperarCuentaClienteSP">
+          <FunctionImportMapping FunctionImportName="RecuperarCuentaUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.RecuperarCuentaUsuarioSP">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="ImportadoraMoyaUlateModel.RecuperarCuentaClienteSP_Result">
-                <ScalarProperty Name="Nombre_Cliente" ColumnName="Nombre_Cliente" />
-                <ScalarProperty Name="Apellido_Cliente" ColumnName="Apellido_Cliente" />
-                <ScalarProperty Name="Correo_Cliente" ColumnName="Correo_Cliente" />
-                <ScalarProperty Name="Contrasenna_Cliente" ColumnName="Contrasenna_Cliente" />
+              <ComplexTypeMapping TypeName="ImportadoraMoyaUlateModel.RecuperarCuentaUsuarioSP_Result">
+                <ScalarProperty Name="Nombre_Usuario" ColumnName="Nombre_Usuario" />
+                <ScalarProperty Name="Apellido_Usuario" ColumnName="Apellido_Usuario" />
+                <ScalarProperty Name="Correo_Usuario" ColumnName="Correo_Usuario" />
+                <ScalarProperty Name="Contrasenna_Usuario" ColumnName="Contrasenna_Usuario" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="RegistrarCategoria" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarCategoria" />
-          <FunctionImportMapping FunctionImportName="RegistrarClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarClienteSP" />
           <FunctionImportMapping FunctionImportName="RegistrarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarEmpresaSP" />
           <FunctionImportMapping FunctionImportName="RegistrarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarProveedorSP" />
+          <FunctionImportMapping FunctionImportName="RegistrarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarUsuarioSP" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -958,7 +1270,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

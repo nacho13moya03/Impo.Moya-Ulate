@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ImportadoraMoyaUlateModelStoreContainer" CdmEntityContainer="ImportadoraMoyaUlateEntities">
+    <EntitySetMapping Name="Canton">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Canton">
+        <MappingFragment StoreEntitySet="Canton">
+          <ScalarProperty Name="ID_Provincia" ColumnName="ID_Provincia" />
+          <ScalarProperty Name="ID_Canton" ColumnName="ID_Canton" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Carrito">
       <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Carrito">
         <MappingFragment StoreEntitySet="Carrito">
@@ -20,19 +29,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Clientes">
-      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Clientes">
-        <MappingFragment StoreEntitySet="Clientes">
-          <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
-          <ScalarProperty Name="Ced_Cliente" ColumnName="Ced_Cliente" />
-          <ScalarProperty Name="Nombre_Cliente" ColumnName="Nombre_Cliente" />
-          <ScalarProperty Name="Apellido_Cliente" ColumnName="Apellido_Cliente" />
-          <ScalarProperty Name="Correo_Cliente" ColumnName="Correo_Cliente" />
-          <ScalarProperty Name="Contrasenna_Cliente" ColumnName="Contrasenna_Cliente" />
-          <ScalarProperty Name="Direccion_Cliente" ColumnName="Direccion_Cliente" />
-          <ScalarProperty Name="Tel_Cliente" ColumnName="Tel_Cliente" />
-          <ScalarProperty Name="Est_Cliente" ColumnName="Est_Cliente" />
-          <ScalarProperty Name="Rol_Cliente" ColumnName="Rol_Cliente" />
+    <EntitySetMapping Name="Direcciones">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Direcciones">
+        <MappingFragment StoreEntitySet="Direcciones">
+          <ScalarProperty Name="ID_Direccion" ColumnName="ID_Direccion" />
+          <ScalarProperty Name="ID_Provincia" ColumnName="ID_Provincia" />
+          <ScalarProperty Name="ID_Canton" ColumnName="ID_Canton" />
+          <ScalarProperty Name="ID_Distrito" ColumnName="ID_Distrito" />
+          <ScalarProperty Name="Direccion_Exacta" ColumnName="Direccion_Exacta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Distrito">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Distrito">
+        <MappingFragment StoreEntitySet="Distrito">
+          <ScalarProperty Name="ID_Provincia" ColumnName="ID_Provincia" />
+          <ScalarProperty Name="ID_Canton" ColumnName="ID_Canton" />
+          <ScalarProperty Name="ID_Distrito" ColumnName="ID_Distrito" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -76,6 +90,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Identificacion">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Identificacion">
+        <MappingFragment StoreEntitySet="Identificacion">
+          <ScalarProperty Name="ID_Identificacion" ColumnName="ID_Identificacion" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Producto">
       <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Producto">
         <MappingFragment StoreEntitySet="Producto">
@@ -105,6 +127,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Provincia">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Provincia">
+        <MappingFragment StoreEntitySet="Provincia">
+          <ScalarProperty Name="ID_Provincia" ColumnName="ID_Provincia" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Roles">
       <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Roles">
         <MappingFragment StoreEntitySet="Roles">
@@ -113,44 +143,70 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="ActualizarCuentaClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCuentaClienteSP" />
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+          <ScalarProperty Name="ID_Identificacion" ColumnName="ID_Identificacion" />
+          <ScalarProperty Name="Identificacion_Usuario" ColumnName="Identificacion_Usuario" />
+          <ScalarProperty Name="Nombre_Usuario" ColumnName="Nombre_Usuario" />
+          <ScalarProperty Name="Apellido_Usuario" ColumnName="Apellido_Usuario" />
+          <ScalarProperty Name="Correo_Usuario" ColumnName="Correo_Usuario" />
+          <ScalarProperty Name="Contrasenna_Usuario" ColumnName="Contrasenna_Usuario" />
+          <ScalarProperty Name="ID_Direccion" ColumnName="ID_Direccion" />
+          <ScalarProperty Name="Telefono_Usuario" ColumnName="Telefono_Usuario" />
+          <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
+          <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="ActualizarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEmpresaSP" />
-    <FunctionImportMapping FunctionImportName="ActualizarEstadoClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoClienteSP" />
     <FunctionImportMapping FunctionImportName="ActualizarEstadoProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoProveedorSP" />
     <FunctionImportMapping FunctionImportName="ActualizarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarProveedorSP" />
     <FunctionImportMapping FunctionImportName="EliminarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarEmpresaSP" />
     <FunctionImportMapping FunctionImportName="EliminarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarProveedorSP" />
-    <FunctionImportMapping FunctionImportName="InactivarClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.InactivarClienteSP" />
     <FunctionImportMapping FunctionImportName="IniciarSesionSP" FunctionName="ImportadoraMoyaUlateModel.Store.IniciarSesionSP">
       <ResultMapping>
         <ComplexTypeMapping TypeName="ImportadoraMoyaUlateModel.IniciarSesionSP_Result">
-          <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
-          <ScalarProperty Name="Ced_Cliente" ColumnName="Ced_Cliente" />
-          <ScalarProperty Name="Nombre_Cliente" ColumnName="Nombre_Cliente" />
-          <ScalarProperty Name="Apellido_Cliente" ColumnName="Apellido_Cliente" />
-          <ScalarProperty Name="Correo_Cliente" ColumnName="Correo_Cliente" />
-          <ScalarProperty Name="Contrasenna_Cliente" ColumnName="Contrasenna_Cliente" />
-          <ScalarProperty Name="Direccion_Cliente" ColumnName="Direccion_Cliente" />
-          <ScalarProperty Name="Tel_Cliente" ColumnName="Tel_Cliente" />
-          <ScalarProperty Name="Est_Cliente" ColumnName="Est_Cliente" />
-          <ScalarProperty Name="Rol_Cliente" ColumnName="Rol_Cliente" />
+          <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+          <ScalarProperty Name="ID_Identificacion" ColumnName="ID_Identificacion" />
+          <ScalarProperty Name="Identificacion_Usuario" ColumnName="Identificacion_Usuario" />
+          <ScalarProperty Name="Nombre_Usuario" ColumnName="Nombre_Usuario" />
+          <ScalarProperty Name="Apellido_Usuario" ColumnName="Apellido_Usuario" />
+          <ScalarProperty Name="Correo_Usuario" ColumnName="Correo_Usuario" />
+          <ScalarProperty Name="Contrasenna_Usuario" ColumnName="Contrasenna_Usuario" />
+          <ScalarProperty Name="ID_Direccion" ColumnName="ID_Direccion" />
+          <ScalarProperty Name="Telefono_Usuario" ColumnName="Telefono_Usuario" />
+          <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
+          <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="PagarCarritoSP" FunctionName="ImportadoraMoyaUlateModel.Store.PagarCarritoSP" />
-    <FunctionImportMapping FunctionImportName="RecuperarCuentaClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.RecuperarCuentaClienteSP">
+    <FunctionImportMapping FunctionImportName="RecuperarCuentaUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.RecuperarCuentaUsuarioSP">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="ImportadoraMoyaUlateModel.RecuperarCuentaClienteSP_Result">
-          <ScalarProperty Name="Nombre_Cliente" ColumnName="Nombre_Cliente" />
-          <ScalarProperty Name="Apellido_Cliente" ColumnName="Apellido_Cliente" />
-          <ScalarProperty Name="Correo_Cliente" ColumnName="Correo_Cliente" />
-          <ScalarProperty Name="Contrasenna_Cliente" ColumnName="Contrasenna_Cliente" />
+        <ComplexTypeMapping TypeName="ImportadoraMoyaUlateModel.RecuperarCuentaUsuarioSP_Result">
+          <ScalarProperty Name="Nombre_Usuario" ColumnName="Nombre_Usuario" />
+          <ScalarProperty Name="Apellido_Usuario" ColumnName="Apellido_Usuario" />
+          <ScalarProperty Name="Correo_Usuario" ColumnName="Correo_Usuario" />
+          <ScalarProperty Name="Contrasenna_Usuario" ColumnName="Contrasenna_Usuario" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="RegistrarCategoria" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarCategoria" />
-    <FunctionImportMapping FunctionImportName="RegistrarClienteSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarClienteSP" />
     <FunctionImportMapping FunctionImportName="RegistrarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarEmpresaSP" />
     <FunctionImportMapping FunctionImportName="RegistrarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarProveedorSP" />
+    <FunctionImportMapping FunctionImportName="RegistrarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarUsuarioSP" />
   </EntityContainerMapping>
 </Mapping>

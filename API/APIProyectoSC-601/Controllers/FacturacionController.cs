@@ -47,12 +47,12 @@ namespace APIProyectoSC_601.Controllers
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     return (from x in context.Factura_Encabezado
-                            join y in context.Clientes on x.ID_Usuario equals y.ID_Cliente
+                            join y in context.Usuario on x.ID_Usuario equals y.ID_Usuario
                             select new
                             {
                                 x.ID_Factura,
-                                NombreCliente = y.Nombre_Cliente,
-                                ApellidoCliente = y.Apellido_Cliente,
+                                NombreCliente = y.Nombre_Usuario,
+                                ApellidoCliente = y.Apellido_Usuario,
                                 x.FechaCompra,
                                 x.TotalCompra,
                             }).OrderByDescending(x => x.FechaCompra).ToList();
@@ -112,15 +112,15 @@ namespace APIProyectoSC_601.Controllers
                     decimal factor = 1.13m;
 
                     var facturaData = (from x in context.Factura_Encabezado
-                                       join y in context.Clientes on x.ID_Usuario equals y.ID_Cliente
+                                       join y in context.Usuario on x.ID_Usuario equals y.ID_Usuario
                                        join z in context.Factura_Detalle on x.ID_Factura equals z.ID_Factura
                                        where x.ID_Usuario == q
                                        select new FacturaEnt
                                        {
                                            ID_Factura = x.ID_Factura,
-                                           NombreCliente = y.Nombre_Cliente,
-                                           ApellidoCliente = y.Apellido_Cliente,
-                                           CorreoCliente = y.Correo_Cliente,
+                                           NombreCliente = y.Nombre_Usuario,
+                                           ApellidoCliente = y.Apellido_Usuario,
+                                           CorreoCliente = y.Correo_Usuario,
                                            FechaCompra = x.FechaCompra,
                                            TotalCompra = x.TotalCompra,
                                            SubTotal = (x.TotalCompra / factor),

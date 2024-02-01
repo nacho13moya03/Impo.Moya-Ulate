@@ -12,20 +12,18 @@ namespace APIProyectoSC_601
     using System;
     using System.Collections.Generic;
     
-    public partial class Empresa
+    public partial class Identificacion
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Empresa()
+        public Identificacion()
         {
-            this.Proveedores = new HashSet<Proveedores>();
+            this.Usuario = new HashSet<Usuario>();
         }
     
-        public long ID_Empresa { get; set; }
-        public string Nombre_empresa { get; set; }
-        public string Descripcion { get; set; }
-        public string Ubicacion { get; set; }
+        public int ID_Identificacion { get; set; }
+        public string Nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Proveedores> Proveedores { get; set; }
+        public virtual ICollection<Usuario> Usuario { get; set; }
     }
 }

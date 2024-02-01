@@ -12,18 +12,14 @@ namespace APIProyectoSC_601
     using System;
     using System.Collections.Generic;
     
-    public partial class Categorias
+    public partial class Distrito
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Categorias()
-        {
-            this.Producto = new HashSet<Producto>();
-        }
-    
-        public int ID_Categoria { get; set; }
+        public int ID_Provincia { get; set; }
+        public int ID_Canton { get; set; }
+        public int ID_Distrito { get; set; }
         public string Nombre { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Producto> Producto { get; set; }
+        public virtual Canton Canton { get; set; }
+        public virtual Provincia Provincia { get; set; }
     }
 }

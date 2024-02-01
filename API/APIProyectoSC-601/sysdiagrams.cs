@@ -12,16 +12,12 @@ namespace APIProyectoSC_601
     using System;
     using System.Collections.Generic;
     
-    public partial class Factura_Detalle
+    public partial class sysdiagrams
     {
-        public long ID_Detalle { get; set; }
-        public long ID_Factura { get; set; }
-        public long ID_Producto { get; set; }
-        public decimal PrecioPagado { get; set; }
-        public int CantidadPagado { get; set; }
-        public decimal ImpuestoPagado { get; set; }
-    
-        public virtual Factura_Encabezado Factura_Encabezado { get; set; }
-        public virtual Producto Producto { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

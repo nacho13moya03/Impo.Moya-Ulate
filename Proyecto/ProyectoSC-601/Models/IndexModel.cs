@@ -29,11 +29,11 @@ namespace ProyectoSC_601.Models
         }
 
         //Funcion para contar la cantidad de clientes y mostrarla en el inicio
-        public int ContarClientes()
+        public int ContarUsuarios()
         {
             using (var client = new HttpClient())
             {
-                var urlApi = rutaServidor + "ContarClientes";
+                var urlApi = rutaServidor + "ContarUsuarios";
                 var res = client.GetAsync(urlApi).Result;
                 return res.Content.ReadFromJsonAsync<int>().Result;
             }

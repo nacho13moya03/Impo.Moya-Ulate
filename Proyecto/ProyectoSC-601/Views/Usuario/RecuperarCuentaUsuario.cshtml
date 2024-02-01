@@ -1,6 +1,6 @@
-﻿@model ProyectoSC_601.Entities.ClienteEnt
+﻿@model ProyectoSC_601.Entities.UsuarioEnt
 @{
-    ViewBag.Title = "RecuperarCuentaCliente";
+    ViewBag.Title = "RecuperarCuentaUsuario";
     Layout = "~/Views/Shared/_Layout_Login.cshtml";
     <link href="~/Assets/css/logstyle.css" rel="stylesheet">
 }
@@ -14,16 +14,16 @@
             </div>
         }
 
-        @using (Html.BeginForm("RecuperarCuentaCliente", "Cliente", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate" }))
+        @using (Html.BeginForm("RecuperarCuentaUsuario", "Usuario", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate" }))
         {
             <h1 style="font-size:30px!important;">Recuperar Cuenta</h1>
             <br />
             <div style="align-self: flex-start;">
-                <label class="medium" for="identificacion">Identificación</label>
+                <label class="medium" for="identificacion">Correo Electrónico</label>
             </div>
-            @Html.TextBoxFor(m => m.Ced_Cliente, new { @placeholder = "XXXXXXXXX", @type = "text", required = "required" })
+            @Html.TextBoxFor(m => m.Correo_Usuario, new { @placeholder = "usuario@ejemplo.com", @type = "text", required = "required" })
             <div style="align-self: flex-start;">
-                @Html.ValidationMessageFor(m => m.Ced_Cliente, "", new { @style = "color: red;" })
+                @Html.ValidationMessageFor(m => m.Correo_Usuario, "", new { @style = "color: red;" })
             </div>
             <br />
             <button type="submit" style=" margin-top: 8%;">Recuperar</button>
@@ -33,7 +33,7 @@
         <div class="overlay">
             <div class="overlay-panel overlay-right">
                 <h3>¿Ya tienes una cuenta?</h3><br />
-                <button class="ghost" id="signUp" onclick="location.href='@Url.Action("Login", "Cliente")'">Iniciar Sesión</button>
+                <button class="ghost" id="signUp" onclick="location.href='@Url.Action("Login", "Usuario")'">Iniciar Sesión</button>
 
             </div>
         </div>

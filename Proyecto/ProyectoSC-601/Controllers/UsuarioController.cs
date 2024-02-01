@@ -8,46 +8,52 @@ using System.Web.Mvc;
 
 namespace ProyectoSC_601.Controllers
 {
-    public class ClienteController : Controller
+    public class UsuarioController : Controller
     {
         
-        ClienteModel modelCliente = new ClienteModel();
+        UsuarioModel modelUsuario = new UsuarioModel();
 
         [HttpGet]
-        public ActionResult RegistroCliente()
+        public ActionResult RegistroUsuario()
         {
+            ViewBag.Identificaciones = modelUsuario.ConsultarTiposIdentificaciones();
             return View();
         }
 
         //Se llama al modelo para registrar al cliente y se devuelven mensajes de exito o error
-        [HttpPost]
-        public ActionResult RegistroCliente(ClienteEnt entidad)
+       [HttpPost]
+        public ActionResult RegistroUsuario(UsuarioEnt entidad)
         {
             if (ModelState.IsValid)
             {
-                string cedulaExistente = modelCliente.ComprobarCedulaExistente(entidad);
+                string cedulaExistente = modelUsuario.ComprobarCedulaExistente(entidad);
                 if(cedulaExistente == "Existe")
                 {
                     ViewBag.MensajeNoExitoso = "El usuario ya está registrado";
+                    ViewBag.Identificaciones = modelUsuario.ConsultarTiposIdentificaciones();
                     return View();
                 }
                 else { 
-                    string correoExistente = modelCliente.ComprobarCorreoExistenteCliente(entidad);
+                    string correoExistente = modelUsuario.ComprobarCorreoExistenteUsuario(entidad);
                     if (correoExistente == "Existe")
                     {
                         ViewBag.MensajeNoExitoso = "Ese correo está asociado a otra cuenta";
+                        ViewBag.Identificaciones = modelUsuario.ConsultarTiposIdentificaciones();
                         return View();
                     } else {
-                        string respuesta = modelCliente.RegistroCliente(entidad);
+                        string respuesta = modelUsuario.RegistroUsuario(entidad);
 
                         if (respuesta == "OK")
                         {
+                            ModelState.Clear();
                             ViewBag.MensajeExitoso = "La información se ha registrado exitosamente";
+                            ViewBag.Identificaciones = modelUsuario.ConsultarTiposIdentificaciones();
                             return View();
                         }
                         else
                         {
                             ViewBag.MensajeNoExitoso = "No se ha podido registrar la información";
+                            ViewBag.Identificaciones = modelUsuario.ConsultarTiposIdentificaciones();
                             return View();
                         }
                     }
@@ -55,7 +61,8 @@ namespace ProyectoSC_601.Controllers
             }
             else
                 {
-                    return View(entidad);
+                ViewBag.Identificaciones = modelUsuario.ConsultarTiposIdentificaciones();
+                return View(entidad);
                 }
             }
 
@@ -67,24 +74,24 @@ namespace ProyectoSC_601.Controllers
 
         // Se llama al modelo para iniciar sesion y redirije a las paginas correspondientes basado en el rol 
         [HttpPost]
-        public ActionResult Login(ClienteEnt entidad)
+        public ActionResult Login(UsuarioEnt entidad)
         {
-            ModelState.Remove("Ced_Cliente");
-            ModelState.Remove("Nombre_Cliente");
-            ModelState.Remove("Apellido_Cliente");
+            ModelState.Remove("Identificacion_Usuario");
+            ModelState.Remove("Nombre_Usuario");
+            ModelState.Remove("Apellido_Usuario");
             if (ModelState.IsValid)  
             {
                
-                    var respuesta = modelCliente.Login(entidad);
+                    var respuesta = modelUsuario.Login(entidad);
 
-                if (respuesta != null && respuesta.Rol_Cliente == 2)
+                if (respuesta != null && respuesta.ID_Rol == 2)
                 {
-                    Session["ID_Cliente"] = respuesta.ID_Cliente;
+                    Session["ID_Usuario"] = respuesta.ID_Usuario;
                     return RedirectToAction("Index", "Home");
                 }
-                else if (respuesta != null && respuesta.Rol_Cliente == 1)
+                else if (respuesta != null && respuesta.ID_Rol == 1)
                 {
-                    Session["ID_Cliente"] = respuesta.ID_Cliente;
+                    Session["ID_Cliente"] = respuesta.ID_Usuario;
                     return RedirectToAction("IndexAdmin", "Home");
 
                 }
@@ -101,7 +108,7 @@ namespace ProyectoSC_601.Controllers
         }
 
         [HttpGet]
-        public ActionResult RecuperarCuentaCliente()
+        public ActionResult RecuperarCuentaUsuario()
         {
             return View();
         }
@@ -109,18 +116,20 @@ namespace ProyectoSC_601.Controllers
 
         //Se llama al modelo para recuperar la cuenta, si es exitoso lo redirije al login y si no muestra mensaje de error
         [HttpPost]
-        public ActionResult RecuperarCuentaCliente(ClienteEnt entidad)
+        public ActionResult RecuperarCuentaUsuario(UsuarioEnt entidad)
         {
-            ModelState.Remove("Correo_Cliente");  
-            ModelState.Remove("Contrasenna_Cliente"); 
+            ModelState.Remove("Nombre_Usuario");
+            ModelState.Remove("Apellido_Usuario");
+            ModelState.Remove("Identificacion_Usuario");  
+            ModelState.Remove("Contrasenna_Usuario"); 
 
             if (ModelState.IsValid)
             {
-                string respuesta = modelCliente.RecuperarCuentaCliente(entidad);
+                string respuesta = modelUsuario.RecuperarCuentaUsuario(entidad);
 
                 if (respuesta == "OK")
                 {
-                    return RedirectToAction("Login", "Cliente");
+                    return RedirectToAction("Login", "Usuario");
                 }
                 else
                 {
@@ -136,42 +145,42 @@ namespace ProyectoSC_601.Controllers
         }
 
         //Devuelve la vista de perfil con los datos del cliente
-        [HttpGet]
+      /*  [HttpGet]
         public ActionResult PerfilCliente()
         {
             long q = long.Parse(Session["ID_Cliente"].ToString());
-            var datos = modelCliente.ConsultaClienteEspecifico(q);
+            var datos = modelUsuario.ConsultaClienteEspecifico(q);
             Session["ID_Cliente"] = datos.ID_Cliente;
             return View(datos);
         }
-
+      */
         //Actualiza los datos del cliente
-        [HttpPost]
-        public ActionResult PerfilCliente(ClienteEnt entidad)
+       /* [HttpPost]
+        public ActionResult PerfilCliente(UsuarioEnt entidad)
         {
-            string cedulaExistente = modelCliente.ComprobarCedulaExistente(entidad);
+            string cedulaExistente = modelUsuario.ComprobarCedulaExistente(entidad);
             if (cedulaExistente == "Existe")
             {
                 ViewBag.MensajeNoExitoso = "El usuario ya está registrado";
                 long q = long.Parse(Session["ID_Cliente"].ToString());
-                var datos = modelCliente.ConsultaClienteEspecifico(q);
+                var datos = modelUsuario.ConsultaClienteEspecifico(q);
                 Session["ID_Cliente"] = datos.ID_Cliente;
                 return View(datos);
             }
             else
             {
-                string correoExistente = modelCliente.ComprobarCorreoExistenteCliente(entidad);
+                string correoExistente = modelUsuario.ComprobarCorreoExistenteCliente(entidad);
                 if (correoExistente == "Existe")
                 {
                     ViewBag.MensajeNoExitoso = "Ese correo está asociado a otra cuenta";
                     long q = long.Parse(Session["ID_Cliente"].ToString());
-                    var datos = modelCliente.ConsultaClienteEspecifico(q);
+                    var datos = modelUsuario.ConsultaClienteEspecifico(q);
                     Session["ID_Cliente"] = datos.ID_Cliente;
                     return View(datos);
                 }
                 else
                 {
-                    string respuesta = modelCliente.ActualizarCuentaCliente(entidad);
+                    string respuesta = modelUsuario.ActualizarCuentaCliente(entidad);
 
                     if (respuesta == "OK")
                     {
@@ -184,19 +193,19 @@ namespace ProyectoSC_601.Controllers
                     }
                 }
             }
-        }
+        }*/
 
         //Inactiva el usuario segun el id del cliente recibido
-        [HttpGet]
+      /*  [HttpGet]
         public ActionResult InactivarCliente(long q)
         {
-            var entidad = new ClienteEnt();
+            var entidad = new UsuarioEnt();
             entidad.ID_Cliente = q;
-            modelCliente.InactivarCliente(entidad);
+            modelUsuario.InactivarCliente(entidad);
             return RedirectToAction("CerrarSesionCliente", "Cliente");
 
         }
-
+      */
          //Limpia los datos de la sesion y lo redirije al index
         [HttpGet]
         public ActionResult CerrarSesionCliente()
@@ -206,10 +215,10 @@ namespace ProyectoSC_601.Controllers
         }
 
         //Muestra los datos de todos los clientes en el administrador
-        [HttpGet]
+      /*  [HttpGet]
         public ActionResult GestionClientes()
         {
-            var datos = modelCliente.ConsultarClientesAdministrador();
+            var datos = modelUsuario.ConsultarClientesAdministrador();
             return View(datos);
         }
 
@@ -217,10 +226,10 @@ namespace ProyectoSC_601.Controllers
         [HttpGet]
         public ActionResult ActualizarEstadoCliente(long q)
         {
-            var entidad = new ClienteEnt();
+            var entidad = new UsuarioEnt();
             entidad.ID_Cliente = q;
 
-            string respuesta = modelCliente.ActualizarEstadoCliente(entidad);
+            string respuesta = modelUsuario.ActualizarEstadoCliente(entidad);
 
             if (respuesta == "OK")
             {
@@ -231,6 +240,6 @@ namespace ProyectoSC_601.Controllers
                 ViewBag.Mensaje = "No se ha podido cambiar el estado del cliente";
                 return View();
             }
-        }
+        }*/
     }
 }

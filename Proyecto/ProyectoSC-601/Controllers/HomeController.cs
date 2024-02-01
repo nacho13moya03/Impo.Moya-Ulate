@@ -16,7 +16,7 @@ namespace ProyectoSC_601.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            ViewBag.CantidadClientes = modelIndex.ContarClientes();
+            ViewBag.CantidadClientes = modelIndex.ContarUsuarios();
             ViewBag.CantidadVentas = modelIndex.ContarVentas();
             return View();
         }
@@ -30,13 +30,13 @@ namespace ProyectoSC_601.Controllers
             if (respuesta == "OK")
             {
                 ViewBag.MensajeExitoso = "La información se ha enviado con éxito";
-                ViewBag.CantidadClientes = modelIndex.ContarClientes();
+                ViewBag.CantidadClientes = modelIndex.ContarUsuarios();
                 return View();
             }
             else
             {
                 ViewBag.MensajeNoExitoso = "No se ha podido enviar la informacion";
-                ViewBag.CantidadClientes = modelIndex.ContarClientes();
+                ViewBag.CantidadClientes = modelIndex.ContarUsuarios();
                 return View();
             }
         }

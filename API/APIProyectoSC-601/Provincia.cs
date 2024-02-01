@@ -12,20 +12,21 @@ namespace APIProyectoSC_601
     using System;
     using System.Collections.Generic;
     
-    public partial class Empresa
+    public partial class Provincia
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Empresa()
+        public Provincia()
         {
-            this.Proveedores = new HashSet<Proveedores>();
+            this.Canton = new HashSet<Canton>();
+            this.Distrito = new HashSet<Distrito>();
         }
     
-        public long ID_Empresa { get; set; }
-        public string Nombre_empresa { get; set; }
-        public string Descripcion { get; set; }
-        public string Ubicacion { get; set; }
+        public int ID_Provincia { get; set; }
+        public string Nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Proveedores> Proveedores { get; set; }
+        public virtual ICollection<Canton> Canton { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Distrito> Distrito { get; set; }
     }
 }
