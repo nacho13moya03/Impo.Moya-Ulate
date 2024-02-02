@@ -382,6 +382,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="ActualizarCuentaUsuarioSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="bigint" Mode="In" />
+    <Parameter Name="Nombre" Type="varchar" Mode="In" />
+    <Parameter Name="Apellido" Type="varchar" Mode="In" />
+    <Parameter Name="Correo" Type="varchar" Mode="In" />
+    <Parameter Name="NuevaContrasenna" Type="varchar" Mode="In" />
+    <Parameter Name="Telefono" Type="varchar" Mode="In" />
+    <Parameter Name="Prov" Type="int" Mode="In" />
+    <Parameter Name="Canton" Type="int" Mode="In" />
+    <Parameter Name="Distrito" Type="int" Mode="In" />
+    <Parameter Name="direccion" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="ActualizarEmpresaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ID_Empresa" Type="bigint" Mode="In" />
     <Parameter Name="Nombre_empresa" Type="varchar" Mode="In" />

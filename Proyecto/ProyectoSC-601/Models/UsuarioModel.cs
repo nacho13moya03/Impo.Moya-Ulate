@@ -167,6 +167,16 @@ namespace ProyectoSC_601.Models
             }
         }
 
+        public List<SelectListItem> cargarDistritos(int q)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "cargarDistritos?q=" + q;
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<List<SelectListItem>>().Result;
+            }
+        }
+
         //Funcion para inactivar el cliente
         public void InactivarUsuario(UsuarioEnt entidad)
         {
@@ -181,7 +191,7 @@ namespace ProyectoSC_601.Models
 
 
         //Funcion para actualizar los datos del cliente desde el perfil
-        /*  public string ActualizarCuentaCliente(UsuarioEnt entidad)
+        public string ActualizarCuentaCliente(UsuarioEnt entidad)
           {
               using (var client = new HttpClient())
               {
@@ -191,6 +201,6 @@ namespace ProyectoSC_601.Models
                   return res.Content.ReadFromJsonAsync<string>().Result;
               }
           }
-          */
+          
     }
 }

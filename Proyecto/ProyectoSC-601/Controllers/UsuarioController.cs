@@ -25,6 +25,11 @@ namespace ProyectoSC_601.Controllers
         public ActionResult RegistroUsuario(UsuarioEnt entidad)
         {
             ModelState.Remove("NuevaContrasenna_Usuario");
+            ModelState.Remove("ID_Provincia");
+            ModelState.Remove("ID_Canton");
+            ModelState.Remove("ID_Distrito");
+            ModelState.Remove("Direccion_Exacta");
+            ModelState.Remove("Telefono_Usuario");
             if (ModelState.IsValid)
             {
                 string cedulaExistente = modelUsuario.ComprobarCedulaExistente(entidad);
@@ -81,6 +86,11 @@ namespace ProyectoSC_601.Controllers
             ModelState.Remove("Nombre_Usuario");
             ModelState.Remove("Apellido_Usuario");
             ModelState.Remove("NuevaContrasenna_Usuario");
+            ModelState.Remove("ID_Provincia");
+            ModelState.Remove("ID_Canton");
+            ModelState.Remove("ID_Distrito");
+            ModelState.Remove("Direccion_Exacta");
+            ModelState.Remove("Telefono_Usuario");
             if (ModelState.IsValid)  
             {
                
@@ -125,6 +135,11 @@ namespace ProyectoSC_601.Controllers
             ModelState.Remove("Identificacion_Usuario");  
             ModelState.Remove("Contrasenna_Usuario");
             ModelState.Remove("NuevaContrasenna_Usuario");
+            ModelState.Remove("ID_Provincia");
+            ModelState.Remove("ID_Canton");
+            ModelState.Remove("ID_Distrito");
+            ModelState.Remove("Direccion_Exacta");
+            ModelState.Remove("Telefono_Usuario");
 
             if (ModelState.IsValid)
             {
@@ -156,6 +171,18 @@ namespace ProyectoSC_601.Controllers
             return View(datos);
         }
 
+        public ActionResult cargarCantones(int idProvincia)
+        {
+            var cantones = modelUsuario.cargarCantones(idProvincia);
+            return Json(cantones, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult cargarDistritos(int idCanton)
+        {
+            var distritos = modelUsuario.cargarDistritos(idCanton);
+            return Json(distritos, JsonRequestBehavior.AllowGet);
+        }
+
         //Devuelve la vista de perfil con los datos del cliente
         [HttpGet]
           public ActionResult PerfilCliente()
@@ -164,60 +191,61 @@ namespace ProyectoSC_601.Controllers
                 var datos = modelUsuario.ConsultaClienteEspecifico(q);
                 Session["ID_Usuario"] = datos.ID_Usuario;
                 ViewBag.Provincias = modelUsuario.ConsultarProvincias();
-                ViewBag.Cantones = modelUsuario.ConsultarCantones();
-                ViewBag.Distritos = modelUsuario.ConsultarDistritos();
+                ViewBag.Cantones = "";
+;                ViewBag.Distritos = "";
                 return View(datos);
           }
 
-        public ActionResult cargarCantones(int idProvincia)
-        {
-
-            var cantones = modelUsuario.cargarCantones(idProvincia);
-
-            var jsonResult = Json(cantones, JsonRequestBehavior.AllowGet);
-            return jsonResult;
-        }
+      
 
         //Actualiza los datos del cliente
-        /* [HttpPost]
+        [HttpPost]
          public ActionResult PerfilCliente(UsuarioEnt entidad)
          {
-             string cedulaExistente = modelUsuario.ComprobarCedulaExistente(entidad);
-             if (cedulaExistente == "Existe")
-             {
-                 ViewBag.MensajeNoExitoso = "El usuario ya está registrado";
-                 long q = long.Parse(Session["ID_Cliente"].ToString());
-                 var datos = modelUsuario.ConsultaClienteEspecifico(q);
-                 Session["ID_Cliente"] = datos.ID_Cliente;
-                 return View(datos);
-             }
-             else
-             {
-                 string correoExistente = modelUsuario.ComprobarCorreoExistenteCliente(entidad);
+            if (ModelState.IsValid)
+            {
+
+                string correoExistente = modelUsuario.ComprobarCorreoExistenteUsuario(entidad);
                  if (correoExistente == "Existe")
                  {
                      ViewBag.MensajeNoExitoso = "Ese correo está asociado a otra cuenta";
-                     long q = long.Parse(Session["ID_Cliente"].ToString());
+                     long q = long.Parse(Session["ID_Usuario"].ToString());
                      var datos = modelUsuario.ConsultaClienteEspecifico(q);
-                     Session["ID_Cliente"] = datos.ID_Cliente;
+                     Session["ID_Usuario"] = datos.ID_Usuario;
                      return View(datos);
                  }
                  else
                  {
-                     string respuesta = modelUsuario.ActualizarCuentaCliente(entidad);
+                    if(entidad.NuevaContrasenna_Usuario==null || entidad.NuevaContrasenna_Usuario.Length == 0)
+                    {
+                        entidad.NuevaContrasenna_Usuario = entidad.Contrasenna_Usuario;
+                    }
 
-                     if (respuesta == "OK")
-                     {
-                         return RedirectToAction("PerfilCliente", "Cliente");
-                     }
-                     else
-                     {
-                         ViewBag.MensajeNoExitoso = "No se ha podido actualizar su información";
-                         return View();
-                     }
-                 }
-             }
-         }*/
+                    if (entidad.Apellido_Usuario == null || entidad.Apellido_Usuario.Length == 0)
+                    {
+                        entidad.Apellido_Usuario = string.Empty;
+                    }
+
+                string respuesta = modelUsuario.ActualizarCuentaCliente(entidad);
+
+                    if (respuesta == "OK")
+                    {
+                        return RedirectToAction("PerfilCliente", "Usuario");
+                    }
+                    else
+                    {
+                        ViewBag.MensajeNoExitoso = "No se ha podido actualizar su información";
+                        return View();
+                    }
+
+                }
+            }
+            else
+            {
+                return View(entidad);
+            }
+
+        }
 
         //Inactiva el usuario segun el id del cliente recibido
         [HttpGet]

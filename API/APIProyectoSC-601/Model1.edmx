@@ -387,6 +387,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ActualizarCuentaUsuarioSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="bigint" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Apellido" Type="varchar" Mode="In" />
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+          <Parameter Name="NuevaContrasenna" Type="varchar" Mode="In" />
+          <Parameter Name="Telefono" Type="varchar" Mode="In" />
+          <Parameter Name="Prov" Type="int" Mode="In" />
+          <Parameter Name="Canton" Type="int" Mode="In" />
+          <Parameter Name="Distrito" Type="int" Mode="In" />
+          <Parameter Name="direccion" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="ActualizarEmpresaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Empresa" Type="bigint" Mode="In" />
           <Parameter Name="Nombre_empresa" Type="varchar" Mode="In" />
@@ -1090,7 +1102,19 @@
           <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="InactivarUsuarioSP">
-            <Parameter Name="CodigoUsuario" Mode="In" Type="Int64" />
+          <Parameter Name="CodigoUsuario" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="ActualizarCuentaUsuarioSP">
+            <Parameter Name="ID" Mode="In" Type="Int64" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="NuevaContrasenna" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Prov" Mode="In" Type="Int32" />
+            <Parameter Name="Canton" Mode="In" Type="Int32" />
+            <Parameter Name="Distrito" Mode="In" Type="Int32" />
+            <Parameter Name="direccion" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="IniciarSesionSP_Result">
@@ -1376,6 +1400,7 @@
           <FunctionImportMapping FunctionImportName="ActualizarEstadoUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoUsuarioSP" />
           <FunctionImportMapping FunctionImportName="ActualizarRolUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarRolUsuarioSP" />
           <FunctionImportMapping FunctionImportName="InactivarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.InactivarUsuarioSP" />
+          <FunctionImportMapping FunctionImportName="ActualizarCuentaUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCuentaUsuarioSP" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

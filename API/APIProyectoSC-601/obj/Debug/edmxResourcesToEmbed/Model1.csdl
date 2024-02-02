@@ -536,6 +536,18 @@
     <FunctionImport Name="InactivarUsuarioSP">
       <Parameter Name="CodigoUsuario" Mode="In" Type="Int64" />
     </FunctionImport>
+    <FunctionImport Name="ActualizarCuentaUsuarioSP">
+      <Parameter Name="ID" Mode="In" Type="Int64" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+      <Parameter Name="Apellido" Mode="In" Type="String" />
+      <Parameter Name="Correo" Mode="In" Type="String" />
+      <Parameter Name="NuevaContrasenna" Mode="In" Type="String" />
+      <Parameter Name="Telefono" Mode="In" Type="String" />
+      <Parameter Name="Prov" Mode="In" Type="Int32" />
+      <Parameter Name="Canton" Mode="In" Type="Int32" />
+      <Parameter Name="Distrito" Mode="In" Type="Int32" />
+      <Parameter Name="direccion" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="IniciarSesionSP_Result">
     <Property Type="Int64" Name="ID_Usuario" Nullable="false" />

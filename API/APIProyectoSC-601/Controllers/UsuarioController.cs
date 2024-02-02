@@ -472,6 +472,39 @@ namespace APIProyectoSC_601.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("cargarDistritos")]
+        public List<System.Web.Mvc.SelectListItem> cargarDistritos(int q)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    var datos = (from x in context.Distrito
+                                 where x.ID_Canton == q
+                                 select x).ToList();
+
+                    List<System.Web.Mvc.SelectListItem> distritos = new List<System.Web.Mvc.SelectListItem>();
+                    foreach (var item in datos)
+                    {
+                        distritos.Add(new System.Web.Mvc.SelectListItem
+                        {
+                            Value = item.ID_Distrito.ToString(),
+                            Text = item.Nombre
+                        });
+                    }
+
+                    return distritos;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ConsultarDistritosPorCanton: " + ex.Message);
+                return new List<System.Web.Mvc.SelectListItem>();
+            }
+        }
+
+
         //Conexion a procedimiento para inactivar al cliente
         [HttpPut]
         [Route("InactivarUsuario")]
@@ -495,7 +528,7 @@ namespace APIProyectoSC_601.Controllers
 
 
         //Conexion a procedimiento para actualizar los datos del cliente desde el perfil
-        /*   [HttpPut]
+        [HttpPut]
            [Route("ActualizarCuentaCliente")]
            public string ActualizarCuentaCliente(UsuarioEnt entidad)
            {
@@ -503,7 +536,7 @@ namespace APIProyectoSC_601.Controllers
                {
                    using (var context = new ImportadoraMoyaUlateEntities())
                    {
-                       context.ActualizarCuentaClienteSP(entidad.Ced_Cliente, entidad.Nombre_Cliente, entidad.Apellido_Cliente, entidad.Correo_Cliente, entidad.Direccion_Cliente, entidad.Tel_Cliente, entidad.ID_Cliente);
+                       context.ActualizarCuentaUsuarioSP(entidad.ID_Usuario, entidad.Nombre_Usuario, entidad.Apellido_Usuario, entidad.Correo_Usuario, entidad.NuevaContrasenna_Usuario, entidad.Telefono_Usuario, entidad.ID_Provincia, entidad.ID_Canton, entidad.ID_Distrito, entidad.Direccion_Exacta);
                        return "OK";
                    }
                }
@@ -514,6 +547,5 @@ namespace APIProyectoSC_601.Controllers
                }
            }
 
-     */
     }
 }

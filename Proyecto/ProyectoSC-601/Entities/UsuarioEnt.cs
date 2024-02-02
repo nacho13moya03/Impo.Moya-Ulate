@@ -50,13 +50,21 @@ namespace ProyectoSC_601.Entities
         
         public int ID_Direccion { get; set; }
 
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
         public int ID_Provincia { get; set; }
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
         public int ID_Canton { get; set; }
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
         public int ID_Distrito { get; set; }
         public string Nombre_Provincia { get; set; }
         public string Nombre_Canton { get; set; }
         public string Nombre_Distrito { get; set; }
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [StringLength(200, MinimumLength = 100, ErrorMessage = "La dirección debe tener entre 100 y 200 caracteres.")]
         public string Direccion_Exacta { get; set; }
+
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        [RegularExpression("^[0-9]{8}$", ErrorMessage = "El teléfono debe contener 8 números.")]
         public string Telefono_Usuario { get; set; }
         public int ID_Estado { get; set; }
         public int ID_Rol { get; set; }

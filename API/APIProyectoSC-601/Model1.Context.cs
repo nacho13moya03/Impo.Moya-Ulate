@@ -282,5 +282,50 @@ namespace APIProyectoSC_601
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InactivarUsuarioSP", codigoUsuarioParameter);
         }
+    
+        public virtual int ActualizarCuentaUsuarioSP(Nullable<long> iD, string nombre, string apellido, string correo, string nuevaContrasenna, string telefono, Nullable<int> prov, Nullable<int> canton, Nullable<int> distrito, string direccion)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(long));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var correoParameter = correo != null ?
+                new ObjectParameter("Correo", correo) :
+                new ObjectParameter("Correo", typeof(string));
+    
+            var nuevaContrasennaParameter = nuevaContrasenna != null ?
+                new ObjectParameter("NuevaContrasenna", nuevaContrasenna) :
+                new ObjectParameter("NuevaContrasenna", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var provParameter = prov.HasValue ?
+                new ObjectParameter("Prov", prov) :
+                new ObjectParameter("Prov", typeof(int));
+    
+            var cantonParameter = canton.HasValue ?
+                new ObjectParameter("Canton", canton) :
+                new ObjectParameter("Canton", typeof(int));
+    
+            var distritoParameter = distrito.HasValue ?
+                new ObjectParameter("Distrito", distrito) :
+                new ObjectParameter("Distrito", typeof(int));
+    
+            var direccionParameter = direccion != null ?
+                new ObjectParameter("direccion", direccion) :
+                new ObjectParameter("direccion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizarCuentaUsuarioSP", iDParameter, nombreParameter, apellidoParameter, correoParameter, nuevaContrasennaParameter, telefonoParameter, provParameter, cantonParameter, distritoParameter, direccionParameter);
+        }
     }
 }
