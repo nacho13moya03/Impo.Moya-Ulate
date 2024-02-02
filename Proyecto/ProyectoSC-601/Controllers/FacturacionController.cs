@@ -17,7 +17,7 @@ namespace ProyectoSC_601.Controllers
         [HttpGet]
         public ActionResult FacturacionCliente()
         {
-            var datos = modelFacturacion.ConsultaFacturasCliente(long.Parse(Session["ID_Cliente"].ToString()));
+            var datos = modelFacturacion.ConsultaFacturasCliente(long.Parse(Session["ID_Usuario"].ToString()));
             return View(datos);
         }
 

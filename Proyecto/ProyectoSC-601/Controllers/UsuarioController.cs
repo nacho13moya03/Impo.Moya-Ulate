@@ -24,6 +24,7 @@ namespace ProyectoSC_601.Controllers
        [HttpPost]
         public ActionResult RegistroUsuario(UsuarioEnt entidad)
         {
+            ModelState.Remove("NuevaContrasenna_Usuario");
             if (ModelState.IsValid)
             {
                 string cedulaExistente = modelUsuario.ComprobarCedulaExistente(entidad);
@@ -79,6 +80,7 @@ namespace ProyectoSC_601.Controllers
             ModelState.Remove("Identificacion_Usuario");
             ModelState.Remove("Nombre_Usuario");
             ModelState.Remove("Apellido_Usuario");
+            ModelState.Remove("NuevaContrasenna_Usuario");
             if (ModelState.IsValid)  
             {
                
@@ -121,7 +123,8 @@ namespace ProyectoSC_601.Controllers
             ModelState.Remove("Nombre_Usuario");
             ModelState.Remove("Apellido_Usuario");
             ModelState.Remove("Identificacion_Usuario");  
-            ModelState.Remove("Contrasenna_Usuario"); 
+            ModelState.Remove("Contrasenna_Usuario");
+            ModelState.Remove("NuevaContrasenna_Usuario");
 
             if (ModelState.IsValid)
             {
@@ -154,15 +157,27 @@ namespace ProyectoSC_601.Controllers
         }
 
         //Devuelve la vista de perfil con los datos del cliente
-        /*  [HttpGet]
+        [HttpGet]
           public ActionResult PerfilCliente()
           {
-              long q = long.Parse(Session["ID_Cliente"].ToString());
-              var datos = modelUsuario.ConsultaClienteEspecifico(q);
-              Session["ID_Cliente"] = datos.ID_Cliente;
-              return View(datos);
+                long q = long.Parse(Session["ID_Usuario"].ToString());
+                var datos = modelUsuario.ConsultaClienteEspecifico(q);
+                Session["ID_Usuario"] = datos.ID_Usuario;
+                ViewBag.Provincias = modelUsuario.ConsultarProvincias();
+                ViewBag.Cantones = modelUsuario.ConsultarCantones();
+                ViewBag.Distritos = modelUsuario.ConsultarDistritos();
+                return View(datos);
           }
-        */
+
+        public ActionResult cargarCantones(int idProvincia)
+        {
+
+            var cantones = modelUsuario.cargarCantones(idProvincia);
+
+            var jsonResult = Json(cantones, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
         //Actualiza los datos del cliente
         /* [HttpPost]
          public ActionResult PerfilCliente(UsuarioEnt entidad)
@@ -205,16 +220,16 @@ namespace ProyectoSC_601.Controllers
          }*/
 
         //Inactiva el usuario segun el id del cliente recibido
-        /* [HttpGet]
-          public ActionResult InactivarCliente(long q)
+        [HttpGet]
+          public ActionResult InactivarUsuario(long q)
           {
               var entidad = new UsuarioEnt();
-              entidad.ID_Cliente = q;
-              modelUsuario.InactivarCliente(entidad);
-              return RedirectToAction("CerrarSesionCliente", "Cliente");
+              entidad.ID_Usuario = q;
+              modelUsuario.InactivarUsuario(entidad);
+              return RedirectToAction("CerrarSesionUsuario", "Usuario");
 
           }
-        */
+        
         //Limpia los datos de la sesion y lo redirije al index
         [HttpGet]
         public ActionResult CerrarSesionUsuario()

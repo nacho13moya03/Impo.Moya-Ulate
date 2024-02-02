@@ -301,19 +301,44 @@ namespace APIProyectoSC_601.Controllers
         }
 
         //Devuelve los datos de la entidad basados en la cedula recibida
-        /*      [HttpGet]
+            [HttpGet]
               [Route("ConsultaClienteEspecifico")]
-              public Clientes ConsultaClienteEspecifico(long q)
+              public UsuarioEnt ConsultaClienteEspecifico(long q)
               {
                   try
                   {
                       using (var context = new ImportadoraMoyaUlateEntities())
                       {
                           context.Configuration.LazyLoadingEnabled = false;
-                          return (from x in context.Clientes
-                                  where x.ID_Cliente == q
-                                  select x).FirstOrDefault();
-                      }
+                    return (from u in context.Usuario
+                            join i in context.Identificacion on u.ID_Identificacion equals i.ID_Identificacion
+                            join d in context.Direcciones on u.ID_Direccion equals d.ID_Direccion into direccionJoin
+                            from dir in direccionJoin.DefaultIfEmpty() // Left join for Direcciones
+                            join p in context.Provincia on (dir != null ? dir.ID_Provincia : (int?)null) equals p.ID_Provincia into provinciaJoin
+                            from prov in provinciaJoin.DefaultIfEmpty() // Left join for Provincia
+                            join c in context.Canton on (dir != null ? dir.ID_Canton : (int?)null) equals c.ID_Canton into cantonJoin
+                            from cant in cantonJoin.DefaultIfEmpty() // Left join for Canton
+                            join dis in context.Distrito on (dir != null ? dir.ID_Distrito : (int?)null) equals dis.ID_Distrito into distritoJoin
+                            from dist in distritoJoin.DefaultIfEmpty() // Left join for Distrito
+                            where u.ID_Usuario == q
+                            select new UsuarioEnt
+                            {
+                                ID_Usuario = u.ID_Usuario,
+                                Nombre_Identificacion = i.Nombre,
+                                Identificacion_Usuario = u.Identificacion_Usuario,
+                                Nombre_Usuario = u.Nombre_Usuario,
+                                Apellido_Usuario = u.Apellido_Usuario,
+                                Correo_Usuario = u.Correo_Usuario,
+                                Contrasenna_Usuario = u.Contrasenna_Usuario,
+                                Nombre_Provincia = prov != null ? prov.Nombre : "",
+                                Nombre_Canton = cant != null ? cant.Nombre : "",
+                                Nombre_Distrito = dist != null ? dist.Nombre : "",
+                                Direccion_Exacta = dir != null ? dir.Direccion_Exacta : "",
+                                Telefono_Usuario = u.Telefono_Usuario,
+                                ID_Estado = u.ID_Estado,
+                                ID_Rol = u.ID_Rol,
+                            }).FirstOrDefault();
+                }
                   }
                   catch (Exception ex)
                   {
@@ -322,49 +347,173 @@ namespace APIProyectoSC_601.Controllers
                   }
               }
 
-              //Conexion a procedimiento para actualizar los datos del cliente desde el perfil
-              [HttpPut]
-              [Route("ActualizarCuentaCliente")]
-              public string ActualizarCuentaCliente(UsuarioEnt entidad)
-              {
-                  try
-                  {
-                      using (var context = new ImportadoraMoyaUlateEntities())
-                      {
-                          context.ActualizarCuentaClienteSP(entidad.Ced_Cliente, entidad.Nombre_Cliente, entidad.Apellido_Cliente, entidad.Correo_Cliente, entidad.Direccion_Cliente, entidad.Tel_Cliente, entidad.ID_Cliente);
-                          return "OK";
-                      }
-                  }
-                  catch (Exception ex)
-                  {
-                      log.Add("Error en ActualizarCuentaCliente: " + ex.Message);
-                      return string.Empty;
-                  }
-              }
+        [HttpGet]
+        [Route("ConsultarProvincias")]
+        public List<System.Web.Mvc.SelectListItem> ConsultarProvincias()
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    var datos = (from x in context.Provincia
+                                 select x).ToList();
 
-              //Conexion a procedimiento para inactivar al cliente
-              [HttpPut]
-              [Route("InactivarCliente")]
-              public void InactivarCliente(UsuarioEnt entidad)
-              {
-                  try
-                  {
-                      using (var context = new ImportadoraMoyaUlateEntities())
-                      {
-                          context.InactivarClienteSP(entidad.ID_Cliente);
-                      }
-                  }
-                  catch (Exception ex)
-                  {
-                      log.Add("Error en InactivarCliente: " + ex.Message);
-                  }
-              }
+                    List<System.Web.Mvc.SelectListItem> provincias = new List<System.Web.Mvc.SelectListItem>();
+                    foreach (var item in datos)
+                    {
+                        provincias.Add(new System.Web.Mvc.SelectListItem
+                        {
+                            Value = item.ID_Provincia.ToString(),
+                            Text = item.Nombre
+                        });
+                    }
+
+                    return provincias;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ConsultarProvincias: " + ex.Message);
+                return new List<System.Web.Mvc.SelectListItem>();
+            }
+        }
+
+        [HttpGet]
+        [Route("ConsultarCantones")]
+        public List<System.Web.Mvc.SelectListItem> ConsultarCantones()
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    var datos = (from x in context.Canton
+                                 select x).ToList();
+
+                    List<System.Web.Mvc.SelectListItem> cantones = new List<System.Web.Mvc.SelectListItem>();
+                    foreach (var item in datos)
+                    {
+                        cantones.Add(new System.Web.Mvc.SelectListItem
+                        {
+                            Value = item.ID_Canton.ToString(),
+                            Text = item.Nombre
+                        });
+                    }
+
+                    return cantones;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ConsultarCantones: " + ex.Message);
+                return new List<System.Web.Mvc.SelectListItem>();
+            }
+        }
+
+        [HttpGet]
+        [Route("cargarCantones")]
+        public List<System.Web.Mvc.SelectListItem> cargarCantones(int q)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    var datos = (from x in context.Canton
+                                 where x.ID_Provincia == q
+                                 select x).ToList();
+
+                    List<System.Web.Mvc.SelectListItem> cantones = new List<System.Web.Mvc.SelectListItem>();
+                    foreach (var item in datos)
+                    {
+                        cantones.Add(new System.Web.Mvc.SelectListItem
+                        {
+                            Value = item.ID_Canton.ToString(),
+                            Text = item.Nombre
+                        });
+                    }
+
+                    return cantones;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ConsultarCantonesPorProvincia: " + ex.Message);
+                return new List<System.Web.Mvc.SelectListItem>();
+            }
+        }
+
+        [HttpGet]
+        [Route("ConsultarDistritos")]
+        public List<System.Web.Mvc.SelectListItem> ConsultarDistritos()
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    var datos = (from x in context.Distrito
+                                 select x).ToList();
+
+                    List<System.Web.Mvc.SelectListItem> distritos = new List<System.Web.Mvc.SelectListItem>();
+                    foreach (var item in datos)
+                    {
+                        distritos.Add(new System.Web.Mvc.SelectListItem
+                        {
+                            Value = item.ID_Distrito.ToString(),
+                            Text = item.Nombre
+                        });
+                    }
+
+                    return distritos;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ConsultarDistritos: " + ex.Message);
+                return new List<System.Web.Mvc.SelectListItem>();
+            }
+        }
+
+        //Conexion a procedimiento para inactivar al cliente
+        [HttpPut]
+        [Route("InactivarUsuario")]
+        public void InactivarUsuario(UsuarioEnt entidad)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.InactivarUsuarioSP(entidad.ID_Usuario);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en InactivarUsuario: " + ex.Message);
+            }
+        }
 
 
-              
 
-              
 
-        */
+
+        //Conexion a procedimiento para actualizar los datos del cliente desde el perfil
+        /*   [HttpPut]
+           [Route("ActualizarCuentaCliente")]
+           public string ActualizarCuentaCliente(UsuarioEnt entidad)
+           {
+               try
+               {
+                   using (var context = new ImportadoraMoyaUlateEntities())
+                   {
+                       context.ActualizarCuentaClienteSP(entidad.Ced_Cliente, entidad.Nombre_Cliente, entidad.Apellido_Cliente, entidad.Correo_Cliente, entidad.Direccion_Cliente, entidad.Tel_Cliente, entidad.ID_Cliente);
+                       return "OK";
+                   }
+               }
+               catch (Exception ex)
+               {
+                   log.Add("Error en ActualizarCuentaCliente: " + ex.Message);
+                   return string.Empty;
+               }
+           }
+
+     */
     }
 }

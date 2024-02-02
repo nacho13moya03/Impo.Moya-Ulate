@@ -118,7 +118,7 @@ namespace ProyectoSC_601.Models
             }
         }
         //Funcion para mostrar los datos del cliente logueado en el perfil
-        /* public UsuarioEnt ConsultaClienteEspecifico(long q)
+        public UsuarioEnt ConsultaClienteEspecifico(long q)
          {
              using (var client = new HttpClient())
              {
@@ -128,33 +128,69 @@ namespace ProyectoSC_601.Models
              }
          }
 
-         //Funcion para actualizar los datos del cliente desde el perfil
-         public string ActualizarCuentaCliente(UsuarioEnt entidad)
-         {
-             using (var client = new HttpClient())
-             {
-                 var urlApi = rutaServidor + "ActualizarCuentaCliente";
-                 var jsonData = JsonContent.Create(entidad);
-                 var res = client.PutAsync(urlApi, jsonData).Result;
-                 return res.Content.ReadFromJsonAsync<string>().Result;
-             }
-         }
+        public List<SelectListItem> ConsultarProvincias()
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ConsultarProvincias";
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<List<SelectListItem>>().Result;
+            }
+        }
 
-         //Funcion para inactivar el cliente
-         public void InactivarCliente(UsuarioEnt entidad)
-         {
-             using (var client = new HttpClient())
-             {
-                 var urlApi = rutaServidor + "InactivarCliente";
-                 var jsonData = JsonContent.Create(entidad);
-                 var res = client.PutAsync(urlApi, jsonData).Result;
-             }
-         }
+        public List<SelectListItem> ConsultarCantones()
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ConsultarCantones";
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<List<SelectListItem>>().Result;
+            }
+        }
+        public List<SelectListItem> ConsultarDistritos()
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ConsultarDistritos";
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<List<SelectListItem>>().Result;
+            }
+        }
 
-         
+        public List<SelectListItem> cargarCantones(int q)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "cargarCantones?q=" + q;
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<List<SelectListItem>>().Result;
+            }
+        }
 
-         
+        //Funcion para inactivar el cliente
+        public void InactivarUsuario(UsuarioEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "InactivarUsuario";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PutAsync(urlApi, jsonData).Result;
+            }
+        }
 
-         */
+
+
+        //Funcion para actualizar los datos del cliente desde el perfil
+        /*  public string ActualizarCuentaCliente(UsuarioEnt entidad)
+          {
+              using (var client = new HttpClient())
+              {
+                  var urlApi = rutaServidor + "ActualizarCuentaCliente";
+                  var jsonData = JsonContent.Create(entidad);
+                  var res = client.PutAsync(urlApi, jsonData).Result;
+                  return res.Content.ReadFromJsonAsync<string>().Result;
+              }
+          }
+          */
     }
 }

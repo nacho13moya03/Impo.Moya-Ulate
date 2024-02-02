@@ -418,6 +418,9 @@
         <Function Name="EliminarProveedorSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Proveedor" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="InactivarUsuarioSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoUsuario" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="IniciarSesionSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="varchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
@@ -1086,6 +1089,9 @@
           <FunctionImport Name="ActualizarRolUsuarioSP">
           <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
           </FunctionImport>
+          <FunctionImport Name="InactivarUsuarioSP">
+            <Parameter Name="CodigoUsuario" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="IniciarSesionSP_Result">
           <Property Type="Int64" Name="ID_Usuario" Nullable="false" />
@@ -1369,6 +1375,7 @@
           <FunctionImportMapping FunctionImportName="RegistrarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarUsuarioSP" />
           <FunctionImportMapping FunctionImportName="ActualizarEstadoUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoUsuarioSP" />
           <FunctionImportMapping FunctionImportName="ActualizarRolUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarRolUsuarioSP" />
+          <FunctionImportMapping FunctionImportName="InactivarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.InactivarUsuarioSP" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

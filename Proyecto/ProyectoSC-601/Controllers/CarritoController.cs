@@ -20,14 +20,14 @@ namespace ProyectoSC_601.Controllers
         public ActionResult RegistrarCarrito(int cantidad, long ID_Producto)
         {
             var entidad = new CarritoEnt();
-            entidad.ID_Usuario = long.Parse(Session["ID_Cliente"].ToString());
+            entidad.ID_Usuario = long.Parse(Session["ID_Usuario"].ToString());
             entidad.ID_Producto = ID_Producto;
             entidad.Cantidad = cantidad;
             entidad.FechaCarrito = DateTime.Now;
 
             modelCarrito.RegistrarCarrito(entidad);
 
-            var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Cliente"].ToString()));
+            var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Usuario"].ToString()));
             Session["Cant"] = datos.AsEnumerable().Sum(x => x.Cantidad);
             Session["SubT"] = datos.AsEnumerable().Sum(x => x.SubTotal);
 
@@ -38,7 +38,7 @@ namespace ProyectoSC_601.Controllers
         public ActionResult Carrito()
         {
 
-            var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Cliente"].ToString()));
+            var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Usuario"].ToString()));
             Session["TotalPago"] = datos.AsEnumerable().Sum(x => x.Total);
             return View(datos);
 
@@ -56,7 +56,7 @@ namespace ProyectoSC_601.Controllers
         {
             modelCarrito.EliminarRegistroCarrito(q);
 
-            var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Cliente"].ToString()));
+            var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Usuario"].ToString()));
             Session["Cant"] = datos.AsEnumerable().Sum(x => x.Cantidad);
             Session["SubT"] = datos.AsEnumerable().Sum(x => x.SubTotal);
             return RedirectToAction("Carrito", "Carrito");
@@ -66,16 +66,16 @@ namespace ProyectoSC_601.Controllers
         public ActionResult PagarCarrito()
         {
             var entidad = new CarritoEnt();
-            entidad.ID_Usuario = long.Parse(Session["ID_Cliente"].ToString());
+            entidad.ID_Usuario = long.Parse(Session["ID_Usuario"].ToString());
 
             var respuesta = modelCarrito.PagarCarrito(entidad);
-            var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Cliente"].ToString()));
+            var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Usuario"].ToString()));
             Session["Cant"] = datos.AsEnumerable().Sum(x => x.Cantidad);
             Session["SubT"] = datos.AsEnumerable().Sum(x => x.SubTotal);
 
             if (respuesta == "TRUE")
             {
-                var datosCorreo = modelFacturacion.ConsultarDatosEnviarCorreo(long.Parse(Session["ID_Cliente"].ToString()));
+                var datosCorreo = modelFacturacion.ConsultarDatosEnviarCorreo(long.Parse(Session["ID_Usuario"].ToString()));
 
 
                 if (datosCorreo == "OK")

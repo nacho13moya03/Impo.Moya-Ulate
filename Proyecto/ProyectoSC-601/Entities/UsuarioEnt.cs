@@ -42,7 +42,17 @@ namespace ProyectoSC_601.Entities
         [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$", ErrorMessage = "La contraseña debe tener entre 8 y 15 caracteres y contener números, letras y caracteres especiales.")]
 
         public string Contrasenna_Usuario { get; set; }
+
+        [StringLength(15, MinimumLength = 8, ErrorMessage = "La contraseña debe tener entre 8 y 15 caracteres.")]
+        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$", ErrorMessage = "La contraseña debe tener entre 8 y 15 caracteres y contener números, letras y caracteres especiales.")]
+
+        public string NuevaContrasenna_Usuario { get; set; }
+        
         public int ID_Direccion { get; set; }
+
+        public int ID_Provincia { get; set; }
+        public int ID_Canton { get; set; }
+        public int ID_Distrito { get; set; }
         public string Nombre_Provincia { get; set; }
         public string Nombre_Canton { get; set; }
         public string Nombre_Distrito { get; set; }

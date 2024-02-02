@@ -533,6 +533,9 @@
     <FunctionImport Name="ActualizarRolUsuarioSP">
       <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
     </FunctionImport>
+    <FunctionImport Name="InactivarUsuarioSP">
+      <Parameter Name="CodigoUsuario" Mode="In" Type="Int64" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="IniciarSesionSP_Result">
     <Property Type="Int64" Name="ID_Usuario" Nullable="false" />

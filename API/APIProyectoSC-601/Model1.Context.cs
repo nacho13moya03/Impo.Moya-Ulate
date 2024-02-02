@@ -273,5 +273,14 @@ namespace APIProyectoSC_601
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizarRolUsuarioSP", iD_UsuarioParameter);
         }
+    
+        public virtual int InactivarUsuarioSP(Nullable<long> codigoUsuario)
+        {
+            var codigoUsuarioParameter = codigoUsuario.HasValue ?
+                new ObjectParameter("CodigoUsuario", codigoUsuario) :
+                new ObjectParameter("CodigoUsuario", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InactivarUsuarioSP", codigoUsuarioParameter);
+        }
     }
 }
