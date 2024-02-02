@@ -397,7 +397,7 @@
           <Parameter Name="Prov" Type="int" Mode="In" />
           <Parameter Name="Canton" Type="int" Mode="In" />
           <Parameter Name="Distrito" Type="int" Mode="In" />
-          <Parameter Name="direccion" Type="varchar" Mode="In" />
+          <Parameter Name="Direccion" Type="varchar" Mode="In" />
         </Function>
         <Function Name="ActualizarEmpresaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Empresa" Type="bigint" Mode="In" />
@@ -1114,7 +1114,7 @@
             <Parameter Name="Prov" Mode="In" Type="Int32" />
             <Parameter Name="Canton" Mode="In" Type="Int32" />
             <Parameter Name="Distrito" Mode="In" Type="Int32" />
-            <Parameter Name="direccion" Mode="In" Type="String" />
+            <Parameter Name="Direccion" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="IniciarSesionSP_Result">

@@ -322,8 +322,8 @@ namespace APIProyectoSC_601
                 new ObjectParameter("Distrito", typeof(int));
     
             var direccionParameter = direccion != null ?
-                new ObjectParameter("direccion", direccion) :
-                new ObjectParameter("direccion", typeof(string));
+                new ObjectParameter("Direccion", direccion) :
+                new ObjectParameter("Direccion", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizarCuentaUsuarioSP", iDParameter, nombreParameter, apellidoParameter, correoParameter, nuevaContrasennaParameter, telefonoParameter, provParameter, cantonParameter, distritoParameter, direccionParameter);
         }

@@ -314,12 +314,6 @@ namespace APIProyectoSC_601.Controllers
                             join i in context.Identificacion on u.ID_Identificacion equals i.ID_Identificacion
                             join d in context.Direcciones on u.ID_Direccion equals d.ID_Direccion into direccionJoin
                             from dir in direccionJoin.DefaultIfEmpty() // Left join for Direcciones
-                            join p in context.Provincia on (dir != null ? dir.ID_Provincia : (int?)null) equals p.ID_Provincia into provinciaJoin
-                            from prov in provinciaJoin.DefaultIfEmpty() // Left join for Provincia
-                            join c in context.Canton on (dir != null ? dir.ID_Canton : (int?)null) equals c.ID_Canton into cantonJoin
-                            from cant in cantonJoin.DefaultIfEmpty() // Left join for Canton
-                            join dis in context.Distrito on (dir != null ? dir.ID_Distrito : (int?)null) equals dis.ID_Distrito into distritoJoin
-                            from dist in distritoJoin.DefaultIfEmpty() // Left join for Distrito
                             where u.ID_Usuario == q
                             select new UsuarioEnt
                             {
@@ -330,16 +324,18 @@ namespace APIProyectoSC_601.Controllers
                                 Apellido_Usuario = u.Apellido_Usuario,
                                 Correo_Usuario = u.Correo_Usuario,
                                 Contrasenna_Usuario = u.Contrasenna_Usuario,
-                                Nombre_Provincia = prov != null ? prov.Nombre : "",
-                                Nombre_Canton = cant != null ? cant.Nombre : "",
-                                Nombre_Distrito = dist != null ? dist.Nombre : "",
+                                ID_Direccion = dir != null ? dir.ID_Direccion : 0,
+                                ID_Provincia = dir != null ? dir.ID_Provincia : 0,
+                                ID_Canton = dir != null ? dir.ID_Canton : 0,
+                                ID_Distrito = dir != null ? dir.ID_Distrito : 0,
                                 Direccion_Exacta = dir != null ? dir.Direccion_Exacta : "",
                                 Telefono_Usuario = u.Telefono_Usuario,
                                 ID_Estado = u.ID_Estado,
                                 ID_Rol = u.ID_Rol,
                             }).FirstOrDefault();
+
                 }
-                  }
+            }
                   catch (Exception ex)
                   {
                       log.Add("Error en ConsultaClienteEspecifico: " + ex.Message);

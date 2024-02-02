@@ -32,13 +32,14 @@
             }*@
 
 
-        @using (Html.BeginForm("PerfilCliente", "Usuario", FormMethod.Post, new { @class = "pt-3" }))
+        @using (Html.BeginForm("PerfilCliente", "Usuario", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate" }))
         {
             <div class="col-xl-7" style="margin-left:25%;margin-top:-13%; margin-bottom:4%;">
                 <div class="card mb-4">
                     <div class="card-header" style="background-color: #EEEEEE; ">Información Personal</div>
                     <div class="card-body ">
                         @Html.HiddenFor(m => m.ID_Usuario)
+                        @Html.HiddenFor(m => m.ID_Direccion)
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="tipo">Tipo</label>
@@ -54,7 +55,7 @@
                             <div class="mb-3">
                                 <label class="small mb-1" for="nombre">Nombre</label>
                                 @Html.TextBoxFor(m => m.Nombre_Usuario, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
-                                <div style="align-self: flex-start; margin-top: -8px !important;">
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                     @Html.ValidationMessageFor(m => m.Nombre_Usuario, "", new { @style = "color: red;" })
                                 </div>
                             </div>
@@ -65,14 +66,14 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="nombre">Nombre</label>
                                     @Html.TextBoxFor(m => m.Nombre_Usuario, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
-                                    <div style="align-self: flex-start; margin-top: -8px !important;">
+                                    <div style="align-self: flex-start; font-size: 10px !important;margin-top:2px!important;margin-left:3px!important;">
                                         @Html.ValidationMessageFor(m => m.Nombre_Usuario, "", new { @style = "color: red;" })
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="apellido">Primer Apellido</label>
                                     @Html.TextBoxFor(m => m.Apellido_Usuario, new { @class = "form-control", @placeholder = "Primer Apellido", @type = "text" })
-                                    <div style="align-self: flex-start; margin-top: -8px !important;">
+                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                         @Html.ValidationMessageFor(m => m.Apellido_Usuario, "", new { @style = "color: red;" })
                                     </div>
                                 </div>
@@ -82,16 +83,16 @@
                             <div class="col-md-6">
                                 <label class="small mb-1" for="correo">Correo Electrónico</label>
                                 @Html.TextBoxFor(m => m.Correo_Usuario, new { @class = "form-control", @placeholder = "Correo Electrónico", @type = "email", required = "required" })
-                            <div style="align-self: flex-start; margin-top: -8px !important;">
-                                @Html.ValidationMessageFor(m => m.Correo_Usuario, "", new { @style = "color: red;" })
-                            </div>
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    @Html.ValidationMessageFor(m => m.Correo_Usuario, "", new { @style = "color: red;" })
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="telefono">Teléfono</label>
                                 @Html.TextBoxFor(m => m.Telefono_Usuario, new { @class = "form-control", @placeholder = "Teléfono", @type = "text", required = "required" })
-                            <div style="align-self: flex-start; margin-top: -8px !important;">
-                                @Html.ValidationMessageFor(m => m.Telefono_Usuario, "", new { @style = "color: red;" })
-                            </div>
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;;">
+                                    @Html.ValidationMessageFor(m => m.Telefono_Usuario, "", new { @style = "color: red;" })
+                                </div>
                             </div>
                         </div>
 
@@ -107,28 +108,28 @@
                         <div class="row gx-3 mb-3">
                             <div class="col-md-4">
                                 <label class="small mb-1" for="provincia">Provincia</label>
-                                <div style="display:flex;">
+                           
                                     @Html.DropDownListFor(m => m.ID_Provincia, (ViewBag.Provincias as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control provincia-dropdown", required = "required" })
 
-                                    <div style="align-self: flex-start; margin-top:-8px!important;">
+                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                         @Html.ValidationMessageFor(m => m.ID_Provincia, "", new { @style = "color: red;" })
-                                    </div>
+                                   
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <label class="small mb-1" for="canton">Cantón</label>
-                                @Html.DropDownListFor(m => m.ID_Canton, (ViewBag.Cantones as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control canton-dropdown", required = "required", disabled = "disabled" })
+                                @Html.DropDownListFor(m => m.ID_Canton, (ViewBag.Cantones as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control canton-dropdown", required = "required", disabled = ViewBag.Provincias == null ? "disabled" : "" })
 
-                                <div style="align-self: flex-start; margin-top:-8px!important;">
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                     @Html.ValidationMessageFor(m => m.ID_Canton, "", new { @style = "color: red;" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label class="small mb-1" for="distrito">Distrito</label>
-                                @Html.DropDownListFor(m => m.ID_Distrito, (ViewBag.Distritos as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control distrito-dropdown", required = "required", disabled = "disabled" })
+                                @Html.DropDownListFor(m => m.ID_Distrito, (ViewBag.Distritos as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control distrito-dropdown", required = "required", disabled = ViewBag.Cantones == null ? "disabled" : "" })
 
-                                <div style="align-self: flex-start; margin-top:-8px!important;">
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                     @Html.ValidationMessageFor(m => m.ID_Distrito, "", new { @style = "color: red;" })
                                 </div>
                             </div>
@@ -139,7 +140,7 @@
                             <label class="small mb-1" for="direccion">Dirección Exacta</label>
                             @Html.TextAreaFor(m => m.Direccion_Exacta, new { rows = 3, cols = 20, @class = "form-control", @placeholder = "Ubicación Exacta", @type = "text", required = "required" })
 
-                            <div style="align-self: flex-start; margin-top:-8px!important;">
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                 @Html.ValidationMessageFor(m => m.Direccion_Exacta, "", new { @style = "color: red;" })
                             </div>
                         </div>
@@ -155,7 +156,7 @@
                             <label class="small mb-1" for="password">Contraseña</label>
                             @Html.TextBoxFor(m => m.Contrasenna_Usuario, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @placeholder = "Contraseña", @type = "password" })
 
-                            <div style="align-self: flex-start; margin-top:-8px!important;">
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                 @Html.ValidationMessageFor(m => m.Contrasenna_Usuario, "", new { @style = "color: red;" })
                             </div>
                         </div>
@@ -163,7 +164,7 @@
                             <label class="small mb-1" for="password">Nueva Contraseña</label>
                             @Html.TextBoxFor(m => m.NuevaContrasenna_Usuario, new { @class = "form-control", @placeholder = "Nueva Contraseña", @type = "password" })
 
-                            <div style="align-self: flex-start; margin-top:-8px!important;">
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                 @Html.ValidationMessageFor(m => m.NuevaContrasenna_Usuario, "", new { @style = "color: red;" })
                             </div>
                         </div>
@@ -320,8 +321,8 @@
         cantonDropdown.change(cargarDistritos);
 
         // Llamar a la función inicialmente para configurar el estado inicial
-        cargarCantones();
-        cargarDistritos();
+        //cargarCantones();
+        //cargarDistritos();
     });
 </script>
 

@@ -546,7 +546,7 @@
       <Parameter Name="Prov" Mode="In" Type="Int32" />
       <Parameter Name="Canton" Mode="In" Type="Int32" />
       <Parameter Name="Distrito" Mode="In" Type="Int32" />
-      <Parameter Name="direccion" Mode="In" Type="String" />
+      <Parameter Name="Direccion" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="IniciarSesionSP_Result">

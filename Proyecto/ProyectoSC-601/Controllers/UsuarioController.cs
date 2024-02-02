@@ -185,18 +185,64 @@ namespace ProyectoSC_601.Controllers
 
         //Devuelve la vista de perfil con los datos del cliente
         [HttpGet]
-          public ActionResult PerfilCliente()
-          {
-                long q = long.Parse(Session["ID_Usuario"].ToString());
-                var datos = modelUsuario.ConsultaClienteEspecifico(q);
-                Session["ID_Usuario"] = datos.ID_Usuario;
-                ViewBag.Provincias = modelUsuario.ConsultarProvincias();
-                ViewBag.Cantones = "";
-;                ViewBag.Distritos = "";
-                return View(datos);
-          }
+        public ActionResult PerfilCliente()
+        {
+            long q = long.Parse(Session["ID_Usuario"].ToString());
 
-      
+            var datos = modelUsuario.ConsultaClienteEspecifico(q);
+
+            // Consultar todas las provincias y cargarlas en el ViewBag
+            ViewBag.Provincias = modelUsuario.ConsultarProvincias();
+
+            // Verificar si el usuario tiene una dirección
+            if (datos.ID_Direccion != 0)
+            {
+                int idProvinciaSeleccionada = datos.ID_Provincia;
+                int idCantonSeleccionado = datos.ID_Canton;
+                int idDistritoSeleccionado = datos.ID_Distrito;
+
+                // Modificar la lista de provincias para establecer la seleccionada
+                ViewBag.Provincias = ((IEnumerable<SelectListItem>)ViewBag.Provincias)
+                    .Select(p => new SelectListItem
+                    {
+                        Value = p.Value,
+                        Text = p.Text,
+                        Selected = (p.Value == idProvinciaSeleccionada.ToString())
+                    }).ToList();
+
+                // Consultar los cantones de la provincia seleccionada
+                var cantones = modelUsuario.cargarCantones(idProvinciaSeleccionada);
+                ViewBag.Cantones = cantones
+                    .Select(c => new SelectListItem
+                    {
+                        Value = c.Value,
+                        Text = c.Text,
+                        Selected = (c.Value == idCantonSeleccionado.ToString())
+                    }).ToList();
+
+                // Consultar los distritos del cantón seleccionado
+                var distritos = modelUsuario.cargarDistritos(idCantonSeleccionado);
+                ViewBag.Distritos = distritos
+                    .Select(d => new SelectListItem
+                    {
+                        Value = d.Value,
+                        Text = d.Text,
+                        Selected = (d.Value == idDistritoSeleccionado.ToString())
+                    }).ToList();
+            }
+            else
+            {
+                // Si no tiene dirección, establecer los cantones y distritos como cadena vacía
+                ViewBag.Cantones = "";
+                ViewBag.Distritos = "";
+            }
+
+            return View(datos);
+        }
+
+
+
+
 
         //Actualiza los datos del cliente
         [HttpPost]
@@ -242,6 +288,50 @@ namespace ProyectoSC_601.Controllers
             }
             else
             {
+                if (entidad.ID_Direccion != 0)
+                {
+                    var datos = modelUsuario.ConsultaClienteEspecifico(entidad.ID_Usuario);
+
+                    ViewBag.Provincias = modelUsuario.ConsultarProvincias();
+
+                    if (datos.ID_Direccion != 0)
+                    {
+                        int idProvinciaSeleccionada = datos.ID_Provincia;
+                        int idCantonSeleccionado = datos.ID_Canton;
+                        int idDistritoSeleccionado = datos.ID_Distrito;
+
+                        ViewBag.Provincias = ((IEnumerable<SelectListItem>)ViewBag.Provincias)
+                            .Select(p => new SelectListItem
+                            {
+                                Value = p.Value,
+                                Text = p.Text,
+                                Selected = (p.Value == idProvinciaSeleccionada.ToString())
+                            }).ToList();
+
+                        var cantones = modelUsuario.cargarCantones(idProvinciaSeleccionada);
+                        ViewBag.Cantones = cantones
+                            .Select(c => new SelectListItem
+                            {
+                                Value = c.Value,
+                                Text = c.Text,
+                                Selected = (c.Value == idCantonSeleccionado.ToString())
+                            }).ToList();
+
+                        var distritos = modelUsuario.cargarDistritos(idCantonSeleccionado);
+                        ViewBag.Distritos = distritos
+                            .Select(d => new SelectListItem
+                            {
+                                Value = d.Value,
+                                Text = d.Text,
+                                Selected = (d.Value == idDistritoSeleccionado.ToString())
+                            }).ToList();
+                        return View(entidad);
+                    }
+                }
+
+                ViewBag.Provincias = modelUsuario.ConsultarProvincias();
+                ViewBag.Cantones = "";
+                ViewBag.Distritos = "";
                 return View(entidad);
             }
 

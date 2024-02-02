@@ -60,7 +60,7 @@ namespace ProyectoSC_601.Entities
         public string Nombre_Canton { get; set; }
         public string Nombre_Distrito { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio.")]
-        [StringLength(200, MinimumLength = 100, ErrorMessage = "La dirección debe tener entre 100 y 200 caracteres.")]
+        [StringLength(100, MinimumLength = 50, ErrorMessage = "La dirección debe tener entre 100 y 200 caracteres.")]
         public string Direccion_Exacta { get; set; }
 
         [Required(ErrorMessage = "Este campo es obligatorio.")]
