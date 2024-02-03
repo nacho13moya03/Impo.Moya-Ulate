@@ -12,13 +12,19 @@
             <div class="card mb-4">
                 @if (ViewBag.MensajeUsuario != null)
                 {
-                    <div class="alert alert-danger" role="alert" style="text-align:center; margin: 10px !important;">
+                    <div class="alert alert-danger" role="alert" style="text-align:center">
                         @ViewBag.MensajeUsuario
+                    </div>
+                }
+                @if (ViewBag.MensajeCedulaExistente != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align:center; ">
+                        @ViewBag.MensajeCedulaExistente
                     </div>
                 }
                 <div class="card-header">Registrar Proveedor</div>
                 <div class="card-body">
-                    @using (Html.BeginForm("RegistrarProveedor", "Proveedor", FormMethod.Post, new { @class = "pt-3", id = "registroForm" }))
+                    @using (Html.BeginForm("RegistrarProveedor", "Proveedor", FormMethod.Post, new { @class = "pt-3"}))
                     {
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
@@ -31,15 +37,20 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small mb-1" for="apellido">Apellido</label>
-                                    @Html.TextBoxFor(m => m.Apellido_Proveedor, new { @class = "form-control", @placeholder = "Apellido", @type = "text" })
+                                    @Html.TextBoxFor(m => m.Apellido_Proveedor, new { @class = "form-control", @placeholder = "Apellido", @type = "text", @id = "apellido" })
                                     <div id="errorApellido" class="text-danger"></div>
                                 </div>
                             </div>
                         </div>
+                        <div style="align-self: flex-start;">
+                            <label class="medium" for="tipo">Tipo de Identificación</label>
+                        </div>
+                        @Html.DropDownListFor(m => m.ID_Identificacion, (ViewBag.Identificaciones as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @style = "background-color: #eee; border: none; padding: 12px 15px; margin: 8px 0; width: 100%;", required = "required", @onchange = "actualizarCampoApellido()" })
+
                         <div class="form-group">
                             <label class="small mb-1" for="cedula">Cédula</label>
                             @Html.TextBoxFor(m => m.Cedula_Proveedor, new { @class = "form-control", @placeholder = "Cédula", @type = "text" })
-                            <div id="errorCedula" class="text-danger"></div>
+                            <div id="errorCedula" class="text-danger">@ViewBag.MensajeCedulaExistente</div>
                         </div>
                         <br />
                         <div class="form-group">
@@ -79,78 +90,119 @@
     </div>
 </div>
 
-<!--Validaciones de los campos en el formulario-->
 <script>
     function validarFormulario() {
-        //Obtener los valores del formulario
-        var nombre = document.getElementById("Nombre_Proveedor").value;
-        var apellido = document.getElementById("Apellido_Proveedor").value;
-        var cedula = document.getElementById("Cedula_Proveedor").value;
-        var direccion = document.getElementById("Direccion_Exacta").value;
-        var telefono = document.getElementById("Telefono").value;
-        var correo = document.getElementById("Correo").value;
+    // Obtener los valores del formulario
+    var nombreElement = document.getElementById("Nombre_Proveedor");
+    var apellidoElement = document.getElementById("Apellido_Proveedor");
+    var cedulaElement = document.getElementById("Cedula_Proveedor");
+    var direccionElement = document.getElementById("Direccion_Exacta");
+    var telefonoElement = document.getElementById("Telefono");
+    var correoElement = document.getElementById("Correo");
 
-        //Activar el evento si el campo esta vacio
-        document.getElementById("errorNombre").innerText = "";
-        document.getElementById("errorApellido").innerText = "";
-        document.getElementById("errorCedula").innerText = "";
-        document.getElementById("errorDireccion").innerText = "";
-        document.getElementById("errorTelefono").innerText = "";
-        document.getElementById("errorCorreo").innerText = "";
+    // Activar el evento si el campo está vacío
+    document.getElementById("errorNombre").innerText = "";
+    document.getElementById("errorApellido").innerText = "";
+    document.getElementById("errorCedula").innerText = "";
+    document.getElementById("errorDireccion").innerText = "";
+    document.getElementById("errorTelefono").innerText = "";
+    document.getElementById("errorCorreo").innerText = "";
 
-        var valid = true;
+    var valid = true;
 
-        //Validar el nombre, que no contenga números o caracteres especiales
-        if (nombre.trim() === "") {
-            document.getElementById("errorNombre").innerText = "Se necesita rellenar este campo";
-            valid = false;
-        } else if (!/^[a-zA-Z\s]+$/.test(nombre)) {
-            document.getElementById("errorNombre").innerText = "El nombre no puede contener números o caracteres especiales";
-            valid = false;
-        }
+    // Validar el nombre, que no contenga números o caracteres especiales
+    if (nombreElement !== null && nombreElement.value.trim() === "") {
+        document.getElementById("errorNombre").innerText = "Se necesita rellenar este campo";
+        valid = false;
+    } else if (nombreElement !== null && !/^[a-zA-Z\s]+$/.test(nombreElement.value)) {
+        document.getElementById("errorNombre").innerText = "El nombre no puede contener números o caracteres especiales";
+        valid = false;
+    }
 
-        //Validar el apellido, que no contenga números o caracteres especiales
-        if (apellido.trim() === "") {
-            document.getElementById("errorApellido").innerText = "Se necesita rellenar este campo";
-            valid = false;
-        } else if (!/^[a-zA-Z\s]+$/.test(apellido)) {
-            document.getElementById("errorApellido").innerText = "El apellido no puede contener números o caracteres especiales";
-            valid = false;
-        }
+    // Validar el apellido, que no contenga números o caracteres especiales
+    if (apellidoElement !== null && apellidoElement.value.trim() === "") {
+        document.getElementById("errorApellido").innerText = "Se necesita rellenar este campo";
+        valid = false;
+    } else if (apellidoElement !== null && !/^[a-zA-Z\s]+$/.test(apellidoElement.value)) {
+        document.getElementById("errorApellido").innerText = "El apellido no puede contener números o caracteres especiales";
+        valid = false;
+    }
 
-        //Validar la cédula, solo puede contener números
-        if (cedula.trim() === "") {
-            document.getElementById("errorCedula").innerText = "Se necesita rellenar este campo";
-            valid = false;
-        } else if (!/^\d+$/.test(cedula)) {
-            document.getElementById("errorCedula").innerText = "La cédula solo puede contener números";
-            valid = false;
-        }
+    // Validar la cédula, solo puede contener números
+    if (cedulaElement !== null && cedulaElement.value.trim() === "") {
+        document.getElementById("errorCedula").innerText = "Se necesita rellenar este campo";
+        valid = false;
+    } else if (cedulaElement !== null && !/^\d+$/.test(cedulaElement.value)) {
+        document.getElementById("errorCedula").innerText = "La cédula solo puede contener números";
+        valid = false;
+    }
 
-        //Validar que la dirección no este vacía
-        if (direccion.trim() === "") {
-            document.getElementById("errorDireccion").innerText = "Se necesita rellenar este campo";
-            valid = false;
-        }
+    // Validar que la dirección no esté vacía
+    if (direccionElement !== null && direccionElement.value.trim() === "") {
+        document.getElementById("errorDireccion").innerText = "Se necesita rellenar este campo";
+        valid = false;
+    }
 
-        //Validar el teléfono, solo puede contener números
-        if (telefono.trim() === "") {
-            document.getElementById("errorTelefono").innerText = "Se necesita rellenar este campo";
-            valid = false;
-        } else if (!/^\d+$/.test(telefono)) {
-            document.getElementById("errorTelefono").innerText = "El teléfono solo puede contener números";
-            valid = false;
-        }
+    // Validar el teléfono, solo puede contener números
+    if (telefonoElement !== null && telefonoElement.value.trim() === "") {
+        document.getElementById("errorTelefono").innerText = "Se necesita rellenar este campo";
+        valid = false;
+    } else if (telefonoElement !== null && !/^\d+$/.test(telefonoElement.value)) {
+        document.getElementById("errorTelefono").innerText = "El teléfono solo puede contener números";
+        valid = false;
+    }
 
-        //Validar el correo, debe contener un @@ y un punto con información
-        if (correo.trim() === "") {
+    // Validar el correo, debe contener un @@ y un punto con información
+    if (correoElement !== null && correoElement.value.trim() === "") {
         document.getElementById("errorCorreo").innerText = "Se necesita rellenar este campo";
         valid = false;
-        } else if (!RegExp('\\S+@@\\S+\\.\\S+').test(correo)) {
-            document.getElementById("errorCorreo").innerText = "Ingrese una dirección de correo electrónico válida";
-            valid = false;
+    } else if (correoElement !== null && !RegExp('\\S+@@\\S+\\.\\S+').test(correoElement.value)) {
+        document.getElementById("errorCorreo").innerText = "Ingrese una dirección de correo electrónico válida";
+        valid = false;
+    }
+
+    return valid;
+    };
+</script>
+
+<script>
+    $(document).ready(function () {
+        function validarCedula() {
+            var cedula = $("#Cedula_Proveedor").val();
+            var tipoIdentificacion = $("#ID_Identificacion").val();
+
+            $("#errorCedula").text("");
+
+            if (tipoIdentificacion == 1 && cedula.length !== 9) {
+                $("#errorCedula").text("La cédula debe tener exactamente 9 dígitos numéricos.");
+                return false;
+            } else if (tipoIdentificacion == 2 && cedula.length !== 11) {
+                $("#errorCedula").text("La cédula debe tener exactamente 11 dígitos numéricos.");
+                return false;
+            } else if (tipoIdentificacion == 3 && cedula.length !== 15) {
+                $("#errorCedula").text("La cédula debe tener exactamente 15 caracteres alfanuméricos.");
+                return false;
+            }
+
+            return true;
         }
 
-        return valid;
-    }
+        function actualizarCampoApellido() {
+            var identificacion = $("#ID_Identificacion").val();
+            var apellidoField = $("#apellido");
+
+            if (identificacion == 2) { 
+                apellidoField.val("");
+                apellidoField.prop("disabled", true);
+            } else {
+                // Si la identificación es diferente, habilita el campo de apellido
+                apellidoField.prop("disabled", false);
+            }
+        }
+
+        validarCedula();
+        actualizarCampoApellido();
+
+        $("#ID_Identificacion").change(actualizarCampoApellido);
+    });
 </script>

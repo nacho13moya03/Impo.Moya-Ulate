@@ -11,7 +11,16 @@ namespace APIProyectoSC_601.Controllers
 {
     public class ProveedorController : ApiController
     {
-        Errores log = new Errores(@"D:\Proyectos\Impo.Moya-Ulate\Logs");
+
+        private readonly Errores log;
+
+        public ProveedorController()
+        {
+            string rutaDeLogs = ConfigurationManager.AppSettings["RutaDeLogs"];
+
+            log = new Errores(rutaDeLogs);
+        }
+
 
         /*En este metodo post se van a hacer todos los registros de proveedor
          procesa la solicitud de registro de un proveedor, interactúa con la base de 
@@ -26,7 +35,7 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
 
-                    context.RegistrarProveedorSP(entidad.Nombre_Proveedor, entidad.Apellido_Proveedor, entidad.Cedula_Proveedor, entidad.Direccion_Exacta, entidad.Estado_Proveedor, entidad.Empresa, entidad.Telefono, entidad.Correo);
+                    context.RegistrarProveedorSP(entidad.Nombre_Proveedor, entidad.Apellido_Proveedor, entidad.ID_Identificacion, entidad.Cedula_Proveedor, entidad.Direccion_Exacta, entidad.Estado_Proveedor, entidad.Empresa, entidad.Telefono, entidad.Correo);
                     return "OK";
                 }
             }
@@ -75,28 +84,45 @@ namespace APIProyectoSC_601.Controllers
             }
         }
 
-        
+
 
         /*lista de objetos Proveedores que representan la información de todos los proveedores almacenados en la base de datos. 
          Si se produce alguna excepción durante la consulta, devuelve una lista vacía.*/
-
         [HttpGet]
         [Route("ConsultaProveedores")]
-        public List<Proveedores> ConsultaProveedores()
+        public List<ProveedorEnt> ConsultaProveedores()
         {
             try
             {
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return (from x in context.Proveedores
-                            select x).ToList();
+
+                    var proveedores = (from p in context.Proveedores
+                                       join i in context.Identificacion on p.ID_Identificacion equals i.ID_Identificacion into identificacionJoin
+                                       from ident in identificacionJoin.DefaultIfEmpty() 
+                                       select new ProveedorEnt
+                                       {
+                                           ID_Proveedor = p.ID_Proveedor,
+                                           ID_Identificacion = p.ID_Identificacion,
+                                           Nombre_Identificacion = ident != null ? ident.Nombre : "",
+                                           Nombre_Proveedor = p.Nombre_Proveedor,
+                                           Apellido_Proveedor = p.Apellido_Proveedor,
+                                           Cedula_Proveedor = p.Cedula_Proveedor,
+                                           Direccion_Exacta = p.Direccion_Exacta,
+                                           Estado_Proveedor = p.Estado_Proveedor,
+                                           Empresa = p.Empresa,
+                                           Telefono = p.Telefono,
+                                           Correo = p.Correo,
+                                       }).ToList();
+
+                    return proveedores;
                 }
             }
             catch (Exception ex)
             {
                 log.Add("Error en ConsultaProveedores: " + ex.Message);
-                return new List<Proveedores>();
+                return new List<ProveedorEnt>();
             }
         }
 
@@ -106,16 +132,34 @@ namespace APIProyectoSC_601.Controllers
 
         [HttpGet]
         [Route("ConsultaProveedor")]
-        public Proveedores ConsultaProveedor(long q)
+        public ProveedorEnt ConsultaProveedor(long q)
         {
             try
             {
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return (from x in context.Proveedores
-                            where x.ID_Proveedor == q
-                            select x).FirstOrDefault();
+
+                    var proveedor = (from p in context.Proveedores
+                                     join i in context.Identificacion on p.ID_Identificacion equals i.ID_Identificacion into identificacionJoin
+                                     from ident in identificacionJoin.DefaultIfEmpty() 
+                                     where p.ID_Proveedor == q
+                                     select new ProveedorEnt
+                                     {
+                                         ID_Proveedor = p.ID_Proveedor,
+                                         ID_Identificacion = p.ID_Identificacion,
+                                         Nombre_Identificacion = ident != null ? ident.Nombre : "",
+                                         Nombre_Proveedor = p.Nombre_Proveedor,
+                                         Apellido_Proveedor = p.Apellido_Proveedor,
+                                         Cedula_Proveedor = p.Cedula_Proveedor,
+                                         Direccion_Exacta = p.Direccion_Exacta,
+                                         Estado_Proveedor = p.Estado_Proveedor,
+                                         Empresa = p.Empresa,
+                                         Telefono = p.Telefono,
+                                         Correo = p.Correo,
+                                     }).FirstOrDefault();
+
+                    return proveedor;
                 }
             }
             catch (Exception ex)
@@ -124,6 +168,7 @@ namespace APIProyectoSC_601.Controllers
                 return null;
             }
         }
+
 
 
 
@@ -149,8 +194,6 @@ namespace APIProyectoSC_601.Controllers
             }
         }
 
-
-
         /*Sirve para actualizar la información de un proveedor en la base de datos mediante un procedimiento almacenado. Si la operación tiene éxito, 
         devuelve "OK". En caso de errores, captura excepciones y devuelve una caden*/
 
@@ -162,7 +205,7 @@ namespace APIProyectoSC_601.Controllers
             {
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
-                    context.ActualizarProveedorSP(entidad.ID_Proveedor, entidad.Nombre_Proveedor, entidad.Apellido_Proveedor, entidad.Cedula_Proveedor, entidad.Direccion_Exacta, entidad.Empresa, entidad.Telefono, entidad.Correo);
+                    context.ActualizarProveedorSP(entidad.ID_Proveedor, entidad.Nombre_Proveedor, entidad.Apellido_Proveedor,entidad.Direccion_Exacta, entidad.Empresa, entidad.Telefono, entidad.Correo);
                     return "OK";
                 }
             }
@@ -205,6 +248,72 @@ namespace APIProyectoSC_601.Controllers
                 log.Add("Error al EliminarProveedor: " + ex.Message);
                 return string.Empty;
             }
+        }
+
+        [HttpGet]
+        [Route("ConsultarIdentificacionesProveedor")]
+        public List<System.Web.Mvc.SelectListItem> ConsultarIdentificacionesProveedor()
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    var datos = (from x in context.Identificacion
+                                 select x).ToList();
+
+                    List<System.Web.Mvc.SelectListItem> identificaciones = new List<System.Web.Mvc.SelectListItem>();
+                    foreach (var item in datos)
+                    {
+                        identificaciones.Add(new System.Web.Mvc.SelectListItem
+                        {
+                            Value = item.ID_Identificacion.ToString(),
+                            Text = item.Nombre
+                        });
+                    }
+
+                    return identificaciones;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ConsultarIdentificacionesProveedor: " + ex.Message);
+                return new List<System.Web.Mvc.SelectListItem>();
+            }
+        }
+
+
+        //Verifica si la cedula ya existe
+        [HttpPost]
+        [Route("ComprobarCedulaProveedor")]
+        public string ComprobarCedulaProveedor(ProveedorEnt entidad)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+
+                    // Verificar si la cedula existe antes de ejecutar la consulta
+                    bool cedulaProveedorExiste = context.Proveedores.Any(x => x.Cedula_Proveedor == entidad.Cedula_Proveedor && x.ID_Proveedor != entidad.ID_Proveedor);
+
+                    if (cedulaProveedorExiste)
+                    {
+                        // Devuelve que ya existe la cedula
+                        return "Existe";
+                    }
+                    else
+                    {
+                        return "NoExiste";
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ComprobarCedulaProveedor: " + ex.Message);
+                return null;
+            }
+
         }
 
 

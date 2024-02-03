@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace ProyectoSC_601.Entities
@@ -8,6 +10,8 @@ namespace ProyectoSC_601.Entities
     public class ProveedorEnt
     {
         public long ID_Proveedor { get; set; }
+        public int ID_Identificacion { get; set; }
+        public string Nombre_Identificacion { get; set; }
         public string Nombre_Proveedor { get; set; }
         public string Apellido_Proveedor { get; set; }
         public string Cedula_Proveedor { get; set; }

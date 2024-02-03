@@ -329,9 +329,37 @@ namespace ProyectoSC_601.Controllers
                     }
                 }
 
+                
                 ViewBag.Provincias = modelUsuario.ConsultarProvincias();
-                ViewBag.Cantones = "";
-                ViewBag.Distritos = "";
+                int idProvinciaS = entidad.ID_Provincia;
+                int idCantonS = entidad.ID_Canton;
+                int idDistritoS = entidad.ID_Distrito;
+
+                ViewBag.Provincias = ((IEnumerable<SelectListItem>)ViewBag.Provincias)
+                    .Select(p => new SelectListItem
+                    {
+                        Value = p.Value,
+                        Text = p.Text,
+                        Selected = (p.Value == idProvinciaS.ToString())
+                    }).ToList();
+
+                var cantones2 = modelUsuario.cargarCantones(idProvinciaS);
+                ViewBag.Cantones = cantones2
+                    .Select(c => new SelectListItem
+                    {
+                        Value = c.Value,
+                        Text = c.Text,
+                        Selected = (c.Value == idCantonS.ToString())
+                    }).ToList();
+
+                var distritos2 = modelUsuario.cargarDistritos(idCantonS);
+                ViewBag.Distritos = distritos2
+                    .Select(d => new SelectListItem
+                    {
+                        Value = d.Value,
+                        Text = d.Text,
+                        Selected = (d.Value == idDistritoS.ToString())
+                    }).ToList();
                 return View(entidad);
             }
 

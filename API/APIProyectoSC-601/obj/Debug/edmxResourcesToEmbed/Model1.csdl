@@ -8,8 +8,8 @@
     <Property Name="ID_Canton" Type="Int32" Nullable="false" />
     <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Provincia" Relationship="Self.FK_Canton_Provincia" FromRole="Canton" ToRole="Provincia" />
+    <NavigationProperty Name="Direcciones" Relationship="Self.FK_Direccion_Canton" FromRole="Canton" ToRole="Direcciones" />
     <NavigationProperty Name="Distrito" Relationship="Self.FK_Distrito_Canton" FromRole="Canton" ToRole="Distrito" />
-    <NavigationProperty Name="Direcciones" Relationship="ImportadoraMoyaUlateModel.FK_Direccion_Canton" FromRole="Canton" ToRole="Direcciones" />
   </EntityType>
   <EntityType Name="Carrito">
     <Key>
@@ -40,10 +40,10 @@
     <Property Name="ID_Canton" Type="Int32" Nullable="false" />
     <Property Name="ID_Distrito" Type="Int32" Nullable="false" />
     <Property Name="Direccion_Exacta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Canton" Relationship="Self.FK_Direccion_Canton" FromRole="Direcciones" ToRole="Canton" />
+    <NavigationProperty Name="Distrito" Relationship="Self.FK_Direccion_Distrito" FromRole="Direcciones" ToRole="Distrito" />
+    <NavigationProperty Name="Provincia" Relationship="Self.FK_Direccion_Provincia" FromRole="Direcciones" ToRole="Provincia" />
     <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Direccion" FromRole="Direcciones" ToRole="Usuario" />
-    <NavigationProperty Name="Canton" Relationship="ImportadoraMoyaUlateModel.FK_Direccion_Canton" FromRole="Direcciones" ToRole="Canton" />
-    <NavigationProperty Name="Distrito" Relationship="ImportadoraMoyaUlateModel.FK_Direccion_Distrito" FromRole="Direcciones" ToRole="Distrito" />
-    <NavigationProperty Name="Provincia" Relationship="ImportadoraMoyaUlateModel.FK_Direccion_Provincia" FromRole="Direcciones" ToRole="Provincia" />
   </EntityType>
   <EntityType Name="Distrito">
     <Key>
@@ -54,8 +54,8 @@
     <Property Name="ID_Distrito" Type="Int32" Nullable="false" />
     <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Canton" Relationship="Self.FK_Distrito_Canton" FromRole="Distrito" ToRole="Canton" />
+    <NavigationProperty Name="Direcciones" Relationship="Self.FK_Direccion_Distrito" FromRole="Distrito" ToRole="Direcciones" />
     <NavigationProperty Name="Provincia" Relationship="Self.FK_Distrito_Provincia" FromRole="Distrito" ToRole="Provincia" />
-    <NavigationProperty Name="Direcciones" Relationship="ImportadoraMoyaUlateModel.FK_Direccion_Distrito" FromRole="Distrito" ToRole="Direcciones" />
   </EntityType>
   <EntityType Name="Empresa">
     <Key>
@@ -107,7 +107,8 @@
     </Key>
     <Property Name="ID_Identificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Usuario" Relationship="ImportadoraMoyaUlateModel.FK_Usuario_Identificacion" FromRole="Identificacion" ToRole="Usuario" />
+    <NavigationProperty Name="Proveedores" Relationship="Self.FK_Proveedores_Identificacion" FromRole="Identificacion" ToRole="Proveedores" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Identificacion" FromRole="Identificacion" ToRole="Usuario" />
   </EntityType>
   <EntityType Name="Producto">
     <Key>
@@ -131,6 +132,7 @@
       <PropertyRef Name="ID_Proveedor" />
     </Key>
     <Property Name="ID_Proveedor" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Identificacion" Type="Int32" Nullable="false" />
     <Property Name="Nombre_Proveedor" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Apellido_Proveedor" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Cedula_Proveedor" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
@@ -141,6 +143,7 @@
     <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Empresa1" Relationship="Self.FK_Proveedores_Empresa" FromRole="Proveedores" ToRole="Empresa" />
     <NavigationProperty Name="Estado" Relationship="Self.FK_Proveedores_Estado" FromRole="Proveedores" ToRole="Estado" />
+    <NavigationProperty Name="Identificacion" Relationship="Self.FK_Proveedores_Identificacion" FromRole="Proveedores" ToRole="Identificacion" />
   </EntityType>
   <EntityType Name="Provincia">
     <Key>
@@ -149,8 +152,8 @@
     <Property Name="ID_Provincia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Nombre" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Canton" Relationship="Self.FK_Canton_Provincia" FromRole="Provincia" ToRole="Canton" />
+    <NavigationProperty Name="Direcciones" Relationship="Self.FK_Direccion_Provincia" FromRole="Provincia" ToRole="Direcciones" />
     <NavigationProperty Name="Distrito" Relationship="Self.FK_Distrito_Provincia" FromRole="Provincia" ToRole="Distrito" />
-    <NavigationProperty Name="Direcciones" Relationship="ImportadoraMoyaUlateModel.FK_Direccion_Provincia" FromRole="Provincia" ToRole="Direcciones" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -159,16 +162,6 @@
     <Property Name="ID_Rol" Type="Int32" Nullable="false" />
     <Property Name="Nombre_Rol" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Rol" FromRole="Roles" ToRole="Usuario" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="Usuario">
     <Key>
@@ -189,8 +182,8 @@
     <NavigationProperty Name="Direcciones" Relationship="Self.FK_Usuario_Direccion" FromRole="Usuario" ToRole="Direcciones" />
     <NavigationProperty Name="Estado" Relationship="Self.FK_Usuario_Estado" FromRole="Usuario" ToRole="Estado" />
     <NavigationProperty Name="Factura_Encabezado" Relationship="Self.FK_Factura_Encabezado_Usuario" FromRole="Usuario" ToRole="Factura_Encabezado" />
+    <NavigationProperty Name="Identificacion" Relationship="Self.FK_Usuario_Identificacion" FromRole="Usuario" ToRole="Identificacion" />
     <NavigationProperty Name="Roles" Relationship="Self.FK_Usuario_Rol" FromRole="Usuario" ToRole="Roles" />
-    <NavigationProperty Name="Identificacion" Relationship="ImportadoraMoyaUlateModel.FK_Usuario_Identificacion" FromRole="Usuario" ToRole="Identificacion" />
   </EntityType>
   <Association Name="FK_Canton_Provincia">
     <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
@@ -201,6 +194,18 @@
       </Principal>
       <Dependent Role="Canton">
         <PropertyRef Name="ID_Provincia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Direccion_Canton">
+    <End Role="Canton" Type="Self.Canton" Multiplicity="1" />
+    <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Canton">
+        <PropertyRef Name="ID_Canton" />
+      </Principal>
+      <Dependent Role="Direcciones">
+        <PropertyRef Name="ID_Canton" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -249,6 +254,30 @@
       </Principal>
       <Dependent Role="Producto">
         <PropertyRef Name="ID_Categoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Direccion_Distrito">
+    <End Role="Distrito" Type="Self.Distrito" Multiplicity="1" />
+    <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Distrito">
+        <PropertyRef Name="ID_Distrito" />
+      </Principal>
+      <Dependent Role="Direcciones">
+        <PropertyRef Name="ID_Distrito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Direccion_Provincia">
+    <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
+    <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provincia">
+        <PropertyRef Name="ID_Provincia" />
+      </Principal>
+      <Dependent Role="Direcciones">
+        <PropertyRef Name="ID_Provincia" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -360,6 +389,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Proveedores_Identificacion">
+    <End Role="Identificacion" Type="Self.Identificacion" Multiplicity="1" />
+    <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Identificacion">
+        <PropertyRef Name="ID_Identificacion" />
+      </Principal>
+      <Dependent Role="Proveedores">
+        <PropertyRef Name="ID_Identificacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Identificacion">
+    <End Role="Identificacion" Type="Self.Identificacion" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Identificacion">
+        <PropertyRef Name="ID_Identificacion" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="ID_Identificacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Usuario_Rol">
     <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -387,11 +440,14 @@
     <EntitySet Name="Proveedores" EntityType="Self.Proveedores" />
     <EntitySet Name="Provincia" EntityType="Self.Provincia" />
     <EntitySet Name="Roles" EntityType="Self.Roles" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" />
     <AssociationSet Name="FK_Canton_Provincia" Association="Self.FK_Canton_Provincia">
       <End Role="Provincia" EntitySet="Provincia" />
       <End Role="Canton" EntitySet="Canton" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Direccion_Canton" Association="Self.FK_Direccion_Canton">
+      <End Role="Canton" EntitySet="Canton" />
+      <End Role="Direcciones" EntitySet="Direcciones" />
     </AssociationSet>
     <AssociationSet Name="FK_Distrito_Canton" Association="Self.FK_Distrito_Canton">
       <End Role="Canton" EntitySet="Canton" />
@@ -408,6 +464,14 @@
     <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
       <End Role="Categorias" EntitySet="Categorias" />
       <End Role="Producto" EntitySet="Producto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Direccion_Distrito" Association="Self.FK_Direccion_Distrito">
+      <End Role="Distrito" EntitySet="Distrito" />
+      <End Role="Direcciones" EntitySet="Direcciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Direccion_Provincia" Association="Self.FK_Direccion_Provincia">
+      <End Role="Provincia" EntitySet="Provincia" />
+      <End Role="Direcciones" EntitySet="Direcciones" />
     </AssociationSet>
     <AssociationSet Name="FK_Usuario_Direccion" Association="Self.FK_Usuario_Direccion">
       <End Role="Direcciones" EntitySet="Direcciones" />
@@ -445,10 +509,30 @@
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
     </AssociationSet>
+    <AssociationSet Name="FK_Proveedores_Identificacion" Association="Self.FK_Proveedores_Identificacion">
+      <End Role="Identificacion" EntitySet="Identificacion" />
+      <End Role="Proveedores" EntitySet="Proveedores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Identificacion" Association="Self.FK_Usuario_Identificacion">
+      <End Role="Identificacion" EntitySet="Identificacion" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
     <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
       <End Role="Roles" EntitySet="Roles" />
       <End Role="Usuario" EntitySet="Usuario" />
     </AssociationSet>
+    <FunctionImport Name="ActualizarCuentaUsuarioSP">
+      <Parameter Name="ID" Mode="In" Type="Int64" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+      <Parameter Name="Apellido" Mode="In" Type="String" />
+      <Parameter Name="Correo" Mode="In" Type="String" />
+      <Parameter Name="NuevaContrasenna" Mode="In" Type="String" />
+      <Parameter Name="Telefono" Mode="In" Type="String" />
+      <Parameter Name="Prov" Mode="In" Type="Int32" />
+      <Parameter Name="Canton" Mode="In" Type="Int32" />
+      <Parameter Name="Distrito" Mode="In" Type="Int32" />
+      <Parameter Name="Direccion" Mode="In" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="ActualizarEmpresaSP">
       <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
       <Parameter Name="Nombre_empresa" Mode="In" Type="String" />
@@ -458,21 +542,29 @@
     <FunctionImport Name="ActualizarEstadoProveedorSP">
       <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
     </FunctionImport>
+    <FunctionImport Name="ActualizarEstadoUsuarioSP">
+      <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
+    </FunctionImport>
     <FunctionImport Name="ActualizarProveedorSP">
       <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
       <Parameter Name="Nombre_Proveedor" Mode="In" Type="String" />
       <Parameter Name="Apellido_Proveedor" Mode="In" Type="String" />
-      <Parameter Name="Cedula_Proveedor" Mode="In" Type="String" />
       <Parameter Name="Direccion_Exacta" Mode="In" Type="String" />
       <Parameter Name="Empresa" Mode="In" Type="Int64" />
       <Parameter Name="Telefono" Mode="In" Type="String" />
       <Parameter Name="Correo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ActualizarRolUsuarioSP">
+      <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
     </FunctionImport>
     <FunctionImport Name="EliminarEmpresaSP">
       <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
     </FunctionImport>
     <FunctionImport Name="EliminarProveedorSP">
       <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="InactivarUsuarioSP">
+      <Parameter Name="CodigoUsuario" Mode="In" Type="Int64" />
     </FunctionImport>
     <FunctionImport Name="IniciarSesionSP" ReturnType="Collection(ImportadoraMoyaUlateModel.IniciarSesionSP_Result)">
       <Parameter Name="Correo" Mode="In" Type="String" />
@@ -495,6 +587,7 @@
     <FunctionImport Name="RegistrarProveedorSP">
       <Parameter Name="Nombre_Proveedor" Mode="In" Type="String" />
       <Parameter Name="Apellido_Proveedor" Mode="In" Type="String" />
+      <Parameter Name="tipo" Mode="In" Type="Int32" />
       <Parameter Name="Cedula_Proveedor" Mode="In" Type="String" />
       <Parameter Name="Direccion_Exacta" Mode="In" Type="String" />
       <Parameter Name="Estado_Proveedor" Mode="In" Type="Int32" />
@@ -502,10 +595,6 @@
       <Parameter Name="Telefono" Mode="In" Type="String" />
       <Parameter Name="Correo" Mode="In" Type="String" />
     </FunctionImport>
-    <AssociationSet Name="FK_Usuario_Identificacion" Association="ImportadoraMoyaUlateModel.FK_Usuario_Identificacion">
-      <End Role="Identificacion" EntitySet="Identificacion" />
-      <End Role="Usuario" EntitySet="Usuario" />
-    </AssociationSet>
     <FunctionImport Name="RegistrarUsuarioSP">
       <Parameter Name="tipo" Mode="In" Type="Int32" />
       <Parameter Name="Identificacion" Mode="In" Type="String" />
@@ -514,39 +603,6 @@
       <Parameter Name="Correo" Mode="In" Type="String" />
       <Parameter Name="Contrasenna" Mode="In" Type="String" />
       <Parameter Name="Telefono" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="ActualizarEstadoUsuarioSP">
-      <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
-    </FunctionImport>
-    <AssociationSet Name="FK_Direccion_Canton" Association="ImportadoraMoyaUlateModel.FK_Direccion_Canton">
-      <End Role="Canton" EntitySet="Canton" />
-      <End Role="Direcciones" EntitySet="Direcciones" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Direccion_Distrito" Association="ImportadoraMoyaUlateModel.FK_Direccion_Distrito">
-      <End Role="Distrito" EntitySet="Distrito" />
-      <End Role="Direcciones" EntitySet="Direcciones" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Direccion_Provincia" Association="ImportadoraMoyaUlateModel.FK_Direccion_Provincia">
-      <End Role="Provincia" EntitySet="Provincia" />
-      <End Role="Direcciones" EntitySet="Direcciones" />
-    </AssociationSet>
-    <FunctionImport Name="ActualizarRolUsuarioSP">
-      <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
-    </FunctionImport>
-    <FunctionImport Name="InactivarUsuarioSP">
-      <Parameter Name="CodigoUsuario" Mode="In" Type="Int64" />
-    </FunctionImport>
-    <FunctionImport Name="ActualizarCuentaUsuarioSP">
-      <Parameter Name="ID" Mode="In" Type="Int64" />
-      <Parameter Name="Nombre" Mode="In" Type="String" />
-      <Parameter Name="Apellido" Mode="In" Type="String" />
-      <Parameter Name="Correo" Mode="In" Type="String" />
-      <Parameter Name="NuevaContrasenna" Mode="In" Type="String" />
-      <Parameter Name="Telefono" Mode="In" Type="String" />
-      <Parameter Name="Prov" Mode="In" Type="Int32" />
-      <Parameter Name="Canton" Mode="In" Type="Int32" />
-      <Parameter Name="Distrito" Mode="In" Type="Int32" />
-      <Parameter Name="Direccion" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="IniciarSesionSP_Result">
@@ -557,7 +613,7 @@
     <Property Type="String" Name="Apellido_Usuario" Nullable="true" MaxLength="70" />
     <Property Type="String" Name="Correo_Usuario" Nullable="false" MaxLength="100" />
     <Property Type="String" Name="Contrasenna_Usuario" Nullable="false" MaxLength="50" />
-    <Property Type="Int32" Name="ID_Direccion" Nullable="true" />
+    <Property Type="Int32" Name="ID_Direccion" Nullable="false" />
     <Property Type="String" Name="Telefono_Usuario" Nullable="true" MaxLength="20" />
     <Property Type="Int32" Name="ID_Estado" Nullable="false" />
     <Property Type="Int32" Name="ID_Rol" Nullable="false" />
@@ -568,52 +624,4 @@
     <Property Type="String" Name="Correo_Usuario" Nullable="false" MaxLength="100" />
     <Property Type="String" Name="Contrasenna_Usuario" Nullable="false" MaxLength="50" />
   </ComplexType>
-  <Association Name="FK_Usuario_Identificacion">
-    <End Type="ImportadoraMoyaUlateModel.Identificacion" Role="Identificacion" Multiplicity="1" />
-    <End Type="ImportadoraMoyaUlateModel.Usuario" Role="Usuario" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Identificacion">
-        <PropertyRef Name="ID_Identificacion" />
-      </Principal>
-      <Dependent Role="Usuario">
-        <PropertyRef Name="ID_Identificacion" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Direccion_Canton">
-    <End Type="ImportadoraMoyaUlateModel.Canton" Role="Canton" Multiplicity="1" />
-    <End Type="ImportadoraMoyaUlateModel.Direcciones" Role="Direcciones" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Canton">
-        <PropertyRef Name="ID_Canton" />
-      </Principal>
-      <Dependent Role="Direcciones">
-        <PropertyRef Name="ID_Canton" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Direccion_Distrito">
-    <End Type="ImportadoraMoyaUlateModel.Distrito" Role="Distrito" Multiplicity="1" />
-    <End Type="ImportadoraMoyaUlateModel.Direcciones" Role="Direcciones" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Distrito">
-        <PropertyRef Name="ID_Distrito" />
-      </Principal>
-      <Dependent Role="Direcciones">
-        <PropertyRef Name="ID_Distrito" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Direccion_Provincia">
-    <End Type="ImportadoraMoyaUlateModel.Provincia" Role="Provincia" Multiplicity="1" />
-    <End Type="ImportadoraMoyaUlateModel.Direcciones" Role="Direcciones" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Provincia">
-        <PropertyRef Name="ID_Provincia" />
-      </Principal>
-      <Dependent Role="Direcciones">
-        <PropertyRef Name="ID_Provincia" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

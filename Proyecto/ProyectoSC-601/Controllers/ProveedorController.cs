@@ -24,11 +24,13 @@ namespace ProyectoSC_601.Controllers
             try
             {
                 ViewBag.combo = modelProveedor.ConsultarEmpresas();
+                ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
                 return View();
             }
             catch (Exception ex)
             {
-                return ViewBag.Empresas;
+                ViewBag.combo = modelProveedor.ConsultarEmpresas();
+                return View("Error");
             }
         }
 
@@ -41,18 +43,40 @@ namespace ProyectoSC_601.Controllers
         {
             try
             {
-                string respuesta = modelProveedor.RegistrarProveedor(entidad);
-
-                if (respuesta == "OK")
+                if (ModelState.IsValid)
                 {
-                    TempData["RegistroExito"] = "El proveedor se registró correctamente.";
-                    return RedirectToAction("ConsultaProveedores", "Proveedor");
+                    string cedulaExistente = modelProveedor.ComprobarCedulaProveedor(entidad);
+
+                    if (cedulaExistente == "Existe")
+                    {
+                        ViewBag.MensajeCedulaExistente = "El proveedor con esta cédula ya está registrado.";
+                        ViewBag.combo = modelProveedor.ConsultarEmpresas();
+                        ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
+                        return View();
+                    }
+
+                    // Continuar con el registro solo si la cédula no existe
+                    string respuesta = modelProveedor.RegistrarProveedor(entidad);
+
+                    if (respuesta == "OK")
+                    {
+                        TempData["RegistroExito"] = "El proveedor se registró correctamente.";
+                        return RedirectToAction("ConsultaProveedores", "Proveedor");
+                    }
+                    else
+                    {
+                        ViewBag.MensajeUsuario = "No se ha podido registrar la información del proveedor";
+                        ViewBag.combo = modelProveedor.ConsultarEmpresas();
+                        ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
+                        return View();
+                    }
                 }
                 else
                 {
-                    ViewBag.MensajeUsuario = "No se ha podido registrar la informacón del proveedor";
+                    
                     ViewBag.combo = modelProveedor.ConsultarEmpresas();
-                    return View();
+                    ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
+                    return View(entidad);
                 }
             }
             catch (Exception ex)
@@ -71,6 +95,7 @@ namespace ProyectoSC_601.Controllers
             {
                 var datos = modelProveedor.ConsultaProveedores();
                 ViewBag.combo = modelProveedor.ConsultarEmpresas();
+                ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
                 return View(datos);
             }
             catch (Exception ex)
@@ -119,6 +144,7 @@ namespace ProyectoSC_601.Controllers
             {
                 var datos = modelProveedor.ConsultaProveedor(q);
                 ViewBag.combo = modelProveedor.ConsultarEmpresas();
+                ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
                 return View(datos);
             }
             catch (Exception ex)
@@ -146,6 +172,7 @@ namespace ProyectoSC_601.Controllers
                 {
                     ViewBag.MensajeUsuario = "No se ha podido actualizar la información del proveedor";
                     ViewBag.combo = modelProveedor.ConsultarEmpresas();
+                    ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
                     return View();
                 }
             }

@@ -116,6 +116,7 @@
       <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Proveedores">
         <MappingFragment StoreEntitySet="Proveedores">
           <ScalarProperty Name="ID_Proveedor" ColumnName="ID_Proveedor" />
+          <ScalarProperty Name="ID_Identificacion" ColumnName="ID_Identificacion" />
           <ScalarProperty Name="Nombre_Proveedor" ColumnName="Nombre_Proveedor" />
           <ScalarProperty Name="Apellido_Proveedor" ColumnName="Apellido_Proveedor" />
           <ScalarProperty Name="Cedula_Proveedor" ColumnName="Cedula_Proveedor" />
@@ -143,17 +144,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.sysdiagrams">
-        <MappingFragment StoreEntitySet="sysdiagrams">
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Usuario">
       <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Usuario">
         <MappingFragment StoreEntitySet="Usuario">
@@ -171,11 +161,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ActualizarCuentaUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCuentaUsuarioSP" />
     <FunctionImportMapping FunctionImportName="ActualizarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEmpresaSP" />
     <FunctionImportMapping FunctionImportName="ActualizarEstadoProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoProveedorSP" />
+    <FunctionImportMapping FunctionImportName="ActualizarEstadoUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoUsuarioSP" />
     <FunctionImportMapping FunctionImportName="ActualizarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarProveedorSP" />
+    <FunctionImportMapping FunctionImportName="ActualizarRolUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarRolUsuarioSP" />
     <FunctionImportMapping FunctionImportName="EliminarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarEmpresaSP" />
     <FunctionImportMapping FunctionImportName="EliminarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarProveedorSP" />
+    <FunctionImportMapping FunctionImportName="InactivarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.InactivarUsuarioSP" />
     <FunctionImportMapping FunctionImportName="IniciarSesionSP" FunctionName="ImportadoraMoyaUlateModel.Store.IniciarSesionSP">
       <ResultMapping>
         <ComplexTypeMapping TypeName="ImportadoraMoyaUlateModel.IniciarSesionSP_Result">
@@ -208,9 +202,5 @@
     <FunctionImportMapping FunctionImportName="RegistrarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarEmpresaSP" />
     <FunctionImportMapping FunctionImportName="RegistrarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarProveedorSP" />
     <FunctionImportMapping FunctionImportName="RegistrarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarUsuarioSP" />
-    <FunctionImportMapping FunctionImportName="ActualizarEstadoUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoUsuarioSP" />
-    <FunctionImportMapping FunctionImportName="ActualizarRolUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarRolUsuarioSP" />
-    <FunctionImportMapping FunctionImportName="InactivarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.InactivarUsuarioSP" />
-    <FunctionImportMapping FunctionImportName="ActualizarCuentaUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCuentaUsuarioSP" />
   </EntityContainerMapping>
 </Mapping>

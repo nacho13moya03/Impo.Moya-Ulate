@@ -1,6 +1,7 @@
 ﻿using APIProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,7 +12,13 @@ namespace APIProyectoSC_601.Controllers
 {
     public class UsuarioController : ApiController
     {
-        Errores log = new Errores(@"C:\Users\Angel\Documents\GitHub\Proyecto Diseño\Impo.Moya-Ulate\Logs");
+        private readonly Errores log;
+
+        public UsuarioController()
+        {
+            string rutaDeLogs = ConfigurationManager.AppSettings["RutaDeLogs"];
+            log = new Errores(rutaDeLogs);
+        }
 
         //Se crea instancia para usar herramientas necesarias para enviar correo de recuperacion al cliente
         Utilitarios util = new Utilitarios();

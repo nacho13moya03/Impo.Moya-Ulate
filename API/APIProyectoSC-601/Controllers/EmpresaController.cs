@@ -1,6 +1,7 @@
 ﻿using APIProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,7 +11,16 @@ namespace APIProyectoSC_601.Controllers
 {
     public class EmpresaController : ApiController
     {
-        Errores log = new Errores(@"D:\Proyectos\Impo.Moya-Ulate\Logs");
+        private readonly Errores log;
+
+        public EmpresaController()
+        {
+            string rutaDeLogs = ConfigurationManager.AppSettings["RutaDeLogs"];
+            log = new Errores(rutaDeLogs);
+        }
+
+
+
         /*En este metodo post se van a hacer todos los registros de empresa
          procesa la solicitud de registro de una empresa, interactúa con la base de 
          datos a través de un procedimiento almacenado y devuelve un resultado indicando el éxito o fallo de la operación.*/

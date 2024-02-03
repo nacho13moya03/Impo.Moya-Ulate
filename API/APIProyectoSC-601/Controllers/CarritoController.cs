@@ -1,6 +1,7 @@
 ﻿using APIProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,7 +12,13 @@ namespace APIProyectoSC_601.Controllers
 {
     public class CarritoController : ApiController
     {
-        Errores log = new Errores(@"D:\Proyectos\Impo.Moya-Ulate\Logs");
+        private readonly Errores log;
+
+        public CarritoController()
+        {
+            string rutaDeLogs = ConfigurationManager.AppSettings["RutaDeLogs"];
+            log = new Errores(rutaDeLogs);
+        }
 
         [HttpPost]
         [Route("RegistrarCarrito")]

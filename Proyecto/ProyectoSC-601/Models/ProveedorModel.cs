@@ -14,9 +14,29 @@ namespace ProyectoSC_601.Models
     {
         public string rutaServidor = ConfigurationManager.AppSettings["RutaApi"];
 
+        public List<SelectListItem> ConsultarIdentificacionesProveedor()
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ConsultarIdentificacionesProveedor";
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<List<SelectListItem>>().Result;
+            }
+        }
+
+        public string ComprobarCedulaProveedor(ProveedorEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ComprobarCedulaProveedor";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PostAsync(urlApi, jsonData).Result;
+                return res.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
 
         /*Esto envía una solicitud HTTP POST a una API para registrar un proveedor, 
-         convierte la respuesta a una cadena y la devuelve. */
+        convierte la respuesta a una cadena y la devuelve. */
         public string RegistrarProveedor(ProveedorEnt entidad)
         {
             try

@@ -23,27 +23,42 @@
                     {
                         @Html.HiddenFor(m => m.ID_Proveedor)
 
+                    <div class="row gx-3 mb-3">
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="small mb-1" for="nombre">Nombre</label>
-                                    @Html.TextBoxFor(m => m.Nombre_Proveedor, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
-                                    <div id="errorNombre" class="text-danger"></div>
-                                </div>
+                                <label class="small mb-1" for="tipo">Tipo</label>
+                                @Html.TextBoxFor(m => m.Nombre_Identificacion, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @type = "text" })
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="small mb-1" for="apellido">Apellido</label>
-                                    @Html.TextBoxFor(m => m.Apellido_Proveedor, new { @class = "form-control", @placeholder = "Apellido", @type = "text" })
-                                    <div id="errorApellido" class="text-danger"></div>
-                                </div>
+                                <label class="small mb-1" for="identificacion">Identificación</label>
+                                @Html.TextBoxFor(m => m.Cedula_Proveedor, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @type = "text" })
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="small mb-1" for="cedula">Cédula</label>
-                            @Html.TextBoxFor(m => m.Cedula_Proveedor, new { @class = "form-control", @placeholder = "Cédula", @type = "text" })
-                            <div id="errorCedula" class="text-danger"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="nombre">Nombre</label>
+                                @Html.TextBoxFor(m => m.Nombre_Proveedor, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
+                                <div id="errorNombre" class="text-danger"></div>
+                            </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="apellido">Apellido</label>
+                                @{
+                                    bool readOnlyApellido = Model.ID_Identificacion == 2;
+                                }
+                                @if (readOnlyApellido)
+                                {
+                                    @Html.TextBoxFor(m => m.Apellido_Proveedor, new { @class = "form-control", @placeholder = "Apellido", @type = "text", @readonly = "readonly", @style = "background-color: #eeeeee" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.Apellido_Proveedor, new { @class = "form-control", @placeholder = "Apellido", @type = "text" })
+                                }
+                                <div id="errorApellido" class="text-danger"></div>
+                            </div>
+                        </div>
+                    </div>
                         <br />
                         <div class="form-group">
                             <label class="small mb-1" for="direccion">Dirección Exacta</label>

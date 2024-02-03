@@ -105,6 +105,7 @@
       <PropertyRef Name="ID_Proveedor" />
     </Key>
     <Property Name="ID_Proveedor" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Identificacion" Type="int" Nullable="false" />
     <Property Name="Nombre_Proveedor" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="Apellido_Proveedor" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="Cedula_Proveedor" Type="varchar" MaxLength="15" Nullable="false" />
@@ -127,16 +128,6 @@
     </Key>
     <Property Name="ID_Rol" Type="int" Nullable="false" />
     <Property Name="Nombre_Rol" Type="varchar" MaxLength="30" Nullable="false" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="Usuario">
     <Key>
@@ -334,6 +325,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Proveedores_Identificacion">
+    <End Role="Identificacion" Type="Self.Identificacion" Multiplicity="1" />
+    <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Identificacion">
+        <PropertyRef Name="ID_Identificacion" />
+      </Principal>
+      <Dependent Role="Proveedores">
+        <PropertyRef Name="ID_Identificacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Usuario_Direccion">
     <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="0..1" />
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -410,7 +413,6 @@
     <Parameter Name="ID_Proveedor" Type="bigint" Mode="In" />
     <Parameter Name="Nombre_Proveedor" Type="varchar" Mode="In" />
     <Parameter Name="Apellido_Proveedor" Type="varchar" Mode="In" />
-    <Parameter Name="Cedula_Proveedor" Type="varchar" Mode="In" />
     <Parameter Name="Direccion_Exacta" Type="varchar" Mode="In" />
     <Parameter Name="Empresa" Type="bigint" Mode="In" />
     <Parameter Name="Telefono" Type="varchar" Mode="In" />
@@ -449,6 +451,7 @@
   <Function Name="RegistrarProveedorSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Nombre_Proveedor" Type="varchar" Mode="In" />
     <Parameter Name="Apellido_Proveedor" Type="varchar" Mode="In" />
+    <Parameter Name="tipo" Type="int" Mode="In" />
     <Parameter Name="Cedula_Proveedor" Type="varchar" Mode="In" />
     <Parameter Name="Direccion_Exacta" Type="varchar" Mode="In" />
     <Parameter Name="Estado_Proveedor" Type="int" Mode="In" />
@@ -480,7 +483,6 @@
     <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Provincia" EntityType="Self.Provincia" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Canton_Provincia" Association="Self.FK_Canton_Provincia">
       <End Role="Provincia" EntitySet="Provincia" />
@@ -540,6 +542,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_Proveedores_Estado" Association="Self.FK_Proveedores_Estado">
       <End Role="Estado" EntitySet="Estado" />
+      <End Role="Proveedores" EntitySet="Proveedores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Proveedores_Identificacion" Association="Self.FK_Proveedores_Identificacion">
+      <End Role="Identificacion" EntitySet="Identificacion" />
       <End Role="Proveedores" EntitySet="Proveedores" />
     </AssociationSet>
     <AssociationSet Name="FK_Usuario_Direccion" Association="Self.FK_Usuario_Direccion">
