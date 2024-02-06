@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProyectoSC_601.Entities.InventarioEnt>
+﻿@model IEnumerable<ProyectoSC_601.Entities.CategoriaEnt>
 @{
     ViewBag.Title = "ConsultaCategoria";
     Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
@@ -20,7 +20,7 @@
                         <h4 class="card-title">Categorias Registradas</h4>
                         <div style="margin-left:72%">
                             <div style="display:flex;">
-                                <a class="btn btn-primary" href="@Url.Action("RegistrarCategoria","Inventario")" style="margin-left:5%;"><i style="color: white;" class="fa fa-plus fa-lg"></i></a>
+                                <a class="btn btn-primary" href="@Url.Action("RegistrarCategoria","Categoria")" style="margin-left:5%;"><i style="color: white;" class="fa fa-plus fa-lg"></i></a>
                             </div>
                         </div>
                     </div>
@@ -42,23 +42,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @*@foreach (var item in Model)
+                                @foreach (var item in Model)
                                 {
                                     <tr>
-                                        @if (item.ID_Categoria == 1)
-                                        {
-                                            <td>Hombre</td>
-                                        }
-                                        else if (item.ID_Categoria == 2)
-                                        {
-                                            <td>Mujer</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Niños</td>
-                                        }
-                                        <td>@item.Nombre</td>
-                                        @if (item.Estado == 1)
+                                        <td>@item.ID_Categoria</td>
+                                        <td>@item.Nombre_Categoria</td>
+                                        @if (item.Estado_Categoria == 1)
                                         {
                                             <td><span class="badge bg-success">Activo</span></td>
                                         }
@@ -67,12 +56,12 @@
                                             <td><span class="badge bg-danger">Inactivo</span></td>
                                         }
                                         <td class="text-center">
-                                            <a href="@Url.Action("ActualizarEstadoProducto", "Inventario", new { q = item.ID_Producto })"><i style="color: #6282a9;" class="fa fa-exchange fa-lg"></i></a>
-                                            <a href="@Url.Action("ModificarProducto", "Inventario", new { q = item.ID_Producto })"><i style="color: forestgreen;padding-left: 10px;" class="fa fa-edit fa-lg"></i></a>
-                                            <a href="javascript:void(0);" onclick="confirmarEliminarProducto(@item.ID_Producto)"><i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i></a>
+                                            <a href="@Url.Action("ActualizarEstadoCategoria", "Categoria", new { q = item.ID_Categoria })"><i style="color: #6282a9;" class="fa fa-exchange fa-lg"></i></a>
+                                            <a href="@Url.Action("ModificarCategoria", "Categoria", new { q = item.ID_Categoria })"><i style="color: forestgreen;padding-left: 10px;" class="fa fa-edit fa-lg"></i></a>
+                                            <a href="javascript:void(0);" onclick="confirmarEliminarCategoria(@item.ID_Categoria"><i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i></a>
                                         </td>
                                     </tr>
-                                }*@
+                                }
                             </tbody>
                         </table>
                         <br />
@@ -91,7 +80,7 @@
 
 <script>
     $j(document).ready(function () {
-        $j('#TablaInventario').DataTable({
+        $j('#TablaCategorias').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
             },
@@ -103,10 +92,10 @@
 
 <script>
     //Funcion para mostrar mensaje de alerta
-    function confirmarEliminarProducto(ID_Producto) {
+    function confirmarEliminarCategoria(ID_Categoria) {
         Swal.fire({
             title: '¿Estás seguro?',
-            text: 'Si lo eliminas vas a perder la información relacionada a este producto',
+            text: 'Si lo eliminas vas a perder la información relacionada a esta categoria',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#6282a9',
@@ -115,22 +104,9 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Si el usuario confirma, redirige a la acción de inactivar cliente
-                window.location.href = '/Inventario/EliminarProducto?q=' + ID_Producto;
+                // Si el usuario confirma, redirige a la acción de inactivar categoria
+                window.location.href = '/Categoria/EliminarCategoria?q=' + ID_Categoria;
             }
-        });
-    }
-</script>
-
-<script>
-    // Muestra el total del Inventario
-    function MostrarTotalInventario() {
-        Swal.fire({
-            title: 'Total del Inventario',
-            text: '₡ @ViewBag.TotalInventario',
-            icon: 'info',
-            confirmButtonColor: '#6282a9',
-            confirmButtonText: 'Ok'
         });
     }
 </script>

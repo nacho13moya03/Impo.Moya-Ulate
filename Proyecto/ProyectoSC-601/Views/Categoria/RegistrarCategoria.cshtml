@@ -1,4 +1,4 @@
-﻿@model ProyectoSC_601.Entities.InventarioEnt
+﻿@model ProyectoSC_601.Entities.CategoriaEnt
 @{
     ViewBag.Title = "RegistrarCategoria";
     Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
@@ -22,13 +22,13 @@
                 }
                 <div class="card-header">Agregar Categoria</div>
                 <div class="card-body ">
-                    @using (Html.BeginForm("RegistrarCategoria", "Inventario", FormMethod.Post, new { @class = "pt-3", @enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("RegistrarCategoria", "Categoria", FormMethod.Post, new { @class = "pt-3", @enctype = "multipart/form-data" }))
                     {
 
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="nombre">Nombre</label>
-                                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", @placeholder = "Nombre", @type = "text", required = "required" })
+                                @Html.TextBoxFor(m => m.Nombre_Categoria, new { @class = "form-control", @placeholder = "Nombre", @type = "text", required = "required" })
                             </div>
 
                         </div>

@@ -1,4 +1,5 @@
 ﻿using APIProyectoSC_601.Entities;
+using ProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,20 +25,37 @@ namespace APIProyectoSC_601.Controllers
 
         [HttpGet]
         [Route("ConsultarInventario")]
-        public List<Producto> ConsultarInventario()
+        public List<ProductoEnt> ConsultarInventario()
         {
             try
             {
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return context.Producto.ToList();
+
+                    var producto = (from i in context.Producto
+                                    join c in context.Categorias on i.ID_Categoria equals c.ID_Categoria into categoriaJoin
+                                    from cat in categoriaJoin.DefaultIfEmpty()
+                                    select new ProductoEnt
+                                    {
+                                        ID_Producto = i.ID_Producto,
+                                        ID_Categoria = i.ID_Categoria,
+                                        Nombre_Categoria = cat != null ? cat.Nombre_Categoria : "",
+                                        Nombre = i.Nombre,
+                                        Descripcion = i.Descripcion,
+                                        Cantidad = i.Cantidad,
+                                        Precio = i.Precio,
+                                        Imagen = i.Imagen,
+                                        Estado = i.Estado
+                                    }).ToList();
+
+                    return producto;
                 }
             }
             catch (Exception ex)
             {
                 log.Add("Error en ConsultarInventario: " + ex.Message);
-                return new List<Producto>();
+                return new List<ProductoEnt>();
             }
            
         }
@@ -58,9 +76,13 @@ namespace APIProyectoSC_601.Controllers
                     foreach (var item in datos)
                     {
                         categorias.Add(new System.Web.Mvc.SelectListItem
+
                         {
+
                             Value = item.ID_Categoria.ToString(),
-                            Text = item.Nombre
+                            Text = item.Nombre_Categoria,
+                            Selected = Convert.ToBoolean(item.Estado_Categoria)
+
                         });
                     }
 
@@ -73,57 +95,6 @@ namespace APIProyectoSC_601.Controllers
                 return new List<System.Web.Mvc.SelectListItem>();
             }
         }
-
-        //Conexion a procedimiento para registrar categorias
-        [HttpPost]
-        [Route("RegistrarCategoria")]
-        public long RegistrarCategoria(Producto categoria)
-        {
-            try
-            {
-                using (var context = new ImportadoraMoyaUlateEntities())
-                {
-                    context.Producto.Add(categoria);
-                    context.SaveChanges();
-                    return categoria.ID_Categoria;
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Add("Error en RegistrarCategoria: " + ex.Message);
-                return -1;
-            }
-        }
-
-
-        //Elimina la categoria en la base de datos
-        [HttpPut]
-        [Route("EliminarCategoria")]
-        public string EliminarCategoria(Producto categoria)
-        {
-            try
-            {
-                using (var context = new ImportadoraMoyaUlateEntities())
-                {
-                    var categoriaAEliminar = context.Producto.Find(categoria.ID_Producto);
-
-                    if (categoriaAEliminar != null)
-                    {
-                        context.Producto.Remove(categoriaAEliminar);
-                        context.SaveChanges();
-                        return "OK";
-                    }
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Add("Error en EliminarCategoria: " + ex.Message);
-                return "Error: " + ex.Message;
-            }
-        }
-
-
         //Conexion a procedimiento para registrar productos
         [HttpPost]
         [Route("RegistrarProducto")]
@@ -144,8 +115,6 @@ namespace APIProyectoSC_601.Controllers
                 return -1;
             }
         }
-
-
         //Actualiza la ruta de la imagen del producto en la base de datos
         [HttpPut]
         [Route("ActualizarRutaProducto")]
@@ -175,8 +144,6 @@ namespace APIProyectoSC_601.Controllers
                 return "Error: " + ex.Message;
             }
         }
-
-
         //Actualiza el estado del producto en la base de datos
         [HttpPut]
         [Route("ActualizarEstadoProducto")]

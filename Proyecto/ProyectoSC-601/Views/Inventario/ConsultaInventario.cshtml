@@ -53,18 +53,7 @@
                                     <tr>
 
                                         <td>@item.ID_Producto</td>
-                                        @if (item.ID_Categoria == 1)
-                                        {
-                                            <td>Hombre</td>
-                                        }
-                                        else if (item.ID_Categoria == 2)
-                                        {
-                                            <td>Mujer</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Niños</td>
-                                        }
+                                        <td>@item.Nombre_Categoria</td>
                                         <td>@item.Nombre</td>
                                         <td>@item.Descripcion</td>
                                         @if (item.Cantidad <= 5)

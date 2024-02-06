@@ -25,7 +25,8 @@
       <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Categorias">
         <MappingFragment StoreEntitySet="Categorias">
           <ScalarProperty Name="ID_Categoria" ColumnName="ID_Categoria" />
-          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Nombre_Categoria" ColumnName="Nombre_Categoria" />
+          <ScalarProperty Name="Estado_Categoria" ColumnName="Estado_Categoria" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -161,12 +162,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ActualizarCategoriaSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCategoriaSP" />
     <FunctionImportMapping FunctionImportName="ActualizarCuentaUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCuentaUsuarioSP" />
     <FunctionImportMapping FunctionImportName="ActualizarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEmpresaSP" />
+    <FunctionImportMapping FunctionImportName="ActualizarEstadoCategoriaSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoCategoriaSP" />
     <FunctionImportMapping FunctionImportName="ActualizarEstadoProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoProveedorSP" />
     <FunctionImportMapping FunctionImportName="ActualizarEstadoUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoUsuarioSP" />
     <FunctionImportMapping FunctionImportName="ActualizarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarProveedorSP" />
     <FunctionImportMapping FunctionImportName="ActualizarRolUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarRolUsuarioSP" />
+    <FunctionImportMapping FunctionImportName="EliminarCategoriaSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarCategoriaSP" />
     <FunctionImportMapping FunctionImportName="EliminarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarEmpresaSP" />
     <FunctionImportMapping FunctionImportName="EliminarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarProveedorSP" />
     <FunctionImportMapping FunctionImportName="InactivarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.InactivarUsuarioSP" />
@@ -198,7 +202,7 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="RegistrarCategoria" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarCategoria" />
+    <FunctionImportMapping FunctionImportName="RegistrarCategoriaSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarCategoriaSP" />
     <FunctionImportMapping FunctionImportName="RegistrarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarEmpresaSP" />
     <FunctionImportMapping FunctionImportName="RegistrarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarProveedorSP" />
     <FunctionImportMapping FunctionImportName="RegistrarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarUsuarioSP" />

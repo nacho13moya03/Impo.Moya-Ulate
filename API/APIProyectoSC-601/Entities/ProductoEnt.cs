@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ProyectoSC_601.Entities
 {
-    public class InventarioEnt
+    public class ProductoEnt
     {
         public long ID_Producto { get; set; }
         public int ID_Categoria { get; set; }

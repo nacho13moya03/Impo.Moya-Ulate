@@ -27,8 +27,9 @@
           <Key>
             <PropertyRef Name="ID_Categoria" />
           </Key>
-          <Property Name="ID_Categoria" Type="int" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ID_Categoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre_Categoria" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Estado_Categoria" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Direcciones">
           <Key>
@@ -112,7 +113,7 @@
           <Property Name="ID_Proveedor" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_Identificacion" Type="int" Nullable="false" />
           <Property Name="Nombre_Proveedor" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Apellido_Proveedor" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Apellido_Proveedor" Type="varchar" MaxLength="255" />
           <Property Name="Cedula_Proveedor" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="Direccion_Exacta" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Estado_Proveedor" Type="int" Nullable="false" />
@@ -243,6 +244,18 @@
             </Principal>
             <Dependent Role="Distrito">
               <PropertyRef Name="ID_Provincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Estado_Categoria">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="ID_Estado" />
+            </Principal>
+            <Dependent Role="Categorias">
+              <PropertyRef Name="Estado_Categoria" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -390,6 +403,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ActualizarCategoriaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_Categoria" Type="int" Mode="In" />
+          <Parameter Name="Nombre_Categoria" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="ActualizarCuentaUsuarioSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="bigint" Mode="In" />
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
@@ -408,6 +425,9 @@
           <Parameter Name="Descripcion" Type="varchar" Mode="In" />
           <Parameter Name="Ubicacion" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ActualizarEstadoCategoriaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_Categoria" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="ActualizarEstadoProveedorSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Proveedor" Type="bigint" Mode="In" />
         </Function>
@@ -425,6 +445,9 @@
         </Function>
         <Function Name="ActualizarRolUsuarioSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Usuario" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="EliminarCategoriaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_Categoria" Type="bigint" Mode="In" />
         </Function>
         <Function Name="EliminarEmpresaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Empresa" Type="bigint" Mode="In" />
@@ -445,8 +468,9 @@
         <Function Name="RecuperarCuentaUsuarioSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Correo" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="RegistrarCategoria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="RegistrarCategoriaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Categoria" Type="varchar" Mode="In" />
+          <Parameter Name="Estado_Categoria" Type="int" Mode="In" />
         </Function>
         <Function Name="RegistrarEmpresaSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre_empresa" Type="varchar" Mode="In" />
@@ -520,6 +544,10 @@
           <AssociationSet Name="FK_Distrito_Provincia" Association="Self.FK_Distrito_Provincia">
             <End Role="Provincia" EntitySet="Provincia" />
             <End Role="Distrito" EntitySet="Distrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Estado_Categoria" Association="Self.FK_Estado_Categoria">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Categorias" EntitySet="Categorias" />
           </AssociationSet>
           <AssociationSet Name="FK_Factura_Detalle_Factura_Encabezado" Association="Self.FK_Factura_Detalle_Factura_Encabezado">
             <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
@@ -602,8 +630,10 @@
           <Key>
             <PropertyRef Name="ID_Categoria" />
           </Key>
-          <Property Name="ID_Categoria" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_Categoria" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado_Categoria" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Estado_Categoria" FromRole="Categorias" ToRole="Estado" />
           <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Categoria" FromRole="Categorias" ToRole="Producto" />
         </EntityType>
         <EntityType Name="Direcciones">
@@ -648,6 +678,7 @@
           </Key>
           <Property Name="ID_Estado" Type="Int32" Nullable="false" />
           <Property Name="Tipo_Estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Categorias" Relationship="Self.FK_Estado_Categoria" FromRole="Estado" ToRole="Categorias" />
           <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Estado" FromRole="Estado" ToRole="Producto" />
           <NavigationProperty Name="Proveedores" Relationship="Self.FK_Proveedores_Estado" FromRole="Estado" ToRole="Proveedores" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Estado" FromRole="Estado" ToRole="Usuario" />
@@ -709,7 +740,7 @@
           <Property Name="ID_Proveedor" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_Identificacion" Type="Int32" Nullable="false" />
           <Property Name="Nombre_Proveedor" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Apellido_Proveedor" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellido_Proveedor" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Cedula_Proveedor" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Direccion_Exacta" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Estado_Proveedor" Type="Int32" Nullable="false" />
@@ -817,6 +848,18 @@
             </Principal>
             <Dependent Role="Carrito">
               <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Estado_Categoria">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="ID_Estado" />
+            </Principal>
+            <Dependent Role="Categorias">
+              <PropertyRef Name="Estado_Categoria" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1036,6 +1079,10 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Carrito" EntitySet="Carrito" />
           </AssociationSet>
+          <AssociationSet Name="FK_Estado_Categoria" Association="Self.FK_Estado_Categoria">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Categorias" EntitySet="Categorias" />
+          </AssociationSet>
           <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
             <End Role="Categorias" EntitySet="Categorias" />
             <End Role="Producto" EntitySet="Producto" />
@@ -1096,6 +1143,10 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
+          <FunctionImport Name="ActualizarCategoriaSP">
+            <Parameter Name="ID_Categoria" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre_Categoria" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="ActualizarCuentaUsuarioSP">
             <Parameter Name="ID" Mode="In" Type="Int64" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
@@ -1114,6 +1165,9 @@
             <Parameter Name="Descripcion" Mode="In" Type="String" />
             <Parameter Name="Ubicacion" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="ActualizarEstadoCategoriaSP">
+            <Parameter Name="ID_Categoria" Mode="In" Type="Int64" />
+          </FunctionImport>
           <FunctionImport Name="ActualizarEstadoProveedorSP">
             <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
           </FunctionImport>
@@ -1131,6 +1185,9 @@
           </FunctionImport>
           <FunctionImport Name="ActualizarRolUsuarioSP">
             <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="EliminarCategoriaSP">
+            <Parameter Name="ID_Categoria" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="EliminarEmpresaSP">
             <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
@@ -1151,8 +1208,9 @@
           <FunctionImport Name="RecuperarCuentaUsuarioSP" ReturnType="Collection(ImportadoraMoyaUlateModel.RecuperarCuentaUsuarioSP_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="RegistrarCategoria">
+          <FunctionImport Name="RegistrarCategoriaSP">
             <Parameter Name="Categoria" Mode="In" Type="String" />
+            <Parameter Name="Estado_Categoria" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="RegistrarEmpresaSP">
             <Parameter Name="Nombre_empresa" Mode="In" Type="String" />
@@ -1229,7 +1287,8 @@
             <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Categorias">
               <MappingFragment StoreEntitySet="Categorias">
                 <ScalarProperty Name="ID_Categoria" ColumnName="ID_Categoria" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Nombre_Categoria" ColumnName="Nombre_Categoria" />
+                <ScalarProperty Name="Estado_Categoria" ColumnName="Estado_Categoria" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1365,12 +1424,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ActualizarCategoriaSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCategoriaSP" />
           <FunctionImportMapping FunctionImportName="ActualizarCuentaUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCuentaUsuarioSP" />
           <FunctionImportMapping FunctionImportName="ActualizarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEmpresaSP" />
+          <FunctionImportMapping FunctionImportName="ActualizarEstadoCategoriaSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoCategoriaSP" />
           <FunctionImportMapping FunctionImportName="ActualizarEstadoProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoProveedorSP" />
           <FunctionImportMapping FunctionImportName="ActualizarEstadoUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoUsuarioSP" />
           <FunctionImportMapping FunctionImportName="ActualizarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarProveedorSP" />
           <FunctionImportMapping FunctionImportName="ActualizarRolUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarRolUsuarioSP" />
+          <FunctionImportMapping FunctionImportName="EliminarCategoriaSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarCategoriaSP" />
           <FunctionImportMapping FunctionImportName="EliminarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarEmpresaSP" />
           <FunctionImportMapping FunctionImportName="EliminarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.EliminarProveedorSP" />
           <FunctionImportMapping FunctionImportName="InactivarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.InactivarUsuarioSP" />
@@ -1402,7 +1464,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RegistrarCategoria" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarCategoria" />
+          <FunctionImportMapping FunctionImportName="RegistrarCategoriaSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarCategoriaSP" />
           <FunctionImportMapping FunctionImportName="RegistrarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarEmpresaSP" />
           <FunctionImportMapping FunctionImportName="RegistrarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarProveedorSP" />
           <FunctionImportMapping FunctionImportName="RegistrarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarUsuarioSP" />
@@ -1423,7 +1485,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
