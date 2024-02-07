@@ -112,7 +112,7 @@ namespace APIProyectoSC_601.Controllers
             catch (Exception ex)
             {
                 log.Add("Error en RegistrarProducto: " + ex.Message);
-                return -1;
+                return 0;
             }
         }
         //Actualiza la ruta de la imagen del producto en la base de datos

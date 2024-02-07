@@ -55,9 +55,10 @@
                             Inventariado
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Categoria", "ConsultarCategoria", "Categoria", new { area = "" }, new { @class = "nav-link" })</a></li>
+
                             <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Inventario", "ConsultaInventario", "Inventario", new { area = "" }, new { @class = "nav-link" })</a></li>
 
-                            <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Categoria", "ConsultarCategoria", "Categoria", new { area = "" }, new { @class = "nav-link" })</a></li>
                         </ul>
                     </div>
                     <div class="dropdown" style="margin-left: 20px">
@@ -69,9 +70,10 @@
                             Proveeduria
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Empresas", "ConsultaEmpresas", "Empresa", new { area = "" }, new { @class = "nav-link" })</a></li>
+
                             <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Proveedores", "ConsultaProveedores", "Proveedor", new { area = "" }, new { @class = "nav-link" })</a></li>
 
-                            <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Empresas", "ConsultaEmpresas", "Empresa", new { area = "" }, new { @class = "nav-link" })</a></li>
                         </ul>
                     </div
 

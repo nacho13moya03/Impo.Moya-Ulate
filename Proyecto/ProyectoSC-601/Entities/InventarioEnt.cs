@@ -28,6 +28,8 @@ namespace ProyectoSC_601.Entities
         public decimal Precio { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio.")]
         public string Imagen { get; set; }
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        public HttpPostedFileBase Imagen_Nueva { get; set; }
         public int Estado { get; set; }
     }
 

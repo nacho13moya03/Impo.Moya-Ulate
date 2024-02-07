@@ -22,7 +22,7 @@
                 }
                 <div class="card-header">Modificar Producto</div>
                 <div class="card-body ">
-                    @using (Html.BeginForm("ModificarProducto", "Inventario", FormMethod.Post, new { @class = "pt-3", @enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("ModificarProducto", "Inventario", FormMethod.Post, new { @class = "pt-3", @enctype = "multipart/form-data", @novalidate = "novalidate" }))
                     {
                         @Html.HiddenFor(m => m.ID_Producto)
                         <div class="row gx-3 mb-3">
@@ -33,31 +33,53 @@
                                    new SelectList(ViewBag.Categorias, "Value", "Text", Model.ID_Categoria),
                                    new { @class = "form-control form-control-lg", required = "required" }
                                )
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    @Html.ValidationMessageFor(m => m.ID_Categoria, "", new { @style = "color: red;" })
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="nombre">Nombre</label>
                                 @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", @placeholder = "Nombre", @type = "text", required = "required" })
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    @Html.ValidationMessageFor(m => m.Nombre, "", new { @style = "color: red;" })
+                                </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="descripcion">Descripción</label>
                             @Html.TextAreaFor(m => m.Descripcion, new { rows = 3, cols = 20, @class = "form-control", @placeholder = "Descripción", @type = "text", required = "required" })
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                @Html.ValidationMessageFor(m => m.Descripcion, "", new { @style = "color: red;" })
+                            </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="cantidad">Cantidad Disponible</label>
                                 @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", @placeholder = "Cantidad", @type = "number", required = "required" })
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    @Html.ValidationMessageFor(m => m.Cantidad, "", new { @style = "color: red;" })
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="precio">Precio</label>
                                 @Html.TextBoxFor(m => m.Precio, new { @class = "form-control", @placeholder = "Precio", @type = "number", required = "required" })
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    @Html.ValidationMessageFor(m => m.Precio, "", new { @style = "color: red;" })
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Imagen</label>
-                            <input type="file" class="form-control" id="ImgProducto" name="ImgProducto">
+                            <input type="file" class="form-control" id="Imagen_Nueva" name="Imagen_Nueva">
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                @Html.ValidationMessageFor(m => m.Imagen_Nueva, "", new { @style = "color: red;" })
+                            </div>
                         </div>
                         <div style="text-align:center;padding-top:4%;">
+                            <a href="@Url.Action("ConsultaInventario", "Inventario")" class="btn btn-danger">
+                                <i class="fa fa-arrow-left"></i> Volver
+                            </a>
+                            <span class="px-2"></span>
                             <button class="btn btn-success" type="submit"> Actualizar <i class="bi bi-pencil-square"></i></button>
                         </div>
                     }

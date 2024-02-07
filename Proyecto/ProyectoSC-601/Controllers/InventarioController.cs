@@ -36,21 +36,23 @@ namespace ProyectoSC_601.Controllers
 
         //Registra un producto 
         [HttpPost]
-        public ActionResult RegistrarProducto(HttpPostedFileBase ImgProducto, InventarioEnt entidad)
+        public ActionResult RegistrarProducto(HttpPostedFileBase Imagen_Nueva, InventarioEnt entidad)
         {
+            ModelState.Remove("Imagen");
 
             if (ModelState.IsValid)
             {
                 entidad.Imagen = string.Empty;
                 entidad.Estado = 1;
+                entidad.Imagen_Nueva = null;
 
                 long ID_Producto = modelInventario.RegistrarProducto(entidad);
 
                 if (ID_Producto > 0)
                 {
-                    string extension = Path.GetExtension(Path.GetFileName(ImgProducto.FileName));
+                    string extension = Path.GetExtension(Path.GetFileName(Imagen_Nueva.FileName));
                     string ruta = AppDomain.CurrentDomain.BaseDirectory + "Images\\" + ID_Producto + extension;
-                    ImgProducto.SaveAs(ruta);
+                    Imagen_Nueva.SaveAs(ruta);
 
                     entidad.Imagen = "/Images/" + ID_Producto + extension;
                     entidad.ID_Producto = ID_Producto;
@@ -129,31 +131,44 @@ namespace ProyectoSC_601.Controllers
 
         //Actualiza el producto con los nuevos datos ingresados
         [HttpPost]
-        public ActionResult ModificarProducto(HttpPostedFileBase ImgProducto, InventarioEnt entidad)
+        public ActionResult ModificarProducto(HttpPostedFileBase Imagen_Nueva, InventarioEnt entidad)
         {
 
-            if (ImgProducto != null)
+            ModelState.Remove("Imagen");
+            ModelState.Remove("Imagen_Nueva");
+
+            if (ModelState.IsValid)
             {
-                string extension = Path.GetExtension(ImgProducto.FileName);
-                string rutaNuevaImagen = Path.Combine(Server.MapPath("~/Images/"), entidad.ID_Producto + extension);
+                entidad.Imagen_Nueva = null;
 
-                ImgProducto.SaveAs(rutaNuevaImagen);
+                if (Imagen_Nueva != null)
+                {
+                    string extension = Path.GetExtension(Imagen_Nueva.FileName);
+                    string rutaNuevaImagen = Path.Combine(Server.MapPath("~/Images/"), entidad.ID_Producto + extension);
 
-                entidad.Imagen = "/Images/" + entidad.ID_Producto + extension;
-            }
+                    Imagen_Nueva.SaveAs(rutaNuevaImagen);
 
-            long ID_Producto = modelInventario.ActualizarProducto(entidad);
+                    entidad.Imagen = "/Images/" + entidad.ID_Producto + extension;
+                }
 
-            if (ID_Producto > 0)
-            {
-                return RedirectToAction("ConsultaInventario", "Inventario");
+                long ID_Producto = modelInventario.ActualizarProducto(entidad);
+
+                if (ID_Producto > 0)
+                {
+                    return RedirectToAction("ConsultaInventario", "Inventario");
+                }
+                else
+                {
+                    ViewBag.Mensaje = "No se ha podido actualizar el producto";
+                    return View();
+                }
             }
             else
-            {
-                ViewBag.Mensaje = "No se ha podido actualizar el producto";
-                return View();
+                {
+                    ViewBag.Categorias = modelInventario.ConsultarCategorias();
+                    return View(entidad);
+                }
             }
-        }
 
         // GET: Categoria
         public ActionResult ConsultarCategoria()
