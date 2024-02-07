@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ProyectoSC_601.Entities.ClienteEnt>
+@{
+    ViewBag.Title = "ConsultaCompras";
+    Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
+    <link href="~/Assets/css/perfilClienteStyle.css" rel="stylesheet">
+    <link href="~/Assets/css/gestionClientesStyle.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+}
+<div class="container mt-5 pt-4">
+    <div class="row justify-content-center">
+        <div class="col-12 grid-margin stretch-card">
+            <br>
+            <br>
+            <br>
+            <div class="card" style="margin-bottom:80px;">
+                <div class="card-body">
+                    <h4 class="card-title">Compras Registrados</h4><br />
+                    <div class="table-responsive">
+                        @if (ViewBag.MensajeNoExitoso != null)
+                        {
+                            <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px !important;margin-bottom:-40px!important;">
+                                @ViewBag.Mensaje
+                            </div>
+                        }
+                      
+                            <table id="TablaClientes" class="table table-bordered table-hover">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th style="background-color: #6282a9; color:white;">ID</th>
+                                        <th style="background-color: #6282a9; color:white;">Proveedor</th>
+                                        <th style="background-color: #6282a9; color:white;">Empresa</th>
+                                        <th style="background-color: #6282a9; color:white;">Producto</th>
+                                        <th style="background-color: #6282a9; color:white;">Cantidad</th>
+                                        <th style="background-color: #6282a9; color:white;">Estado</th>
+                                        <th style="background-color: #6282a9; color:white;">Documento</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 
+                                   
+                                </tbody>
+                            </table>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Se agrega un data table para la consulta de clientes*@
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script>var $j = jQuery.noConflict();</script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $j(document).ready(function () {
+        $j('#TablaClientes').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            },
+            "pagingType": 'simple'
+        });
+
+    });
+</script>

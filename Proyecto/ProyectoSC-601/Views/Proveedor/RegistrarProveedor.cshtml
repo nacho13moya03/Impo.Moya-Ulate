@@ -1,0 +1,215 @@
+﻿@model ProyectoSC_601.Entities.ProveedorEnt
+@{
+    ViewBag.Title = "RegistrarProveedor";
+    Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
+    <link href="~/Assets/css/ProveedorEstilos.css" rel="stylesheet">
+}
+
+<div class="container-xl px-4 mt-4">
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-8" style="margin-left:18%;margin-top:5%; margin-bottom:2%;">
+            <div class="card mb-4">
+                @if (ViewBag.MensajeUsuario != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align:center">
+                        @ViewBag.MensajeUsuario
+                    </div>
+                }
+                @if (ViewBag.MensajeCedulaExistente != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align:center; ">
+                        @ViewBag.MensajeCedulaExistente
+                    </div>
+                }
+                <div class="card-header">Registrar Proveedor</div>
+                <div class="card-body">
+                    @using (Html.BeginForm("RegistrarProveedor", "Proveedor", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate" }))
+                    {
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small mb-1" for="nombre">Nombre</label>
+                                    @Html.TextBoxFor(m => m.Nombre_Proveedor, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
+                                    <div id="errorNombre" class="text-danger"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small mb-1" for="apellido">Apellido</label>
+                                    @Html.TextBoxFor(m => m.Apellido_Proveedor, new { @class = "form-control", @placeholder = "Apellido", @type = "text", @id = "apellido" })
+                                    <div id="errorApellido" class="text-danger"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="align-self: flex-start;">
+                            <label class="medium" for="tipo">Tipo de Identificación</label>
+                        </div>
+                        @Html.DropDownListFor(m => m.ID_Identificacion, (ViewBag.Identificaciones as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @style = "background-color: #eee; border: none; padding: 12px 15px; margin: 8px 0; width: 100%;", required = "required", @onchange = "actualizarCampoApellido()" })
+                        <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                            @Html.ValidationMessageFor(m => m.ID_Identificacion, "", new { @style = "color: red;" })
+                        </div>
+                        <div class="form-group">
+                            <label class="small mb-1" for="cedula">Cédula</label>
+                            @Html.TextBoxFor(m => m.Cedula_Proveedor, new { @class = "form-control", @placeholder = "Cédula", @type = "text" })
+                            <div id="errorCedula" class="text-danger">@ViewBag.MensajeCedulaExistente</div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label class="small mb-1" for="direccion">Dirección Exacta</label>
+                            @Html.TextBoxFor(m => m.Direccion_Exacta, new { @class = "form-control", @placeholder = "Dirección Exacta", @type = "text" })
+                            <div id="errorDireccion" class="text-danger"></div>
+                        </div>
+                        <div>
+                            <br>
+                            <label class="small mb-1" for="empresa">Empresa</label>
+                            @Html.DropDownListFor(m => m.Empresa, (ViewBag.combo as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @style = "background-color: #eee; border: none; padding: 12px 15px; margin: 8px 0; width: 100%;", required = "required" })
+
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                @Html.ValidationMessageFor(m => m.Empresa, "", new { @style = "color: red;" })
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label class="small mb-1" for="telefono">Teléfono</label>
+                            @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", @placeholder = "Teléfono", @type = "text" })
+                            <div id="errorTelefono" class="text-danger"></div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label class="small mb-1" for="correo">Correo</label>
+                            @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @placeholder = "Correo", @type = "mail" })
+                            <div id="errorCorreo" class="text-danger"></div>
+                        </div>
+                        <br>
+                        <div style="text-align:center;padding-top:4%;">
+                            <a href="@Url.Action("ConsultaProveedores", "Proveedor")" class="btn btn-danger">
+                                <i class="fa fa-arrow-left"></i> Volver
+                            </a>
+                            <span class="px-2"></span>
+                            <button class="btn btn-success" type="submit" onclick="return validarFormulario()">REGISTRAR<i class="bi bi-pencil-square"></i></button>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function validarFormulario() {
+    // Obtener los valores del formulario
+    var nombreElement = document.getElementById("Nombre_Proveedor");
+    var apellidoElement = document.getElementById("Apellido_Proveedor");
+    var cedulaElement = document.getElementById("Cedula_Proveedor");
+    var direccionElement = document.getElementById("Direccion_Exacta");
+    var telefonoElement = document.getElementById("Telefono");
+    var correoElement = document.getElementById("Correo");
+
+    // Activar el evento si el campo está vacío
+    document.getElementById("errorNombre").innerText = "";
+    document.getElementById("errorApellido").innerText = "";
+    document.getElementById("errorCedula").innerText = "";
+    document.getElementById("errorDireccion").innerText = "";
+    document.getElementById("errorTelefono").innerText = "";
+    document.getElementById("errorCorreo").innerText = "";
+
+    var valid = true;
+
+    // Validar el nombre, que no contenga números o caracteres especiales
+    if (nombreElement !== null && nombreElement.value.trim() === "") {
+        document.getElementById("errorNombre").innerText = "Este campo es obligatorio";
+        valid = false;
+    } else if (nombreElement !== null && !/^[a-zA-Z\s]+$/.test(nombreElement.value)) {
+        document.getElementById("errorNombre").innerText = "El nombre no puede contener números o caracteres especiales";
+        valid = false;
+    }
+
+    // Validar el apellido, que no contenga números o caracteres especiales
+    if (apellidoElement !== null && apellidoElement.value.trim() === "") {
+        document.getElementById("errorApellido").innerText = "Este campo es obligatorio";
+        valid = false;
+    } else if (apellidoElement !== null && !/^[a-zA-Z\s]+$/.test(apellidoElement.value)) {
+        document.getElementById("errorApellido").innerText = "El apellido no puede contener números o caracteres especiales";
+        valid = false;
+    }
+
+    // Validar la cédula, solo puede contener números
+    if (cedulaElement !== null && cedulaElement.value.trim() === "") {
+        document.getElementById("errorCedula").innerText = "Este campo es obligatorio";
+        valid = false;
+    } else if (cedulaElement !== null && !/^\d+$/.test(cedulaElement.value)) {
+        document.getElementById("errorCedula").innerText = "La cédula solo puede contener números";
+        valid = false;
+    }
+
+    // Validar que la dirección no esté vacía
+    if (direccionElement !== null && direccionElement.value.trim() === "") {
+        document.getElementById("errorDireccion").innerText = "Este campo es obligatorio";
+        valid = false;
+    }
+
+    // Validar el teléfono, solo puede contener números
+    if (telefonoElement !== null && telefonoElement.value.trim() === "") {
+        document.getElementById("errorTelefono").innerText = "Este campo es obligatorio";
+        valid = false;
+    } else if (telefonoElement !== null && !/^\d+$/.test(telefonoElement.value)) {
+        document.getElementById("errorTelefono").innerText = "El teléfono solo puede contener números";
+        valid = false;
+    }
+
+    // Validar el correo, debe contener un @@ y un punto con información
+    if (correoElement !== null && correoElement.value.trim() === "") {
+        document.getElementById("errorCorreo").innerText = "Este campo es obligatorio";
+        valid = false;
+    } else if (correoElement !== null && !RegExp('\\S+@@\\S+\\.\\S+').test(correoElement.value)) {
+        document.getElementById("errorCorreo").innerText = "Ingrese una dirección de correo electrónico válida";
+        valid = false;
+    }
+
+    return valid;
+    };
+</script>
+
+<script>
+    $(document).ready(function () {
+        function validarCedula() {
+            var cedula = $("#Cedula_Proveedor").val();
+            var tipoIdentificacion = $("#ID_Identificacion").val();
+
+            $("#errorCedula").text("");
+
+            if (tipoIdentificacion == 1 && cedula.length !== 9) {
+                $("#errorCedula").text("La cédula debe tener exactamente 9 dígitos numéricos.");
+                return false;
+            } else if (tipoIdentificacion == 2 && cedula.length !== 11) {
+                $("#errorCedula").text("La cédula debe tener exactamente 11 dígitos numéricos.");
+                return false;
+            } else if (tipoIdentificacion == 3 && cedula.length !== 15) {
+                $("#errorCedula").text("La cédula debe tener exactamente 15 caracteres alfanuméricos.");
+                return false;
+            }
+
+            return true;
+        }
+
+        function actualizarCampoApellido() {
+            var identificacion = $("#ID_Identificacion").val();
+            var apellidoField = $("#apellido");
+
+            if (identificacion == 2) { 
+                apellidoField.val("");
+                apellidoField.prop("disabled", true);
+            } else {
+                // Si la identificación es diferente, habilita el campo de apellido
+                apellidoField.prop("disabled", false);
+            }
+        }
+
+        validarCedula();
+        actualizarCampoApellido();
+
+        $("#ID_Identificacion").change(actualizarCampoApellido);
+    });
+</script>

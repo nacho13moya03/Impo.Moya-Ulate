@@ -1,0 +1,177 @@
+﻿@model IEnumerable<ProyectoSC_601.Entities.UsuarioEnt>
+@{
+    ViewBag.Title = "GestionUsuarios";
+    Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
+    <link href="~/Assets/css/perfilClienteStyle.css" rel="stylesheet">
+    <link href="~/Assets/css/gestionClientesStyle.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" rel="stylesheet">
+
+
+}
+<div class="container mt-5 pt-4">
+    <div class="row justify-content-center">
+        <div class="col-12 grid-margin stretch-card">
+            <br>
+            <br>
+            <br>
+            <div class="card" style="margin-bottom:80px;width:110%!important;margin-left:-5%;">
+                <div class="card-body">
+                    <h4 class="card-title">Usuarios Registrados</h4><br />
+
+                    <div class="table-responsive">
+                       
+                        @if (Model.Count() > 0)
+                        {
+                            <table id="TablaClientes" class="table table-bordered table-hover">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th style="background-color: #6282a9; color:white;">ID</th>
+                                        <th style="background-color: #6282a9; color:white;">Tipo</th>
+                                        <th style="background-color: #6282a9; color:white;">Identificación</th>
+                                        <th style="background-color: #6282a9; color:white;">Nombre</th>
+                                        <th style="background-color: #6282a9; color:white;">Correo Electrónico</th>
+                                        <th style="background-color: #6282a9; color:white;">Provincia</th>
+                                        <th style="background-color: #6282a9; color:white;">Cantón</th>
+                                        <th style="background-color: #6282a9; color:white;">Distrito</th>
+                                        <th style="background-color: #6282a9; color:white;">Dirección</th>
+                                        <th style="background-color: #6282a9; color:white;">Teléfono</th>
+                                        <th style="background-color: #6282a9; color:white;">Detalles</th>
+                                        <th style="background-color: #6282a9; color:white;">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.ID_Usuario</td>
+                                            <td>@item.Nombre_Identificacion</td>
+                                            <td>@item.Identificacion_Usuario</td>
+                                            <td>@($"{item.Nombre_Usuario} {item.Apellido_Usuario}")</td>
+                                            <td>@item.Correo_Usuario</td>
+                                            <td>@item.Nombre_Provincia</td>
+                                            <td>@item.Nombre_Canton</td>
+                                            <td>@item.Nombre_Distrito</td>
+                                            <td style="max-width:120px;">@item.Direccion_Exacta</td>
+                                            <td>@item.Telefono_Usuario</td>
+                                            <td>
+                                                @if (item.ID_Estado == 1)
+                                                {
+                                                    <span class="badge bg-success">Activo</span>
+
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-danger">Inactivo</span>
+                                                }
+                                                @if (item.ID_Rol == 1)
+                                                {
+                                                    <span class="badge bg-warning">Admin</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-info">Cliente</span>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="@Url.Action("ActualizarEstadoUsuario", "Usuario", new { q = item.ID_Usuario })"><i class="fa fa-exchange fa-lg text-primary"></i></a><br />
+                                                <a href="@Url.Action("ActualizarRolUsuario", "Usuario", new { q = item.ID_Usuario })"><i class="fa fa-exchange fa-lg text-primary" style="color:black!important;"></i></a>
+
+                                            </td>
+                                            </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                                No hay usuarios registrados en este momento
+                            </div>
+                        }
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Se agrega un data table para la consulta de clientes*@
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script>var $j = jQuery.noConflict();</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+
+<script>
+    $j(document).ready(function () {
+        $j('#TablaClientes').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            },
+            "pagingType": 'simple',
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6,7,8,9,10] 
+                    }
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                    },
+                    customize: function (doc) {
+                        doc.styles.tableBodyEven.alignment = 'left';
+                        doc.styles.tableBodyOdd.alignment = 'left';
+
+                        // Establecer el ancho de las columnas
+                        doc.content[1].table.widths = ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'];
+
+                    },
+                    orientation: 'landscape'  // Establecer la orientación a horizontal
+
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 
+                    }
+                }
+            ]
+        });
+
+        // Ajustar los botones de exportación
+        table.buttons().container().prependTo('#TablaClientes_wrapper .dataTables_filter');
+    });
+</script>

@@ -1,0 +1,133 @@
+﻿@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,700");
+
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#bbbbbb));
+    background: linear-gradient(#e6e6e6, #bbbbbb);
+    font-family: "Raleway", sans-serif;
+}
+
+#main {
+    position: relative;
+    width: 550px;
+    height: 330px;
+    left: 30px;
+    top: 250px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    background-color: white;
+}
+
+#left {
+    position: relative;
+    background: -webkit-gradient(linear, left bottom, left top, from(rgba(91, 36, 122, 0.45)), to(rgba(27, 206, 223, 0.55))), url("https://images.pexels.com/photos/556663/pexels-photo-556663.jpeg?auto=compress&cs=tinysrgb&h=650&w=940");
+    background: linear-gradient(to top, rgba(91, 36, 122, 0.45) 0%, rgba(27, 206, 223, 0.55) 100%), url("https://images.pexels.com/photos/556663/pexels-photo-556663.jpeg?auto=compress&cs=tinysrgb&h=650&w=940");
+    background-size: cover;
+    background-position: center;
+    height: calc(100% + 50px);
+    width: 40%;
+    top: -35px;
+    left: -50px;
+    padding: 10px 25px;
+    -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    color: white;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: column nowrap;
+    flex-flow: column nowrap;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+
+    #left #head {
+        opacity: 0.95;
+    }
+
+#right {
+    position: absolute;
+    width: calc(60% - 40px);
+    height: 100%;
+    top: 0;
+    left: 40%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: column nowrap;
+    flex-flow: column nowrap;
+    padding-left: 20px;
+}
+
+    #right form {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: column nowrap;
+        flex-flow: column nowrap;
+        width: 100%;
+    }
+
+        #right form input,
+        #right form select {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none;
+            border: none;
+            border-bottom: 1.5px solid #ccc;
+            padding: 5px;
+            margin-top: 2.5px;
+            position: relative;
+        }
+
+        #right form .form-field {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+            -webkit-justify-content: center;
+            justify-content: center;
+            margin-bottom: 12.5px;
+        }
+
+        #right form #date-val {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-justify-content: space-between;
+            justify-content: space-between;
+        }
+
+            #right form #date-val select {
+                width: 45%;
+            }
+
+        #right form button[type="submit"] {
+            background: -webkit-gradient(linear, left bottom, left top, from(#4183d7), to(#66cc99));
+            background: linear-gradient(to top, #4183d7 0%, #66cc99 100%);
+            padding: 5px;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 400;
+            font-size: 12pt;
+            margin-top: 10px;
+        }
+
+            #right form button[type="submit"]:hover {
+                background: transparent;
+                -webkit-box-shadow: 0 0 0 3px #4183d7;
+                box-shadow: 0 0 0 3px #4183d7;
+                color: #4183d7;
+            }

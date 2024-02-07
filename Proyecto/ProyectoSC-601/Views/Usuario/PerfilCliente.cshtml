@@ -1,0 +1,328 @@
+﻿@model ProyectoSC_601.Entities.UsuarioEnt
+@{
+    ViewBag.Title = "PerfilCLiente";
+    <link href="~/Assets/css/perfilClienteStyle.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
+
+}
+
+<div class="container-xl px-4 mt-4">
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-md-3" style="margin-top: 4%;margin-left:-5.2%!important;">
+            <div class="card" style="text-align:center;">
+                <div class="card-header" style="background-color: #EEEEEE; ">Opciones</div>
+                <div class="card-body">
+                    @Html.ActionLink("Información Personal", "PerfilCliente", "Usuario", new { area = "" }, new { @class = "nav-link" })
+                    <hr class="my-1" style="margin:5px!important;">
+                    @Html.ActionLink("Historial de Compras", "FacturacionCliente", "Facturacion", new { area = "" }, new { @class = "nav-link" })
+
+                </div>
+            </div>
+        </div>
+        @*<div class="col-xl-7" style="margin-left:2%;margin-top:4%; margin-bottom:4%;">
+            <div class="card mb-4">*@
+        @*@if (ViewBag.MensajeNoExitoso != null)
+            {
+                <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px !important;margin-bottom:-40px!important;">
+                    @ViewBag.MensajeNoExitoso
+                </div>
+            }*@
+
+
+        @using (Html.BeginForm("PerfilCliente", "Usuario", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate" }))
+        {
+            <div class="col-xl-7" style="margin-left:25%;margin-top:-13%; margin-bottom:4%;">
+                <div class="card mb-4">
+                    <div class="card-header" style="background-color: #EEEEEE; ">Información Personal</div>
+                    <div class="card-body ">
+                        @Html.HiddenFor(m => m.ID_Usuario)
+                        @Html.HiddenFor(m => m.ID_Direccion)
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="tipo">Tipo</label>
+                                @Html.TextBoxFor(m => m.Nombre_Identificacion, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @type = "text" })
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="identificacion">Identificación</label>
+                                @Html.TextBoxFor(m => m.Identificacion_Usuario, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @type = "text" })
+                            </div>
+                        </div>
+                        @if (Model.Nombre_Identificacion.Equals("Cédula Jurídica"))
+                        {
+                            <div class="mb-3">
+                                <label class="small mb-1" for="nombre">Nombre</label>
+                                @Html.TextBoxFor(m => m.Nombre_Usuario, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    @Html.ValidationMessageFor(m => m.Nombre_Usuario, "", new { @style = "color: red;" })
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="nombre">Nombre</label>
+                                    @Html.TextBoxFor(m => m.Nombre_Usuario, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
+                                    <div style="align-self: flex-start; font-size: 10px !important;margin-top:2px!important;margin-left:3px!important;">
+                                        @Html.ValidationMessageFor(m => m.Nombre_Usuario, "", new { @style = "color: red;" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="apellido">Primer Apellido</label>
+                                    @Html.TextBoxFor(m => m.Apellido_Usuario, new { @class = "form-control", @placeholder = "Primer Apellido", @type = "text" })
+                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                        @Html.ValidationMessageFor(m => m.Apellido_Usuario, "", new { @style = "color: red;" })
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="correo">Correo Electrónico</label>
+                                @Html.TextBoxFor(m => m.Correo_Usuario, new { @class = "form-control", @placeholder = "Correo Electrónico", @type = "email", required = "required" })
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    @Html.ValidationMessageFor(m => m.Correo_Usuario, "", new { @style = "color: red;" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="telefono">Teléfono</label>
+                                @Html.TextBoxFor(m => m.Telefono_Usuario, new { @class = "form-control", @placeholder = "Teléfono", @type = "text", required = "required" })
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;;">
+                                    @Html.ValidationMessageFor(m => m.Telefono_Usuario, "", new { @style = "color: red;" })
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7" style="margin-left:25%;margin-top:4%; margin-bottom:4%;">
+                <div class="card mb-4">
+                    <div class="card-header" style="background-color: #EEEEEE; ">Ubicación</div>
+                    <div class="card-body ">
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-4">
+                                <label class="small mb-1" for="provincia">Provincia</label>
+                           
+                                    @Html.DropDownListFor(m => m.ID_Provincia, (ViewBag.Provincias as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control provincia-dropdown", required = "required" })
+
+                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                        @Html.ValidationMessageFor(m => m.ID_Provincia, "", new { @style = "color: red;" })
+                                   
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="small mb-1" for="canton">Cantón</label>
+                                @Html.DropDownListFor(m => m.ID_Canton, (ViewBag.Cantones as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control canton-dropdown", required = "required", disabled = ViewBag.Provincias == null ? "disabled" : "" })
+
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    @Html.ValidationMessageFor(m => m.ID_Canton, "", new { @style = "color: red;" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small mb-1" for="distrito">Distrito</label>
+                                @Html.DropDownListFor(m => m.ID_Distrito, (ViewBag.Distritos as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control distrito-dropdown", required = "required", disabled = ViewBag.Cantones == null ? "disabled" : "" })
+
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    @Html.ValidationMessageFor(m => m.ID_Distrito, "", new { @style = "color: red;" })
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label class="small mb-1" for="direccion">Dirección Exacta</label>
+                            @Html.TextAreaFor(m => m.Direccion_Exacta, new { rows = 3, cols = 20, @class = "form-control", @placeholder = "Ubicación Exacta", @type = "text", required = "required" })
+
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                @Html.ValidationMessageFor(m => m.Direccion_Exacta, "", new { @style = "color: red;" })
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+           
+            <div class="col-xl-7" style="margin-left:25%;margin-top:4%; margin-bottom:4%;">
+                <div class="card mb-4">
+                    <div class="card-header" style="background-color: #EEEEEE; ">Seguridad</div>
+                    <div class="card-body ">
+                        <div class="mb-3">
+                            <label class="small mb-1" for="password">Contraseña</label>
+                            @Html.TextBoxFor(m => m.Contrasenna_Usuario, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @placeholder = "Contraseña", @type = "password" })
+
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                @Html.ValidationMessageFor(m => m.Contrasenna_Usuario, "", new { @style = "color: red;" })
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="password">Nueva Contraseña</label>
+                            @Html.TextBoxFor(m => m.NuevaContrasenna_Usuario, new { @class = "form-control", @placeholder = "Nueva Contraseña", @type = "password" })
+
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                @Html.ValidationMessageFor(m => m.NuevaContrasenna_Usuario, "", new { @style = "color: red;" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="justify-content-center" style=" margin-bottom: 5%;">
+                <button class="btn btn-success" type="submit" style="margin-left:48%!important;"><i class="bi bi-pencil-square"></i></button>
+                <a href="javascript:void(0);" onclick="confirmarInactivarCliente(@Model.ID_Usuario)" class="btn btn-danger" style="color: white;"> <i class="bi bi-trash3"></i></a>
+                <a href='@Url.Action("CerrarSesionUsuario", "Usuario")' class="btn btn-dark" style="color: white;"><i class="bi bi-box-arrow-left"></i></a>
+            </div>
+        }
+    </div>
+    @*</div>
+        </div>*@
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="~/Assets/js/Cliente.js"></script>
+
+<script>
+    //Funcion para mostrar mensaje de alerta
+    function confirmarInactivarCliente(idCliente) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Si deseas recuperar la cuenta deberás contactar a la Importadora',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#6282a9',
+            cancelButtonColor: '#354461',
+            confirmButtonText: 'Sí, Inactivar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, redirige a la acción de inactivar cliente
+                window.location.href = '/Usuario/InactivarUsuario?q=' + idCliente;
+            }
+        });
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Variables para los dropdowns
+        var provinciaDropdown = $('.provincia-dropdown');
+        var cantonDropdown = $('.canton-dropdown');
+        var distritoDropdown = $('.distrito-dropdown');
+
+        // Función para habilitar o deshabilitar dropdowns
+        function toggleDropdowns() {
+            var provinciaSelected = provinciaDropdown.val();
+            var cantonSelected = cantonDropdown.val();
+
+            // Verificar que tanto la provincia como el cantón tengan opciones válidas
+            var enableCanton = provinciaSelected !== "";
+            var enableDistrito = provinciaSelected && cantonSelected;
+
+            cantonDropdown.prop('disabled', !enableCanton);
+            distritoDropdown.prop('disabled', !enableDistrito);
+
+            // Restablecer los valores a la opción predeterminada si la provincia no tiene una opción válida
+            if (!enableCanton) {
+                cantonDropdown.val("");
+                distritoDropdown.val("");
+            }
+
+            // Restablecer el valor del distrito si el cantón no tiene una opción válida
+            if (!enableDistrito) {
+                distritoDropdown.val("");
+            }
+
+        }
+
+        // Asociar la función al cambio de selección en los dropdowns
+        $('.provincia-dropdown, .canton-dropdown').change(toggleDropdowns);
+
+        // Llamar a la función inicialmente para configurar el estado inicial
+        toggleDropdowns();
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var provinciaDropdown = $('.provincia-dropdown');
+        var cantonDropdown = $('.canton-dropdown');
+        var distritoDropdown = $('.distrito-dropdown');
+
+        function cargarCantones() {
+            var idProvincia = provinciaDropdown.val();
+            if (idProvincia !== "") {
+                $.ajax({
+                    url: '@Url.Action("cargarCantones", "Usuario")',
+                    type: 'GET',
+                    data: { idProvincia: idProvincia },
+                    success: function (data) {
+                        // Limpiar el dropdown de cantones antes de agregar nuevos datos
+                        cantonDropdown.empty();
+
+                        // Agregar nuevos datos al dropdown de cantones
+                        $.each(data, function (index, item) {
+                            cantonDropdown.append($('<option>', {
+                                value: item.Value,
+                                text: item.Text
+                            }));
+                        });
+
+                        cantonDropdown.prop('disabled', false);
+                    },
+                    error: function () {
+                        // Manejar errores si es necesario
+                    }
+                });
+            } else {
+                // Limpiar y deshabilitar el dropdown de cantones si no se selecciona una provincia
+                cantonDropdown.empty().prop('disabled', true);
+                // Limpiar y deshabilitar el dropdown de distritos
+                distritoDropdown.empty().prop('disabled', true);
+            }
+        }
+
+        function cargarDistritos() {
+            var idCanton = cantonDropdown.val();
+            if (idCanton !== "") {
+                $.ajax({
+                    url: '@Url.Action("cargarDistritos", "Usuario")',
+                    type: 'GET',
+                    data: { idCanton: idCanton },
+                    success: function (data) {
+                        // Limpiar el dropdown de distritos antes de agregar nuevos datos
+                        distritoDropdown.empty();
+
+                        // Agregar nuevos datos al dropdown de distritos
+                        $.each(data, function (index, item) {
+                            distritoDropdown.append($('<option>', {
+                                value: item.Value,
+                                text: item.Text
+                            }));
+                        });
+
+                        // Habilitar el dropdown de distritos
+                        distritoDropdown.prop('disabled', false);
+                    },
+                    error: function () {
+                        // Manejar errores si es necesario
+                    }
+                });
+            } else {
+                // Limpiar y deshabilitar el dropdown de distritos si no se selecciona un cantón
+                distritoDropdown.empty().prop('disabled', true);
+            }
+        }
+
+        // Asociar las funciones al cambio de selección en los dropdowns
+        provinciaDropdown.change(cargarCantones);
+        cantonDropdown.change(cargarDistritos);
+
+        // Llamar a la función inicialmente para configurar el estado inicial
+        //cargarCantones();
+        //cargarDistritos();
+    });
+</script>
+
