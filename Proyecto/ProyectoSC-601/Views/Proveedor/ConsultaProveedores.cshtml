@@ -52,7 +52,6 @@
                                     <tr>
                                         <th style="background-color: #6282a9; color:white;">ID</th>
                                         <th style="background-color: #6282a9; color:white;">Nombre</th>
-                                        <th style="background-color: #6282a9; color:white;">Apellido</th>
                                         <th style="background-color: #6282a9; color:white;">Tipo</th>
                                         <th style="background-color: #6282a9; color:white;">Cédula</th>
                                         <th style="background-color: #6282a9; color:white;">Dirección</th>
@@ -69,14 +68,13 @@
                                     {
                                         <tr>
                                             <td>@item.ID_Proveedor</td>
-                                            <td>@item.Nombre_Proveedor</td>
-                                            <td>@item.Apellido_Proveedor</td>
+                                            <td>@($"{item.Nombre_Proveedor} {item.Apellido_Proveedor}")</td>
                                             <td>@item.Nombre_Identificacion</td>
                                             <td>@item.Cedula_Proveedor</td>
                                             <td>@item.Direccion_Exacta</td>
                                             <!--Obtener el nombre en vez del ID-->
                                             @{
-                                                var idEmpresa = item.Empresa; 
+                                                var idEmpresa = item.Empresa;
                                                 var nombreEmpresa = empresas.FirstOrDefault(e => e.Value == idEmpresa.ToString())?.Text;
                                             }
                                             <td>@nombreEmpresa</td>
@@ -157,31 +155,31 @@
                 {
                     extend: 'copy',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        columns: [0, 1, 2, 3, 4, 5, 6,7,8]
                     }
                 },
                 {
                     extend: 'csv',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                     }
                 },
                 {
                     extend: 'excel',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                     }
                 },
                 {
                     extend: 'pdf',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                     }
                 },
                 {
                     extend: 'print',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                     }
                 }
             ]

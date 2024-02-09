@@ -205,6 +205,10 @@ namespace APIProyectoSC_601.Controllers
             {
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
+                    if (entidad.Nombre_Identificacion.Equals("Cédula Jurídica"))
+                    {
+                        entidad.Apellido_Proveedor = string.Empty; 
+                    }
                     context.ActualizarProveedorSP(entidad.ID_Proveedor, entidad.Nombre_Proveedor, entidad.Apellido_Proveedor,entidad.Direccion_Exacta, entidad.Empresa, entidad.Telefono, entidad.Correo);
                     return "OK";
                 }

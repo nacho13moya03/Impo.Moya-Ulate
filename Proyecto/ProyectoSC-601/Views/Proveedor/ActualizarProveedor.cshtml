@@ -11,59 +11,48 @@
     <div class="row">
         <div class="col-xl-8" style="margin-left:18%;margin-top:5%; margin-bottom:2%;">
             <div class="card mb-4">
-                @if (ViewBag.MensajeUsuario != null)
-                {
-                    <div class="alert alert-danger" role="alert" style="text-align:center">
-                        @ViewBag.MensajeUsuario
-                    </div>
-                }
                 <div class="card-header">Actualizar Proveedor</div>
                 <div class="card-body">
                     @using (Html.BeginForm("ActualizarProveedor", "Proveedor", FormMethod.Post, new { @class = "pt-3" }))
                     {
                         @Html.HiddenFor(m => m.ID_Proveedor)
+                        @Html.HiddenFor(m => m.ID_Identificacion)
 
-                    <div class="row gx-3 mb-3">
                         <div class="row gx-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="tipo">Tipo</label>
-                                @Html.TextBoxFor(m => m.Nombre_Identificacion, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @type = "text" })
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="tipo">Tipo</label>
+                                    @Html.TextBoxFor(m => m.Nombre_Identificacion, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @type = "text" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="identificacion">Identificación</label>
+                                    @Html.TextBoxFor(m => m.Cedula_Proveedor, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @type = "text" })
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="small mb-1" for="identificacion">Identificación</label>
-                                @Html.TextBoxFor(m => m.Cedula_Proveedor, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @type = "text" })
+                                <div class="form-group">
+                                    <label class="small mb-1" for="nombre">Nombre</label>
+                                    @Html.TextBoxFor(m => m.Nombre_Proveedor, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small mb-1" for="apellido">Apellido</label>
+                                    @if (Model.Nombre_Identificacion.Equals("Cédula Jurídica"))
+                                    {
+                                        @Html.TextBoxFor(m => m.Apellido_Proveedor, new { @class = "form-control", @placeholder = "Apellido", @type = "text", @readonly = "readonly", @style = "background-color: #eeeeee" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(m => m.Apellido_Proveedor, new { @class = "form-control", @placeholder = "Apellido", @type = "text" })
+                                    }
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small mb-1" for="nombre">Nombre</label>
-                                @Html.TextBoxFor(m => m.Nombre_Proveedor, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
-                                <div id="errorNombre" class="text-danger"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small mb-1" for="apellido">Apellido</label>
-                                @{
-                                    bool readOnlyApellido = Model.ID_Identificacion == 2;
-                                }
-                                @if (readOnlyApellido)
-                                {
-                                    @Html.TextBoxFor(m => m.Apellido_Proveedor, new { @class = "form-control", @placeholder = "Apellido", @type = "text", @readonly = "readonly", @style = "background-color: #eeeeee" })
-                                }
-                                else
-                                {
-                                    @Html.TextBoxFor(m => m.Apellido_Proveedor, new { @class = "form-control", @placeholder = "Apellido", @type = "text" })
-                                }
-                                <div id="errorApellido" class="text-danger"></div>
-                            </div>
-                        </div>
-                    </div>
                         <br />
                         <div class="form-group">
                             <label class="small mb-1" for="direccion">Dirección Exacta</label>
                             @Html.TextBoxFor(m => m.Direccion_Exacta, new { @class = "form-control", @placeholder = "Dirección Exacta", @type = "text" })
-                            <div id="errorDireccion" class="text-danger"></div>
                         </div>
                         <div>
                             <br>
@@ -74,13 +63,11 @@
                         <div class="form-group">
                             <label class="small mb-1" for="telefono">Teléfono</label>
                             @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", @placeholder = "Teléfono", @type = "text" })
-                            <div id="errorTelefono" class="text-danger"></div>
                         </div>
                         <br>
                         <div class="form-group">
                             <label class="small mb-1" for="correo">Correo</label>
                             @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @placeholder = "Correo", @type = "mail" })
-                            <div id="errorCorreo" class="text-danger"></div>
                         </div>
                         <br>
                         <div style="text-align:center;padding-top:4%;">
@@ -97,18 +84,18 @@
     </div>
 </div>
 
-<!--Validaciones de los campos en el formulario-->
+<!-- Validaciones de los campos en el formulario -->
 <script>
     function validarFormulario() {
-        //Obtener los valores del formulario
-        var nombre = document.getElementById("Nombre_Proveedor").value;
-        var apellido = document.getElementById("Apellido_Proveedor").value;
-        var cedula = document.getElementById("Cedula_Proveedor").value;
-        var direccion = document.getElementById("Direccion_Exacta").value;
-        var telefono = document.getElementById("Telefono").value;
-        var correo = document.getElementById("Correo").value;
+        // Obtener los valores del formulario
+        var nombreElement = document.getElementById("Nombre_Proveedor").value;
+        var apellidoElement = document.getElementById("Apellido_Proveedor").value;
+        var cedulaElement = document.getElementById("Cedula_Proveedor").value;
+        var direccionElement = document.getElementById("Direccion_Exacta").value;
+        var telefonoElement = document.getElementById("Telefono").value;
+        var correoElement = document.getElementById("Correo").value;
 
-        //Activar el evento si el campo esta vacio
+        // Activar el evento si el campo está vacío
         document.getElementById("errorNombre").innerText = "";
         document.getElementById("errorApellido").innerText = "";
         document.getElementById("errorCedula").innerText = "";
@@ -118,53 +105,53 @@
 
         var valid = true;
 
-        //Validar el nombre, que no contenga números o caracteres especiales
-        if (nombre.trim() === "") {
+        // Validar el nombre, que no contenga números o caracteres especiales
+        if (nombreElement.trim() === "") {
             document.getElementById("errorNombre").innerText = "Se necesita rellenar este campo";
             valid = false;
-        } else if (!/^[a-zA-Z\s]+$/.test(nombre)) {
-            document.getElementById("errorNombre").innerText = "El nombre no puede contener numeros o caracteres especiales";
+        } else if (!/^[a-zA-Z\s]+$/.test(nombreElement)) {
+            document.getElementById("errorNombre").innerText = "El nombre no puede contener números o caracteres especiales";
             valid = false;
         }
 
-        //Validar el apellido, que no contenga números o caracteres especiales
-        if (apellido.trim() === "") {
+        // Validar el apellido, que no contenga números o caracteres especiales
+        if (apellidoElement.trim() === "") {
             document.getElementById("errorApellido").innerText = "Se necesita rellenar este campo";
             valid = false;
-        } else if (!/^[a-zA-Z\s]+$/.test(apellido)) {
-            document.getElementById("errorApellido").innerText = "El apellido no puede contener numeros o caracteres especiales";
+        } else if (!/^[a-zA-Z\s]+$/.test(apellidoElement)) {
+            document.getElementById("errorApellido").innerText = "El apellido no puede contener números o caracteres especiales";
             valid = false;
         }
 
-        //Validar la cédula, solo puede contener números
-        if (cedula.trim() === "") {
+        // Validar la cédula, solo puede contener números
+        if (cedulaElement.trim() === "") {
             document.getElementById("errorCedula").innerText = "Se necesita rellenar este campo";
             valid = false;
-        } else if (!/^\d+$/.test(cedula)) {
+        } else if (!/^\d+$/.test(cedulaElement)) {
             document.getElementById("errorCedula").innerText = "La cédula solo puede contener números";
             valid = false;
         }
 
-        //Validar que la dirección no este vacía
-        if (direccion.trim() === "") {
+        // Validar que la dirección no esté vacía
+        if (direccionElement.trim() === "") {
             document.getElementById("errorDireccion").innerText = "Se necesita rellenar este campo";
             valid = false;
         }
 
-        //Validar el teléfono, solo puede contener números
-        if (telefono.trim() === "") {
+        // Validar el teléfono, solo puede contener números
+        if (telefonoElement.trim() === "") {
             document.getElementById("errorTelefono").innerText = "Se necesita rellenar este campo";
             valid = false;
-        } else if (!/^\d+$/.test(telefono)) {
+        } else if (!/^\d+$/.test(telefonoElement)) {
             document.getElementById("errorTelefono").innerText = "El teléfono solo puede contener números";
             valid = false;
         }
 
-        //Validar el correo, debe contener un @@ y un punto con información
-        if (correo.trim() === "") {
+        // Validar el correo, debe contener un @@ y un punto con información
+        if (correoElement.trim() === "") {
             document.getElementById("errorCorreo").innerText = "Se necesita rellenar este campo";
             valid = false;
-        } else if (!RegExp('\\S+@@\\S+\\.\\S+').test(correo)) {
+        } else if (!/\S+@@\S+\.\S+/.test(correoElement)) {
             document.getElementById("errorCorreo").innerText = "Ingrese una dirección de correo electrónico válida";
             valid = false;
         }
@@ -172,3 +159,4 @@
         return valid;
     }
 </script>
+

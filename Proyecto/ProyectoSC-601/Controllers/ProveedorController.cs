@@ -132,7 +132,8 @@ namespace ProyectoSC_601.Controllers
             {
                 var entidad = new ProveedorEnt();
                 entidad.ID_Proveedor = q;
-
+                ViewBag.combo = modelProveedor.ConsultarEmpresas();
+                ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
                 string respuesta = modelProveedor.ActualizarEstadoProveedor(entidad);
 
                 if (respuesta == "OK")
@@ -141,6 +142,8 @@ namespace ProyectoSC_601.Controllers
                 }
                 else
                 {
+                    ViewBag.combo = modelProveedor.ConsultarEmpresas();
+                    ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
                     ViewBag.MensajeUsuario = "No se ha podido cambiar el estado del proveedor";
                     return View();
                 }
@@ -158,16 +161,20 @@ namespace ProyectoSC_601.Controllers
         [HttpGet]
         public ActionResult ActualizarProveedor(long q)
         {
+
             try
             {
-                var datos = modelProveedor.ConsultaProveedor(q);
                 ViewBag.combo = modelProveedor.ConsultarEmpresas();
                 ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
-                return View(datos);
+                var datos = modelProveedor.ConsultaProveedor(q);
+                return View(datos );
             }
             catch (Exception ex)
             {
-                return View("Error");
+                ViewBag.combo = modelProveedor.ConsultarEmpresas();
+                ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
+                var datos = modelProveedor.ConsultaProveedor(q);
+                return View();
             }
         }
 
@@ -179,26 +186,39 @@ namespace ProyectoSC_601.Controllers
         {
             try
             {
-                string respuesta = modelProveedor.ActualizarProveedor(entidad);
+                if (entidad.Apellido_Proveedor == null || entidad.Apellido_Proveedor.Length == 0)
+                {
+                    entidad.Apellido_Proveedor = string.Empty;
+                }
 
-                if (respuesta == "OK")
+                // Almacena el modelo original en TempData antes de intentar la actualización
+                TempData["OriginalModel"] = entidad;
+
+                // Realiza la validación para asegurar que el modelo no sea nulo
+                if (ModelState.IsValid && entidad != null)
                 {
-                    TempData["ActualizacionExito"] = "Proveedor actualizado con éxito";
-                    return RedirectToAction("ConsultaProveedores", "Proveedor");
+                    string respuesta = modelProveedor.ActualizarProveedor(entidad);
+
+                    if (respuesta == "OK")
+                    {
+                        TempData["ActualizacionExito"] = "Proveedor actualizado con éxito";
+                        return RedirectToAction("ConsultaProveedores", "Proveedor");
+                    }
                 }
-                else
-                {
-                    ViewBag.MensajeUsuario = "No se ha podido actualizar la información del proveedor";
-                    ViewBag.combo = modelProveedor.ConsultarEmpresas();
-                    ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
-                    return View();
-                }
+
+                // Recupera el modelo original de TempData para mostrar los datos en la vista
+                ProveedorEnt originalModel = TempData["OriginalModel"] as ProveedorEnt;
+                ViewBag.MensajeUsuario = "No se ha podido actualizar la información del proveedor";
+                ViewBag.combo = modelProveedor.ConsultarEmpresas();
+                ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
+                return View(originalModel);
             }
             catch (Exception ex)
             {
                 return View("Error");
             }
         }
+
 
 
 
