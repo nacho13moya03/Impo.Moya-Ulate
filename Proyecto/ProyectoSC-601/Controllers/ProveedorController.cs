@@ -156,39 +156,37 @@ namespace ProyectoSC_601.Controllers
 
 
 
-        /*Se llama cuando se desea actualizar la información de un proveedor modificada
-          Este sirve para Visualizar los datos del proveedor y la lista de empresas.*/
+        /* Se llama cuando se desea actualizar la información de un proveedor modificada
+           Este sirve para Visualizar los datos del proveedor y la lista de empresas. */
         [HttpGet]
         public ActionResult ActualizarProveedor(long q)
         {
-
             try
             {
+                var datos = modelProveedor.ConsultaProveedor(q);
                 ViewBag.combo = modelProveedor.ConsultarEmpresas();
                 ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
-                var datos = modelProveedor.ConsultaProveedor(q);
-                return View(datos );
+                return View(datos);
             }
             catch (Exception ex)
             {
                 ViewBag.combo = modelProveedor.ConsultarEmpresas();
                 ViewBag.Identificaciones = modelProveedor.ConsultarIdentificacionesProveedor();
-                var datos = modelProveedor.ConsultaProveedor(q);
+                ModelState.AddModelError(string.Empty, "Error al cargar los datos del proveedor.");
                 return View();
             }
         }
 
-
-
-        /*Este procesa la actualización de datos de un proveedor desde un formulario y redirige.*/
+        /* Este procesa la actualización de datos de un proveedor desde un formulario y redirige. */
         [HttpPost]
         public ActionResult ActualizarProveedor(ProveedorEnt entidad)
         {
             try
             {
-                if (entidad.Apellido_Proveedor == null || entidad.Apellido_Proveedor.Length == 0)
+                if (string.IsNullOrEmpty(entidad.Apellido_Proveedor))
                 {
                     entidad.Apellido_Proveedor = string.Empty;
+                    Console.WriteLine("Apellido establecido como cadena vacía");
                 }
 
                 // Almacena el modelo original en TempData antes de intentar la actualización
