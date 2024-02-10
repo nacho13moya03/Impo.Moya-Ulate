@@ -1,4 +1,5 @@
 ﻿using APIProyectoSC_601.Entities;
+using ProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -129,6 +130,28 @@ namespace APIProyectoSC_601.Controllers
                 return "Error: " + ex.Message;
             }
         }
+
+        [HttpPost]
+        [Route("VerificarProductosVinculados")]
+        public bool VerificarProductosVinculados(CategoriaEnt entidad)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    // Verificar si hay productos vinculados a la categoría específica
+                    return context.Producto.Any(p => p.ID_Categoria == entidad.ID_Categoria);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en VerificarProductosVinculados: " + ex.Message);
+                return false;
+            }
+        }
+
+
+
 
 
         //Actualiza los datos de la categoria en la base de datos

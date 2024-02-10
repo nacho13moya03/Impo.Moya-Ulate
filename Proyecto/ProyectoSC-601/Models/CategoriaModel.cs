@@ -60,6 +60,19 @@ namespace ProyectoSC_601.Models
             }
         }
 
+        public bool VerificarProductosVinculados(CategoriaEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "VerificarProductosVinculados";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PostAsync(urlApi, jsonData).Result;
+                return res.Content.ReadFromJsonAsync<bool>().Result;
+            }
+        }
+
+
+
         //Funcion para eliminar una categoria
         public string EliminarCategoria(CategoriaEnt entidad)
         {

@@ -87,25 +87,51 @@ namespace ProyectoSC_601.Controllers
             }
         }
 
-        //Eliminar un producto 
         [HttpGet]
         public ActionResult EliminarCategoria(int q)
         {
             var entidad = new CategoriaEnt();
             entidad.ID_Categoria = q;
 
-            string respuesta = modelCategoria.EliminarCategoria(entidad);
+            try
+            {
+                string respuesta = modelCategoria.EliminarCategoria(entidad);
 
-            if (respuesta == "OK")
-            {
-                return RedirectToAction("ConsultarCategoria", "Categoria");
+                if (respuesta == "OK")
+                {
+                    return RedirectToAction("ConsultarCategoria", "Categoria");
+                }
+                else
+                {
+                    ViewBag.Mensaje = "No se ha podido eliminar la categoría";
+                    return View();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ViewBag.Mensaje = "No se ha podido eliminar la categoria";
+                ViewBag.Mensaje = "Error inesperado: " + ex.Message;
                 return View();
             }
         }
+
+
+        [HttpGet]
+        public ActionResult VerificarEliminarCategoria(int idCategoria)
+        {
+            var entidad = new CategoriaEnt { ID_Categoria = idCategoria };
+
+            // Verificar si hay productos vinculados a la categoría usando el API
+            bool hayProductosVinculados = modelCategoria.VerificarProductosVinculados(entidad);
+
+            if (hayProductosVinculados)
+            {
+                return Json(new { success = false, message = "No se puede eliminar la categoría porque tiene productos vinculados. Elimina los productos primero." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         //Muestra una vista con los datos del producto seleccionado para modificarlo
         [HttpGet]

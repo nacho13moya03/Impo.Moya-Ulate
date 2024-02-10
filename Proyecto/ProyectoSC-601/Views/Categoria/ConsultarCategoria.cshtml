@@ -144,11 +144,10 @@
 
 
 <script>
-    //Funcion para mostrar mensaje de alerta
     function confirmarEliminarCategoria(ID_Categoria) {
         Swal.fire({
             title: '¿Estás seguro?',
-            text: 'Si lo eliminas vas a perder la información relacionada a esta categoria',
+            text: 'Si lo eliminas vas a perder la información relacionada a esta categoría',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#6282a9',
@@ -157,9 +156,26 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Si el usuario confirma, redirige a la acción de inactivar categoria
-                window.location.href = '/Categoria/EliminarCategoria?q=' + ID_Categoria;
+                // Llamar al controlador de verificación antes de eliminar
+                $.ajax({
+                    url: '/Categoria/VerificarEliminarCategoria?idCategoria=' + ID_Categoria,
+                    type: 'GET',
+                    success: function (response) {
+                        if (response.success) {
+                            // Si la verificación es exitosa, redirigir para eliminar
+                            window.location.href = '/Categoria/EliminarCategoria?q=' + ID_Categoria;
+                        } else {
+                            // Si hay productos vinculados, mostrar el mensaje de error
+                            Swal.fire('Error', response.message, 'error');
+                        }
+                    },
+                    error: function () {
+                        // Manejar errores en la llamada AJAX si es necesario
+                        Swal.fire('Error', 'Se produjo un error al verificar la eliminación', 'error');
+                    }
+                });
             }
         });
     }
+
 </script>
