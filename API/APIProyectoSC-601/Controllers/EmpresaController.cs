@@ -104,6 +104,26 @@ namespace APIProyectoSC_601.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("VerificarProveedoresVinculados")]
+        public bool VerificarProveedoresVinculados(EmpresaEnt entidad)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    // Verificar si hay proveedores vinculados a la empresa específica
+                    return context.Proveedores.Any(p => p.Empresa == entidad.ID_Empresa);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en VerificarProveedoresVinculados: " + ex.Message);
+                return false;
+            }
+        }
+
+
         [HttpGet]
         [Route("ConsultaEmpresas")]
         public List<Empresa> ConsultaEmpresas()

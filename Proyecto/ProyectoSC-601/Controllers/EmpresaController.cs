@@ -130,9 +130,6 @@ namespace ProyectoSC_601.Controllers
             {
                 string respuesta = modelEmpresa.EliminarEmpresa(q);
 
-                // Imprime la respuesta en la consola para depuración
-                Console.WriteLine($"Respuesta del servicio: {respuesta}");
-
                 if (respuesta == "OK")
                 {
                     TempData["ActualizacionExito"] = "Empresa eliminada con éxito";
@@ -150,6 +147,21 @@ namespace ProyectoSC_601.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult VerificarEliminarEmpresa(int idEmpresa)
+        {
+            var entidad = new EmpresaEnt { ID_Empresa = idEmpresa };
+
+            // Verificar si hay proveedores vinculados a la empresa usando el API
+            bool hayProveedoresVinculados = modelEmpresa.VerificarProveedoresVinculados(entidad);
+
+            if (hayProveedoresVinculados)
+            {
+                return Json(new { success = false, message = "No se puede eliminar la empresa porque tiene proveedores vinculados. Elimina los proveedores primero." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
 
 
 

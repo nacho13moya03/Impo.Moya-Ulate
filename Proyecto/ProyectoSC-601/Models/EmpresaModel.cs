@@ -134,6 +134,19 @@ namespace ProyectoSC_601.Models
         }
 
 
+        public bool VerificarProveedoresVinculados(EmpresaEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "VerificarProveedoresVinculados";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PostAsync(urlApi, jsonData).Result;
+                return res.Content.ReadFromJsonAsync<bool>().Result;
+            }
+        }
+
+
+
 
 
 

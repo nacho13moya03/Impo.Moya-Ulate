@@ -160,7 +160,6 @@
 
 
 <script>
-    //Funcion para mostrar mensaje de alerta
     function confirmarEliminarEmpresa(ID_Empresa) {
         Swal.fire({
             title: '¿Estás seguro?',
@@ -173,11 +172,31 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Si el usuario confirma, redirige a la acción de inactivar proveedores
-                window.location.href = '/Empresa/EliminarEmpresa?q=' + ID_Empresa;
+                // Llamar al controlador de verificación antes de eliminar
+                var urlVerificacion = '/Empresa/VerificarEliminarEmpresa?idEmpresa=' + ID_Empresa;
+
+                $.ajax({
+                    url: urlVerificacion,
+                    type: 'GET',
+                    success: function (response) {
+                        if (response.success) {
+                            // Si la verificación es exitosa, redirigir para eliminar
+                            var urlEliminar = '/Empresa/EliminarEmpresa?q=' + ID_Empresa;
+                            window.location.href = urlEliminar;
+                        } else {
+                            // Si hay proveedores vinculados, mostrar el mensaje de error
+                            Swal.fire('Error', response.message, 'error');
+                        }
+                    },
+                    error: function () {
+                        // Manejar errores en la llamada AJAX si es necesario
+                        Swal.fire('Error', 'Se produjo un error al verificar la eliminación', 'error');
+                    }
+                });
             }
         });
     }
+
 </script>
 
 
