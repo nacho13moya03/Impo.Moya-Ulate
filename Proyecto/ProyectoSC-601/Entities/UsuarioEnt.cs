@@ -96,11 +96,12 @@ public class CustomIdentificacionAttribute : ValidationAttribute
         }
         else if (usuario.ID_Identificacion == 3)
         {
-            // Validación para el tipo 3 (ejemplo: 15 caracteres alfanuméricos)
-            if (!Regex.IsMatch(value.ToString(), "^[a-zA-Z0-9]{15}$"))
+            // Validación para un mínimo de 4 y un máximo de 15 dígitos 
+            if (!Regex.IsMatch(value.ToString(), "^[a-zA-Z0-9]{4,15}$"))
             {
-                return new ValidationResult("La identificación debe tener 15 caracteres alfanuméricos.");
+                return new ValidationResult("La identificación debe tener entre 4 y 15 caracteres.");
             }
+
         }
 
         return ValidationResult.Success;
