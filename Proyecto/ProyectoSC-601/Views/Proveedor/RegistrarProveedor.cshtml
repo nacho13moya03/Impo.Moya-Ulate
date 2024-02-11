@@ -75,9 +75,6 @@
                                     <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                         <div id="errorEmpresa" class="text-danger"></div>
                                     </div>
-                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                        @Html.ValidationMessageFor(m => m.Empresa, "", new { @style = "color: red;" })
-                                    </div>
                                 </div>
                                 <br>
                                 <div class="form-group">
@@ -124,6 +121,9 @@
     var empresaElement  = document.getElementById("Empresa");
 
 
+        submitted = true;
+
+
     // Activar el evento si el campo está vacío
     document.getElementById("errorNombre").innerText = "";
     document.getElementById("errorApellido").innerText = "";
@@ -145,21 +145,11 @@
         valid = false;
     }
 
-    // Validar el apellido, que no contenga números o caracteres especiales
-    if (apellidoElement !== null && apellidoElement.value.trim() === "") {
-        document.getElementById("errorApellido").innerText = "Este campo es obligatorio";
-        valid = false;
-    } else if (apellidoElement !== null && !/^[a-zA-Z\s]+$/.test(apellidoElement.value)) {
-        document.getElementById("errorApellido").innerText = "El apellido no puede contener números o caracteres especiales";
-        valid = false;
-    }
+
 
     // Validar la cédula, solo puede contener números
     if (cedulaElement !== null && cedulaElement.value.trim() === "") {
         document.getElementById("errorCedula").innerText = "Este campo es obligatorio";
-        valid = false;
-    } else if (cedulaElement !== null && !/^\d+$/.test(cedulaElement.value)) {
-        document.getElementById("errorCedula").innerText = "La cédula solo puede contener números";
         valid = false;
     }
 
@@ -203,9 +193,14 @@
         }
 
 
-        validarCedula();
-        actualizarCampoApellido();
-        return valid;
+
+        valid = validarCedula() && valid;
+        actualizarCampoApellido(valid);
+        if (!valid) {
+            // Si hay errores, evitar el envío del formulario
+            return false;
+        }
+        return true;
     };
 </script>
 
@@ -216,10 +211,6 @@
 
         $("#errorCedula").text("");
 
-        if (!/^\d+$/.test(cedula)) {
-            $("#errorCedula").text("La cédula solo puede contener números.");
-            return false;
-        }
 
         if (tipoIdentificacion === "1" && cedula.length !== 9) {
             $("#errorCedula").text("La cédula debe tener exactamente 9 dígitos numéricos.");
@@ -231,30 +222,55 @@
             return false;
         }
 
-        if (tipoIdentificacion === "3" && (cedula.length !== 15 || !/^[a-zA-Z0-9]+$/.test(cedula))) {
-            $("#errorCedula").text("La cédula debe tener exactamente 15 caracteres alfanuméricos.");
+        if (tipoIdentificacion === "3" && (cedula.length < 5 || cedula.length > 15 || !/^[a-zA-Z0-9]+$/.test(cedula))) {
+            $("#errorCedula").text("La cédula debe tener entre 5 y 15 caracteres alfanuméricos.");
             return false;
         }
+
+        if (tipoIdentificacion !== "3" && !/^\d+$/.test(cedula)) {
+            $("#errorCedula").text("La cédula solo puede contener números.");
+            return false;
+        }
+
+        if (tipoIdentificacion === "3" && !/^[a-zA-Z0-9]+$/.test(cedula)) {
+            $("#errorCedula").text("La cédula (pasaporte) debe contener caracteres alfanuméricos.");
+            return false;
+        }
+
 
         return true;
     }
 
-    function actualizarCampoApellido() {
+    function actualizarCampoApellido(valid) {
+        // Verificar si se ha intentado enviar el formulario
+
+
         var identificacion = $("#ID_Identificacion").val();
         var apellidoField = $("#apellido");
 
         if (identificacion == 2) {
             apellidoField.val("");
+            document.getElementById("errorApellido").innerText = "";
             apellidoField.prop("disabled", true);
         } else {
             // Si la identificación es diferente, habilita el campo de apellido
-            document.getElementById("errorApellido").innerText = "Este campo es obligatorio";
             apellidoField.prop("disabled", false);
+            document.getElementById("errorApellido").innerText = "";
+            if (!submitted) {
+                return;
+            }
+
+            // Validar el apellido solo si el campo está vacío
+            if (apellidoField !== null && apellidoField.val().trim() === "") {
+                document.getElementById("errorApellido").innerText = "Este campo es obligatorio";
+                valid = false;
+            } else if (apellidoField !== null && !/^[a-zA-Z\s]+$/.test(apellidoField.val())) {
+                document.getElementById("errorApellido").innerText = "El apellido no puede contener números o caracteres especiales";
+                valid = false;
+            }
+
+
         }
     }
-
-
-
-
 
 </script>
