@@ -13,11 +13,16 @@ namespace APIProyectoSC_601.Controllers
     public class FacturacionController : ApiController
     {
         private readonly Errores log;
+        private readonly LogExitos logExitos;
 
         public FacturacionController()
         {
-            string rutaDeLogs = ConfigurationManager.AppSettings["RutaDeLogs"];
-            log = new Errores(rutaDeLogs);
+            string rutaErrores = ConfigurationManager.AppSettings["RutaErrores"];
+            string rutaExitos = ConfigurationManager.AppSettings["RutaExitos"];
+
+
+            log = new Errores(rutaErrores);
+            logExitos = new LogExitos(rutaExitos);
         }
 
         Utilitarios util = new Utilitarios();
@@ -31,9 +36,20 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return (from x in context.Factura_Encabezado
-                            where x.ID_Usuario == q
-                            select x).OrderByDescending(x => x.FechaCompra).ToList();
+                    var facturas = (from x in context.Factura_Encabezado
+                                    where x.ID_Usuario == q
+                                    select x).OrderByDescending(x => x.FechaCompra).ToList();
+
+                    if (facturas != null && facturas.Any())
+                    {
+                        logExitos.Add("ConsultaFacturasCliente", $"Se consultaron satisfactoriamente las facturas para el cliente con ID {q}.");
+                    }
+                    else
+                    {
+                        logExitos.Add("ConsultaFacturasCliente", $"No se encontraron facturas para el cliente con ID {q}.");
+                    }
+
+                    return facturas;
                 }
             }
             catch (Exception ex)
@@ -53,16 +69,27 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return (from x in context.Factura_Encabezado
-                            join y in context.Usuario on x.ID_Usuario equals y.ID_Usuario
-                            select new
-                            {
-                                x.ID_Factura,
-                                NombreCliente = y.Nombre_Usuario,
-                                ApellidoCliente = y.Apellido_Usuario,
-                                x.FechaCompra,
-                                x.TotalCompra,
-                            }).OrderByDescending(x => x.FechaCompra).ToList();
+                    var facturasAdmin = (from x in context.Factura_Encabezado
+                                         join y in context.Usuario on x.ID_Usuario equals y.ID_Usuario
+                                         select new
+                                         {
+                                             x.ID_Factura,
+                                             NombreCliente = y.Nombre_Usuario,
+                                             ApellidoCliente = y.Apellido_Usuario,
+                                             x.FechaCompra,
+                                             x.TotalCompra,
+                                         }).OrderByDescending(x => x.FechaCompra).ToList();
+
+                    if (facturasAdmin != null && facturasAdmin.Any())
+                    {
+                        logExitos.Add("ConsultaFacturasAdmin", "Se consultaron satisfactoriamente las facturas para el administrador.");
+                    }
+                    else
+                    {
+                        logExitos.Add("ConsultaFacturasAdmin", "No se encontraron facturas para el administrador.");
+                    }
+
+                    return facturasAdmin;
                 }
             }
             catch (Exception ex)
@@ -82,20 +109,31 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return (from x in context.Factura_Detalle
-                            join y in context.Producto on x.ID_Producto equals y.ID_Producto
-                            where x.ID_Factura == q
-                            select new
-                            {
-                                x.ID_Factura,
-                                y.Nombre,
-                                x.PrecioPagado,
-                                x.CantidadPagado,
-                                x.ImpuestoPagado,
-                                SubTotal = (x.PrecioPagado * x.CantidadPagado),
-                                Impuesto = (x.ImpuestoPagado * x.CantidadPagado),
-                                Total = (x.PrecioPagado * x.CantidadPagado) + (x.ImpuestoPagado * x.CantidadPagado),
-                            }).ToList();
+                    var detalleFactura = (from x in context.Factura_Detalle
+                                          join y in context.Producto on x.ID_Producto equals y.ID_Producto
+                                          where x.ID_Factura == q
+                                          select new
+                                          {
+                                              x.ID_Factura,
+                                              y.Nombre,
+                                              x.PrecioPagado,
+                                              x.CantidadPagado,
+                                              x.ImpuestoPagado,
+                                              SubTotal = (x.PrecioPagado * x.CantidadPagado),
+                                              Impuesto = (x.ImpuestoPagado * x.CantidadPagado),
+                                              Total = (x.PrecioPagado * x.CantidadPagado) + (x.ImpuestoPagado * x.CantidadPagado),
+                                          }).ToList();
+
+                    if (detalleFactura != null && detalleFactura.Any())
+                    {
+                        logExitos.Add("ConsultaDetalleFactura", "Se consultaron satisfactoriamente los detalles de la factura.");
+                    }
+                    else
+                    {
+                        logExitos.Add("ConsultaDetalleFactura", "No se encontraron detalles de la factura.");
+                    }
+
+                    return detalleFactura;
                 }
             }
             catch (Exception ex)
@@ -104,6 +142,7 @@ namespace APIProyectoSC_601.Controllers
                 return new List<object>();
             }
         }
+
 
 
         [HttpGet]
@@ -154,11 +193,13 @@ namespace APIProyectoSC_601.Controllers
                         html = html.Replace("@@Total", total);
 
                         util.EnviarCorreo(facturaData.CorreoCliente, "Factura Electrónica", html);
+                        logExitos.Add("ConsultarDatosEnviarCorreo", "Se consultaron y enviaron los datos de la factura satisfactoriamente.");
 
                         return "OK";
                     }
                     else
                     {
+                        logExitos.Add("ConsultarDatosEnviarCorreo", "No se encontraron datos de factura para enviar.");
                         return string.Empty;
                     }
                 }
@@ -181,7 +222,9 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return context.Factura_Encabezado.Count();
+                    int cantidadVentas = context.Factura_Encabezado.Count();
+                    logExitos.Add("ContarVentas", $"Se contaron satisfactoriamente {cantidadVentas} ventas.");
+                    return cantidadVentas;
                 }
             }
             catch (Exception ex)
