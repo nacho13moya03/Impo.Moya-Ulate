@@ -192,10 +192,21 @@
         valid = false;
         }
 
+        if (tipoIdentificacionElement !== null && tipoIdentificacionElement.value.trim() !== "2") {
+            // Si el tipo de identificación no es jurídica, el apellido es obligatorio
+            if (apellidoElement !== null && apellidoElement.value.trim() === "") {
+                document.getElementById("errorApellido").innerText = "Este campo es obligatorio";
+                valid = false;
+            } else if (apellidoElement !== null && !/^[a-zA-Z\s]+$/.test(apellidoElement.value)) {
+                document.getElementById("errorApellido").innerText = "El apellido no puede contener números o caracteres especiales";
+                valid = false;
+            }
+        }
 
 
-        valid = validarCedula() && valid;
-        actualizarCampoApellido(valid);
+        valid = validarCedula() && actualizarCampoApellido(valid);
+
+        
         if (!valid) {
             // Si hay errores, evitar el envío del formulario
             return false;
@@ -242,25 +253,19 @@
     }
 
     function actualizarCampoApellido(valid) {
-        // Verificar si se ha intentado enviar el formulario
-
-
         var identificacion = $("#ID_Identificacion").val();
         var apellidoField = $("#apellido");
 
-        if (identificacion == 2) {
+        if (identificacion === "2") {
+            // Si la identificación es jurídica, deshabilitar el campo de apellido
             apellidoField.val("");
             document.getElementById("errorApellido").innerText = "";
             apellidoField.prop("disabled", true);
         } else {
-            // Si la identificación es diferente, habilita el campo de apellido
+            // Si la identificación no es jurídica, habilitar el campo de apellido
             apellidoField.prop("disabled", false);
-            document.getElementById("errorApellido").innerText = "";
-            if (!submitted) {
-                return;
-            }
 
-            // Validar el apellido solo si el campo está vacío
+            // Validar el apellido siempre
             if (apellidoField !== null && apellidoField.val().trim() === "") {
                 document.getElementById("errorApellido").innerText = "Este campo es obligatorio";
                 valid = false;
@@ -268,9 +273,9 @@
                 document.getElementById("errorApellido").innerText = "El apellido no puede contener números o caracteres especiales";
                 valid = false;
             }
-
-
         }
+
+        return valid;
     }
 
 </script>

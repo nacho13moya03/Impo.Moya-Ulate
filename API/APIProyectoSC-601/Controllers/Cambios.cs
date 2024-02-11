@@ -6,6 +6,7 @@ namespace APIProyectoSC_601.Controllers
     public class LogExitos
     {
         private string Ruta = "";
+        private static int idCounter = 1;
 
         public LogExitos(string Ruta)
         {
@@ -18,11 +19,13 @@ namespace APIProyectoSC_601.Controllers
             string nombre = GetNameFile();
             string cadena = "";
 
-            cadena += $"{DateTime.Now} - Procedimiento: {procedimiento} - Descripción: {descripcion}" + Environment.NewLine;
-
+            cadena += "ID: " + idCounter + " - "  + $"{DateTime.Now} - Procedimiento: {procedimiento} - Descripción: {descripcion}" + Environment.NewLine;
+            idCounter++;
             StreamWriter sw = new StreamWriter(Ruta + "/" + nombre, true);
             sw.Write(cadena);
             sw.Close();
+
+            
         }
 
         #region HELPER

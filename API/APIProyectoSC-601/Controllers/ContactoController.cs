@@ -13,11 +13,16 @@ namespace APIProyectoSC_601.Controllers
     public class ContactoController : ApiController
     {
         private readonly Errores log;
+        private readonly LogExitos logExitos;
 
         public ContactoController()
         {
-            string rutaDeLogs = ConfigurationManager.AppSettings["RutaDeLogs"];
-            log = new Errores(rutaDeLogs);
+            string rutaErrores = ConfigurationManager.AppSettings["RutaErrores"];
+            string rutaExitos = ConfigurationManager.AppSettings["RutaExitos"];
+
+
+            log = new Errores(rutaErrores);
+            logExitos = new LogExitos(rutaExitos);
         }
 
         //Se crea instancia para usar herramientas necesarias para enviar correo de contactenos
@@ -42,6 +47,8 @@ namespace APIProyectoSC_601.Controllers
                     html = html.Replace("@@correo", entidad.Correo);
 
                     util.EnviarCorreo("angelicavalerin13@gmail.com", "Solicitud de Contacto", html);
+
+                    logExitos.Add("EnviarInformacion", "Correo de contacto enviado exitosamente");
                     return "OK";
                 }
                 else

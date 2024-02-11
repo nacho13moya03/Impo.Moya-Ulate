@@ -6,13 +6,13 @@ namespace APIProyectoSC_601.Controllers
     public class Errores
     {
         private string Ruta = "";
-        private int idCounter; 
-
+        private static int idCounter = 1;
         public Errores(string Ruta)
         {
             this.Ruta = Ruta;
-            idCounter = 1; 
         }
+
+
 
         public void Add(string sLog)
         {
@@ -21,12 +21,11 @@ namespace APIProyectoSC_601.Controllers
             string cadena = "";
 
             cadena += "ID: " + idCounter + " - " + DateTime.Now + " - " + sLog + Environment.NewLine;
-
+            idCounter++;
             StreamWriter sw = new StreamWriter(Ruta + "/" + nombre, true);
             sw.Write(cadena);
             sw.Close();
 
-            idCounter++; // Incrementar el contador de ID para cada instancia
         }
 
         #region HELPER

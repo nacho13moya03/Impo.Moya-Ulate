@@ -14,11 +14,16 @@ namespace APIProyectoSC_601.Controllers
     public class CategoriaController : ApiController
     {
         private readonly Errores log;
+        private readonly LogExitos logExitos;
 
         public CategoriaController()
         {
-            string rutaDeLogs = ConfigurationManager.AppSettings["RutaDeLogs"];
-            log = new Errores(rutaDeLogs);
+            string rutaErrores = ConfigurationManager.AppSettings["RutaErrores"];
+            string rutaExitos = ConfigurationManager.AppSettings["RutaExitos"];
+
+
+            log = new Errores(rutaErrores);
+            logExitos = new LogExitos(rutaExitos);
         }
 
         //Devuelve una lista con todos las categorias registradas en la base de datos
@@ -32,7 +37,10 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return context.Categorias.ToList();
+                    var categorias = context.Categorias.ToList();
+                    logExitos.Add("ConsultarCategoria", "Consulta de categorías realizada exitosamente");
+                    return categorias;
+
                 }
             }
             catch (Exception ex)
@@ -42,6 +50,9 @@ namespace APIProyectoSC_601.Controllers
             }
 
         }
+
+
+
         //Conexion a procedimiento para registrar categoria
         [HttpPost]
         [Route("RegistrarCategoria")]
@@ -53,6 +64,7 @@ namespace APIProyectoSC_601.Controllers
                 {
                     context.Categorias.Add(categoria);
                     context.SaveChanges();
+                    logExitos.Add("RegistrarCategoria", $"Registro de categoría '{categoria.Nombre_Categoria}' realizado exitosamente");
                     return "OK";
                 }
             }
@@ -62,6 +74,8 @@ namespace APIProyectoSC_601.Controllers
                 return string.Empty;
             }
         }
+
+
         //Actualiza el estado de la categoria en la base de datos
         [HttpPut]
         [Route("ActualizarEstadoCategoria")]
@@ -84,6 +98,7 @@ namespace APIProyectoSC_601.Controllers
                             datos.Estado_Categoria = 1;
                         }
                         context.SaveChanges();
+                        logExitos.Add("ActualizarEstadoCategoria", $"Estado de categoría '{datos.Nombre_Categoria}' actualizado exitosamente. Nuevo estado: {datos.Estado_Categoria}");
                         return "OK";
                     }
                     else
@@ -116,6 +131,7 @@ namespace APIProyectoSC_601.Controllers
                     {
                         context.Categorias.Remove(categoriaAEliminar);
                         context.SaveChanges();
+                        logExitos.Add("EliminarCategoria", $"Categoría '{categoriaAEliminar.Nombre_Categoria}' eliminada exitosamente.");
                         return "OK";
                     }
                     else
@@ -131,6 +147,8 @@ namespace APIProyectoSC_601.Controllers
             }
         }
 
+
+
         [HttpPost]
         [Route("VerificarProductosVinculados")]
         public bool VerificarProductosVinculados(CategoriaEnt entidad)
@@ -139,8 +157,14 @@ namespace APIProyectoSC_601.Controllers
             {
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
-                    // Verificar si hay productos vinculados a la categoría específica
-                    return context.Producto.Any(p => p.ID_Categoria == entidad.ID_Categoria);
+                    bool productosVinculados = context.Producto.Any(p => p.ID_Categoria == entidad.ID_Categoria);
+
+                    if (!productosVinculados)
+                    {
+                        logExitos.Add("VerificarProductosVinculados", $"No hay productos vinculados a la categoría con ID {entidad.ID_Categoria}.");
+                    }
+
+                    return productosVinculados;
                 }
             }
             catch (Exception ex)
@@ -149,8 +173,6 @@ namespace APIProyectoSC_601.Controllers
                 return false;
             }
         }
-
-
 
 
 
@@ -169,7 +191,8 @@ namespace APIProyectoSC_601.Controllers
                     {
                         datos.Nombre_Categoria = categoria.Nombre_Categoria;
 
-                        context.SaveChanges();  
+                        context.SaveChanges();
+                        logExitos.Add("ActualizarCategoria", "Actualización exitosa de la categoría con ID: " + categoria.ID_Categoria);
 
                         return categoria.ID_Categoria;
                     }
@@ -186,6 +209,8 @@ namespace APIProyectoSC_601.Controllers
             }
         }
 
+
+
         //Devuelve los datos de una categoria segun su ID
         [HttpGet]
         [Route("ConsultaCategoriaEspecifica")]
@@ -196,9 +221,20 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return (from x in context.Categorias
-                            where x.ID_Categoria == q
-                            select x).FirstOrDefault();
+                    var categoria = (from x in context.Categorias
+                                     where x.ID_Categoria == q
+                                     select x).FirstOrDefault();
+
+                    if (categoria != null)
+                    {
+                        logExitos.Add("ConsultaCategoriaEspecifica", $"Consulta exitosa de la categoría con ID: {q}");
+                    }
+                    else
+                    {
+                        logExitos.Add("ConsultaCategoriaEspecifica", $"No se encontró la categoría con ID: {q}");
+                    }
+
+                    return categoria;
                 }
             }
             catch (Exception ex)
