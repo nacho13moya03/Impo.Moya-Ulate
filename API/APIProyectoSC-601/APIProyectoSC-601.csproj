@@ -170,6 +170,7 @@
     </Compile>
     <Compile Include="Controllers\CarritoController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="Controllers\Cambios.cs" />
     <Compile Include="Controllers\Errores.cs" />
     <Compile Include="Controllers\FacturacionController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />

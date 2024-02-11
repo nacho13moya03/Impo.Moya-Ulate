@@ -13,12 +13,17 @@ namespace APIProyectoSC_601.Controllers
     {
 
         private readonly Errores log;
+        private readonly LogExitos logExitos;
 
         public ProveedorController()
         {
-            string rutaDeLogs = ConfigurationManager.AppSettings["RutaDeLogs"];
+            
+            string rutaErrores = ConfigurationManager.AppSettings["RutaErrores"];
+            string rutaExitos = ConfigurationManager.AppSettings["RutaExitos"];
 
-            log = new Errores(rutaDeLogs);
+
+            log = new Errores(rutaErrores);
+            logExitos = new LogExitos(rutaExitos);
         }
 
 
@@ -36,6 +41,7 @@ namespace APIProyectoSC_601.Controllers
                 {
 
                     context.RegistrarProveedorSP(entidad.Nombre_Proveedor, entidad.Apellido_Proveedor, entidad.ID_Identificacion, entidad.Cedula_Proveedor, entidad.Direccion_Exacta, entidad.Estado_Proveedor, entidad.Empresa, entidad.Telefono, entidad.Correo);
+                    logExitos.Add("RegistrarProveedor", "Proveedor registrado exitosamente");
                     return "OK";
                 }
             }
@@ -72,6 +78,8 @@ namespace APIProyectoSC_601.Controllers
                             Text = item.Nombre_empresa
                         });
                     }
+
+                    logExitos.Add("ConsultarEmpresas", "Consulta de empresas realizada exitosamente");
 
                     return combo;
                 }
@@ -115,7 +123,7 @@ namespace APIProyectoSC_601.Controllers
                                            Telefono = p.Telefono,
                                            Correo = p.Correo,
                                        }).ToList();
-
+                    logExitos.Add("ConsultaProveedores", "Consulta de proveedores realizada exitosamente");
                     return proveedores;
                 }
             }
@@ -158,7 +166,7 @@ namespace APIProyectoSC_601.Controllers
                                          Telefono = p.Telefono,
                                          Correo = p.Correo,
                                      }).FirstOrDefault();
-
+                    logExitos.Add("ConsultaProveedor", $"Consulta de proveedor con ID {q} realizada exitosamente");
                     return proveedor;
                 }
             }
@@ -184,6 +192,7 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.ActualizarEstadoProveedorSP(entidad.ID_Proveedor);
+                    logExitos.Add("ActualizarEstadoProveedor", $"Actualización de estado del proveedor con ID {entidad.ID_Proveedor} realizada exitosamente");
                     return "OK";
                 }
             }
@@ -210,6 +219,7 @@ namespace APIProyectoSC_601.Controllers
                         entidad.Apellido_Proveedor = string.Empty; 
                     }
                     context.ActualizarProveedorSP(entidad.ID_Proveedor, entidad.Nombre_Proveedor, entidad.Apellido_Proveedor,entidad.Direccion_Exacta, entidad.Empresa, entidad.Telefono, entidad.Correo);
+                    logExitos.Add("ActualizarProveedor", $"Actualización del proveedor con ID {entidad.ID_Proveedor} realizada exitosamente");
                     return "OK";
                 }
             }
@@ -239,6 +249,7 @@ namespace APIProyectoSC_601.Controllers
                     {
                         context.Proveedores.Remove(proveedorAEliminar);
                         context.SaveChanges();
+                        logExitos.Add("EliminarProveedor", $"Eliminación del proveedor con ID {q} realizada exitosamente");
                         return "OK";
                     }
                     else
@@ -274,7 +285,7 @@ namespace APIProyectoSC_601.Controllers
                             Text = item.Nombre
                         });
                     }
-
+                    logExitos.Add("ConsultarIdentificacionesProveedor", "Consulta de identificaciones de proveedores realizada exitosamente");
                     return identificaciones;
                 }
             }
@@ -303,10 +314,12 @@ namespace APIProyectoSC_601.Controllers
                     if (cedulaProveedorExiste)
                     {
                         // Devuelve que ya existe la cedula
+                        logExitos.Add("ComprobarCedulaProveedor", "Consulta de cédula de proveedor realizada exitosamente, Existe");
                         return "Existe";
                     }
                     else
                     {
+                        logExitos.Add("ComprobarCedulaProveedor", "Consulta de cédula de proveedor realizada exitosamente, No existe");
                         return "NoExiste";
                     }
 
