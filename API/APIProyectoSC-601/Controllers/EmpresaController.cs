@@ -12,11 +12,16 @@ namespace APIProyectoSC_601.Controllers
     public class EmpresaController : ApiController
     {
         private readonly Errores log;
+        private readonly LogExitos logExitos;
 
         public EmpresaController()
         {
-            string rutaDeLogs = ConfigurationManager.AppSettings["RutaDeLogs"];
-            log = new Errores(rutaDeLogs);
+            string rutaErrores = ConfigurationManager.AppSettings["RutaErrores"];
+            string rutaExitos = ConfigurationManager.AppSettings["RutaExitos"];
+
+
+            log = new Errores(rutaErrores);
+            logExitos = new LogExitos(rutaExitos);
         }
 
 
@@ -35,6 +40,7 @@ namespace APIProyectoSC_601.Controllers
                 {
 
                     context.RegistrarEmpresaSP(entidad.Nombre_empresa, entidad.Descripcion, entidad.Ubicacion);
+                    logExitos.Add("RegistrarEmpresa", $"Empresa '{entidad.Nombre_empresa}' registrada exitosamente");
                     return "OK";
                 }
             }
@@ -59,6 +65,7 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.ActualizarEmpresaSP(entidad.ID_Empresa,entidad.Nombre_empresa, entidad.Descripcion, entidad.Ubicacion);
+                    logExitos.Add("ActualizarEmpresa", $"Información de la empresa '{entidad.Nombre_empresa}' actualizada exitosamente.");
                     return "OK";
                 }
             }
@@ -68,6 +75,7 @@ namespace APIProyectoSC_601.Controllers
                 return string.Empty;
             }
         }
+
 
 
 
@@ -88,6 +96,7 @@ namespace APIProyectoSC_601.Controllers
                     {
                         context.Empresa.Remove(empresaAEliminar);
                         context.SaveChanges();
+                        logExitos.Add("EliminarEmpresa", $"Empresa '{empresaAEliminar.Nombre_empresa}' eliminada exitosamente.");
                         return "OK";
                     }
                     else
@@ -104,6 +113,8 @@ namespace APIProyectoSC_601.Controllers
             }
         }
 
+
+
         [HttpPost]
         [Route("VerificarProveedoresVinculados")]
         public bool VerificarProveedoresVinculados(EmpresaEnt entidad)
@@ -113,7 +124,18 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     // Verificar si hay proveedores vinculados a la empresa específica
-                    return context.Proveedores.Any(p => p.Empresa == entidad.ID_Empresa);
+                    bool hayProveedoresVinculados = context.Proveedores.Any(p => p.Empresa == entidad.ID_Empresa);
+
+                    if (hayProveedoresVinculados)
+                    {
+                        logExitos.Add("VerificarProveedoresVinculados", $"Existen proveedores vinculados a la empresa con ID {entidad.ID_Empresa}.");
+                    }
+                    else
+                    {
+                        logExitos.Add("VerificarProveedoresVinculados", $"No hay proveedores vinculados a la empresa con ID {entidad.ID_Empresa}.");
+                    }
+
+                    return hayProveedoresVinculados;
                 }
             }
             catch (Exception ex)
@@ -122,6 +144,8 @@ namespace APIProyectoSC_601.Controllers
                 return false;
             }
         }
+
+
 
 
         [HttpGet]
@@ -133,8 +157,19 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return (from x in context.Empresa
-                            select x).ToList();
+                    var empresas = (from x in context.Empresa
+                                    select x).ToList();
+
+                    if (empresas.Count > 0)
+                    {
+                        logExitos.Add("ConsultaEmpresas", $"Se consultaron satisfactoriamente {empresas.Count} empresas.");
+                    }
+                    else
+                    {
+                        logExitos.Add("ConsultaEmpresas", "No se encontraron empresas.");
+                    }
+
+                    return empresas;
                 }
             }
             catch (Exception ex)
@@ -143,6 +178,8 @@ namespace APIProyectoSC_601.Controllers
                 return new List<Empresa>();
             }
         }
+
+
 
         [HttpGet]
         [Route("ConsultaEmpresa")]
@@ -153,9 +190,20 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return (from x in context.Empresa
-                            where x.ID_Empresa == q
-                            select x).FirstOrDefault();
+                    var empresa = (from x in context.Empresa
+                                   where x.ID_Empresa == q
+                                   select x).FirstOrDefault();
+
+                    if (empresa != null)
+                    {
+                        logExitos.Add("ConsultaEmpresa", $"Se consultó satisfactoriamente la empresa con ID {q}.");
+                    }
+                    else
+                    {
+                        logExitos.Add("ConsultaEmpresa", $"No se encontró la empresa con ID {q}.");
+                    }
+
+                    return empresa;
                 }
             }
             catch (Exception ex)
