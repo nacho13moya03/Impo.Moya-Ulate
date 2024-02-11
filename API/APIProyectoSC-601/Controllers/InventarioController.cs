@@ -14,11 +14,16 @@ namespace APIProyectoSC_601.Controllers
     public class InventarioController : ApiController
     {
         private readonly Errores log;
+        private readonly LogExitos logExitos;
 
         public InventarioController()
         {
-            string rutaDeLogs = ConfigurationManager.AppSettings["RutaDeLogs"];
-            log = new Errores(rutaDeLogs);
+            string rutaErrores = ConfigurationManager.AppSettings["RutaErrores"];
+            string rutaExitos = ConfigurationManager.AppSettings["RutaExitos"];
+
+
+            log = new Errores(rutaErrores);
+            logExitos = new LogExitos(rutaExitos);
         }
 
         //Devuelve una lista con todos los productos registrados en la base de datos
@@ -48,7 +53,7 @@ namespace APIProyectoSC_601.Controllers
                                         Imagen = i.Imagen,
                                         Estado = i.Estado
                                     }).ToList();
-
+                    logExitos.Add("ConsultarInventario", "Se consultó satisfactoriamente el inventario de productos.");
                     return producto;
                 }
             }
@@ -59,6 +64,7 @@ namespace APIProyectoSC_601.Controllers
             }
            
         }
+
 
         //Devuelve una lista con las categorias que existen para los productos
         [HttpGet]
@@ -85,7 +91,7 @@ namespace APIProyectoSC_601.Controllers
 
                         });
                     }
-
+                    logExitos.Add("ConsultarCategorias", "Se consultaron satisfactoriamente las categorías de productos.");
                     return categorias;
                 }
             }
@@ -95,6 +101,8 @@ namespace APIProyectoSC_601.Controllers
                 return new List<System.Web.Mvc.SelectListItem>();
             }
         }
+
+
         //Conexion a procedimiento para registrar productos
         [HttpPost]
         [Route("RegistrarProducto")]
@@ -106,6 +114,7 @@ namespace APIProyectoSC_601.Controllers
                 {
                     context.Producto.Add(producto);
                     context.SaveChanges();
+                    logExitos.Add("RegistrarProducto", $"Se registró satisfactoriamente el producto con ID {producto.ID_Producto}.");
                     return producto.ID_Producto;
                 }
             }
@@ -115,6 +124,9 @@ namespace APIProyectoSC_601.Controllers
                 return 0;
             }
         }
+
+
+
         //Actualiza la ruta de la imagen del producto en la base de datos
         [HttpPut]
         [Route("ActualizarRutaProducto")]
@@ -130,6 +142,7 @@ namespace APIProyectoSC_601.Controllers
                     {
                         datos.Imagen = producto.Imagen;
                         context.SaveChanges();
+                        logExitos.Add("ActualizarRutaProducto", $"Se actualizó la ruta de la imagen del producto con ID {producto.ID_Producto}.");
                         return "OK";
                     }
                     else
@@ -144,6 +157,9 @@ namespace APIProyectoSC_601.Controllers
                 return "Error: " + ex.Message;
             }
         }
+
+
+
         //Actualiza el estado del producto en la base de datos
         [HttpPut]
         [Route("ActualizarEstadoProducto")]
@@ -166,6 +182,7 @@ namespace APIProyectoSC_601.Controllers
                             datos.Estado = 1;
                         }
                         context.SaveChanges();
+                        logExitos.Add("ActualizarEstadoProducto", $"Se actualizó el estado del producto con ID {producto.ID_Producto}.");
                         return "OK";
                     }
                     else
@@ -183,6 +200,7 @@ namespace APIProyectoSC_601.Controllers
         }
 
 
+
         //Elimina el producto en la base de datos
         [HttpPut]
         [Route("EliminarProducto")]
@@ -198,6 +216,7 @@ namespace APIProyectoSC_601.Controllers
                     {
                         context.Producto.Remove(productoAEliminar);
                         context.SaveChanges();
+                        logExitos.Add("EliminarProducto", $"Se eliminó el producto con ID {producto.ID_Producto}.");
                         return "OK";
                     }
                     else
@@ -214,6 +233,7 @@ namespace APIProyectoSC_601.Controllers
         }
 
 
+
         //Devuelve los datos de un producto segun su ID
         [HttpGet]
         [Route("ConsultaProductoEspecifico")]
@@ -224,9 +244,16 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return (from x in context.Producto
-                            where x.ID_Producto == q
-                            select x).FirstOrDefault();
+                    var producto = (from x in context.Producto
+                                    where x.ID_Producto == q
+                                    select x).FirstOrDefault();
+
+                    if (producto != null)
+                    {
+                        logExitos.Add("ConsultaProductoEspecifico", $"Se consultaron los datos del producto con ID {q}.");
+                    }
+
+                    return producto;
                 }
             }
             catch (Exception ex)
@@ -235,6 +262,7 @@ namespace APIProyectoSC_601.Controllers
                 return null;
             } 
         }
+
 
 
         //Actualiza los datos del producto en la base de datos
@@ -261,11 +289,12 @@ namespace APIProyectoSC_601.Controllers
                         datos.Precio = producto.Precio;
 
                         context.SaveChanges();
-
+                        logExitos.Add("ActualizarProducto", $"Se actualizó exitosamente el producto con ID {producto.ID_Producto}.");
                         return producto.ID_Producto;
                     }
                     else
                     {
+                        log.Add("Error en ActualizarProducto: Producto no encontrado.");
                         return -1; 
                     }
                 }
@@ -278,6 +307,7 @@ namespace APIProyectoSC_601.Controllers
         }
 
 
+
         //Devuelve la cantidad total de los recursos del inventario
         [HttpGet]
         [Route("TotalInventario")]
@@ -288,7 +318,9 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return context.Producto.Sum(x => x.Precio * x.Cantidad);
+                    decimal totalInventario = context.Producto.Sum(x => x.Precio * x.Cantidad);
+                    logExitos.Add("TotalInventario", $"La cantidad total de los recursos del inventario es {totalInventario:C2}.");
+                    return totalInventario;
                 }
             }
             catch (Exception ex)
