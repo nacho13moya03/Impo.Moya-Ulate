@@ -12,12 +12,18 @@ namespace APIProyectoSC_601.Controllers
 {
     public class UsuarioController : ApiController
     {
+
         private readonly Errores log;
+        private readonly LogExitos logExitos;
 
         public UsuarioController()
         {
-            string rutaDeLogs = ConfigurationManager.AppSettings["RutaDeLogs"];
-            log = new Errores(rutaDeLogs);
+            string rutaErrores = ConfigurationManager.AppSettings["RutaErrores"];
+            string rutaExitos = ConfigurationManager.AppSettings["RutaExitos"];
+
+
+            log = new Errores(rutaErrores);
+            logExitos = new LogExitos(rutaExitos);
         }
 
         //Se crea instancia para usar herramientas necesarias para enviar correo de recuperacion al cliente
@@ -43,7 +49,7 @@ namespace APIProyectoSC_601.Controllers
                             Text = item.Nombre
                         });
                     }
-
+                    logExitos.Add("ConsultarTiposIdentificaciones", "Se consultaron los tipos de identificaciones exitosamente.");
                     return identificaciones;
                 }
             }
@@ -53,6 +59,7 @@ namespace APIProyectoSC_601.Controllers
                 return new List<System.Web.Mvc.SelectListItem>();
             }
         }
+
 
         //Conexion a procedimiento para registrar clientes
         [HttpPost]
@@ -68,6 +75,7 @@ namespace APIProyectoSC_601.Controllers
                   {
 
                       context.RegistrarUsuarioSP(entidad.ID_Identificacion,entidad.Identificacion_Usuario, entidad.Nombre_Usuario, entidad.Apellido_Usuario, entidad.Correo_Usuario, entidad.Contrasenna_Usuario, entidad.Telefono_Usuario);
+                      logExitos.Add("RegistroUsuario", "Se registró un nuevo usuario exitosamente.");
                       return "OK";
                   }
               }
@@ -78,6 +86,8 @@ namespace APIProyectoSC_601.Controllers
               }
           }
         
+
+
         //Conexion a procedimiento para verificar los datos del login y permitir o negar el inicio de sesion
         [HttpPost]
         [Route("Login")]
@@ -87,7 +97,18 @@ namespace APIProyectoSC_601.Controllers
             {
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
-                    return context.IniciarSesionSP(entidad.Correo_Usuario, entidad.Contrasenna_Usuario).FirstOrDefault();
+                    var resultado = context.IniciarSesionSP(entidad.Correo_Usuario, entidad.Contrasenna_Usuario).FirstOrDefault();
+
+                    if (resultado != null)
+                    {
+                        logExitos.Add("Login", $"Inicio de sesión exitoso para el usuario con correo: {entidad.Correo_Usuario}");
+                    }
+                    else
+                    {
+                        logExitos.Add("Login", $"Inicio de sesión fallido para el usuario con correo: {entidad.Correo_Usuario}");
+                    }
+
+                    return resultado;
                 }
             }
             catch (Exception ex)
@@ -96,6 +117,8 @@ namespace APIProyectoSC_601.Controllers
                 return null;
             }
         }
+
+
 
         //Se comprueba si existe la cedula ingresada y se envia correo de recuperacion con nombre y contrasenna al cliente
         [HttpGet]
@@ -117,10 +140,12 @@ namespace APIProyectoSC_601.Controllers
                         html = html.Replace("@@Contrasenna", datos.Contrasenna_Usuario);
 
                         util.EnviarCorreo(datos.Correo_Usuario, "Contraseña de Acceso", html);
+                        logExitos.Add("RecuperarCuentaUsuario", $"Se envió correo de recuperación a {datos.Correo_Usuario}");
                         return "OK";
                     }
                     else
                     {
+                        logExitos.Add("RecuperarCuentaUsuario", $"Correo no encontrado: {Correo}");
                         return string.Empty;
                     }
                 }
@@ -132,6 +157,8 @@ namespace APIProyectoSC_601.Controllers
             }
         }
 
+
+
         //Funcion para contar la cantidad de clientes registrados en la pagina
         [HttpGet]
         [Route("ContarUsuarios")]
@@ -142,7 +169,11 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return context.Usuario.Count(x => x.ID_Rol == 2);
+                    int cantidadUsuarios = context.Usuario.Count(x => x.ID_Rol == 2);
+
+                    logExitos.Add("ContarUsuarios", $"Se contaron {cantidadUsuarios} usuarios registrados");
+
+                    return cantidadUsuarios;
                 }
             }
             catch (Exception ex)
@@ -151,6 +182,7 @@ namespace APIProyectoSC_601.Controllers
                 return 0;
             }
         }
+
 
 
         //Verifica si el correo ya existe
@@ -170,10 +202,12 @@ namespace APIProyectoSC_601.Controllers
                     if (correoExiste)
                     {
                         // El correo existe, devuelve un valor que indica que existe
+                        logExitos.Add("ComprobarCorreoExistenteUsuario", $"El correo {entidad.Correo_Usuario} ya existe.");
                         return "Existe";
                     }
                     else
                     {
+                        logExitos.Add("ComprobarCorreoExistenteUsuario", $"El correo {entidad.Correo_Usuario} no existe.");
                         return "NoExiste";
                     }
 
@@ -186,6 +220,8 @@ namespace APIProyectoSC_601.Controllers
             }
 
         }
+
+
 
         //Verifica si la cedula ya existe
         [HttpPost]
@@ -204,10 +240,12 @@ namespace APIProyectoSC_601.Controllers
                     if (cedulaExiste)
                     {
                         // Devuelve que ya existe la cedula
+                        logExitos.Add("ComprobarCedulaExistente", $"La cédula {entidad.Identificacion_Usuario} ya existe.");
                         return "Existe";
                     }
                     else
                     {
+                        logExitos.Add("ComprobarCedulaExistente", $"La cédula {entidad.Identificacion_Usuario} no existe.");
                         return "NoExiste";
                     }
 
@@ -221,6 +259,8 @@ namespace APIProyectoSC_601.Controllers
 
         }
 
+
+
         //Devuelve todos los clientes registrados, solo rol de usuario
         [HttpGet]
         [Route("ConsultarUsuariosAdministrador")]
@@ -231,33 +271,44 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
-                    return (from u in context.Usuario
-                            join i in context.Identificacion on u.ID_Identificacion equals i.ID_Identificacion
-                            join d in context.Direcciones on u.ID_Direccion equals d.ID_Direccion into direccionJoin
-                            from dir in direccionJoin.DefaultIfEmpty() // Left join for Direcciones
-                            join p in context.Provincia on (dir != null ? dir.ID_Provincia : (int?)null) equals p.ID_Provincia into provinciaJoin
-                            from prov in provinciaJoin.DefaultIfEmpty() // Left join for Provincia
-                            join c in context.Canton on (dir != null ? dir.ID_Canton : (int?)null) equals c.ID_Canton into cantonJoin
-                            from cant in cantonJoin.DefaultIfEmpty() // Left join for Canton
-                            join dis in context.Distrito on (dir != null ? dir.ID_Distrito : (int?)null) equals dis.ID_Distrito into distritoJoin
-                            from dist in distritoJoin.DefaultIfEmpty() // Left join for Distrito
-                            where u.ID_Usuario != idUsuario
-                            select new UsuarioEnt
-                            {
-                                ID_Usuario = u.ID_Usuario,
-                                Nombre_Identificacion = i.Nombre,
-                                Identificacion_Usuario = u.Identificacion_Usuario,
-                                Nombre_Usuario = u.Nombre_Usuario,
-                                Apellido_Usuario = u.Apellido_Usuario,
-                                Correo_Usuario = u.Correo_Usuario,
-                                Nombre_Provincia = prov != null ? prov.Nombre : "",
-                                Nombre_Canton = cant != null ? cant.Nombre : "",
-                                Nombre_Distrito = dist != null ? dist.Nombre : "",
-                                Direccion_Exacta = dir != null ? dir.Direccion_Exacta : "",
-                                Telefono_Usuario = u.Telefono_Usuario,
-                                ID_Estado = u.ID_Estado,
-                                ID_Rol = u.ID_Rol,
-                            }).ToList();
+                    var usuarios = (from u in context.Usuario
+                                    join i in context.Identificacion on u.ID_Identificacion equals i.ID_Identificacion
+                                    join d in context.Direcciones on u.ID_Direccion equals d.ID_Direccion into direccionJoin
+                                    from dir in direccionJoin.DefaultIfEmpty() // Left join for Direcciones
+                                    join p in context.Provincia on (dir != null ? dir.ID_Provincia : (int?)null) equals p.ID_Provincia into provinciaJoin
+                                    from prov in provinciaJoin.DefaultIfEmpty() // Left join for Provincia
+                                    join c in context.Canton on (dir != null ? dir.ID_Canton : (int?)null) equals c.ID_Canton into cantonJoin
+                                    from cant in cantonJoin.DefaultIfEmpty() // Left join for Canton
+                                    join dis in context.Distrito on (dir != null ? dir.ID_Distrito : (int?)null) equals dis.ID_Distrito into distritoJoin
+                                    from dist in distritoJoin.DefaultIfEmpty() // Left join for Distrito
+                                    where u.ID_Usuario != idUsuario
+                                    select new UsuarioEnt
+                                    {
+                                        ID_Usuario = u.ID_Usuario,
+                                        Nombre_Identificacion = i.Nombre,
+                                        Identificacion_Usuario = u.Identificacion_Usuario,
+                                        Nombre_Usuario = u.Nombre_Usuario,
+                                        Apellido_Usuario = u.Apellido_Usuario,
+                                        Correo_Usuario = u.Correo_Usuario,
+                                        Nombre_Provincia = prov != null ? prov.Nombre : "",
+                                        Nombre_Canton = cant != null ? cant.Nombre : "",
+                                        Nombre_Distrito = dist != null ? dist.Nombre : "",
+                                        Direccion_Exacta = dir != null ? dir.Direccion_Exacta : "",
+                                        Telefono_Usuario = u.Telefono_Usuario,
+                                        ID_Estado = u.ID_Estado,
+                                        ID_Rol = u.ID_Rol,
+                                    }).ToList();
+
+                    if (usuarios != null && usuarios.Any())
+                    {
+                        logExitos.Add("ConsultarUsuariosAdministrador", "Consulta de usuarios administradores exitosa.");
+                    }
+                    else
+                    {
+                        logExitos.Add("ConsultarUsuariosAdministrador", "No se encontraron usuarios administradores.");
+                    }
+
+                    return usuarios;
 
                 }
             }
@@ -267,6 +318,8 @@ namespace APIProyectoSC_601.Controllers
                 return null;
             }
         }
+
+
 
         // Permite al administrador cambiar el estado del cliente (activar o inactivar)
         [HttpPut]
@@ -278,6 +331,7 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.ActualizarEstadoUsuarioSP(entidad.ID_Usuario);
+                    logExitos.Add("ActualizarEstadoUsuario", $"Estado del usuario con ID {entidad.ID_Usuario} actualizado exitosamente.");
                     return "OK";
                 }
             }
@@ -288,6 +342,8 @@ namespace APIProyectoSC_601.Controllers
             }
         }
 
+
+
         [HttpPut]
         [Route("ActualizarRolUsuario")]
         public string ActualizarRolUsuario(UsuarioEnt entidad)
@@ -297,6 +353,7 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.ActualizarRolUsuarioSP(entidad.ID_Usuario);
+                    logExitos.Add("ActualizarRolUsuario", $"Rol del usuario con ID {entidad.ID_Usuario} actualizado exitosamente.");
                     return "OK";
                 }
             }
@@ -306,6 +363,8 @@ namespace APIProyectoSC_601.Controllers
                 return $"Error al actualizar el rol del usuario: {ex.Message}";
             }
         }
+
+
 
         //Devuelve los datos de la entidad basados en la cedula recibida
             [HttpGet]
@@ -317,29 +376,36 @@ namespace APIProyectoSC_601.Controllers
                       using (var context = new ImportadoraMoyaUlateEntities())
                       {
                           context.Configuration.LazyLoadingEnabled = false;
-                    return (from u in context.Usuario
-                            join i in context.Identificacion on u.ID_Identificacion equals i.ID_Identificacion
-                            join d in context.Direcciones on u.ID_Direccion equals d.ID_Direccion into direccionJoin
-                            from dir in direccionJoin.DefaultIfEmpty() // Left join for Direcciones
-                            where u.ID_Usuario == q
-                            select new UsuarioEnt
-                            {
-                                ID_Usuario = u.ID_Usuario,
-                                Nombre_Identificacion = i.Nombre,
-                                Identificacion_Usuario = u.Identificacion_Usuario,
-                                Nombre_Usuario = u.Nombre_Usuario,
-                                Apellido_Usuario = u.Apellido_Usuario,
-                                Correo_Usuario = u.Correo_Usuario,
-                                Contrasenna_Usuario = u.Contrasenna_Usuario,
-                                ID_Direccion = dir != null ? dir.ID_Direccion : 0,
-                                ID_Provincia = dir != null ? dir.ID_Provincia : 0,
-                                ID_Canton = dir != null ? dir.ID_Canton : 0,
-                                ID_Distrito = dir != null ? dir.ID_Distrito : 0,
-                                Direccion_Exacta = dir != null ? dir.Direccion_Exacta : "",
-                                Telefono_Usuario = u.Telefono_Usuario,
-                                ID_Estado = u.ID_Estado,
-                                ID_Rol = u.ID_Rol,
-                            }).FirstOrDefault();
+                          var usuario = (from u in context.Usuario
+                                   join i in context.Identificacion on u.ID_Identificacion equals i.ID_Identificacion
+                                   join d in context.Direcciones on u.ID_Direccion equals d.ID_Direccion into direccionJoin
+                                   from dir in direccionJoin.DefaultIfEmpty() // Left join for Direcciones
+                                   where u.ID_Usuario == q
+                                   select new UsuarioEnt
+                                   {
+                                       ID_Usuario = u.ID_Usuario,
+                                       Nombre_Identificacion = i.Nombre,
+                                       Identificacion_Usuario = u.Identificacion_Usuario,
+                                       Nombre_Usuario = u.Nombre_Usuario,
+                                       Apellido_Usuario = u.Apellido_Usuario,
+                                       Correo_Usuario = u.Correo_Usuario,
+                                       Contrasenna_Usuario = u.Contrasenna_Usuario,
+                                       ID_Direccion = dir != null ? dir.ID_Direccion : 0,
+                                       ID_Provincia = dir != null ? dir.ID_Provincia : 0,
+                                       ID_Canton = dir != null ? dir.ID_Canton : 0,
+                                       ID_Distrito = dir != null ? dir.ID_Distrito : 0,
+                                       Direccion_Exacta = dir != null ? dir.Direccion_Exacta : "",
+                                       Telefono_Usuario = u.Telefono_Usuario,
+                                       ID_Estado = u.ID_Estado,
+                                       ID_Rol = u.ID_Rol,
+                                   }).FirstOrDefault();
+
+                    if (usuario != null)
+                    {
+                        log.Add("Consulta exitosa para el usuario con ID: " + q);
+                    }
+
+                    return usuario;
 
                 }
             }
@@ -349,6 +415,8 @@ namespace APIProyectoSC_601.Controllers
                       return null;
                   }
               }
+
+
 
         [HttpGet]
         [Route("ConsultarProvincias")]
@@ -370,7 +438,7 @@ namespace APIProyectoSC_601.Controllers
                             Text = item.Nombre
                         });
                     }
-
+                    log.Add("Consulta de provincias exitosa.");
                     return provincias;
                 }
             }
@@ -380,6 +448,8 @@ namespace APIProyectoSC_601.Controllers
                 return new List<System.Web.Mvc.SelectListItem>();
             }
         }
+
+
 
         [HttpGet]
         [Route("ConsultarCantones")]
@@ -402,6 +472,7 @@ namespace APIProyectoSC_601.Controllers
                         });
                     }
 
+                    log.Add("Consulta de cantones exitosa.");
                     return cantones;
                 }
             }
@@ -411,6 +482,8 @@ namespace APIProyectoSC_601.Controllers
                 return new List<System.Web.Mvc.SelectListItem>();
             }
         }
+
+
 
         [HttpGet]
         [Route("cargarCantones")]
@@ -433,7 +506,7 @@ namespace APIProyectoSC_601.Controllers
                             Text = item.Nombre
                         });
                     }
-
+                    log.Add("Carga de cantones exitosa.");
                     return cantones;
                 }
             }
@@ -443,6 +516,8 @@ namespace APIProyectoSC_601.Controllers
                 return new List<System.Web.Mvc.SelectListItem>();
             }
         }
+
+
 
         [HttpGet]
         [Route("ConsultarDistritos")]
@@ -465,6 +540,7 @@ namespace APIProyectoSC_601.Controllers
                         });
                     }
 
+                    log.Add("Consulta de distritos exitosa.");
                     return distritos;
                 }
             }
@@ -474,6 +550,8 @@ namespace APIProyectoSC_601.Controllers
                 return new List<System.Web.Mvc.SelectListItem>();
             }
         }
+
+
 
         [HttpGet]
         [Route("cargarDistritos")]
@@ -496,7 +574,7 @@ namespace APIProyectoSC_601.Controllers
                             Text = item.Nombre
                         });
                     }
-
+                    log.Add("Carga de distritos exitosa.");
                     return distritos;
                 }
             }
@@ -518,6 +596,7 @@ namespace APIProyectoSC_601.Controllers
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.InactivarUsuarioSP(entidad.ID_Usuario);
+                    log.Add($"Usuario con ID {entidad.ID_Usuario} inactivado exitosamente.");
                 }
             }
             catch (Exception ex)
@@ -525,8 +604,6 @@ namespace APIProyectoSC_601.Controllers
                 log.Add("Error en InactivarUsuario: " + ex.Message);
             }
         }
-
-
 
 
 
@@ -540,6 +617,7 @@ namespace APIProyectoSC_601.Controllers
                    using (var context = new ImportadoraMoyaUlateEntities())
                    {
                        context.ActualizarCuentaUsuarioSP(entidad.ID_Usuario, entidad.Nombre_Usuario, entidad.Apellido_Usuario, entidad.Correo_Usuario, entidad.NuevaContrasenna_Usuario, entidad.Telefono_Usuario, entidad.ID_Provincia, entidad.ID_Canton, entidad.ID_Distrito, entidad.Direccion_Exacta);
+                       log.Add($"Datos del cliente con ID {entidad.ID_Usuario} actualizados exitosamente.");
                        return "OK";
                    }
                }
