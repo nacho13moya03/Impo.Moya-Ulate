@@ -109,13 +109,13 @@ namespace ProyectoSC_601.Models
         }
 
         //Funcion para contar el total de recursos del inventario
-        public decimal ContarTotalInventario()
+        public String ContarTotalInventario()
         {
             using (var client = new HttpClient())
             {
                 var urlApi = rutaServidor + "TotalInventario";
                 var res = client.GetAsync(urlApi).Result;
-                return res.Content.ReadFromJsonAsync<decimal>().Result;
+                return res.Content.ReadFromJsonAsync<String>().Result;
             }
         }
 
@@ -140,6 +140,17 @@ namespace ProyectoSC_601.Models
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PutAsync(urlApi, jsonData).Result;
                 return res.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
+        public bool VerificarFacturasVinculadas(InventarioEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "VerificarFacturasVinculadas";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PostAsync(urlApi, jsonData).Result;
+                return res.Content.ReadFromJsonAsync<bool>().Result;
             }
         }
     }

@@ -281,20 +281,52 @@ namespace APIProyectoSC_601.Controllers
         //Devuelve la cantidad total de los recursos del inventario
         [HttpGet]
         [Route("TotalInventario")]
-        public decimal TotalInventario()
+        public String TotalInventario()
         {
             try
             {
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
+<<<<<<< Updated upstream
                     return context.Producto.Sum(x => x.Precio * x.Cantidad);
+=======
+                    decimal totalInventario = context.Producto.Sum(x => x.Precio * x.Cantidad);
+                    string totalFormateado = totalInventario.ToString("N");
+                    logExitos.Add("TotalInventario", $"La cantidad total de los recursos del inventario es {totalInventario:C2}.");
+                    return totalFormateado;
+>>>>>>> Stashed changes
                 }
             }
             catch (Exception ex)
             {
                 log.Add("Error en TotalInventario: " + ex.Message);
-                return -1;
+                return string.Empty;
+            }
+        }
+
+        [HttpPost]
+        [Route("VerificarFacturasVinculadas")]
+        public bool VerificarFacturasVinculadas(ProductoEnt entidad)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    bool facturasVinculadas = context.Factura_Detalle.Any(p => p.ID_Producto == entidad.ID_Producto);
+
+                    if (!facturasVinculadas)
+                    {
+                        logExitos.Add("VerificarFacturasVinculadas", $"No hay facturas vinculadas al producto con ID {entidad.ID_Producto}.");
+                    }
+
+                    return facturasVinculadas;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en VerificarFacturasVinculadas: " + ex.Message);
+                return false;
             }
         }
 
