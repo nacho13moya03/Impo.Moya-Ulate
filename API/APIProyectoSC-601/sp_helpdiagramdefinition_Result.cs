@@ -11,11 +11,9 @@ namespace APIProyectoSC_601
 {
     using System;
     
-    public partial class RecuperarCuentaUsuarioSP_Result
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public string Nombre_Usuario { get; set; }
-        public string Apellido_Usuario { get; set; }
-        public string Correo_Usuario { get; set; }
-        public string Contrasenna_Usuario { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

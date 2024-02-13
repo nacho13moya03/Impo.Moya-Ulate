@@ -170,6 +170,21 @@ namespace ProyectoSC_601.Controllers
                 }
             }
 
+        [HttpGet]
+        public ActionResult VerificarEliminarProducto(int idProducto)
+        {
+            var entidad = new InventarioEnt { ID_Producto = idProducto };
+
+            bool facturasVinculadas = modelInventario.VerificarFacturasVinculadas(entidad);
+
+            if (facturasVinculadas)
+            {
+                return Json(new { success = false, message = "No se puede eliminar el producto por información relacionada en las facturas" }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Categoria
         public ActionResult ConsultarCategoria()
         {

@@ -62,7 +62,7 @@ namespace APIProyectoSC_601.Controllers
                 log.Add("Error en ConsultarInventario: " + ex.Message);
                 return new List<ProductoEnt>();
             }
-           
+
         }
 
 
@@ -87,7 +87,7 @@ namespace APIProyectoSC_601.Controllers
 
                             Value = item.ID_Categoria.ToString(),
                             Text = item.Nombre_Categoria,
-                        
+
 
                         });
                     }
@@ -260,7 +260,7 @@ namespace APIProyectoSC_601.Controllers
             {
                 log.Add("Error en ConsultaProductoEspecifico: " + ex.Message);
                 return null;
-            } 
+            }
         }
 
 
@@ -295,7 +295,7 @@ namespace APIProyectoSC_601.Controllers
                     else
                     {
                         log.Add("Error en ActualizarProducto: Producto no encontrado.");
-                        return -1; 
+                        return -1;
                     }
                 }
             }
@@ -311,7 +311,7 @@ namespace APIProyectoSC_601.Controllers
         //Devuelve la cantidad total de los recursos del inventario
         [HttpGet]
         [Route("TotalInventario")]
-        public decimal TotalInventario()
+        public String TotalInventario()
         {
             try
             {
@@ -319,16 +319,41 @@ namespace APIProyectoSC_601.Controllers
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     decimal totalInventario = context.Producto.Sum(x => x.Precio * x.Cantidad);
+                    string totalFormateado = totalInventario.ToString("N");
                     logExitos.Add("TotalInventario", $"La cantidad total de los recursos del inventario es {totalInventario:C2}.");
-                    return totalInventario;
+                    return totalFormateado;
                 }
             }
             catch (Exception ex)
             {
                 log.Add("Error en TotalInventario: " + ex.Message);
-                return -1;
+                return string.Empty;
             }
         }
+        [HttpPost]
+        [Route("VerificarFacturasVinculadas")]
+        public bool VerificarFacturasVinculadas(ProductoEnt entidad)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    bool facturasVinculadas = context.Factura_Detalle.Any(p => p.ID_Producto == entidad.ID_Producto);
 
+                    if (!facturasVinculadas)
+                    {
+                        logExitos.Add("VerificarFacturasVinculadas", $"No hay facturas vinculadas al producto con ID {entidad.ID_Producto}.");
+                    }
+
+                    return facturasVinculadas;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en VerificarFacturasVinculadas: " + ex.Message);
+                return false;
+
+            }
+        }
     }
 }

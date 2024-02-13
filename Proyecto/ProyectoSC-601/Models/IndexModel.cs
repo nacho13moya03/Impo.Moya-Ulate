@@ -19,7 +19,7 @@ namespace ProyectoSC_601.Models
         //Funcion para enviar la informacion de contactenos
         public string EnviarInformacion(InfoIndex entidad)
         {
-            using (var client = new HttpClient())
+            using (var client = new HttpClient())           
             {
                 var urlApi = rutaServidor + "EnviarInformacion";
                 var jsonData = JsonContent.Create(entidad);
