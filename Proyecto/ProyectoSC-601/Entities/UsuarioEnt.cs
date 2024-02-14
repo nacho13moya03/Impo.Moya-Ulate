@@ -80,27 +80,41 @@ public class CustomIdentificacionAttribute : ValidationAttribute
 
         if (usuario.ID_Identificacion == 1)
         {
-            // Validación para el tipo 1 (ejemplo: 9 dígitos y solo números)
-            if (!Regex.IsMatch(value.ToString(), "^[0-9]{9}$"))
+            if (value == null)
+            {
+                return new ValidationResult("Este campo es obligatorio.");
+            }
+            else if (!Regex.IsMatch(value.ToString(), "^[0-9]{9}$"))
             {
                 return new ValidationResult("La identificación debe tener 9 dígitos numéricos.");
             }
+
         }
         else if (usuario.ID_Identificacion == 2)
         {
-            // Validación para el tipo 2 (ejemplo: 11 dígitos y solo números)
-            if (!Regex.IsMatch(value.ToString(), "^[0-9]{11}$"))
+            if (value == null)
+            {
+                return new ValidationResult("Este campo es obligatorio.");
+            }
+            else if (!Regex.IsMatch(value.ToString(), "^[0-9]{11}$"))
             {
                 return new ValidationResult("La identificación debe tener 11 dígitos numéricos.");
             }
+
+
         }
         else if (usuario.ID_Identificacion == 3)
         {
-            // Validación para un mínimo de 4 y un máximo de 15 dígitos 
-            if (!Regex.IsMatch(value.ToString(), "^[a-zA-Z0-9]{4,15}$"))
+
+            if (value == null)
+            {
+                return new ValidationResult("El campo identificación es obligatorio.");
+            }
+            else if (!Regex.IsMatch(value.ToString(), "^[a-zA-Z0-9]{4,15}$"))
             {
                 return new ValidationResult("La identificación debe tener entre 4 y 15 caracteres.");
             }
+
 
         }
 

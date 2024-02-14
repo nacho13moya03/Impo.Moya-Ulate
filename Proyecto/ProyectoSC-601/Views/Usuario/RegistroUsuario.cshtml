@@ -90,20 +90,8 @@
 
 <script>
     $(document).ready(function () {
-        // Obtener la opción seleccionada al cargar la página
-        var selectedValue = $('#ID_Identificacion').val();
-
-        // Deshabilitar todos los campos si la opción no es válida
-        if (selectedValue === '' || selectedValue === null) {
-            $('input[type="text"]').prop('disabled', true).addClass('disabled');
-            $('input[type="email"]').prop('disabled', true).addClass('disabled');
-            $('input[type="password"]').prop('disabled', true).addClass('disabled');
-        }
-
-        // Manejar el evento change del DropDownList
-        $('#ID_Identificacion').change(function () {
-            var selectedValue = $(this).val();
-
+        // Función para habilitar o deshabilitar los campos según la opción seleccionada
+        function toggleFields(selectedValue) {
             // Deshabilitar todos los campos
             $('input[type="text"]').prop('disabled', true).addClass('disabled');
             $('input[type="email"]').prop('disabled', true).addClass('disabled');
@@ -120,6 +108,18 @@
                     $('input[type="text"][name="Apellido_Usuario"]').prop('disabled', true).addClass('disabled');
                 }
             }
+        }
+
+        // Obtener la opción seleccionada al cargar la página
+        var selectedValue = $('#ID_Identificacion').val();
+
+        // Habilitar o deshabilitar campos según la selección actual
+        toggleFields(selectedValue);
+
+        // Manejar el evento change del DropDownList
+        $('#ID_Identificacion').change(function () {
+            var selectedValue = $(this).val();
+            toggleFields(selectedValue);
         });
 
         // Manejar el evento submit del formulario
@@ -129,9 +129,7 @@
             // Verificar que se ha seleccionado una opción válida
             if (selectedValue === '' || selectedValue === null) {
                 // Si se selecciona la opción predeterminada, deshabilitar todos los campos
-                $('input[type="text"]').prop('disabled', true).addClass('disabled');
-                $('input[type="email"]').prop('disabled', true).addClass('disabled');
-                $('input[type="password"]').prop('disabled', true).addClass('disabled');
+                toggleFields(selectedValue);
             }
         });
     });
