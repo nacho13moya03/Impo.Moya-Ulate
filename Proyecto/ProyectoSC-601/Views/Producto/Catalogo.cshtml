@@ -1,10 +1,10 @@
-﻿﻿@model IEnumerable<ProyectoSC_601.Entities.InventarioEnt>
+﻿@model PagedList.IPagedList<ProyectoSC_601.Entities.InventarioEnt>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Catalogo";
     <link href="~/Assets/css/style.css" rel="stylesheet">
     <link href="~/Assets/css/catalogo.css" rel="stylesheet">
 }
-
 
 @*CATALOGO*@
 <section id="cata" class="py-5">
@@ -80,15 +80,14 @@
                             </div>
                         }
                     </div>
-                    <button class="carousel-control-prev btn btn-primary" type="button" data-bs-target="#productoCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Anterior</span>
-                    </button>
-                    <button class="carousel-control-next btn btn-primary" type="button" data-bs-target="#productoCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Siguiente</span>
-                    </button>
-                </div>
+                    @if (Model.TotalItemCount > 9)
+                    {
+                        <div class="pagination-container">
+                            @Html.PagedListPager(Model, pagina => Url.Action("Catalogo", new { pagina }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
+                        </div>
+                    }
+                       
+                    </div>
             </div>
         </div>
     </div>

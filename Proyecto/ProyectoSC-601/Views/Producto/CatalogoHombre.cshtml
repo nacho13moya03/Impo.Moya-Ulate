@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProyectoSC_601.Entities.InventarioEnt>
+﻿@model PagedList.IPagedList<ProyectoSC_601.Entities.InventarioEnt>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "CatalogoHombre";
     <link href="~/Assets/css/style.css" rel="stylesheet">
@@ -8,59 +9,66 @@
 @*CATALOGO*@
 <section id="cata" class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            @if (Model.Count() > 0)
-            {
-                var cantidad = 0;
-                foreach (var item in Model)
+        <div class="row">
+            <div class="col-md-8" style="margin-left:17%;">
+                @if (Model.Count() > 0)
                 {
-                    if (item.Estado == 1 && item.ID_Categoria == 1 && item.Cantidad > 0)
-                    {
+                    var itemsPerRow = 3;
+                    var totalRows = (int)Math.Ceiling((double)Model.Count() / (itemsPerRow * 4));
 
-                        <div class="col mb-5">
-                            <div class="card h-100">
-                                @if (item.Cantidad <= 5)
+                    for (int row = 0; row < totalRows; row++)
+                    {
+                        <div class="carousel-item @if (row == 0) { <text>active</text> }">
+                            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 justify-content-center">
+
+                                @foreach (var currentItem in Model.Skip(row * itemsPerRow * 4).Take(itemsPerRow * 4))
                                 {
-                                    <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">@item.Cantidad Disponibles</div>
+                                    if (currentItem.Estado == 1 && currentItem.Cantidad > 0)
+                                    {
+                                        <div class="col mb-4" data-categoria="@currentItem.ID_Categoria">
+                                            <div class="card h-100">
+                                                @if (currentItem.Cantidad <= 5)
+                                                {
+                                                    <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem;">@currentItem.Cantidad Disponibles</div>
+                                                }
+                                                <div class="text-center">
+                                                    <a href="@Url.Action("ProductoDetalle", "Producto", new { q = currentItem.ID_Producto })">
+                                                        <img src="@currentItem.Imagen" class="card-img-top" alt="@currentItem.Nombre" style="width:250px; height:175px">
+                                                    </a>
+                                                </div>
+                                                <div class="card-body p-4">
+                                                    <div class="text-center">
+                                                        <a href="@Url.Action("ProductoDetalle", "Producto", new { q = currentItem.ID_Producto })" style="text-decoration:none;color:black;"><h5 class="card-title">@currentItem.Nombre</h5></a>
+                                                        <p class="card-text">₡@currentItem.Precio</p>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="@Url.Action("ProductoDetalle", "Producto", new { q = currentItem.ID_Producto })">Ver Detalles</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
                                 }
-                                <!-- Product image-->
-                                <div style="text-align:center">
-                                    <a href="@Url.Action("ProductoDetalle", "Producto", new { q = item.ID_Producto })">
-                                        <img src="@item.Imagen" style="width:250px; height:175px">
-                                    </a>
-                                </div>
-                                <!-- Product details-->
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-                                        <!-- Product name-->
-                                        <a href="@Url.Action("ProductoDetalle", "Producto", new { q = item.ID_Producto })" style="text-decoration:none;color:black;"><h5> @item.Nombre</h5></a>
-                                        <!-- Product price-->
-                                        ₡@item.Precio
-                                    </div>
-                                </div>
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="@Url.Action("ProductoDetalle", "Producto", new { q = item.ID_Producto})">Ver Detalles</a></div>
-                                </div>
+
                             </div>
                         </div>
-                        cantidad++;
                     }
                 }
-
-                if (cantidad == 0)
+                else
                 {
-                    <div class="col-12 alert alert-info" role="alert" style="text-align: center;margin-bottom:3rem!important;">
-                        No hay productos registrados para hombres en este momento
+                    <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                        No hay productos registrados en este momento
                     </div>
                 }
 
-            }
-            else
+            </div>
+            @if (Model.TotalItemCount > 9)
             {
-                <div class="col-11 alert alert-info" role="alert" style="text-align: center;">
-                    No hay productos registrados en este momento
+                <div class="pagination-container col-md-8" style="margin-left:17%;">
+                    @Html.PagedListPager(Model, pagina => Url.Action("CatalogoNinos", new { pagina }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
                 </div>
             }
+
 
         </div>
     </div>

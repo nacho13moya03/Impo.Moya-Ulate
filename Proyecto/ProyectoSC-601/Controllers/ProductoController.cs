@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace ProyectoSC_601.Controllers
 {
@@ -12,32 +13,39 @@ namespace ProyectoSC_601.Controllers
         InventarioModel modelInventario = new InventarioModel();
 
         [HttpGet]
-        public ActionResult Catalogo()
+        public ActionResult Catalogo(int pagina = 1, int tamanoPagina = 9)
         {
             var datos = modelInventario.ConsultarInventario();
             ViewBag.Categorias = modelInventario.ConsultarCategorias();
-            return View(datos);
+            var productosPaginados = datos.ToPagedList(pagina, tamanoPagina);
+            return View(productosPaginados);
         }
 
         [HttpGet]
-        public ActionResult CatalogoMujer()
+        public ActionResult CatalogoMujer(int pagina = 1, int tamanoPagina = 9)
         {
-            var datos = modelInventario.ConsultarInventario();
-            return View(datos);
+            int categoria = 2;
+            var datos = modelInventario.ConsultarInventarioCatalogo(categoria);
+            var productosPaginados = datos.ToPagedList(pagina, tamanoPagina);
+            return View(productosPaginados);
         }
 
         [HttpGet]
-        public ActionResult CatalogoHombre()
+        public ActionResult CatalogoHombre(int pagina = 1, int tamanoPagina = 9)
         {
-            var datos = modelInventario.ConsultarInventario();
-            return View(datos);
+            int categoria = 1;
+            var datos = modelInventario.ConsultarInventarioCatalogo(categoria);
+            var productosPaginados = datos.ToPagedList(pagina, tamanoPagina);
+            return View(productosPaginados);
         }
 
         [HttpGet]
-        public ActionResult CatalogoNinos()
+        public ActionResult CatalogoNinos(int pagina = 1, int tamanoPagina = 9)
         {
-            var datos = modelInventario.ConsultarInventario();
-            return View(datos);
+            int categoria = 3;
+            var datos = modelInventario.ConsultarInventarioCatalogo(categoria);
+            var productosPaginados = datos.ToPagedList(pagina, tamanoPagina);
+            return View(productosPaginados);
         }
 
         [HttpGet]

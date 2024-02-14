@@ -65,6 +65,44 @@ namespace APIProyectoSC_601.Controllers
 
         }
 
+        [HttpGet]
+        [Route("ConsultarInventarioCatalogo")]
+        public List<ProductoEnt> ConsultarInventarioCatalogo(int categoria)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+
+                    var producto = (from i in context.Producto
+                                    join c in context.Categorias on i.ID_Categoria equals c.ID_Categoria into categoriaJoin
+                                    from cat in categoriaJoin.DefaultIfEmpty()
+                                    where i.ID_Categoria == categoria
+                                    select new ProductoEnt
+                                    {
+                                        ID_Producto = i.ID_Producto,
+                                        ID_Categoria = i.ID_Categoria,
+                                        Nombre_Categoria = cat != null ? cat.Nombre_Categoria : "",
+                                        Nombre = i.Nombre,
+                                        Descripcion = i.Descripcion,
+                                        Cantidad = i.Cantidad,
+                                        Precio = i.Precio,
+                                        Imagen = i.Imagen,
+                                        Estado = i.Estado
+                                    }).ToList();
+                    logExitos.Add("ConsultarInventarioCatalogo", "Se consultó satisfactoriamente el inventario de productos del catálogo específico.");
+                    return producto;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ConsultarInventarioCatalogo: " + ex.Message);
+                return new List<ProductoEnt>();
+            }
+
+        }
+
 
         //Devuelve una lista con las categorias que existen para los productos
         [HttpGet]

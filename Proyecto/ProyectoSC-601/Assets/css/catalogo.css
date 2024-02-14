@@ -10886,3 +10886,46 @@ body {
 .rounded-circle {
     border-radius: 50% !important;
 }
+
+.pagination-container {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 0;
+    border-radius: .25rem;
+}
+
+    .pagination li {
+        display: inline;
+    }
+
+        .pagination li a,
+        .pagination li span {
+            position: relative;
+            float: left;
+            padding: .5rem .75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: #6282a9;
+            text-decoration: none;
+            background-color: #fff;
+            border: 1px solid #6282a9;
+        }
+
+        .pagination li.active a {
+            z-index: 3;
+            color: #fff;
+            background-color: #6282a9;
+            border-color: #6282a9;
+        }
+
+        .pagination li a:hover {
+            z-index: 2;
+            color: #0056b3;
+            background-color: #e9ecef;
+            border-color: #6282a9;
+        }

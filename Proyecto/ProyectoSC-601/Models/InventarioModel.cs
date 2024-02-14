@@ -26,6 +26,16 @@ namespace ProyectoSC_601.Models
             }
         }
 
+        public List<InventarioEnt> ConsultarInventarioCatalogo(int categoria)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ConsultarInventarioCatalogo?categoria=" + categoria;
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<List<InventarioEnt>>().Result;
+            }
+        }
+
         //Funcion para consultar las categorias
         public List<SelectListItem> ConsultarCategorias()
         {

@@ -24,7 +24,7 @@ namespace ProyectoSC_601.Entities
         public int Cantidad { get; set; }
 
         [Required(ErrorMessage = "Este campo es obligatorio.")]
-        [Range(1, 99999, ErrorMessage = "El precio debe ser superior a 0")]
+        [Range(1, 999999, ErrorMessage = "El precio debe ser superior a 0")]
         public decimal Precio { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio.")]
         public string Imagen { get; set; }
