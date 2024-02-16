@@ -233,8 +233,8 @@
             return false;
         }
 
-        if (tipoIdentificacion === "3" && (cedula.length < 5 || cedula.length > 15 || !/^[a-zA-Z0-9]+$/.test(cedula))) {
-            $("#errorCedula").text("La cédula debe tener entre 5 y 15 caracteres alfanuméricos.");
+        if (tipoIdentificacion === "3" && (cedula.length < 4 || cedula.length > 15 || !/^[a-zA-Z0-9]+$/.test(cedula))) {
+            $("#errorCedula").text("La cédula debe tener entre 4 y 15 caracteres alfanuméricos.");
             return false;
         }
 
