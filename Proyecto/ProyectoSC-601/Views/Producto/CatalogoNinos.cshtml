@@ -64,7 +64,7 @@
             </div>
             @if (Model.TotalItemCount > 9)
             {
-                <div class="pagination-container col-md-8" style="margin-left:17%;">
+                <div class="pagination-container col-md-8" style="margin-left:21%;">
                     @Html.PagedListPager(Model, pagina => Url.Action("CatalogoNinos", new { pagina }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
                 </div>
             }

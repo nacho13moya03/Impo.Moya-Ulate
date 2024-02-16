@@ -55,14 +55,14 @@
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="cantidad">Cantidad Disponible</label>
-                                @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", @placeholder = "Cantidad", @type = "number", required = "required" })
+                                @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", @placeholder = "Cantidad", @type = "number", required = "required", min = "1" })
                                 <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                     @Html.ValidationMessageFor(m => m.Cantidad, "", new { @style = "color: red;" })
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="precio">Precio</label>
-                                @Html.TextBoxFor(m => m.Precio, new { @class = "form-control", @placeholder = "Precio", @type = "number", required = "required" })
+                                @Html.TextBoxFor(m => m.Precio, new { @class = "form-control", @placeholder = "Precio", @type = "number", required = "required", min = "1" })
                                 <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                     @Html.ValidationMessageFor(m => m.Precio, "", new { @style = "color: red;" })
                                 </div>

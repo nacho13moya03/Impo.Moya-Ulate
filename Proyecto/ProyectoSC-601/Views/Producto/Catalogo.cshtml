@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<ProyectoSC_601.Entities.InventarioEnt>
+﻿﻿@model PagedList.IPagedList<ProyectoSC_601.Entities.InventarioEnt>
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Catalogo";
@@ -8,7 +8,7 @@
 
 <section id="cata">
     <div class="container">
-        <div class="row" style="margin-top: 5%!important;">
+        <div class="row" style="margin-top: 3%!important;">
 
             <div class="col-md-2" style="margin-bottom:5%!important;">
                 <div class="card">
@@ -17,22 +17,20 @@
                     </div>
 
                     <div class="card-body">
-                        @foreach (var categoria in ViewBag.Categorias)
-                        {
-                            <div class="form-check">
-                                @{
-                                    bool isChecked = false;
-                                    if (ViewBag != null && ViewBag.CategoriaSeleccionada != null)
-                                    {
-                                        isChecked = categoria.Value == ViewBag.CategoriaSeleccionada.ToString();
-                                    }
+                        <div class="card-body">
+                            @foreach (var categoria in ViewBag.Categorias)
+                            {
+                                int categoriaId = int.Parse(categoria.Value);
+                                bool isChecked = ViewBag.CategoriasSeleccionadas != null && ViewBag.CategoriasSeleccionadas.Contains(categoriaId);
+
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="chkCategoria-@categoriaId" value="@categoriaId" onchange="filtrarPorCategoria('@categoriaId')" @(isChecked ? "checked" : "")>
+                                    <label class="form-check-label" for="chkCategoria-@categoriaId">@categoria.Text</label>
+                                </div>
+                            }
+                        </div>
 
 
-                                }
-                                <input type="checkbox" class="form-check-input" id="chkCategoria-@categoria.Value" value="@categoria.Value" onchange="filtrarPorCategoria('@categoria.Value')" @if (isChecked) { <text> checked</text> }>
-                                <label class="form-check-label" for="chkCategoria-@categoria.Value">@categoria.Text</label>
-                            </div>
-                        }
                     </div>
                 </div>
             </div>
@@ -64,7 +62,7 @@
                                                         }
                                                         <div class="text-center">
                                                             <a href="@Url.Action("ProductoDetalle", "Producto", new { q = currentItem.ID_Producto })">
-                                                                <img src="@currentItem.Imagen" class="card-img-top" alt="@currentItem.Nombre" style="width:250px; height:175px">
+                                                                <img src="@currentItem.Imagen" class="card-img-top" alt="@currentItem.Nombre" style="width:250px; height:155px">
                                                             </a>
                                                         </div>
                                                         <div class="card-body p-4">
@@ -96,9 +94,10 @@
                     @if (Model.TotalItemCount > 9)
                     {
                         <div class="pagination-container">
-                            @Html.PagedListPager(Model, pagina => Url.Action("Catalogo", new { pagina }))
+                            @Html.PagedListPager(Model, pagina => Url.Action("Catalogo", new { pagina, categorias = Request.QueryString["categorias"] }))
                         </div>
                     }
+
 
                 </div>
             </div>
@@ -109,60 +108,29 @@
 
 
 <script>
-    function filtrarPorCategoria(idCategoria) {
-        var paginaActual = obtenerPaginaActual(); // obtener la página actual
+    // Función filtrar por categorías
+    function filtrarPorCategoria() {
         var url = new URL(window.location.href); // obtener la URL actual
 
-        if (paginaActual > 1) {
-            // Está en página mayor a 1
-            url.searchParams.set('pagina', 1); 
-        }
+        // Obtener categorías seleccionadas
+        var categoriasSeleccionadas = $(":checkbox:checked")
+            .map(function () {
+                return $(this).val();
+            }).get();
 
-        if (url.searchParams.get('categoria') == idCategoria) {
-            url.searchParams.delete('categoria');
+        // Construir URL con parámetros
+        var url = new URL(window.location);
+        url.searchParams.set("pagina", 1);
+
+        // Verificar si hay categorías seleccionadas
+        if (categoriasSeleccionadas.length > 0) {
+            url.searchParams.set("categorias", categoriasSeleccionadas.join(",")) 
         } else {
-            // Si no, establecer la nueva categoría seleccionada
-            url.searchParams.set('categoria', idCategoria);
+            url.searchParams.delete("categorias"); // Eliminar el parámetro "categorias" si no hay categorías seleccionadas
         }
 
-        // Redirigir a la nueva URL
+        // Redireccionar
         window.location.href = url.toString();
 
-        // Actualizar la visualización de las categorías
-        actualizarVisualizacionCategorias();
     }
-    function obtenerPaginaActual() {
-        var url = new URL(location.href);
-        return parseInt(url.searchParams.get("pagina"));
-    }
-
-    function actualizarVisualizacionCategorias() {
-        // Categorias seleccionadas
-        var categoriasSeleccionadas = $(":checkbox:checked").map(function () {
-            return $(this).attr("id").split("-")[1];
-        }).get();
-
-        // Mostrar solo los productos de las categorías seleccionadas
-        if (categoriasSeleccionadas.length > 0) {
-            $(".col[data-categoria]").hide();
-            categoriasSeleccionadas.forEach(function (categoria) {
-                $(".col[data-categoria='" + categoria + "']").show();
-            });
-        } else {
-            // Mostrar todos los productos si ninguna categoría está seleccionada
-            $(".col[data-categoria]").show();
-        }
-
-        // Verificar si se deben mostrar los controles de paginación
-        var productosVisibles = $(".col[data-categoria]:visible").length;
-        if (productosVisibles < 9) {
-            $(".pagination-container").hide();
-        } else {
-            $(".pagination-container").show();
-        }
-
-        // Actualizar el carrusel
-        $('#productoCarousel').carousel(0);
-    }
-
 </script>

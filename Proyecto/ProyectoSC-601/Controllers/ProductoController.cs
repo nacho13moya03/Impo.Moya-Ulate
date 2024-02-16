@@ -13,18 +13,33 @@ namespace ProyectoSC_601.Controllers
         InventarioModel modelInventario = new InventarioModel();
 
         [HttpGet]
-        public ActionResult Catalogo(int pagina = 1, int tamanoPagina = 9, int? categoria = null)
+        public ActionResult Catalogo(int pagina = 1, int tamanoPagina = 9, string categorias = null)
         {
-            var datos = modelInventario.ConsultarInventario();
-            ViewBag.Categorias = modelInventario.ConsultarCategorias();
-            ViewBag.CategoriaSeleccionada = categoria; // Establecer la categoría seleccionada en ViewBag
 
-            // Filtrar productos por categoría si se especifica
-            if (categoria != null)
+            // Consultar productos
+            var datos = modelInventario.ConsultarInventario();
+            // Obtener info categorías
+            ViewBag.Categorias = modelInventario.ConsultarCategorias();
+            // Convertir string de categorías a lista
+            List<int> idsCategorias = null;
+            if (!String.IsNullOrEmpty(categorias))
             {
-                datos = datos.Where(p => p.ID_Categoria == categoria).ToList(); // Materializar la consulta en una lista
+                idsCategorias = categorias.Split(',')
+                                         .Where(x => !string.IsNullOrWhiteSpace(x)) // Filtrar cadenas vacías o nulas
+                                         .Select(x => int.Parse(x))
+                                         .ToList();
             }
 
+            // Aplicar filtros de búsqueda si hay
+            if (idsCategorias != null && idsCategorias.Count > 0)
+            {
+                datos = datos.Where(p => idsCategorias.Contains(p.ID_Categoria))
+                             .ToList();
+
+                // Categorías seleccionadas para la vista  
+                ViewBag.CategoriasSeleccionadas = idsCategorias;
+            }
+            // Paginar datos filtrados
             var productosPaginados = datos.ToPagedList(pagina, tamanoPagina);
             return View(productosPaginados);
         }
