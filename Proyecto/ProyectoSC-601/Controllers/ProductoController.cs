@@ -13,13 +13,22 @@ namespace ProyectoSC_601.Controllers
         InventarioModel modelInventario = new InventarioModel();
 
         [HttpGet]
-        public ActionResult Catalogo(int pagina = 1, int tamanoPagina = 9)
+        public ActionResult Catalogo(int pagina = 1, int tamanoPagina = 9, int? categoria = null)
         {
             var datos = modelInventario.ConsultarInventario();
             ViewBag.Categorias = modelInventario.ConsultarCategorias();
+            ViewBag.CategoriaSeleccionada = categoria; // Establecer la categoría seleccionada en ViewBag
+
+            // Filtrar productos por categoría si se especifica
+            if (categoria != null)
+            {
+                datos = datos.Where(p => p.ID_Categoria == categoria).ToList(); // Materializar la consulta en una lista
+            }
+
             var productosPaginados = datos.ToPagedList(pagina, tamanoPagina);
             return View(productosPaginados);
         }
+
 
         [HttpGet]
         public ActionResult CatalogoMujer(int pagina = 1, int tamanoPagina = 9)
