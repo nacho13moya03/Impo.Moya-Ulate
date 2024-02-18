@@ -18,6 +18,8 @@
 
     <!-- CSS Files -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
     <link href="~/Assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="~/Assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/Assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -27,11 +29,12 @@
     <link href="~/Assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
     <link href="~/Assets/css/style.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style >
+    <style>
         .btn-primary {
-            --bs-btn-bg: #6282a9 !important; 
+            --bs-btn-bg: #6282a9 !important;
             --bs-btn-border-color: #6282a9 !important;
         }
+
         .dropdown:hover .btn-primary {
             background-color: #6282a9 !important;
             --bs-btn-bg: #6282a9 !important;
@@ -79,6 +82,9 @@
 
                             <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Proveedores", "ConsultaProveedores", "Proveedor", new { area = "" }, new { @class = "nav-link" })</a></li>
 
+                            <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Compras", "ConsultaCompras", "Compras", new { area = "" }, new { @class = "nav-link" })</a></li>
+
+
                         </ul>
                     </div
 
@@ -124,10 +130,10 @@
                     <div class="col-lg-2 col-md-6 footer-links" style="margin-top:6%;margin-left:8%;">
                         <h4>Gestión de Recursos</h4>
                         <ul>
-                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Gestionar Inventario", "ConsultaInventario", "Inventario", new { area = "" }, new { @class = "nav-link" })</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Gestionar Proveedores", "ConsultaProveedores", "Proveedor", new { area = "" }, new { @class = "nav-link" })</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Gestionar Clientes", "GestionClientes", "Cliente", new { area = "" }, new { @class = "nav-link" })</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Facturación", "Facturacion", "Facturacion", new { area = "" }, new { @class = "nav-link" })</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Gestionar Inventario", "ConsultaInventario", "Inventario", new { area = "" }, new { @class = "nav-link" })></a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Gestionar Proveedores", "ConsultaProveedores", "Proveedor", new { area = "" }, new { @class = "nav-link" })></a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Gestionar Clientes", "GestionClientes", "Cliente", new { area = "" }, new { @class = "nav-link" })></a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Facturación", "Facturacion", "Facturacion", new { area = "" }, new { @class = "nav-link" })></a></li>
                         </ul>
                     </div>
                 </div>

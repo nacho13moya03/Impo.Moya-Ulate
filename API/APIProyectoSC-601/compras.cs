@@ -12,21 +12,15 @@ namespace APIProyectoSC_601
     using System;
     using System.Collections.Generic;
     
-    public partial class Proveedores
+    public partial class compras
     {
-        public long ID_Proveedor { get; set; }
-        public int ID_Identificacion { get; set; }
-        public string Nombre_Proveedor { get; set; }
-        public string Apellido_Proveedor { get; set; }
-        public string Cedula_Proveedor { get; set; }
-        public string Direccion_Exacta { get; set; }
-        public int Estado_Proveedor { get; set; }
+        public int id_compras { get; set; }
         public long Empresa { get; set; }
-        public string Telefono { get; set; }
-        public string Correo { get; set; }
+        public System.DateTime fecha { get; set; }
+        public string concepto { get; set; }
+        public int cantidad { get; set; }
+        public decimal total { get; set; }
     
         public virtual Empresa Empresa1 { get; set; }
-        public virtual Estado Estado { get; set; }
-        public virtual Identificacion Identificacion { get; set; }
     }
 }

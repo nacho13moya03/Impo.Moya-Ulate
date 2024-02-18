@@ -175,6 +175,7 @@
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Entities\CarritoEnt.cs" />
+    <Compile Include="Entities\ComprasEnt.cs" />
     <Compile Include="Entities\FacturaEnt.cs" />
     <Compile Include="Entities\CategoriaEnt.cs" />
     <Compile Include="Entities\InventarioEnt.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Models\InventarioModel.cs" />
     <Compile Include="Models\IndexModel.cs" />
     <Compile Include="Models\ProductoModel.cs" />
+    <Compile Include="Models\ComprasModel.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="Models\EmpresaModel.cs" />
     <Compile Include="Models\ProveedorModel.cs" />
@@ -395,8 +397,6 @@
     <Content Include="Views\Facturacion\FacturaDetalle.cshtml" />
     <Content Include="Views\Facturacion\FacturacionCliente.cshtml" />
     <Content Include="Views\Facturacion\FacturaDetalleCliente.cshtml" />
-    <Content Include="Views\Compras\Compras.cshtml" />
-    <Content Include="Views\Compras\ConsultaCompras.cshtml" />
     <Content Include="Views\Carrito\MetodoPago.cshtml" />
     <Content Include="Views\Shared\_Layout_Vacia.cshtml" />
     <Content Include="Views\Categoria\ConsultarCategoria.cshtml" />
@@ -405,6 +405,10 @@
     <Content Include="Views\Empresa\ConsultaEmpresas.cshtml" />
     <Content Include="Views\Empresa\ActualizarEmpresa.cshtml" />
     <Content Include="Views\Categoria\ModificarCategoria.cshtml" />
+    <Content Include="Views\Compras\ConsultaCompras.cshtml" />
+    <Content Include="Views\Compras\RegistrarCompra.cshtml" />
+    <Content Include="Views\Compras\ConsultaCompra.cshtml" />
+    <Content Include="Views\Compras\ActualizarCompra.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

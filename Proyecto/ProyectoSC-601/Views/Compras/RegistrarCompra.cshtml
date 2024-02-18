@@ -1,0 +1,175 @@
+﻿@model ProyectoSC_601.Entities.ComprasEnt
+
+@{
+    ViewBag.Title = "RegistrarCompra";
+    Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
+    <link href="~/Assets/css/perfilClienteStyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css" />
+}
+
+<div class="container-xl px-4 mt-4">
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-8" style="margin-left:18%;margin-top:5%; margin-bottom:2%;">
+            <div class="card mb-4">
+                @if (ViewBag.MensajeUsuario != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align:center">
+                        @ViewBag.MensajeUsuario
+                    </div>
+                }
+                <div class="card-header">Registrar Compra</div>
+                <div class="card-body">
+                    @using (Html.BeginForm("RegistrarCompra", "Compras", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate" }))
+                    {
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small mb-1" for="empresa">Empresa</label>
+                                    @Html.DropDownListFor(m => m.Empresa, (IEnumerable<SelectListItem>)ViewBag.Empresas, "Seleccione una empresa", new { @class = "form-control" })
+                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                        <div id="errorEmpresa" class="text-danger">@ViewBag.MensajeEmpresa</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small mb-1" for="Fecha">Fecha y Hora</label>
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.Fecha, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", @type = "text", required = "required", @id = "datepicker" })
+                                        <span class="input-group-text bg-light">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                    <input type="hidden" id="fechaCompleta" name="fechaCompleta" />
+                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                        <div id="errorFecha" class="text-danger">@ViewBag.MensajeFecha</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small mb-1" for="concepto">Concepto</label>
+                                    @Html.TextBoxFor(m => m.Concepto, new { @class = "form-control", @placeholder = "Concepto", required = "required" })
+                                </div>
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    <div id="errorConcepto" class="text-danger">@ViewBag.MensajeFecha</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small mb-1" for="cantidad">Cantidad</label>
+                                    @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", @placeholder = "Cantidad", @type = "number", required = "required" })
+                                </div>
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    <div id="errorCantidad" class="text-danger">@ViewBag.MensajeFecha</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small mb-1" for="total">Total</label>
+                                    @Html.TextBoxFor(m => m.Total, new { @class = "form-control", @placeholder = "Total", @type = "number", required = "required" })
+                                </div>
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    <div id="errorTotal" class="text-danger">@ViewBag.MensajeFecha</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align:center;padding-top:4%;">
+                            <a href="@Url.Action("ConsultaCompras", "Compras")" class="btn btn-danger">
+                                <i class="fa fa-arrow-left"></i> Volver
+                            </a>
+                            <span class="px-2"></span>
+                            <button class="btn btn-success" type="submit" onclick="return validarFormulario()">REGISTRAR<i class="bi bi-pencil-square"></i></button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function validarFormulario() {
+        // Obtener los valores del formulario
+        var empresaElement = document.getElementById("Empresa");
+        var fechaElement = document.getElementById("Fecha");
+        var conceptoElement = document.getElementById("Concepto");
+        var cantidadElement = document.getElementById("Cantidad");
+        var totalElement = document.getElementById("Total");
+
+        // Limpiar mensajes de error
+        document.getElementById("errorEmpresa").innerText = "";
+        document.getElementById("errorFecha").innerText = "";
+        document.getElementById("errorConcepto").innerText = "";
+        document.getElementById("errorCantidad").innerText = "";
+        document.getElementById("errorTotal").innerText = "";
+
+        var valid = true;
+
+        // Validar empresa
+        if (empresaElement !== null && empresaElement.value.trim() === "") {
+            document.getElementById("errorEmpresa").innerText = "Este campo es obligatorio";
+            valid = false;
+        }
+
+        // Validar fecha
+        // Validar fecha
+        var fechaCompletaElement = document.getElementById("fechaCompleta");
+        if (fechaCompletaElement !== null && fechaCompletaElement.value.trim() === "") {
+            document.getElementById("errorFecha").innerText = "Este campo es obligatorio";
+            valid = false;
+        }
+
+
+        // Validar concepto
+        if (conceptoElement !== null && conceptoElement.value.trim() === "") {
+            document.getElementById("errorConcepto").innerText = "Este campo es obligatorio";
+            valid = false;
+        }
+
+        // Validar cantidad
+        if (cantidadElement !== null && cantidadElement.value.trim() === "") {
+            document.getElementById("errorCantidad").innerText = "Este campo es obligatorio";
+            valid = false;
+        }
+
+        // Validar total
+        if (totalElement !== null && totalElement.value.trim() === "") {
+            document.getElementById("errorTotal").innerText = "Este campo es obligatorio";
+            valid = false;
+        }
+
+        return valid;
+    }
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    $(function () {
+        var fechaCompletaElement = $("#fechaCompleta");
+
+        $("#datepicker").flatpickr({
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
+            onClose: function (selectedDates, dateStr, instance) {
+                // Aquí asignamos la fecha y hora al campo oculto
+                fechaCompletaElement.val(dateStr);
+            }
+        });
+    });
+</script>
+
+
+
+

@@ -1,9 +1,7 @@
-﻿@using System.Web.Mvc
-@model IEnumerable<ProyectoSC_601.Entities.ComprasEnt>
-
+﻿@model ProyectoSC_601.Entities.ComprasEnt
 
 @{
-    ViewBag.Title = "ConsultaCompras";
+    ViewBag.Title = "ConsultaCompra";
     ViewBag.Mensaje = TempData["Mensaje"];
     Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
     <link href="~/Assets/css/perfilClienteStyle.css" rel="stylesheet">
@@ -41,11 +39,11 @@
                         </div>
                     }
                     <h4 class="card-title">
-                        Información de Compras
+                        Información de Compra
                     </h4>
                     <br />
                     <div class="table-responsive">
-                        @if (Model.Count() > 0)
+                        @if (Model != null)
                         {
                             <table id="TablaCompras" class="table table-bordered table-hover">
                                 <thead class="table-info">
@@ -53,54 +51,57 @@
                                         <th style="background-color: #6282a9; color:white;">ID</th>
                                         <th style="background-color: #6282a9; color:white;">Empresa</th>
                                         <th style="background-color: #6282a9; color:white;">Fecha</th>
+                                        <th style="background-color: #6282a9; color:white;">Concepto</th>
+                                        <th style="background-color: #6282a9; color:white;">Cantidad</th>
+                                        <th style="background-color: #6282a9; color:white;">Total</th>
                                         <th style="background-color: #6282a9; color:white;">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>@item.IdCompras</td>
-                                            <td>
-                                                @{
-                                                    var idEmpresa = item.Empresa;
-                                                    var nombreEmpresa = ViewBag.Empresas as List<System.Web.Mvc.SelectListItem>;
+                                    <tr>
+                                        <td>@Model.IdCompras</td>
+                                        <td>
+                                            @{
+                                                var idEmpresa = Model.Empresa;
+                                                var nombreEmpresa = ViewBag.Empresas as List<System.Web.Mvc.SelectListItem>;
 
-                                                    if (nombreEmpresa != null && nombreEmpresa.Any())
-                                                    {
-                                                        var nombreEmpresaText = nombreEmpresa.FirstOrDefault(e => e.Value == idEmpresa.ToString())?.Text;
-                                                        @nombreEmpresaText
-                                                    }
-                                                    else
-                                                    {
-                                                        <text>No hay empresas disponibles</text>
-                                                    }
+                                                if (nombreEmpresa != null && nombreEmpresa.Any())
+                                                {
+                                                    var nombreEmpresaText = nombreEmpresa.FirstOrDefault(e => e.Value == idEmpresa.ToString())?.Text;
+                                                    @nombreEmpresaText
                                                 }
-                                            </td>
-
-                                            <td>@item.Fecha</td>
-                                            <td class="text-center">
-                                                <a href="@Url.Action("ConsultaCompra", "Compras", new { q = item.IdCompras })">
-                                                    <button class="btn btn-primary">
-                                                        Consultar
-                                                    </button>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    }
+                                                else
+                                                {
+                                                    <text>No hay empresas disponibles</text>
+                                                }
+                                            }
+                                        </td>
+                                        <td>@Model.Fecha</td>
+                                        <td>@Model.Concepto</td>
+                                        <td>@Model.Cantidad</td>
+                                        <td>@Model.Total.ToString("0.00")</td>
+                                        <td class="text-center">
+                                            <a href="@Url.Action("ActualizarCompra", "Compras", new { q = Model.IdCompras })">
+                                                <i class="fa fa-user fa-lg text-success" style="padding-left: 10px;"></i>
+                                            </a>
+                                            <a href="javascript:void(0);" onclick="confirmarEliminarCompra(@Model.IdCompras)">
+                                                <i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         }
                         else
                         {
                             <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
-                                No hay compras registradas en este momento
+                                No se encontró la compra.
                             </div>
                         }
                         <br>
                         <div class="text-center mt-4">
-                            <a href="@Url.Action("RegistrarCompra", "Compras")" class="btn btn-success">
-                                <i class="fa fa-plus"></i> Agregar compra
+                            <a href="@Url.Action("ConsultaCompras", "Compras")" class="btn btn-danger">
+                                <i class="fa fa-arrow-left"></i> Volver
                             </a>
                         </div>
                     </div>
@@ -140,31 +141,31 @@
                 {
                     extend: 'copy',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
                 {
                     extend: 'csv',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
                 {
                     extend: 'excel',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
                 {
                     extend: 'pdf',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
                 {
                     extend: 'print',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 }
             ]
