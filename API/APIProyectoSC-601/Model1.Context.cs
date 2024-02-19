@@ -30,7 +30,6 @@ namespace APIProyectoSC_601
         public virtual DbSet<Canton> Canton { get; set; }
         public virtual DbSet<Carrito> Carrito { get; set; }
         public virtual DbSet<Categorias> Categorias { get; set; }
-        public virtual DbSet<compras> compras { get; set; }
         public virtual DbSet<Direcciones> Direcciones { get; set; }
         public virtual DbSet<Distrito> Distrito { get; set; }
         public virtual DbSet<Empresa> Empresa { get; set; }
@@ -43,6 +42,7 @@ namespace APIProyectoSC_601
         public virtual DbSet<Provincia> Provincia { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<compras> compras { get; set; }
     
         public virtual int ActualizarCategoriaSP(Nullable<int> iD_Categoria, string nombre_Categoria)
         {
@@ -55,35 +55,6 @@ namespace APIProyectoSC_601
                 new ObjectParameter("Nombre_Categoria", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizarCategoriaSP", iD_CategoriaParameter, nombre_CategoriaParameter);
-        }
-    
-        public virtual int ActualizarCompra(Nullable<int> idCompra, Nullable<long> empresa, Nullable<System.DateTime> fecha, string concepto, Nullable<int> cantidad, Nullable<decimal> total)
-        {
-            var idCompraParameter = idCompra.HasValue ?
-                new ObjectParameter("IdCompra", idCompra) :
-                new ObjectParameter("IdCompra", typeof(int));
-    
-            var empresaParameter = empresa.HasValue ?
-                new ObjectParameter("Empresa", empresa) :
-                new ObjectParameter("Empresa", typeof(long));
-    
-            var fechaParameter = fecha.HasValue ?
-                new ObjectParameter("Fecha", fecha) :
-                new ObjectParameter("Fecha", typeof(System.DateTime));
-    
-            var conceptoParameter = concepto != null ?
-                new ObjectParameter("concepto", concepto) :
-                new ObjectParameter("concepto", typeof(string));
-    
-            var cantidadParameter = cantidad.HasValue ?
-                new ObjectParameter("Cantidad", cantidad) :
-                new ObjectParameter("Cantidad", typeof(int));
-    
-            var totalParameter = total.HasValue ?
-                new ObjectParameter("Total", total) :
-                new ObjectParameter("Total", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizarCompra", idCompraParameter, empresaParameter, fechaParameter, conceptoParameter, cantidadParameter, totalParameter);
         }
     
         public virtual int ActualizarCuentaUsuarioSP(Nullable<long> iD, string nombre, string apellido, string correo, string nuevaContrasenna, string telefono, Nullable<int> prov, Nullable<int> canton, Nullable<int> distrito, string direccion)
@@ -301,31 +272,6 @@ namespace APIProyectoSC_601
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrarCategoriaSP", categoriaParameter, estado_CategoriaParameter);
         }
     
-        public virtual int RegistrarCompra(Nullable<long> empresa, Nullable<System.DateTime> fecha, string concepto, Nullable<int> cantidad, Nullable<decimal> total)
-        {
-            var empresaParameter = empresa.HasValue ?
-                new ObjectParameter("Empresa", empresa) :
-                new ObjectParameter("Empresa", typeof(long));
-    
-            var fechaParameter = fecha.HasValue ?
-                new ObjectParameter("Fecha", fecha) :
-                new ObjectParameter("Fecha", typeof(System.DateTime));
-    
-            var conceptoParameter = concepto != null ?
-                new ObjectParameter("concepto", concepto) :
-                new ObjectParameter("concepto", typeof(string));
-    
-            var cantidadParameter = cantidad.HasValue ?
-                new ObjectParameter("Cantidad", cantidad) :
-                new ObjectParameter("Cantidad", typeof(int));
-    
-            var totalParameter = total.HasValue ?
-                new ObjectParameter("Total", total) :
-                new ObjectParameter("Total", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrarCompra", empresaParameter, fechaParameter, conceptoParameter, cantidadParameter, totalParameter);
-        }
-    
         public virtual int RegistrarEmpresaSP(string nombre_empresa, string descripcion, string ubicacion)
         {
             var nombre_empresaParameter = nombre_empresa != null ?
@@ -415,6 +361,60 @@ namespace APIProyectoSC_601
                 new ObjectParameter("Telefono", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrarUsuarioSP", tipoParameter, identificacionParameter, nombreParameter, apellidoParameter, correoParameter, contrasennaParameter, telefonoParameter);
+        }
+    
+        public virtual int ActualizarCompra(Nullable<int> idCompra, Nullable<long> empresa, Nullable<System.DateTime> fecha, string concepto, Nullable<int> cantidad, Nullable<decimal> total)
+        {
+            var idCompraParameter = idCompra.HasValue ?
+                new ObjectParameter("IdCompra", idCompra) :
+                new ObjectParameter("IdCompra", typeof(int));
+    
+            var empresaParameter = empresa.HasValue ?
+                new ObjectParameter("Empresa", empresa) :
+                new ObjectParameter("Empresa", typeof(long));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var conceptoParameter = concepto != null ?
+                new ObjectParameter("concepto", concepto) :
+                new ObjectParameter("concepto", typeof(string));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("Cantidad", cantidad) :
+                new ObjectParameter("Cantidad", typeof(int));
+    
+            var totalParameter = total.HasValue ?
+                new ObjectParameter("Total", total) :
+                new ObjectParameter("Total", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizarCompra", idCompraParameter, empresaParameter, fechaParameter, conceptoParameter, cantidadParameter, totalParameter);
+        }
+    
+        public virtual int RegistrarCompra(Nullable<long> empresa, Nullable<System.DateTime> fecha, string concepto, Nullable<int> cantidad, Nullable<decimal> total)
+        {
+            var empresaParameter = empresa.HasValue ?
+                new ObjectParameter("Empresa", empresa) :
+                new ObjectParameter("Empresa", typeof(long));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var conceptoParameter = concepto != null ?
+                new ObjectParameter("concepto", concepto) :
+                new ObjectParameter("concepto", typeof(string));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("Cantidad", cantidad) :
+                new ObjectParameter("Cantidad", typeof(int));
+    
+            var totalParameter = total.HasValue ?
+                new ObjectParameter("Total", total) :
+                new ObjectParameter("Total", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RegistrarCompra", empresaParameter, fechaParameter, conceptoParameter, cantidadParameter, totalParameter);
         }
     }
 }

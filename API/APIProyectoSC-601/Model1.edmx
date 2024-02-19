@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ImportadoraMoyaUlateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ImportadoraMoyaUlateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Canton">
           <Key>
             <PropertyRef Name="ID_Canton" />
@@ -641,8 +641,7 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ImportadoraMoyaUlateModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -679,18 +678,6 @@
           <NavigationProperty Name="Estado" Relationship="Self.FK_Estado_Categoria" FromRole="Categorias" ToRole="Estado" />
           <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Categoria" FromRole="Categorias" ToRole="Producto" />
         </EntityType>
-        <EntityType Name="compras">
-          <Key>
-            <PropertyRef Name="id_compras" />
-          </Key>
-          <Property Name="id_compras" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Empresa" Type="Int64" Nullable="false" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="concepto" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="cantidad" Type="Int32" Nullable="false" />
-          <Property Name="total" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <NavigationProperty Name="Empresa1" Relationship="Self.FK_compras_Empresa" FromRole="compras" ToRole="Empresa" />
-        </EntityType>
         <EntityType Name="Direcciones">
           <Key>
             <PropertyRef Name="ID_Direccion" />
@@ -725,8 +712,8 @@
           <Property Name="Nombre_empresa" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Ubicacion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="compras" Relationship="Self.FK_compras_Empresa" FromRole="Empresa" ToRole="compras" />
           <NavigationProperty Name="Proveedores" Relationship="Self.FK_Proveedores_Empresa" FromRole="Empresa" ToRole="Proveedores" />
+          <NavigationProperty Name="compras" Relationship="ImportadoraMoyaUlateModel.FK_compras_Empresa" FromRole="Empresa" ToRole="compras" />
         </EntityType>
         <EntityType Name="Estado">
           <Key>
@@ -931,18 +918,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_compras_Empresa">
-          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
-          <End Role="compras" Type="Self.compras" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empresa">
-              <PropertyRef Name="ID_Empresa" />
-            </Principal>
-            <Dependent Role="compras">
-              <PropertyRef Name="Empresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Direccion_Distrito">
           <End Role="Distrito" Type="Self.Distrito" Multiplicity="1" />
           <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="*" />
@@ -1115,7 +1090,6 @@
           <EntitySet Name="Canton" EntityType="Self.Canton" />
           <EntitySet Name="Carrito" EntityType="Self.Carrito" />
           <EntitySet Name="Categorias" EntityType="Self.Categorias" />
-          <EntitySet Name="compras" EntityType="Self.compras" />
           <EntitySet Name="Direcciones" EntityType="Self.Direcciones" />
           <EntitySet Name="Distrito" EntityType="Self.Distrito" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" />
@@ -1155,10 +1129,6 @@
           <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
             <End Role="Categorias" EntitySet="Categorias" />
             <End Role="Producto" EntitySet="Producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_compras_Empresa" Association="Self.FK_compras_Empresa">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="compras" EntitySet="compras" />
           </AssociationSet>
           <AssociationSet Name="FK_Direccion_Distrito" Association="Self.FK_Direccion_Distrito">
             <End Role="Distrito" EntitySet="Distrito" />
@@ -1220,14 +1190,6 @@
             <Parameter Name="ID_Categoria" Mode="In" Type="Int32" />
             <Parameter Name="Nombre_Categoria" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ActualizarCompra">
-            <Parameter Name="IdCompra" Mode="In" Type="Int32" />
-            <Parameter Name="Empresa" Mode="In" Type="Int64" />
-            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
-            <Parameter Name="concepto" Mode="In" Type="String" />
-            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
-            <Parameter Name="Total" Mode="In" Type="Decimal" />
-          </FunctionImport>
           <FunctionImport Name="ActualizarCuentaUsuarioSP">
             <Parameter Name="ID" Mode="In" Type="Int64" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
@@ -1247,13 +1209,13 @@
             <Parameter Name="Ubicacion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ActualizarEstadoCategoriaSP">
-            <Parameter Name="ID_Categoria" Mode="In" Type="Int64" />
+          <Parameter Name="ID_Categoria" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="ActualizarEstadoProveedorSP">
-            <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
+          <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="ActualizarEstadoUsuarioSP">
-            <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
+          <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="ActualizarProveedorSP">
             <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
@@ -1265,40 +1227,33 @@
             <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ActualizarRolUsuarioSP">
-            <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
+          <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="EliminarCategoriaSP">
-            <Parameter Name="ID_Categoria" Mode="In" Type="Int64" />
+          <Parameter Name="ID_Categoria" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="EliminarEmpresaSP">
-            <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
+          <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="EliminarProveedorSP">
-            <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
+          <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="InactivarUsuarioSP">
-            <Parameter Name="CodigoUsuario" Mode="In" Type="Int64" />
+          <Parameter Name="CodigoUsuario" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="IniciarSesionSP" ReturnType="Collection(ImportadoraMoyaUlateModel.IniciarSesionSP_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PagarCarritoSP" ReturnType="Collection(String)">
-            <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
+          <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="RecuperarCuentaUsuarioSP" ReturnType="Collection(ImportadoraMoyaUlateModel.RecuperarCuentaUsuarioSP_Result)">
-            <Parameter Name="Correo" Mode="In" Type="String" />
+          <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="RegistrarCategoriaSP">
             <Parameter Name="Categoria" Mode="In" Type="String" />
             <Parameter Name="Estado_Categoria" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="RegistrarCompra">
-            <Parameter Name="Empresa" Mode="In" Type="Int64" />
-            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
-            <Parameter Name="concepto" Mode="In" Type="String" />
-            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
-            <Parameter Name="Total" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="RegistrarEmpresaSP">
             <Parameter Name="Nombre_empresa" Mode="In" Type="String" />
@@ -1325,6 +1280,26 @@
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Telefono" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="compras" EntityType="ImportadoraMoyaUlateModel.compras" />
+          <AssociationSet Name="FK_compras_Empresa" Association="ImportadoraMoyaUlateModel.FK_compras_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="compras" EntitySet="compras" />
+          </AssociationSet>
+          <FunctionImport Name="ActualizarCompra">
+            <Parameter Name="IdCompra" Mode="In" Type="Int32" />
+            <Parameter Name="Empresa" Mode="In" Type="Int64" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="concepto" Mode="In" Type="String" />
+            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="Total" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="RegistrarCompra">
+            <Parameter Name="Empresa" Mode="In" Type="Int64" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="concepto" Mode="In" Type="String" />
+            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="Total" Mode="In" Type="Decimal" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="IniciarSesionSP_Result">
           <Property Type="Int64" Name="ID_Usuario" Nullable="false" />
@@ -1345,6 +1320,30 @@
           <Property Type="String" Name="Correo_Usuario" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="Contrasenna_Usuario" Nullable="false" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="compras">
+          <Key>
+            <PropertyRef Name="id_compras" />
+          </Key>
+          <Property Name="id_compras" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Empresa" Type="Int64" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="concepto" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="total" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="Empresa1" Relationship="ImportadoraMoyaUlateModel.FK_compras_Empresa" FromRole="compras" ToRole="Empresa" />
+        </EntityType>
+        <Association Name="FK_compras_Empresa">
+          <End Type="ImportadoraMoyaUlateModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="ImportadoraMoyaUlateModel.compras" Role="compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="ID_Empresa" />
+            </Principal>
+            <Dependent Role="compras">
+              <PropertyRef Name="Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1377,18 +1376,6 @@
                 <ScalarProperty Name="ID_Categoria" ColumnName="ID_Categoria" />
                 <ScalarProperty Name="Nombre_Categoria" ColumnName="Nombre_Categoria" />
                 <ScalarProperty Name="Estado_Categoria" ColumnName="Estado_Categoria" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="compras">
-            <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.compras">
-              <MappingFragment StoreEntitySet="compras">
-                <ScalarProperty Name="id_compras" ColumnName="id_compras" />
-                <ScalarProperty Name="Empresa" ColumnName="Empresa" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="concepto" ColumnName="concepto" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="total" ColumnName="total" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1525,7 +1512,6 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="ActualizarCategoriaSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCategoriaSP" />
-          <FunctionImportMapping FunctionImportName="ActualizarCompra" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCompra" />
           <FunctionImportMapping FunctionImportName="ActualizarCuentaUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCuentaUsuarioSP" />
           <FunctionImportMapping FunctionImportName="ActualizarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEmpresaSP" />
           <FunctionImportMapping FunctionImportName="ActualizarEstadoCategoriaSP" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarEstadoCategoriaSP" />
@@ -1566,10 +1552,23 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="RegistrarCategoriaSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarCategoriaSP" />
-          <FunctionImportMapping FunctionImportName="RegistrarCompra" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarCompra" />
           <FunctionImportMapping FunctionImportName="RegistrarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarEmpresaSP" />
           <FunctionImportMapping FunctionImportName="RegistrarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarProveedorSP" />
           <FunctionImportMapping FunctionImportName="RegistrarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarUsuarioSP" />
+          <EntitySetMapping Name="compras">
+            <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.compras">
+              <MappingFragment StoreEntitySet="compras">
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="concepto" ColumnName="concepto" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+                <ScalarProperty Name="id_compras" ColumnName="id_compras" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ActualizarCompra" FunctionName="ImportadoraMoyaUlateModel.Store.ActualizarCompra" />
+          <FunctionImportMapping FunctionImportName="RegistrarCompra" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarCompra" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

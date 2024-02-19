@@ -17,8 +17,8 @@ namespace APIProyectoSC_601
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Empresa()
         {
-            this.compras = new HashSet<compras>();
             this.Proveedores = new HashSet<Proveedores>();
+            this.compras = new HashSet<compras>();
         }
     
         public long ID_Empresa { get; set; }
@@ -27,8 +27,8 @@ namespace APIProyectoSC_601
         public string Ubicacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<compras> compras { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Proveedores> Proveedores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<compras> compras { get; set; }
     }
 }
