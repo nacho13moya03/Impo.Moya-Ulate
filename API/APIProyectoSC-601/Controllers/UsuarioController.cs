@@ -320,6 +320,57 @@ namespace APIProyectoSC_601.Controllers
         }
 
 
+        //Devuelve todos los clientes registrados, solo rol de usuario
+        [HttpGet]
+        [Route("GestionDireccion")]
+        public UsuarioEnt GestionDireccion(long q)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    var usuario = (from u in context.Usuario
+                                    join d in context.Direcciones on u.ID_Direccion equals d.ID_Direccion into direccionJoin
+                                    from dir in direccionJoin.DefaultIfEmpty() // Left join for Direcciones
+                                    join p in context.Provincia on (dir != null ? dir.ID_Provincia : (int?)null) equals p.ID_Provincia into provinciaJoin
+                                    from prov in provinciaJoin.DefaultIfEmpty() // Left join for Provincia
+                                    join c in context.Canton on (dir != null ? dir.ID_Canton : (int?)null) equals c.ID_Canton into cantonJoin
+                                    from cant in cantonJoin.DefaultIfEmpty() // Left join for Canton
+                                    join dis in context.Distrito on (dir != null ? dir.ID_Distrito : (int?)null) equals dis.ID_Distrito into distritoJoin
+                                    from dist in distritoJoin.DefaultIfEmpty() // Left join for Distrito
+                                    where u.ID_Usuario == q
+                                    select new UsuarioEnt
+                                    {
+                                        ID_Usuario = u.ID_Usuario,
+                                        Identificacion_Usuario = u.Identificacion_Usuario,
+                                        Nombre_Provincia = prov != null ? prov.Nombre : "",
+                                        Nombre_Canton = cant != null ? cant.Nombre : "",
+                                        Nombre_Distrito = dist != null ? dist.Nombre : "",
+                                        Direccion_Exacta = dir != null ? dir.Direccion_Exacta : "",
+                                     
+                                    }).FirstOrDefault();
+
+                    if (usuario != null)
+                    {
+                        logExitos.Add("ConsultarDireccionUsuario", "Consulta de dirección de usuario exitosa.");
+                    }
+                    else
+                    {
+                        logExitos.Add("ConsultarDireccionUsuario", "No se encontró dirección de usuario.");
+                    }
+
+                    return usuario;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ConsultarUsuariosAdministrador: " + ex.Message);
+                return null;
+            }
+        }
+
 
         // Permite al administrador cambiar el estado del cliente (activar o inactivar)
         [HttpPut]

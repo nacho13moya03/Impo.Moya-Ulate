@@ -83,3 +83,6 @@
     margin-top: 7px;
 }
 
+.table {
+    vertical-align: middle !important;
+}

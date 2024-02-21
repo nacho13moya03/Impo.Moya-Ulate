@@ -16,7 +16,9 @@
 .table-info {
     background-color: #cff4fc !important;
 }
-
+.table {
+    vertical-align: middle !important;
+}
 .buttons-excel, .buttons-pdf, .buttons-print, .buttons-copy, .buttons-csv {
     height: 30px;
     padding-top:5px!important;
@@ -31,3 +33,5 @@
         color: white!important;
         border: none!important;
     }
+
+

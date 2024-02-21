@@ -409,6 +409,7 @@
     <Content Include="Views\Compras\RegistrarCompra.cshtml" />
     <Content Include="Views\Compras\ConsultaCompra.cshtml" />
     <Content Include="Views\Compras\ActualizarCompra.cshtml" />
+    <Content Include="Views\Usuario\GestionDireccion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

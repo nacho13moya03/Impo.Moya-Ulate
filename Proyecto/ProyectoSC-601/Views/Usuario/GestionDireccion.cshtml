@@ -1,0 +1,102 @@
+﻿@model ProyectoSC_601.Entities.UsuarioEnt
+@{
+    ViewBag.Title = "GestionDireccion";
+    Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
+    <link href="~/Assets/css/perfilClienteStyle.css" rel="stylesheet">
+    <link href="~/Assets/css/gestionClientesStyle.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+
+}
+<div class="container mt-5 pt-4">
+    <div class="row justify-content-center">
+        <div class="col-12 grid-margin stretch-card">
+            <br>
+            <br>
+            <br>
+            <div class="card" style="margin-bottom:80px;width:110%!important;margin-left:-5%;">
+                <div class="card-body">
+                    <div style="display:flex;">
+                        <h4 class="card-title">Dirección Registrada</h4>
+                        <div style="margin-left:80%">
+                            <div style="display:flex;">
+                                <a class="btn btn-primary" style="background-color: #6282a9;border:none; " href="@Url.Action("GestionUsuarios","Usuario")" style="margin-left:5%;"><i style="color: white;" class="fa fa-arrow-left fa-lg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <br />
+                        @if (Model != null && !string.IsNullOrEmpty(Model.Nombre_Provincia))
+                        {
+                            <table id="TablaClientes" class="table table-bordered table-hover">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th style="background-color: #6282a9; color:white;">Usuario</th>
+                                        <th style="background-color: #6282a9; color:white;">Provincia</th>
+                                        <th style="background-color: #6282a9; color:white;">Cantón</th>
+                                        <th style="background-color: #6282a9; color:white;">Distrito</th>
+                                        <th style="background-color: #6282a9; color:white;">Dirección Exacta</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td>@Model.Identificacion_Usuario</td>
+                                        <td>@Model.Nombre_Provincia</td>
+                                        <td>@Model.Nombre_Canton</td>
+                                        <td>@Model.Nombre_Distrito</td>
+                                        <td style="max-width:120px;">@Model.Direccion_Exacta</td>
+
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 2%;">
+                               Este usuario no tiene una dirección registrada
+                            </div>
+                        }
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Se agrega un data table para la consulta de clientes*@
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script>var $j = jQuery.noConflict();</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+
+
+<script>
+    $j(document).ready(function () {
+        $j('#TablaClientes').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            },
+            "searching": false,
+            "info": false, 
+            "paging": false,
+            dom: 'Bfrtip'
+        });
+
+    });
+</script>

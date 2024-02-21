@@ -27,16 +27,16 @@
                             <table id="TablaClientes" class="table table-bordered table-hover">
                                 <thead class="table-info">
                                     <tr>
-                                        <th style="background-color: #6282a9; color:white;">ID</th>
                                         <th style="background-color: #6282a9; color:white;">Tipo</th>
                                         <th style="background-color: #6282a9; color:white;">Identificación</th>
                                         <th style="background-color: #6282a9; color:white;">Nombre</th>
                                         <th style="background-color: #6282a9; color:white;">Correo Electrónico</th>
-                                        <th style="background-color: #6282a9; color:white;">Provincia</th>
-                                        <th style="background-color: #6282a9; color:white;">Cantón</th>
-                                        <th style="background-color: #6282a9; color:white;">Distrito</th>
-                                        <th style="background-color: #6282a9; color:white;">Dirección</th>
+                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Provincia</th>
+                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Cantón</th>
+                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Distrito</th>
+                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Dirección</th>
                                         <th style="background-color: #6282a9; color:white;">Teléfono</th>
+                                        <th style="background-color: #6282a9; color:white;">Dirección</th>
                                         <th style="background-color: #6282a9; color:white;">Detalles</th>
                                         <th style="background-color: #6282a9; color:white;">Opciones</th>
                                     </tr>
@@ -45,41 +45,45 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>@item.ID_Usuario</td>
                                             <td>@item.Nombre_Identificacion</td>
                                             <td>@item.Identificacion_Usuario</td>
                                             <td>@($"{item.Nombre_Usuario} {item.Apellido_Usuario}")</td>
                                             <td>@item.Correo_Usuario</td>
-                                            <td>@item.Nombre_Provincia</td>
-                                            <td>@item.Nombre_Canton</td>
-                                            <td>@item.Nombre_Distrito</td>
-                                            <td style="max-width:120px;">@item.Direccion_Exacta</td>
+                                            <td class="visually-hidden">@item.Nombre_Provincia</td>
+                                            <td class="visually-hidden">@item.Nombre_Canton</td>
+                                            <td class="visually-hidden">@item.Nombre_Distrito</td>
+                                            <td class="visually-hidden" style="max-width:120px;">@item.Direccion_Exacta</td>
                                             <td>@item.Telefono_Usuario</td>
-                                            <td>
+                                            <td style="text-align:center;">
+                                                <a href="@Url.Action("GestionDireccion", "Usuario", new { q = item.ID_Usuario })"><i class="fa fa-eye fa-lg text-primary" style="color: #354461 !important;"></i></a>
+                                            </td>
+                                            <td style="text-align:center;">
                                                 @if (item.ID_Estado == 1)
                                                 {
-                                                    <span class="badge bg-success">Activo</span>
+                                                    <span style="color:green;font-size:14px;">Activo</span>
 
                                                 }
                                                 else
                                                 {
-                                                    <span class="badge bg-danger">Inactivo</span>
+                                                    <span style="color:red;font-size:14px;">Inactivo</span>
                                                 }
+                                                <hr style="margin:2px!important;" />
                                                 @if (item.ID_Rol == 1)
                                                 {
-                                                    <span class="badge bg-warning">Admin</span>
+                                                    <span style="color:grey;font-size:14px;">Administrador</span>
                                                 }
                                                 else
                                                 {
-                                                    <span class="badge bg-info">Cliente</span>
+                                                    <span style="color:grey;font-size:14px;">Cliente</span>
                                                 }
                                             </td>
                                             <td class="text-center">
-                                                <a href="@Url.Action("ActualizarEstadoUsuario", "Usuario", new { q = item.ID_Usuario })"><i class="fa fa-exchange fa-lg text-primary"></i></a><br />
-                                                <a href="@Url.Action("ActualizarRolUsuario", "Usuario", new { q = item.ID_Usuario })"><i class="fa fa-exchange fa-lg text-primary" style="color:black!important;"></i></a>
+                                                <a href="@Url.Action("ActualizarEstadoUsuario", "Usuario", new { q = item.ID_Usuario })"><i class="fa fa-exchange fa-lg text-primary" style="color: #354461 !important;"></i></a><br />
+                                                <hr style="margin:2px!important;" />
+                                                <a href="@Url.Action("ActualizarRolUsuario", "Usuario", new { q = item.ID_Usuario })"><i class="fa fa-exchange fa-lg text-primary" style="color: #354461 !important;"></i></a>
 
                                             </td>
-                                            </tr>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -131,33 +135,25 @@
                 {
                     extend: 'copy',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6,7,8,9,10] 
+                        columns: [1, 2, 3, 4, 5, 6,7,8] 
                     }
                 },
                 {
                     extend: 'csv',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8] 
                     }
                 },
                 {
                     extend: 'excel',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8] 
                     }
                 },
                 {
-                    extend: 'pdfHtml5',
+                    extend: 'pdf',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-                    },
-                    customize: function (doc) {
-                        doc.styles.tableBodyEven.alignment = 'left';
-                        doc.styles.tableBodyOdd.alignment = 'left';
-
-                        // Establecer el ancho de las columnas
-                        doc.content[1].table.widths = ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'];
-
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8]
                     },
                     orientation: 'landscape'  // Establecer la orientación a horizontal
 
@@ -165,7 +161,7 @@
                 {
                     extend: 'print',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8] 
                     }
                 }
             ]

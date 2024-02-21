@@ -171,6 +171,16 @@ namespace ProyectoSC_601.Controllers
             return View(datos);
         }
 
+
+        //Muestra los datos de todos los clientes en el administrador
+        [HttpGet]
+        public ActionResult GestionDireccion(long q)
+        {
+            var datos = modelUsuario.GestionDireccion(q);
+            return View(datos);
+        }
+
+
         public ActionResult cargarCantones(int idProvincia)
         {
             var cantones = modelUsuario.cargarCantones(idProvincia);

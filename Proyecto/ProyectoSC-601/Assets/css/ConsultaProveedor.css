@@ -33,3 +33,7 @@
         color: white !important;
         border: none !important;
     }
+
+.table {
+    vertical-align: middle !important;
+}

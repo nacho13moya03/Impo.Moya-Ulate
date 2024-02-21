@@ -64,7 +64,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small mb-1" for="cantidad">Cantidad</label>
-                                    @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", @placeholder = "Cantidad", @type = "number", required = "required" })
+                                    @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", @placeholder = "Cantidad", @type = "number", required = "required", min = "1" })
                                 </div>
                                 <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                     <div id="errorCantidad" class="text-danger">@ViewBag.MensajeFecha</div>
@@ -75,7 +75,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small mb-1" for="total">Total</label>
-                                    @Html.TextBoxFor(m => m.Total, new { @class = "form-control", @placeholder = "Total", @type = "number", required = "required" })
+                                    @Html.TextBoxFor(m => m.Total, new { @class = "form-control", @placeholder = "Total", @type = "number", required = "required", min = "1" })
                                 </div>
                                 <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                     <div id="errorTotal" class="text-danger">@ViewBag.MensajeFecha</div>

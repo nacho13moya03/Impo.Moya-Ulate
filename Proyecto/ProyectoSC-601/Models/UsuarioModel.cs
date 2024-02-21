@@ -95,6 +95,16 @@ namespace ProyectoSC_601.Models
             }
         }
 
+        public UsuarioEnt GestionDireccion(long q)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "GestionDireccion?q=" + q;
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<UsuarioEnt>().Result;
+            }
+        }
+
         //Funcion para cambiar el estado del cliente por parte del administrador
         public string ActualizarEstadoUsuario(UsuarioEnt entidad)
         {
