@@ -4,22 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f6b843fd2d7e49efa4c8fced22468452" Name="Diagram1">
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Canton" Width="1.5" PointX="1.5" PointY="17.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Carrito" Width="1.5" PointX="7.5" PointY="11.375" IsExpanded="true" />
+      <Diagram DiagramId="6188e0bf716d4f90b83e66fed3f3436f" Name="Diagram1">
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Canton" Width="1.5" PointX="1.5" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Carrito" Width="1.5" PointX="7.5" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Categorias" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Direcciones" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Distrito" Width="1.5" PointX="1.5" PointY="23.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Empresa" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Estado" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Factura_Detalle" Width="1.5" PointX="7.5" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Factura_Encabezado" Width="1.5" PointX="5.25" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.compras" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Direcciones" Width="1.5" PointX="0.75" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Distrito" Width="1.5" PointX="1.5" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Empresa" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Estado" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Factura_Detalle" Width="1.5" PointX="7.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Factura_Encabezado" Width="1.5" PointX="5.25" PointY="13.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Identificacion" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Producto" Width="1.5" PointX="5.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Producto" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Proveedores" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Provincia" Width="1.5" PointX="1.5" PointY="20.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Roles" Width="1.5" PointX="0.75" PointY="26.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Usuario" Width="1.5" PointX="3" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Roles" Width="1.5" PointX="0.75" PointY="26.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Usuario" Width="1.5" PointX="3" PointY="12" IsExpanded="true" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Canton_Provincia" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Direccion_Canton" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Distrito_Canton" ManuallyRouted="false" />
@@ -27,6 +28,7 @@
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Carrito_Usuario" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Estado_Categoria" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Producto_Categoria" ManuallyRouted="false" />
+        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_compras_Empresa" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Direccion_Distrito" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Direccion_Provincia" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Usuario_Direccion" ManuallyRouted="false" />
@@ -41,8 +43,6 @@
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Proveedores_Identificacion" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Usuario_Identificacion" ManuallyRouted="false" />
         <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_Usuario_Rol" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.compras" Width="1.5" PointX="3" PointY="0.875" />
-        <AssociationConnector Association="ImportadoraMoyaUlateModel.FK_compras_Empresa" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

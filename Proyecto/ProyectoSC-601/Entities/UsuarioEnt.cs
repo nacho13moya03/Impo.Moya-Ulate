@@ -1,10 +1,6 @@
 ﻿using ProyectoSC_601.Entities;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace ProyectoSC_601.Entities
 {
@@ -47,7 +43,7 @@ namespace ProyectoSC_601.Entities
         [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$", ErrorMessage = "La contraseña debe tener entre 8 y 15 caracteres y contener números, letras y caracteres especiales.")]
 
         public string NuevaContrasenna_Usuario { get; set; }
-        
+
         public int ID_Direccion { get; set; }
 
         [Required(ErrorMessage = "Este campo es obligatorio.")]

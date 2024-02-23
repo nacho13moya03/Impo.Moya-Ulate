@@ -2,10 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Net.Http.Json;
 using System.Net.Http;
-using System.Web;
+using System.Net.Http.Json;
 using System.Web.Mvc;
 
 namespace ProyectoSC_601.Models

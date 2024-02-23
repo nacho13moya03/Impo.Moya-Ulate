@@ -1,11 +1,8 @@
 ﻿using ProyectoSC_601.Entities;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Web;
 
 namespace ProyectoSC_601.Models
 {

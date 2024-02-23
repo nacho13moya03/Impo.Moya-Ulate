@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace APIProyectoSC_601.Entities
+﻿namespace APIProyectoSC_601.Entities
 {
     public class UsuarioEnt
     {
@@ -18,7 +13,7 @@ namespace APIProyectoSC_601.Entities
         public string Correo_Usuario { get; set; }
         public string Contrasenna_Usuario { get; set; }
         public string NuevaContrasenna_Usuario { get; set; }
-        public int ID_Direccion{ get; set; }
+        public int ID_Direccion { get; set; }
         public int ID_Provincia { get; set; }
         public int ID_Canton { get; set; }
         public int ID_Distrito { get; set; }

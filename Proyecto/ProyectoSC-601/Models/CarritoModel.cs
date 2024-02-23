@@ -1,11 +1,8 @@
-﻿using Newtonsoft.Json;
-using ProyectoSC_601.Entities;
+﻿using ProyectoSC_601.Entities;
 using System.Collections.Generic;
 using System.Configuration;
-using System.EnterpriseServices.Internal;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Web.Mvc;
 
 namespace ProyectoSC_601.Models
 {

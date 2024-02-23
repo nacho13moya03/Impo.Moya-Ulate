@@ -1,16 +1,14 @@
 ﻿using ProyectoSC_601.Entities;
 using ProyectoSC_601.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ProyectoSC_601.Controllers
 {
     public class UsuarioController : Controller
     {
-        
+
         UsuarioModel modelUsuario = new UsuarioModel();
 
         [HttpGet]
@@ -21,7 +19,7 @@ namespace ProyectoSC_601.Controllers
         }
 
         //Se llama al modelo para registrar al cliente y se devuelven mensajes de exito o error
-       [HttpPost]
+        [HttpPost]
         public ActionResult RegistroUsuario(UsuarioEnt entidad)
         {
             ModelState.Remove("NuevaContrasenna_Usuario");
@@ -33,20 +31,23 @@ namespace ProyectoSC_601.Controllers
             if (ModelState.IsValid)
             {
                 string cedulaExistente = modelUsuario.ComprobarCedulaExistente(entidad);
-                if(cedulaExistente == "Existe")
+                if (cedulaExistente == "Existe")
                 {
                     ViewBag.MensajeNoExitoso = "El usuario ya está registrado";
                     ViewBag.Identificaciones = modelUsuario.ConsultarTiposIdentificaciones();
                     return View();
                 }
-                else { 
+                else
+                {
                     string correoExistente = modelUsuario.ComprobarCorreoExistenteUsuario(entidad);
                     if (correoExistente == "Existe")
                     {
                         ViewBag.MensajeNoExitoso = "Ese correo está asociado a otra cuenta";
                         ViewBag.Identificaciones = modelUsuario.ConsultarTiposIdentificaciones();
                         return View();
-                    } else {
+                    }
+                    else
+                    {
                         string respuesta = modelUsuario.RegistroUsuario(entidad);
 
                         if (respuesta == "OK")
@@ -66,11 +67,11 @@ namespace ProyectoSC_601.Controllers
                 }
             }
             else
-                {
+            {
                 ViewBag.Identificaciones = modelUsuario.ConsultarTiposIdentificaciones();
                 return View(entidad);
-                }
             }
+        }
 
         [HttpGet]
         public ActionResult Login()
@@ -91,10 +92,10 @@ namespace ProyectoSC_601.Controllers
             ModelState.Remove("ID_Distrito");
             ModelState.Remove("Direccion_Exacta");
             ModelState.Remove("Telefono_Usuario");
-            if (ModelState.IsValid)  
+            if (ModelState.IsValid)
             {
-               
-                    var respuesta = modelUsuario.Login(entidad);
+
+                var respuesta = modelUsuario.Login(entidad);
 
                 if (respuesta != null && respuesta.ID_Rol == 2)
                 {
@@ -113,8 +114,9 @@ namespace ProyectoSC_601.Controllers
                     return View();
                 }
             }
-            
-            else { 
+
+            else
+            {
                 return View(entidad);
             }
         }
@@ -132,7 +134,7 @@ namespace ProyectoSC_601.Controllers
         {
             ModelState.Remove("Nombre_Usuario");
             ModelState.Remove("Apellido_Usuario");
-            ModelState.Remove("Identificacion_Usuario");  
+            ModelState.Remove("Identificacion_Usuario");
             ModelState.Remove("Contrasenna_Usuario");
             ModelState.Remove("NuevaContrasenna_Usuario");
             ModelState.Remove("ID_Provincia");
@@ -256,23 +258,23 @@ namespace ProyectoSC_601.Controllers
 
         //Actualiza los datos del cliente
         [HttpPost]
-         public ActionResult PerfilCliente(UsuarioEnt entidad)
-         {
+        public ActionResult PerfilCliente(UsuarioEnt entidad)
+        {
             if (ModelState.IsValid)
             {
 
                 string correoExistente = modelUsuario.ComprobarCorreoExistenteUsuario(entidad);
-                 if (correoExistente == "Existe")
-                 {
-                     ViewBag.MensajeNoExitoso = "Ese correo está asociado a otra cuenta";
-                     long q = long.Parse(Session["ID_Usuario"].ToString());
-                     var datos = modelUsuario.ConsultaClienteEspecifico(q);
-                     Session["ID_Usuario"] = datos.ID_Usuario;
-                     return View(datos);
-                 }
-                 else
-                 {
-                    if(entidad.NuevaContrasenna_Usuario==null || entidad.NuevaContrasenna_Usuario.Length == 0)
+                if (correoExistente == "Existe")
+                {
+                    ViewBag.MensajeNoExitoso = "Ese correo está asociado a otra cuenta";
+                    long q = long.Parse(Session["ID_Usuario"].ToString());
+                    var datos = modelUsuario.ConsultaClienteEspecifico(q);
+                    Session["ID_Usuario"] = datos.ID_Usuario;
+                    return View(datos);
+                }
+                else
+                {
+                    if (entidad.NuevaContrasenna_Usuario == null || entidad.NuevaContrasenna_Usuario.Length == 0)
                     {
                         entidad.NuevaContrasenna_Usuario = entidad.Contrasenna_Usuario;
                     }
@@ -282,7 +284,7 @@ namespace ProyectoSC_601.Controllers
                         entidad.Apellido_Usuario = string.Empty;
                     }
 
-                string respuesta = modelUsuario.ActualizarCuentaCliente(entidad);
+                    string respuesta = modelUsuario.ActualizarCuentaCliente(entidad);
 
                     if (respuesta == "OK")
                     {
@@ -339,7 +341,7 @@ namespace ProyectoSC_601.Controllers
                     }
                 }
 
-                
+
                 ViewBag.Provincias = modelUsuario.ConsultarProvincias();
                 int idProvinciaS = entidad.ID_Provincia;
                 int idCantonS = entidad.ID_Canton;
@@ -377,15 +379,15 @@ namespace ProyectoSC_601.Controllers
 
         //Inactiva el usuario segun el id del cliente recibido
         [HttpGet]
-          public ActionResult InactivarUsuario(long q)
-          {
-              var entidad = new UsuarioEnt();
-              entidad.ID_Usuario = q;
-              modelUsuario.InactivarUsuario(entidad);
-              return RedirectToAction("CerrarSesionUsuario", "Usuario");
+        public ActionResult InactivarUsuario(long q)
+        {
+            var entidad = new UsuarioEnt();
+            entidad.ID_Usuario = q;
+            modelUsuario.InactivarUsuario(entidad);
+            return RedirectToAction("CerrarSesionUsuario", "Usuario");
 
-          }
-        
+        }
+
         //Limpia los datos de la sesion y lo redirije al index
         [HttpGet]
         public ActionResult CerrarSesionUsuario()
@@ -394,9 +396,9 @@ namespace ProyectoSC_601.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        
 
-      //Cambia el estado del cliente desde el admnistrador
+
+        //Cambia el estado del cliente desde el admnistrador
         [HttpGet]
         public ActionResult ActualizarEstadoUsuario(long q)
         {

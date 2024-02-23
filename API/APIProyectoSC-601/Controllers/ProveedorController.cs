@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace APIProyectoSC_601.Controllers
@@ -17,7 +15,7 @@ namespace APIProyectoSC_601.Controllers
 
         public ProveedorController()
         {
-            
+
             string rutaErrores = ConfigurationManager.AppSettings["RutaErrores"];
             string rutaExitos = ConfigurationManager.AppSettings["RutaExitos"];
 
@@ -53,7 +51,7 @@ namespace APIProyectoSC_601.Controllers
             }
         }
 
-        
+
 
         /*Esto una lista de elementos SelectListItem que sirve para poblar un cuadro de 
          selección HTML en una interfaz de usuario, permitiendo al usuario elegir una empresa de una lista predefinida.*/
@@ -108,7 +106,7 @@ namespace APIProyectoSC_601.Controllers
 
                     var proveedores = (from p in context.Proveedores
                                        join i in context.Identificacion on p.ID_Identificacion equals i.ID_Identificacion into identificacionJoin
-                                       from ident in identificacionJoin.DefaultIfEmpty() 
+                                       from ident in identificacionJoin.DefaultIfEmpty()
                                        select new ProveedorEnt
                                        {
                                            ID_Proveedor = p.ID_Proveedor,
@@ -150,7 +148,7 @@ namespace APIProyectoSC_601.Controllers
 
                     var proveedor = (from p in context.Proveedores
                                      join i in context.Identificacion on p.ID_Identificacion equals i.ID_Identificacion into identificacionJoin
-                                     from ident in identificacionJoin.DefaultIfEmpty() 
+                                     from ident in identificacionJoin.DefaultIfEmpty()
                                      where p.ID_Proveedor == q
                                      select new ProveedorEnt
                                      {
@@ -216,9 +214,9 @@ namespace APIProyectoSC_601.Controllers
                 {
                     if (entidad.Nombre_Identificacion.Equals("Cédula Jurídica"))
                     {
-                        entidad.Apellido_Proveedor = string.Empty; 
+                        entidad.Apellido_Proveedor = string.Empty;
                     }
-                    context.ActualizarProveedorSP(entidad.ID_Proveedor, entidad.Nombre_Proveedor, entidad.Apellido_Proveedor,entidad.Direccion_Exacta, entidad.Empresa, entidad.Telefono, entidad.Correo);
+                    context.ActualizarProveedorSP(entidad.ID_Proveedor, entidad.Nombre_Proveedor, entidad.Apellido_Proveedor, entidad.Direccion_Exacta, entidad.Empresa, entidad.Telefono, entidad.Correo);
                     logExitos.Add("ActualizarProveedor", $"Actualización del proveedor con ID {entidad.ID_Proveedor} realizada exitosamente");
                     return "OK";
                 }

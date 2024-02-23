@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace APIProyectoSC_601.Controllers
@@ -64,7 +62,7 @@ namespace APIProyectoSC_601.Controllers
             {
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
-                    context.ActualizarEmpresaSP(entidad.ID_Empresa,entidad.Nombre_empresa, entidad.Descripcion, entidad.Ubicacion);
+                    context.ActualizarEmpresaSP(entidad.ID_Empresa, entidad.Nombre_empresa, entidad.Descripcion, entidad.Ubicacion);
                     logExitos.Add("ActualizarEmpresa", $"Información de la empresa '{entidad.Nombre_empresa}' actualizada exitosamente.");
                     return "OK";
                 }

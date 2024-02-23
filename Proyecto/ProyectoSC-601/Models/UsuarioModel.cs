@@ -1,11 +1,8 @@
-﻿using Newtonsoft.Json;
-using ProyectoSC_601.Entities;
+﻿using ProyectoSC_601.Entities;
 using System.Collections.Generic;
 using System.Configuration;
-using System.EnterpriseServices.Internal;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ProyectoSC_601.Models
@@ -26,17 +23,17 @@ namespace ProyectoSC_601.Models
         }
 
         //Funcion para registrar al cliente
-         public string RegistroUsuario(UsuarioEnt entidad)
-         {
-             using (var client = new HttpClient())
-             {
-                 var urlApi = rutaServidor + "RegistroUsuario";
-                 var jsonData = JsonContent.Create(entidad);
-                 var res = client.PostAsync(urlApi, jsonData).Result;
-                 return res.Content.ReadFromJsonAsync<string>().Result;
-             }
-         }
-        
+        public string RegistroUsuario(UsuarioEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "RegistroUsuario";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PostAsync(urlApi, jsonData).Result;
+                return res.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
         //Funcion para iniciar sesion
         public UsuarioEnt Login(UsuarioEnt entidad)
         {
@@ -129,14 +126,14 @@ namespace ProyectoSC_601.Models
         }
         //Funcion para mostrar los datos del cliente logueado en el perfil
         public UsuarioEnt ConsultaClienteEspecifico(long q)
-         {
-             using (var client = new HttpClient())
-             {
-                 var urlApi = rutaServidor + "ConsultaClienteEspecifico?q=" + q;
-                 var res = client.GetAsync(urlApi).Result;
-                 return res.Content.ReadFromJsonAsync<UsuarioEnt>().Result;
-             }
-         }
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ConsultaClienteEspecifico?q=" + q;
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<UsuarioEnt>().Result;
+            }
+        }
 
         public List<SelectListItem> ConsultarProvincias()
         {
@@ -202,15 +199,15 @@ namespace ProyectoSC_601.Models
 
         //Funcion para actualizar los datos del cliente desde el perfil
         public string ActualizarCuentaCliente(UsuarioEnt entidad)
-          {
-              using (var client = new HttpClient())
-              {
-                  var urlApi = rutaServidor + "ActualizarCuentaCliente";
-                  var jsonData = JsonContent.Create(entidad);
-                  var res = client.PutAsync(urlApi, jsonData).Result;
-                  return res.Content.ReadFromJsonAsync<string>().Result;
-              }
-          }
-          
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ActualizarCuentaCliente";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PutAsync(urlApi, jsonData).Result;
+                return res.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
     }
 }

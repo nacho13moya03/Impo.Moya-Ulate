@@ -1,10 +1,6 @@
 ﻿using ProyectoSC_601.Entities;
 using ProyectoSC_601.Models;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 
@@ -13,8 +9,8 @@ namespace ProyectoSC_601.Controllers
 {
     public class CategoriaController : Controller
     {
-        
-        CategoriaModel modelCategoria=new CategoriaModel();
+
+        CategoriaModel modelCategoria = new CategoriaModel();
 
 
         /* Consulta todas las categorias registrados en el sistema */

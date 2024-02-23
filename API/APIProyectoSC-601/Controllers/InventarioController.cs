@@ -1,12 +1,8 @@
-﻿using APIProyectoSC_601.Entities;
-using ProyectoSC_601.Entities;
+﻿using ProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace APIProyectoSC_601.Controllers
@@ -50,6 +46,7 @@ namespace APIProyectoSC_601.Controllers
                                         Descripcion = i.Descripcion,
                                         Cantidad = i.Cantidad,
                                         Precio = i.Precio,
+                                        SKU = i.SKU,
                                         Imagen = i.Imagen,
                                         Estado = i.Estado
                                     }).ToList();
@@ -88,6 +85,7 @@ namespace APIProyectoSC_601.Controllers
                                         Descripcion = i.Descripcion,
                                         Cantidad = i.Cantidad,
                                         Precio = i.Precio,
+                                        SKU = i.SKU,
                                         Imagen = i.Imagen,
                                         Estado = i.Estado
                                     }).ToList();
@@ -323,6 +321,7 @@ namespace APIProyectoSC_601.Controllers
                         datos.ID_Categoria = producto.ID_Categoria;
                         datos.Nombre = producto.Nombre;
                         datos.Descripcion = producto.Descripcion;
+                        datos.SKU = producto.SKU;
                         datos.Cantidad = producto.Cantidad;
                         datos.Precio = producto.Precio;
 

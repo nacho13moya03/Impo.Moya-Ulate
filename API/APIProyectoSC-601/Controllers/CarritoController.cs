@@ -1,11 +1,6 @@
-﻿using APIProyectoSC_601.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace APIProyectoSC_601.Controllers

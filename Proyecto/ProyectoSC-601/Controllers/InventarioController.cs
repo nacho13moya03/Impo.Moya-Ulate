@@ -1,9 +1,7 @@
 ﻿using ProyectoSC_601.Entities;
 using ProyectoSC_601.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -13,8 +11,8 @@ namespace ProyectoSC_601.Controllers
 {
     public class InventarioController : Controller
     {
-        
-        InventarioModel modelInventario=new InventarioModel();
+
+        InventarioModel modelInventario = new InventarioModel();
 
 
         /* Consulta todos los productos registrados en el sistema */
@@ -76,7 +74,7 @@ namespace ProyectoSC_601.Controllers
                 ViewBag.Categorias = modelInventario.ConsultarCategorias();
                 return View(entidad);
             }
-           
+
         }
 
         //Cambia el estado de un producto
@@ -164,11 +162,11 @@ namespace ProyectoSC_601.Controllers
                 }
             }
             else
-                {
-                    ViewBag.Categorias = modelInventario.ConsultarCategorias();
-                    return View(entidad);
-                }
+            {
+                ViewBag.Categorias = modelInventario.ConsultarCategorias();
+                return View(entidad);
             }
+        }
 
         [HttpGet]
         public ActionResult VerificarEliminarProducto(int idProducto)

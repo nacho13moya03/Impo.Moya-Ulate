@@ -1,7 +1,6 @@
 ﻿using APIProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
 using System.Web.Http;
@@ -55,7 +54,7 @@ namespace APIProyectoSC_601.Controllers
             {
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
-                    context.ActualizarCompra(entidad.IdCompras,entidad.Empresa, entidad.Fecha, entidad.Concepto, entidad.Cantidad, entidad.Total);
+                    context.ActualizarCompra(entidad.IdCompras, entidad.Empresa, entidad.Fecha, entidad.Concepto, entidad.Cantidad, entidad.Total);
                     logExitos.Add("ActualizarCompra", $"Actualización de la compra con ID {entidad.IdCompras} realizada exitosamente");
                     return "OK";
                 }

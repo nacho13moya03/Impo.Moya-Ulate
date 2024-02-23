@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ProyectoSC_601.Entities
+﻿namespace ProyectoSC_601.Entities
 {
     public class ProductoEnt
     {
@@ -14,6 +9,7 @@ namespace ProyectoSC_601.Entities
         public string Descripcion { get; set; }
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
+        public string SKU { get; set; }
         public string Imagen { get; set; }
         public int Estado { get; set; }
     }

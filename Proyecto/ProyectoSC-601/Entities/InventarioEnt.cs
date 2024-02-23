@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Configuration;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Web;
 
 namespace ProyectoSC_601.Entities
@@ -20,8 +16,9 @@ namespace ProyectoSC_601.Entities
         public string Descripcion { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio.")]
         [Range(1, 99999, ErrorMessage = "La cantidad debe ser superior a 0")]
-
         public int Cantidad { get; set; }
+        [Required(ErrorMessage = "Este campo es obligatorio.")]
+        public string SKU { get; set; }
 
         [Required(ErrorMessage = "Este campo es obligatorio.")]
         [Range(1, 999999, ErrorMessage = "El precio debe ser superior a 0")]

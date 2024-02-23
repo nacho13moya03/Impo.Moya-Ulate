@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace APIProyectoSC_601.Controllers
@@ -63,29 +61,29 @@ namespace APIProyectoSC_601.Controllers
 
         //Conexion a procedimiento para registrar clientes
         [HttpPost]
-          [Route("RegistroUsuario")]
-          public string RegistroUsuario(UsuarioEnt entidad)
-          {
-              try
-              {
-                  //Se asgina inicialmente la direccion y telefono como vacio
-                  
-                  entidad.Telefono_Usuario = string.Empty;
-                  using (var context = new ImportadoraMoyaUlateEntities())
-                  {
+        [Route("RegistroUsuario")]
+        public string RegistroUsuario(UsuarioEnt entidad)
+        {
+            try
+            {
+                //Se asgina inicialmente la direccion y telefono como vacio
 
-                      context.RegistrarUsuarioSP(entidad.ID_Identificacion,entidad.Identificacion_Usuario, entidad.Nombre_Usuario, entidad.Apellido_Usuario, entidad.Correo_Usuario, entidad.Contrasenna_Usuario, entidad.Telefono_Usuario);
-                      logExitos.Add("RegistroUsuario", "Se registró un nuevo usuario exitosamente.");
-                      return "OK";
-                  }
-              }
-              catch (Exception ex)
-              {
-                  log.Add("Error en RegistroUsuario: " + ex.Message);
-                  return string.Empty;
-              }
-          }
-        
+                entidad.Telefono_Usuario = string.Empty;
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+
+                    context.RegistrarUsuarioSP(entidad.ID_Identificacion, entidad.Identificacion_Usuario, entidad.Nombre_Usuario, entidad.Apellido_Usuario, entidad.Correo_Usuario, entidad.Contrasenna_Usuario, entidad.Telefono_Usuario);
+                    logExitos.Add("RegistroUsuario", "Se registró un nuevo usuario exitosamente.");
+                    return "OK";
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en RegistroUsuario: " + ex.Message);
+                return string.Empty;
+            }
+        }
+
 
 
         //Conexion a procedimiento para verificar los datos del login y permitir o negar el inicio de sesion
@@ -136,7 +134,7 @@ namespace APIProyectoSC_601.Controllers
                         string rutaArchivo = AppDomain.CurrentDomain.BaseDirectory + "Templates\\Contrasenna.html";
                         string html = File.ReadAllText(rutaArchivo);
 
-                        html = html.Replace("@@Nombre", datos.Nombre_Usuario + " "+datos.Apellido_Usuario);
+                        html = html.Replace("@@Nombre", datos.Nombre_Usuario + " " + datos.Apellido_Usuario);
                         html = html.Replace("@@Contrasenna", datos.Contrasenna_Usuario);
 
                         util.EnviarCorreo(datos.Correo_Usuario, "Contraseña de Acceso", html);
@@ -331,25 +329,25 @@ namespace APIProyectoSC_601.Controllers
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var usuario = (from u in context.Usuario
-                                    join d in context.Direcciones on u.ID_Direccion equals d.ID_Direccion into direccionJoin
-                                    from dir in direccionJoin.DefaultIfEmpty() // Left join for Direcciones
-                                    join p in context.Provincia on (dir != null ? dir.ID_Provincia : (int?)null) equals p.ID_Provincia into provinciaJoin
-                                    from prov in provinciaJoin.DefaultIfEmpty() // Left join for Provincia
-                                    join c in context.Canton on (dir != null ? dir.ID_Canton : (int?)null) equals c.ID_Canton into cantonJoin
-                                    from cant in cantonJoin.DefaultIfEmpty() // Left join for Canton
-                                    join dis in context.Distrito on (dir != null ? dir.ID_Distrito : (int?)null) equals dis.ID_Distrito into distritoJoin
-                                    from dist in distritoJoin.DefaultIfEmpty() // Left join for Distrito
-                                    where u.ID_Usuario == q
-                                    select new UsuarioEnt
-                                    {
-                                        ID_Usuario = u.ID_Usuario,
-                                        Identificacion_Usuario = u.Identificacion_Usuario,
-                                        Nombre_Provincia = prov != null ? prov.Nombre : "",
-                                        Nombre_Canton = cant != null ? cant.Nombre : "",
-                                        Nombre_Distrito = dist != null ? dist.Nombre : "",
-                                        Direccion_Exacta = dir != null ? dir.Direccion_Exacta : "",
-                                     
-                                    }).FirstOrDefault();
+                                   join d in context.Direcciones on u.ID_Direccion equals d.ID_Direccion into direccionJoin
+                                   from dir in direccionJoin.DefaultIfEmpty() // Left join for Direcciones
+                                   join p in context.Provincia on (dir != null ? dir.ID_Provincia : (int?)null) equals p.ID_Provincia into provinciaJoin
+                                   from prov in provinciaJoin.DefaultIfEmpty() // Left join for Provincia
+                                   join c in context.Canton on (dir != null ? dir.ID_Canton : (int?)null) equals c.ID_Canton into cantonJoin
+                                   from cant in cantonJoin.DefaultIfEmpty() // Left join for Canton
+                                   join dis in context.Distrito on (dir != null ? dir.ID_Distrito : (int?)null) equals dis.ID_Distrito into distritoJoin
+                                   from dist in distritoJoin.DefaultIfEmpty() // Left join for Distrito
+                                   where u.ID_Usuario == q
+                                   select new UsuarioEnt
+                                   {
+                                       ID_Usuario = u.ID_Usuario,
+                                       Identificacion_Usuario = u.Identificacion_Usuario,
+                                       Nombre_Provincia = prov != null ? prov.Nombre : "",
+                                       Nombre_Canton = cant != null ? cant.Nombre : "",
+                                       Nombre_Distrito = dist != null ? dist.Nombre : "",
+                                       Direccion_Exacta = dir != null ? dir.Direccion_Exacta : "",
+
+                                   }).FirstOrDefault();
 
                     if (usuario != null)
                     {
@@ -418,16 +416,16 @@ namespace APIProyectoSC_601.Controllers
 
 
         //Devuelve los datos de la entidad basados en la cedula recibida
-            [HttpGet]
-              [Route("ConsultaClienteEspecifico")]
-              public UsuarioEnt ConsultaClienteEspecifico(long q)
-              {
-                  try
-                  {
-                      using (var context = new ImportadoraMoyaUlateEntities())
-                      {
-                          context.Configuration.LazyLoadingEnabled = false;
-                          var usuario = (from u in context.Usuario
+        [HttpGet]
+        [Route("ConsultaClienteEspecifico")]
+        public UsuarioEnt ConsultaClienteEspecifico(long q)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    var usuario = (from u in context.Usuario
                                    join i in context.Identificacion on u.ID_Identificacion equals i.ID_Identificacion
                                    join d in context.Direcciones on u.ID_Direccion equals d.ID_Direccion into direccionJoin
                                    from dir in direccionJoin.DefaultIfEmpty() // Left join for Direcciones
@@ -460,12 +458,12 @@ namespace APIProyectoSC_601.Controllers
 
                 }
             }
-                  catch (Exception ex)
-                  {
-                      log.Add("Error en ConsultaClienteEspecifico: " + ex.Message);
-                      return null;
-                  }
-              }
+            catch (Exception ex)
+            {
+                log.Add("Error en ConsultaClienteEspecifico: " + ex.Message);
+                return null;
+            }
+        }
 
 
 
@@ -660,24 +658,24 @@ namespace APIProyectoSC_601.Controllers
 
         //Conexion a procedimiento para actualizar los datos del cliente desde el perfil
         [HttpPut]
-           [Route("ActualizarCuentaCliente")]
-           public string ActualizarCuentaCliente(UsuarioEnt entidad)
-           {
-               try
-               {
-                   using (var context = new ImportadoraMoyaUlateEntities())
-                   {
-                       context.ActualizarCuentaUsuarioSP(entidad.ID_Usuario, entidad.Nombre_Usuario, entidad.Apellido_Usuario, entidad.Correo_Usuario, entidad.NuevaContrasenna_Usuario, entidad.Telefono_Usuario, entidad.ID_Provincia, entidad.ID_Canton, entidad.ID_Distrito, entidad.Direccion_Exacta);
-                       log.Add($"Datos del cliente con ID {entidad.ID_Usuario} actualizados exitosamente.");
-                       return "OK";
-                   }
-               }
-               catch (Exception ex)
-               {
-                   log.Add("Error en ActualizarCuentaCliente: " + ex.Message);
-                   return string.Empty;
-               }
-           }
+        [Route("ActualizarCuentaCliente")]
+        public string ActualizarCuentaCliente(UsuarioEnt entidad)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.ActualizarCuentaUsuarioSP(entidad.ID_Usuario, entidad.Nombre_Usuario, entidad.Apellido_Usuario, entidad.Correo_Usuario, entidad.NuevaContrasenna_Usuario, entidad.Telefono_Usuario, entidad.ID_Provincia, entidad.ID_Canton, entidad.ID_Distrito, entidad.Direccion_Exacta);
+                    log.Add($"Datos del cliente con ID {entidad.ID_Usuario} actualizados exitosamente.");
+                    return "OK";
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ActualizarCuentaCliente: " + ex.Message);
+                return string.Empty;
+            }
+        }
 
     }
 }

@@ -131,7 +131,7 @@ namespace ProyectoSC_601.Controllers
             try
             {
                 ViewBag.Empresas = modelCompras.ConsultarEmpresas();  // Configurar ViewBag.Empresas
-                var datos = modelCompras.ConsultaCompra(q);               
+                var datos = modelCompras.ConsultaCompra(q);
                 return View(datos);
             }
             catch (Exception ex)

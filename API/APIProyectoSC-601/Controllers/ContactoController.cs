@@ -1,11 +1,7 @@
 ﻿using APIProyectoSC_601.Entities;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace APIProyectoSC_601.Controllers
@@ -35,7 +31,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-               
+
                 if (entidad != null)
                 {
                     string rutaArchivo = AppDomain.CurrentDomain.BaseDirectory + "Templates\\Contacto.html";
@@ -55,7 +51,7 @@ namespace APIProyectoSC_601.Controllers
                 {
                     return string.Empty;
                 }
-                
+
             }
             catch (Exception ex)
             {
