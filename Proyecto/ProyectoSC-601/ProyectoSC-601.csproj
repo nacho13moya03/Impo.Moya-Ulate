@@ -191,6 +191,7 @@
     <Compile Include="Models\CategoriaModel.cs" />
     <Compile Include="Models\InventarioModel.cs" />
     <Compile Include="Models\IndexModel.cs" />
+    <Compile Include="Models\PayPal2Model.cs" />
     <Compile Include="Models\ProductoModel.cs" />
     <Compile Include="Models\ComprasModel.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
@@ -410,10 +411,12 @@
     <Content Include="Views\Compras\ConsultaCompra.cshtml" />
     <Content Include="Views\Compras\ActualizarCompra.cshtml" />
     <Content Include="Views\Usuario\GestionDireccion.cshtml" />
+    <Content Include="Views\Carrito\CheckPago.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\MetodoPago\" />
+    <Folder Include="Views\PayPal2Model\" />
     <Folder Include="Views\paypalmodel\" />
   </ItemGroup>
   <ItemGroup>

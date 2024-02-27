@@ -11,6 +11,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using static ProyectoSC_601.Models.CarritoModel;
+using static ProyectoSC_601.Models.PayPal2Model;
 using System.Collections.Generic;
 /*PayPal*/
 
@@ -134,7 +135,8 @@ namespace ProyectoSC_601.Controllers
 
                             amount = new Models.CarritoModel.Amount() {
                                 currency_code = "USD",
-                                value =  datos.AsEnumerable().Sum(x => x.Total).ToString()     
+                                value =  datos.AsEnumerable().Sum(x => x.Total).ToString()
+                                //value =  (datos.AsEnumerable().Sum(x => x.Total) / 522).ToString()
                             },
                             description = producto
                         }
@@ -144,7 +146,7 @@ namespace ProyectoSC_601.Controllers
                         brand_name = "Importadora Moya y Ulate SA",
                         landing_page = "NO_PREFERENCE",
                         user_action = "PAY_NOW", //Accion para que paypal muestre el monto de pago
-                        return_url = "https://localhost:44353/Usuario/PerfilCliente",// cuando se aprovo la solicitud del cobro
+                        return_url = "https://localhost:44353/Carrito/CheckPago",// cuando se aprovo la solicitud del cobro
                         cancel_url = "https://localhost:44353/"// cuando cancela la operacion
                     }
                 };
@@ -165,6 +167,51 @@ namespace ProyectoSC_601.Controllers
 
             return Json (new {status = status, respuesta = respuesta}, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public async Task<ActionResult> CheckPago()
+        {
+
+            //id de la autorizacion para obtener el dinero
+
+            string token = Request.QueryString["token"];
+
+
+            bool status = false;
+
+            using (var client = new HttpClient())
+            {
+                var userName = "ASMuZ2JIH6RMroddxn_QDja6RoNSFyoAi3zJRoO4jxtqT0Vezq4fDAFQMP41krlWHkipksJ03aCPpniY";
+                var passwd = "EHdDA3W-uwKW9i34JrQ26bH_Cml16G-TJiAzSaWZBDuxhUETz4cdn8HftHYV3doZ2kMMq76L6GfH_4G4";
+
+                client.BaseAddress = new Uri("https://api-m.sandbox.paypal.com");
+
+                var authToken = Encoding.ASCII.GetBytes($"{userName}:{passwd}");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authToken));
+
+                var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Usuario"].ToString()));
+
+
+                var data = new StringContent("{}", Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.PostAsync($"/v2/checkout/orders/{token}/capture", data);
+
+                status = response.IsSuccessStatusCode;
+
+
+                ViewData["Status"] = status;
+                if (status)
+                {
+                    var jsonRespuesta = response.Content.ReadAsStringAsync().Result;
+
+                    PayPal2Model objeto = JsonConvert.DeserializeObject<PayPal2Model>(jsonRespuesta);
+
+                    ViewData["IdTransaccion"] = objeto.purchase_units[0].payments.captures[0].id;
+                }
+
+            }
+
+            return View();
         }
 
     }

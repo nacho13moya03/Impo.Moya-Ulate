@@ -53,6 +53,7 @@ namespace ProyectoSC_601.Models
         }
 
         //De aqui para abajo implementacion de PayPal
+        //1era API
 
         public class PaypalOrder
         {
@@ -83,5 +84,6 @@ namespace ProyectoSC_601.Models
             public string return_url { get; set; }
             public string cancel_url { get; set; }
         }
+
     }
 }
