@@ -16,6 +16,8 @@ namespace ProyectoSC_601.Entities
         public decimal Total { get; set; }
 
         public int monto;
+        public string Imagen { get; set; }
+
 
     }
 }

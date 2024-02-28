@@ -14,5 +14,6 @@ namespace APIProyectoSC_601.Entities
         public decimal SubTotal { get; set; }
         public decimal Impuesto { get; set; }
         public decimal Total { get; set; }
+
     }
 }

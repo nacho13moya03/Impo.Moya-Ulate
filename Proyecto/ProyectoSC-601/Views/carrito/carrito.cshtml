@@ -34,11 +34,12 @@
                             <table id="TablaInventario" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                        <th style="background-color: #6282a9; color:white;">Imagen</th>
                                         <th style="background-color: #6282a9; color:white;">Nombre</th>
                                         <th style="background-color: #6282a9;color:white; ">Cantidad</th>
-                                        <th style="background-color: #6282a9;color:white; ">Precio Unitario</th>
-                                        <th style="background-color: #6282a9;color:white;">SubTotal</th>
-                                        <th style="background-color: #6282a9;color:white;">Impuesto</th>
+                                        <th style="background-color: #6282a9;color:white;" class=" visually-hidden">Precio Unitario</th>
+                                        <th style="background-color: #6282a9;color:white;" class="visually-hidden">SubTotal</th>
+                                        <th style="background-color: #6282a9;color:white;" class=" visually-hidden">Impuesto</th>
                                         <th style="background-color: #6282a9;color:white;">Total</th>
                                         <th style="background-color: #6282a9;color:white;">Opciones</th>
                                     </tr>
@@ -50,14 +51,17 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
+                                            <td>
+                                                <img src="@item.Imagen" alt="Imagen del Producto" style="max-width: 100px; max-height: 100px;" />
+                                            </td>
                                             <td>@item.Nombre</td>
                                             <td>@item.Cantidad</td>
-                                            <td>@item.Precio.ToString("N2")</td>
-                                            <td>@item.SubTotal.ToString("N2")</td>
-                                            <td>@item.Impuesto.ToString("N2")</td>
+                                            <td class="visually-hidden">@item.Precio.ToString("N2")</td>
+                                            <td class="visually-hidden">@item.SubTotal.ToString("N2")</td>
+                                            <td class="visually-hidden">@item.Impuesto.ToString("N2")</td>
                                             <td>@item.Total.ToString("N2")</td>
                                             <td style="text-align:center">
-                                                <a href="@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.ID_Carrito })"><i class="fa fa-remove fa-lg" style="color:#6282a9;"></i></a>
+                                                <a href="@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.ID_Carrito })"><i class="fa fa-trash fa-lg" style="color:#6282a9;"></i></a>
                                             </td>
                                         </tr>
                                     }
@@ -65,19 +69,20 @@
                             </table>
 
 
-                            <div style="margin-top: 2%;">
+                            <div style="margin-top: 2%; text-align: center;">
                                 <div class="col-12">
-                                    <p style="font-weight:bold; text-align:center; line-height: 40px;"> Total a Pagar: ₡@decimal.Parse(Session["TotalPago"].ToString()).ToString("N2") </p>
+                                    <p style="font-weight: bold; line-height: 30px;">Total a Pagar (Imp. Incl.)</p>
+                                    <p style="font-size: 24px; color: #333;">₡@decimal.Parse(Session["TotalPago"].ToString()).ToString("N2")</p>
                                 </div>
 
                                 <div class="col-12" style="text-align: center; ">
 
                                     <button class="btn btn-success" onclick="pagar()"><i class="fab fa-paypal"></i>Realizar Pago</button>
 
-                                   @* @using (Html.BeginForm("PagarCarrito", "Carrito", FormMethod.Post))
-                                    {
-                                        <button class="btn btn-success" onclick="pagar()"><i class="fab fa-paypal"></i>Realizar Pago</button>
-                                    }*@
+                                    @* @using (Html.BeginForm("PagarCarrito", "Carrito", FormMethod.Post))
+            {
+                <button class="btn btn-success" onclick="pagar()"><i class="fab fa-paypal"></i>Realizar Pago</button>
+            }*@
 
                                 </div>
 
@@ -88,11 +93,12 @@
                             <table id="TablaInventario" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                        <th style="background-color: #6282a9; color:white;">Imagen</th>
                                         <th style="background-color: #6282a9; color:white;">Nombre</th>
                                         <th style="background-color: #6282a9;color:white; ">Cantidad</th>
-                                        <th style="background-color: #6282a9;color:white; ">Precio Unitario</th>
-                                        <th style="background-color: #6282a9;color:white;">SubTotal</th>
-                                        <th style="background-color: #6282a9;color:white;">Impuesto</th>
+                                        <th style="background-color: #6282a9;color:white; " class="visually-hidden">Precio Unitario</th>
+                                        <th style="background-color: #6282a9;color:white;" class="visually-hidden">SubTotal</th>
+                                        <th style="background-color: #6282a9;color:white;" class="visually-hidden">Impuesto</th>
                                         <th style="background-color: #6282a9;color:white;">Total</th>
                                         <th style="background-color: #6282a9;color:white;">Opciones</th>
                                     </tr>

@@ -160,5 +160,7 @@ namespace ProyectoSC_601.Models
                 return res.Content.ReadFromJsonAsync<bool>().Result;
             }
         }
+
+
     }
 }

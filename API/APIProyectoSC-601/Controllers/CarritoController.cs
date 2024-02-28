@@ -79,6 +79,7 @@ namespace APIProyectoSC_601.Controllers
                                       x.FechaCarrito,
                                       y.Nombre,
                                       y.Precio,
+                                      y.Imagen,
                                       SubTotal = (y.Precio * x.Cantidad),
                                       Impuesto = (y.Precio * x.Cantidad) * 0.13M,
                                       Total = (y.Precio * x.Cantidad) + (y.Precio * x.Cantidad) * 0.13M

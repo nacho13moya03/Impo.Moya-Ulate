@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using static ProyectoSC_601.Models.CarritoModel;
 using static ProyectoSC_601.Models.PayPal2Model;
 using System.Collections.Generic;
+using System.IO;
 /*PayPal*/
 
 namespace ProyectoSC_601.Controllers
@@ -23,6 +24,31 @@ namespace ProyectoSC_601.Controllers
 
         CarritoModel modelCarrito = new CarritoModel();
         FacturacionModel modelFacturacion = new FacturacionModel();
+        InventarioModel modelInventario = new InventarioModel(); 
+
+        private string ObtenerImagenProducto(long ID_Producto)
+        {
+            var producto = modelInventario.ConsultaProductoEspecifico(ID_Producto);
+
+            if (producto != null)
+            {
+                // Verificar si hay una imagen disponible
+                if (!string.IsNullOrEmpty(producto.Imagen))
+                {
+                    string extension = Path.GetExtension(producto.Imagen);
+
+                    if (!string.IsNullOrEmpty(extension) && (extension.Equals(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                                                              extension.Equals(".png", StringComparison.OrdinalIgnoreCase) ||
+                                                              extension.Equals(".jpeg", StringComparison.OrdinalIgnoreCase)))
+                    {
+                        return producto.Imagen;
+                    }
+                }
+            }
+
+            return "nombre_del_archivo_imagen.jpg";
+        }
+
 
 
         [HttpGet]
@@ -33,12 +59,14 @@ namespace ProyectoSC_601.Controllers
             entidad.ID_Producto = ID_Producto;
             entidad.Cantidad = cantidad;
             entidad.FechaCarrito = DateTime.Now;
+            entidad.Imagen = ObtenerImagenProducto(ID_Producto);
 
             modelCarrito.RegistrarCarrito(entidad);
 
             var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Usuario"].ToString()));
             Session["Cant"] = datos.AsEnumerable().Sum(x => x.Cantidad);
             Session["SubT"] = datos.AsEnumerable().Sum(x => x.SubTotal);
+            Session["Img"] = entidad.Imagen;
 
             return Json("OK", JsonRequestBehavior.AllowGet);
         }
@@ -81,6 +109,8 @@ namespace ProyectoSC_601.Controllers
             var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Usuario"].ToString()));
             Session["Cant"] = datos.AsEnumerable().Sum(x => x.Cantidad);
             Session["SubT"] = datos.AsEnumerable().Sum(x => x.SubTotal);
+            Session["Img"] = entidad.Imagen;
+
 
             if (respuesta == "TRUE")
             {

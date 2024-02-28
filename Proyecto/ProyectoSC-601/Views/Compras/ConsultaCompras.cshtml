@@ -53,6 +53,9 @@
                                         <th style="background-color: #6282a9; color:white;">ID</th>
                                         <th style="background-color: #6282a9; color:white;">Empresa</th>
                                         <th style="background-color: #6282a9; color:white;">Fecha</th>
+                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Concepto</th>
+                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Cantidad</th>
+                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Total</th>
                                         <th style="background-color: #6282a9; color:white;">Opciones</th>
                                     </tr>
                                 </thead>
@@ -79,6 +82,9 @@
                                             </td>
 
                                             <td>@item.Fecha</td>
+                                            <td class="visually-hidden">@item.Concepto</td>
+                                            <td class="visually-hidden">@item.Cantidad</td>
+                                            <td class="visually-hidden">@item.Total.ToString("0.00")</td>
                                             <td class="text-center">
                                                 <a href="@Url.Action("ConsultaCompra", "Compras", new { q = item.IdCompras })">
                                                     <button class="btn btn-primary">
@@ -140,31 +146,31 @@
                 {
                     extend: 'copy',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2,3,4,5]
                     }
                 },
                 {
                     extend: 'csv',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
                 {
                     extend: 'excel',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
                 {
                     extend: 'pdf',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
                 {
                     extend: 'print',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 }
             ]
