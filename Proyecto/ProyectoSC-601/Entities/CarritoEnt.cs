@@ -15,5 +15,7 @@ namespace ProyectoSC_601.Entities
         public decimal Impuesto { get; set; }
         public decimal Total { get; set; }
 
+        public int monto;
+
     }
 }

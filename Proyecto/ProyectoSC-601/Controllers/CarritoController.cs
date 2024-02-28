@@ -126,6 +126,10 @@ namespace ProyectoSC_601.Controllers
 
                 var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Usuario"].ToString()));
 
+                var total = datos.AsEnumerable().Sum(x => x.Total);
+
+                var valortotal = Math.Round(total / 522, 2).ToString();
+
                 var orden = new PaypalOrder()
                 {
                     intent = "CAPTURE",
@@ -135,8 +139,7 @@ namespace ProyectoSC_601.Controllers
 
                             amount = new Models.CarritoModel.Amount() {
                                 currency_code = "USD",
-                                value =  datos.AsEnumerable().Sum(x => x.Total).ToString()
-                                //value =  (datos.AsEnumerable().Sum(x => x.Total) / 522).ToString()
+                                value = valortotal
                             },
                             description = producto
                         }
@@ -207,6 +210,8 @@ namespace ProyectoSC_601.Controllers
                     PayPal2Model objeto = JsonConvert.DeserializeObject<PayPal2Model>(jsonRespuesta);
 
                     ViewData["IdTransaccion"] = objeto.purchase_units[0].payments.captures[0].id;
+
+                    PagarCarrito();
                 }
 
             }

@@ -72,10 +72,12 @@
 
                                 <div class="col-12" style="text-align: center; ">
 
-                                    @using (Html.BeginForm("PagarCarrito", "Carrito", FormMethod.Post))
+                                    <button class="btn btn-success" onclick="pagar()"><i class="fab fa-paypal"></i>Realizar Pago</button>
+
+                                   @* @using (Html.BeginForm("PagarCarrito", "Carrito", FormMethod.Post))
                                     {
                                         <button class="btn btn-success" onclick="pagar()"><i class="fab fa-paypal"></i>Realizar Pago</button>
-                                    }
+                                    }*@
 
                                 </div>
 
