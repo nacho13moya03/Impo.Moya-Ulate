@@ -27,6 +27,14 @@
 
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
+                                <label class="small mb-1" for="sku">Código del Producto</label>
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    @Html.TextBoxFor(m => m.SKU, new { @class = "form-control", @placeholder = "Código del Producto", @type = "text", required = "required" })
+                                    @Html.ValidationMessageFor(m => m.SKU, "", new { @style = "color: red;" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
                                 <label class="small mb-1" for="categoria">Categoría</label>
                                 <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                     @Html.DropDownListFor(m => m.ID_Categoria, (ViewBag.Categorias as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @style = "background-color: #eee; border: none; padding: 12px 15px; margin: 8px 0; width: 100%;", required = "required" })
@@ -34,14 +42,15 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="nombre">Nombre</label>
-                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", @placeholder = "Nombre", @type = "text", required = "required" })
-                                    @Html.ValidationMessageFor(m => m.Nombre, "", new { @style = "color: red;" })
-                                </div>
-                            </div>
 
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="nombre">Nombre</label>
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", @placeholder = "Nombre", @type = "text", required = "required" })
+                                @Html.ValidationMessageFor(m => m.Nombre, "", new { @style = "color: red;" })
+                            </div>
+                            
                         </div>
 
                         <div class="mb-3">
@@ -67,16 +76,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row gx-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="SKU">Numero de Unidad</label>
-                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                    @Html.TextBoxFor(m => m.SKU, new { @class = "form-control", @placeholder = "Numero de Unidad", @type = "text", required = "required" })
-                                    @Html.ValidationMessageFor(m => m.SKU, "", new { @style = "color: red;" })
-                                </div>
-                            </div>
 
-                        </div>
                         <div class="form-group">
                             <label>Imagen</label>
                             <input type="file" class="form-control" id="Imagen_Nueva" name="Imagen_Nueva" required>
