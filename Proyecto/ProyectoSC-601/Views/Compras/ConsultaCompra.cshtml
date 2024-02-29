@@ -81,7 +81,7 @@
                                         <td>@Model.Cantidad</td>
                                         <td>@Model.Total.ToString("0.00")</td>
                                         <td class="text-center">
-                                            <a href="@Url.Action("ActualizarCompra", "Compras", new { q = Model.IdCompras })">
+                                            <a href="@Url.Action("ActualizarCompra", "Compras", new { q = Model.IdCompras })" title="Modificar Compra">
                                                 <i class="fa fa-user fa-lg text-success" style="padding-left: 10px;"></i>
                                             </a>
                                         </td>

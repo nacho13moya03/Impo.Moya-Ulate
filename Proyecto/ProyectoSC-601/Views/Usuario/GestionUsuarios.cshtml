@@ -55,8 +55,11 @@
                                             <td class="visually-hidden" style="max-width:120px;">@item.Direccion_Exacta</td>
                                             <td>@item.Telefono_Usuario</td>
                                             <td style="text-align:center;">
-                                                <a href="@Url.Action("GestionDireccion", "Usuario", new { q = item.ID_Usuario })"><i class="fa fa-eye fa-lg text-primary" style="color: #354461 !important;"></i></a>
+                                                <a href="@Url.Action("GestionDireccion", "Usuario", new { q = item.ID_Usuario })" title="Ver dirección">
+                                                    <i class="fa fa-eye fa-lg text-primary" style="color: #354461 !important;"></i>
+                                                </a>
                                             </td>
+
                                             <td style="text-align:center;">
                                                 @if (item.ID_Estado == 1)
                                                 {
@@ -78,9 +81,9 @@
                                                 }
                                             </td>
                                             <td class="text-center">
-                                                <a href="@Url.Action("ActualizarEstadoUsuario", "Usuario", new { q = item.ID_Usuario })"><i class="fa fa-exchange fa-lg text-primary" style="color: #354461 !important;"></i></a><br />
+                                                <a href="@Url.Action("ActualizarEstadoUsuario", "Usuario", new { q = item.ID_Usuario })" title="Cambiar Estado"><i class="fa fa-exchange fa-lg text-primary" style="color: #354461 !important;"></i></a><br />
                                                 <hr style="margin:2px!important;" />
-                                                <a href="@Url.Action("ActualizarRolUsuario", "Usuario", new { q = item.ID_Usuario })"><i class="fa fa-exchange fa-lg text-primary" style="color: #354461 !important;"></i></a>
+                                                <a href="@Url.Action("ActualizarRolUsuario", "Usuario", new { q = item.ID_Usuario })" title="Cambiar Rol"><i class="fa fa-exchange fa-lg text-primary" style="color: #354461 !important;"></i></a>
 
                                             </td>
                                         </tr>

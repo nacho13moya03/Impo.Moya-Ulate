@@ -52,16 +52,16 @@
                                         <td>@item.Nombre_Categoria</td>
                                         @if (item.Estado_Categoria == 1)
                                         {
-                                            <td><span class="badge bg-success">Activo</span></td>
+                                            <td style="text-align:center;"><span class="badge bg-success">Activo</span></td>
                                         }
                                         else
                                         {
-                                            <td><span class="badge bg-danger">Inactivo</span></td>
+                                            <td style="text-align:center;"><span class="badge bg-danger">Inactivo</span></td>
                                         }
                                         <td class="text-center">
-                                            <a href="@Url.Action("ActualizarEstadoCategoria", "Categoria", new { q = item.ID_Categoria })"><i style="color: #6282a9;" class="fa fa-exchange fa-lg"></i></a>
-                                            <a href="@Url.Action("ModificarCategoria", "Categoria", new { q = item.ID_Categoria })"><i style="color: forestgreen;padding-left: 10px;" class="fa fa-edit fa-lg"></i></a>
-                                            <a href="javascript:void(0);" onclick="confirmarEliminarCategoria(@item.ID_Categoria)"><i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i></a>
+                                            <a href="@Url.Action("ActualizarEstadoCategoria", "Categoria", new { q = item.ID_Categoria })" title="Cambiar Estado"><i style="color: #6282a9;" class="fa fa-exchange fa-lg"></i></a>
+                                            <a href="@Url.Action("ModificarCategoria", "Categoria", new { q = item.ID_Categoria })" title="Modificar Categoría"><i style="color: forestgreen;padding-left: 10px;" class="fa fa-edit fa-lg"></i></a>
+                                            <a href="javascript:void(0);" onclick="confirmarEliminarCategoria(@item.ID_Categoria)" title="Eliminar Categoría"><i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i></a>
                                         </td>
                                     </tr>
                                 }

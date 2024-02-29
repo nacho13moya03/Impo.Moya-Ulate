@@ -71,12 +71,6 @@ namespace ProyectoSC_601.Controllers
             return View(productosPaginados);
         }
 
-        [HttpGet]
-        public ActionResult ProductoDetalle(long q)
-        {
-            var datos = modelInventario.ConsultaProductoEspecifico(q);
-            return View(datos);
-        }
 
     }
 }

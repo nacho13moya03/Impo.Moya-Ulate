@@ -8,70 +8,131 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
 }
-
-<!-- CATALOGO -->
-<section id="cata">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            @if (Model.Estado == 1)
-            {
-                <div class="col-lg-8 mb-5" >
-
-                    <div class="card h-250 position-relative" style="height: auto!important;padding:5%!important;">
-
-                        @if (Model.Cantidad <= 5)
-                        {
-                            <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; left: 0.5rem; z-index: 1; margin-top: 6% !important; margin-left:6% !important; ">@Model.Cantidad Disponibles</div>
-                        }
-
-                    <div class="row">
-
-                       
-                        <div class="col-md-6" style="border: 2px solid #6282a9; border-radius: 10px; ">
-                            <div class="card-img-top text-center" style="margin-top: 8%;">
-                                <img src="@Model.Imagen" class="img-fluid" style="width:450px; height:240px; margin-bottom: 20px">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 ">
-                            <div class="card-body p-6" style="margin-left:5%;">
-
-                                <h3 class="text-center text-lg-start">@Model.Nombre</h3>
-
-                                <p class="text-center text-lg-start">@Model.Descripcion</p>
-
-                                <p class="text-center text-lg-start">SKU: @Model.SKU </p>
-
-                                <p class="text-center text-lg-start">₡@Model.Precio</p>
-
-                                @if (Session["ID_Usuario"] != null)
+<!-- Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Detalles del Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container px-4 px-lg-5 mt-5">
+                    <div class="row gx-4 gx-lg-5 justify-content-center">
+                        <div class="col-lg-8 mb-5">
+                            <div class="card h-250 position-relative">
+                                @if (Model.Cantidad <= 5)
                                 {
-                                    <div class="d-flex align-items-center justify-content-center justify-content-lg-start">
-                                        <p class="me-2 mb-0">Cantidad:</p>
-                                        <div class="col-3">
-                                            <input id=prd-@Model.ID_Producto type="number" class="form-control" min="1">
+                                    <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; left: 0.5rem; z-index: 1; margin-top: 6% !important; margin-left:6% !important; ">@Model.Cantidad Disponibles</div>
+                                }
+
+                                <div class="row">
+                                    <div class="col-md-6" style="border: 2px solid #6282a9; border-radius: 10px; ">
+                                        <div class="card-img-top text-center" style="margin-top: 8%;">
+                                            <img src="@Model.Imagen" class="img-fluid" style="width:450px; height:240px; margin-bottom: 20px">
                                         </div>
                                     </div>
-                                    <div class="text-center text-lg-start mt-3" style="margin-top:8%!important;">
-                                        <a class="btn btn-outline-dark" href="@Url.Action("Catalogo", "Producto" )" style="margin-top:2%;">Regresar</a>
-                                        <a class="btn" style="background-color: #354461; color: white; margin-left:2%;margin-top:2%;" onclick="RegistrarProducto(@Model.ID_Producto, @Model.Cantidad)">Agregar al Carrito</a>
+
+                                    <div class="col-md-6 ">
+                                        <div class="card-body p-6" style="margin-left:5%;">
+                                            <h3 class="text-center text-lg-start">@Model.Nombre</h3>
+                                            <p class="text-center text-lg-start">@Model.Descripcion</p>
+                                            <p class="text-center text-lg-start">₡@Model.Precio</p>
+
+                                            @if (Session["ID_Usuario"] != null)
+                                            {
+                                                <div class="d-flex align-items-center justify-content-center justify-content-lg-start">
+                                                    <p class="me-2 mb-0">Cantidad:</p>
+                                                    <div class="col-3">
+                                                        <input id="prd-@Model.ID_Producto" type="number" class="form-control" min="1">
+                                                    </div>
+                                                </div>
+                                                <div class="text-center text-lg-start mt-3" style="margin-top:8%!important;">
+                                                    <a class="btn btn-outline-dark" href="@Url.Action("Catalogo", "Producto")" style="margin-top:2%;">Cerrar</a>
+                                                    <a class="btn" style="background-color: #354461; color: white; margin-left:2%;margin-top:2%;" onclick="RegistrarProducto('@Model.ID_Producto', '@Model.Cantidad')">Agregar al Carrito</a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="mt-4">
+                                                    <a class="btn btn-outline-dark" href="@Url.Action("Catalogo", "Producto")">Cerrar</a>
+                                                </div>
+                                            }
+                                        </div>
                                     </div>
-                                }
-                                else
-                                {
-                                    <div class="mt-4">
-                                        <a class="btn btn-outline-dark" href="@Url.Action("Catalogo", "Producto" )">Regresar</a>
-                                    </div>
-                                }
+                                </div>
                             </div>
                         </div>
                     </div>
-                    </div>
                 </div>
-            }
+            </div>
         </div>
     </div>
-</section>
+</div>
+
+<!-- CATALOGO -->
+@*<section id="cata">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                @if (Model.Estado == 1)
+                {
+                    <div class="col-lg-8 mb-5" >
+
+                        <div class="card h-250 position-relative" style="height: auto!important;padding:5%!important;">
+
+                            @if (Model.Cantidad <= 5)
+                            {
+                                <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; left: 0.5rem; z-index: 1; margin-top: 6% !important; margin-left:6% !important; ">@Model.Cantidad Disponibles</div>
+                            }
+
+                        <div class="row">
+
+
+                            <div class="col-md-6" style="border: 2px solid #6282a9; border-radius: 10px; ">
+                                <div class="card-img-top text-center" style="margin-top: 8%;">
+                                    <img src="@Model.Imagen" class="img-fluid" style="width:450px; height:240px; margin-bottom: 20px">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 ">
+                                <div class="card-body p-6" style="margin-left:5%;">
+
+                                    <h3 class="text-center text-lg-start">@Model.Nombre</h3>
+
+                                    <p class="text-center text-lg-start">@Model.Descripcion</p>
+
+                                    <p class="text-center text-lg-start">SKU: @Model.SKU </p>
+
+                                    <p class="text-center text-lg-start">₡@Model.Precio</p>
+
+                                    @if (Session["ID_Usuario"] != null)
+                                    {
+                                        <div class="d-flex align-items-center justify-content-center justify-content-lg-start">
+                                            <p class="me-2 mb-0">Cantidad:</p>
+                                            <div class="col-3">
+                                                <input id=prd-@Model.ID_Producto type="number" class="form-control" min="1">
+                                            </div>
+                                        </div>
+                                        <div class="text-center text-lg-start mt-3" style="margin-top:8%!important;">
+                                            <a class="btn btn-outline-dark" href="@Url.Action("Catalogo", "Producto" )" style="margin-top:2%;">Regresar</a>
+                                            <a class="btn" style="background-color: #354461; color: white; margin-left:2%;margin-top:2%;" onclick="RegistrarProducto(@Model.ID_Producto, @Model.Cantidad)">Agregar al Carrito</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="mt-4">
+                                            <a class="btn btn-outline-dark" href="@Url.Action("Catalogo", "Producto" )">Regresar</a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>*@
 
 <script>
 

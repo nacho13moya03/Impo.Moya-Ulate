@@ -4,6 +4,8 @@
     ViewBag.Title = "CatalogoNinos";
     <link href="~/Assets/css/style.css" rel="stylesheet">
     <link href="~/Assets/css/catalogo.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
 }
 
 @*CATALOGO*@
@@ -42,8 +44,20 @@
                                                         <p class="card-text">₡@currentItem.Precio</p>
                                                     </div>
                                                 </div>
-                                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="@Url.Action("ProductoDetalle", "Producto", new { q = currentItem.ID_Producto })">Ver Detalles</a></div>
+                                                <div class="text-center" style="margin-bottom:7%;margin-top:4%;">
+                                                    @if (Session["ID_Usuario"] != null)
+                                                    {
+
+                                                        <button class="btn btn-outline-dark mt-auto" onclick="mostrarModal('@currentItem.ID_Producto', '@currentItem.Nombre', '@currentItem.Descripcion', '@currentItem.Precio', '@currentItem.Imagen', '@currentItem.Cantidad', '@currentItem.Estado', true)">Ver Detalles</button>
+
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <button class="btn btn-outline-dark mt-auto" onclick="mostrarModal('@currentItem.ID_Producto', '@currentItem.Nombre', '@currentItem.Descripcion', '@currentItem.Precio', '@currentItem.Imagen', '@currentItem.Cantidad', '@currentItem.Estado', false)">Ver Detalles</button>
+
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -72,3 +86,103 @@
         </div>
     </div>
 </section>
+
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <!-- Agregar la clase modal-lg aquí -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Detalles del Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="productModalBody">
+                <!-- Aquí se cargarán los detalles del producto -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function mostrarModal(productID, nombre, descripcion, precio, imagen, cantidad, estado, sesionActiva) {
+        // Actualiza el contenido del modal con los detalles del producto
+        var estadoValue = parseInt(estado); // Convertir estado a número entero
+
+        $('#productModalBody').html(`
+
+            <div class="row justify-content-center">
+                ${estadoValue === 1 ?
+                `<div class="col-lg-10 mb-5" style="margin:0%!important;">
+                    <div class=" h-250 position-relative" style="height: auto!important;padding:5%!important;">
+                        ${cantidad <= 5 ?
+                    `<div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; left: 0.5rem; z-index: 1; margin-top: 6% !important; margin-left:6% !important; ">${cantidad} Disponibles</div>` : ''}
+                        <div class="row">
+                            <div class="col-md-6" style="border: 2px solid #6282a9; border-radius: 10px; ">
+                                <div class="card-img-top text-center" style="margin-top: 8%;">
+                                    <img src="${imagen}" class="img-fluid" style="width:450px; height:240px; margin-bottom: 20px">
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class=" p-6" style="margin-left:5%;margin-top:2%;">
+                                    <h3 class="text-center text-lg-start">${nombre}</h3>
+                                    <p class="text-center text-lg-start">${descripcion}</p>
+                                    <p class="text-center text-lg-start">₡${precio}</p>
+                                   ${sesionActiva === true ?
+                    ` <div class="d-flex align-items-center justify-content-center justify-content-lg-start">
+                                        <p class="me-2 mb-0">Cantidad:</p>
+                                        <div class="col-3">
+
+                                            <input id=prd-${productID} type="number" class="form-control" min="1">
+
+                                            </div>
+                                        </div>
+                                        <div class="text-center text-lg-start mt-3" style="margin-top:8%!important;">
+                                        <a class="btn" style="background-color: #354461; color: white; margin-left:2%;margin-top:2%;" onclick="RegistrarProducto(${productID}, ${cantidad})">Agregar al Carrito</a>
+                                    </div>` :
+                    ''
+                }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>` : ''}
+                </div>
+
+        `);
+        // Muestra el modal
+        $('#productModal').modal('show');
+    }
+</script>
+
+<script>
+
+  function RegistrarProducto(ID_Producto, disponible) {
+      let cantidad = $("#prd-" + ID_Producto).val();
+
+      if (cantidad > disponible) {
+            Swal.fire({
+              title: 'Error en la Solicitud',
+                text: 'No hay suficiente cantidad disponible del producto',
+              icon: 'info',
+              confirmButtonColor: '#6282a9',
+              confirmButtonText: 'Ok'
+          });
+      }
+      else {
+
+            $.ajax({
+            url: '/Carrito/RegistrarCarrito',
+            type: "GET",
+            data:
+            {
+              "cantidad": cantidad,
+                "ID_Producto": ID_Producto
+            },
+            success: function (data) {
+               window.location.href = '@Url.Action("Catalogo", "Producto")';
+            }
+        });
+
+      }
+  }
+
+</script>
