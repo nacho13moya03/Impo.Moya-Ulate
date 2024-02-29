@@ -22,25 +22,19 @@
                     </div>
                     <div class="table-responsive">
                         <br><br>
-                        @*@if (ViewBag.Mensaje != null)
-                                  {
-                                      <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px !important;margin-bottom:-40px!important;">
-                                          @ViewBag.Mensaje
-                                      </div>  @if (Model.Count() > 0)
-                            {
-                                  }*@
+                      
                         @if (Model.Count() > 0)
                         {
                             <table id="TablaInventario" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #6282a9; color:white;">Imagen</th>
+                                        <th style="background-color: #6282a9; color:white;">Producto</th>
                                         <th style="background-color: #6282a9; color:white;">Nombre</th>
+                                        <th style="background-color: #6282a9;color:white;" >Precio Unitario</th>
                                         <th style="background-color: #6282a9;color:white; ">Cantidad</th>
-                                        <th style="background-color: #6282a9;color:white;" class=" visually-hidden">Precio Unitario</th>
-                                        <th style="background-color: #6282a9;color:white;" class="visually-hidden">SubTotal</th>
+                                        <th style="background-color: #6282a9;color:white;" >SubTotal</th>
                                         <th style="background-color: #6282a9;color:white;" class=" visually-hidden">Impuesto</th>
-                                        <th style="background-color: #6282a9;color:white;">Total</th>
+                                        <th style="background-color: #6282a9;color:white;" class="visually-hidden">Total</th>
                                         <th style="background-color: #6282a9;color:white;">Opciones</th>
                                     </tr>
                                 </thead>
@@ -55,13 +49,13 @@
                                                 <img src="@item.Imagen" alt="Imagen del Producto" style="max-width: 100px; max-height: 100px;" />
                                             </td>
                                             <td>@item.Nombre</td>
+                                            <td >@item.Precio.ToString("N2")</td>
                                             <td>@item.Cantidad</td>
-                                            <td class="visually-hidden">@item.Precio.ToString("N2")</td>
-                                            <td class="visually-hidden">@item.SubTotal.ToString("N2")</td>
+                                            <td >@item.SubTotal.ToString("N2")</td>
                                             <td class="visually-hidden">@item.Impuesto.ToString("N2")</td>
-                                            <td>@item.Total.ToString("N2")</td>
+                                            <td class="visually-hidden">@item.Total.ToString("N2")</td>
                                             <td style="text-align:center">
-                                                <a href="@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.ID_Carrito })"><i class="fa fa-trash fa-lg" style="color:#6282a9;"></i></a>
+                                                <a href="@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.ID_Carrito })"><i class="fa fa-times fa-lg" style="color:#6282a9;"></i></a>
                                             </td>
                                         </tr>
                                     }
@@ -70,19 +64,20 @@
 
 
                             <div style="margin-top: 2%; text-align: center;">
-                                <div class="col-12">
-                                    <p style="font-weight: bold; line-height: 30px;">Total a Pagar (Imp. Incl.)</p>
-                                    <p style="font-size: 24px; color: #333;">₡@decimal.Parse(Session["TotalPago"].ToString()).ToString("N2")</p>
+                                <div class="col-12" >
+                                    <p style="font-weight: bold; line-height: 25px;">Total sin IVA: </p>
+                                    <p style="font-size: 15px; color: #333;"> ₡@decimal.Parse(Session["SumaSubTotal"].ToString()).ToString("N2")</p>
+
+                             
+                                    <p style="font-weight: bold; line-height: 25px;">Total a Pagar (IVA. Incl.): </p>
+                                    <p style="font-size: 15px; color: #333;"> ₡@decimal.Parse(Session["TotalPago"].ToString()).ToString("N2")</p>
                                 </div>
 
-                                <div class="col-12" style="text-align: center; ">
+                                <div class="col-12" style="text-align: center;margin-top:2%; ">
 
-                                    <button class="btn btn-success" onclick="pagar()"><i class="fab fa-paypal"></i>Realizar Pago</button>
+                                    <button class="btn btn-success" style="background-color: #1D3380; border:none;" onclick="pagar()"><i class="fab fa-paypal fa-lg"></i> Realizar Pago</button>
 
-                                    @* @using (Html.BeginForm("PagarCarrito", "Carrito", FormMethod.Post))
-            {
-                <button class="btn btn-success" onclick="pagar()"><i class="fab fa-paypal"></i>Realizar Pago</button>
-            }*@
+
 
                                 </div>
 

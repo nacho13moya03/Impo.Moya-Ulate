@@ -76,6 +76,7 @@ namespace ProyectoSC_601.Controllers
         {
 
             var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Usuario"].ToString()));
+            Session["SumaSubTotal"] = datos.AsEnumerable().Sum(x => x.SubTotal);
             Session["TotalPago"] = datos.AsEnumerable().Sum(x => x.Total);
             return View(datos);
 
