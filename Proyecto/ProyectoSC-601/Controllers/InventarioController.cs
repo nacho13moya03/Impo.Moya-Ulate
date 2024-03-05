@@ -37,16 +37,23 @@ namespace ProyectoSC_601.Controllers
         public ActionResult RegistrarProducto(HttpPostedFileBase Imagen_Nueva, InventarioEnt entidad)
         {
             ModelState.Remove("Imagen");
+            ModelState.Remove("SKU");
+
+            entidad.Imagen = string.Empty;
+            entidad.Estado = 1;
+            entidad.Imagen_Nueva = null;
+
+            long ID_Producto = modelInventario.RegistrarProducto(entidad);
 
             if (ModelState.IsValid)
             {
-                entidad.Imagen = string.Empty;
-                entidad.Estado = 1;
-                entidad.Imagen_Nueva = null;
-
-                long ID_Producto = modelInventario.RegistrarProducto(entidad);
-
-                if (ID_Producto > 0)
+                string skuExistente = modelInventario.ComprobarSKUExistente(entidad);
+                if (skuExistente == "Existe")
+                {
+                    ViewBag.MensajeNoExitoso = "El SKU ya está registrado";
+                    return View();
+                }
+                else if (ID_Producto > 0)
                 {
                     string extension = Path.GetExtension(Path.GetFileName(Imagen_Nueva.FileName));
                     string ruta = AppDomain.CurrentDomain.BaseDirectory + "Images\\" + ID_Producto + extension;

@@ -57,6 +57,18 @@ namespace ProyectoSC_601.Models
             }
         }
 
+        //Funcion para comprobar si ya existe el SKU en otro item
+        public string ComprobarSKUExistente(InventarioEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ComprobarSKUExistente";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PostAsync(urlApi, jsonData).Result;
+                return res.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
         //Funcion para actualizar la ruta de la imagen del producto
         public string ActualizarRutaProducto(InventarioEnt entidad)
         {

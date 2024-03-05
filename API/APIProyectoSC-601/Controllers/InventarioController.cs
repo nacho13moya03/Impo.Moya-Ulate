@@ -1,4 +1,5 @@
-﻿using ProyectoSC_601.Entities;
+﻿using APIProyectoSC_601.Entities;
+using ProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -101,6 +102,41 @@ namespace APIProyectoSC_601.Controllers
 
         }
 
+        //Verifica si el SKU ya existe
+        [HttpPost]
+        [Route("ComprobarSKUExistente")]
+        public string ComprobarSKUExistente(ProductoEnt entidad)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+
+                    // Verificar si la cedula existe antes de ejecutar la consulta
+                    bool SKUExiste = context.Producto.Any(x => x.SKU == entidad.SKU && x.ID_Producto != entidad.ID_Producto);
+
+                    if (SKUExiste)
+                    {
+                        // Devuelve que ya existe la cedula
+                        logExitos.Add("ComprobarSKUExistente", $"El SKU {entidad.SKU} ya existe.");
+                        return "Existe";
+                    }
+                    else
+                    {
+                        logExitos.Add("ComprobarSKUExistente", $"El SKU {entidad.SKU} no existe.");
+                        return "NoExiste";
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ComprobarSKUExistente: " + ex.Message);
+                return null;
+            }
+
+        }
 
         //Devuelve una lista con las categorias que existen para los productos
         [HttpGet]

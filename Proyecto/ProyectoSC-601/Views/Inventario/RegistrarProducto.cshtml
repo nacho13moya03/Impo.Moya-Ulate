@@ -20,6 +20,12 @@
                         @ViewBag.Mensaje
                     </div>
                 }
+                @if (ViewBag.MensajeNoExitoso != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px 10px -30px 10px;">
+                        @ViewBag.MensajeNoExitoso
+                    </div>
+                }
                 <div class="card-header">Agregar Producto</div>
                 <div class="card-body ">
                     @using (Html.BeginForm("RegistrarProducto", "Inventario", FormMethod.Post, new { @class = "pt-3", @enctype = "multipart/form-data", @novalidate = "novalidate" }))
@@ -50,7 +56,7 @@
                                 @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", @placeholder = "Nombre", @type = "text", required = "required" })
                                 @Html.ValidationMessageFor(m => m.Nombre, "", new { @style = "color: red;" })
                             </div>
-                            
+
                         </div>
 
                         <div class="mb-3">
