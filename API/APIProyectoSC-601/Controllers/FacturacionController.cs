@@ -191,7 +191,7 @@ namespace APIProyectoSC_601.Controllers
                         string cantidad=facturaData.Cantidad.ToString();
                         string subtotal = facturaData.SubTotal.ToString("N2");
                         string impuesto = facturaData.Impuesto.ToString("N2");
-                        string total = facturaData.TotalCompra.ToString();
+                        string total = facturaData.TotalCompra.ToString("N2");
 
                         List<string> productosCantidades = new List<string>();
                         for (int i = 0; i < facturaData.NombreProducto.Count; i++)
