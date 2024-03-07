@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace APIProyectoSC_601.Entities
 {
@@ -22,5 +23,10 @@ namespace APIProyectoSC_601.Entities
         public decimal Impuesto { get; set; }
 
         public decimal Total { get; set; }
+
+        public List<string> NombreProducto { get; set; }
+        public List<int> Cantidad { get; set; }
+
+        public List<decimal> precio {  get; set; }
     }
 }

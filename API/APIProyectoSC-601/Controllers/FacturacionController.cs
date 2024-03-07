@@ -158,18 +158,26 @@ namespace APIProyectoSC_601.Controllers
                     var facturaData = (from x in context.Factura_Encabezado
                                        join y in context.Usuario on x.ID_Usuario equals y.ID_Usuario
                                        join z in context.Factura_Detalle on x.ID_Factura equals z.ID_Factura
+                                       join p in context.Producto on z.ID_Producto equals p.ID_Producto
                                        where x.ID_Usuario == q
+                                       group new { p.Nombre, p.Precio, z.CantidadPagado } by new { x.ID_Factura, y.Nombre_Usuario, y.Apellido_Usuario, y.Correo_Usuario, x.FechaCompra, x.TotalCompra } into g
                                        select new FacturaEnt
                                        {
-                                           ID_Factura = x.ID_Factura,
-                                           NombreCliente = y.Nombre_Usuario,
-                                           ApellidoCliente = y.Apellido_Usuario,
-                                           CorreoCliente = y.Correo_Usuario,
-                                           FechaCompra = x.FechaCompra,
-                                           TotalCompra = x.TotalCompra,
-                                           SubTotal = (x.TotalCompra / factor),
-                                           Impuesto = (x.TotalCompra - (x.TotalCompra / factor)),
+                                           ID_Factura = g.Key.ID_Factura,
+                                           NombreCliente = g.Key.Nombre_Usuario,
+                                           ApellidoCliente = g.Key.Apellido_Usuario,
+                                           CorreoCliente = g.Key.Correo_Usuario,
+                                           FechaCompra = g.Key.FechaCompra,
+                                           TotalCompra = g.Key.TotalCompra,
+                                           PrecioPagado = g.Sum(item => item.Precio * item.CantidadPagado),
+                                           precio = g.Select(item => item.Precio * item.CantidadPagado).ToList(),
+                                           SubTotal = (g.Key.TotalCompra / factor),
+                                           Impuesto = (g.Key.TotalCompra - (g.Key.TotalCompra / factor)),
+                                           NombreProducto = g.Select(item => item.Nombre).ToList(),
+                                           Cantidad = g.Select(item => item.CantidadPagado).ToList()
                                        }).OrderByDescending(x => x.FechaCompra).FirstOrDefault();
+
+
 
                     if (facturaData != null)
                     {
@@ -179,13 +187,25 @@ namespace APIProyectoSC_601.Controllers
                         string numFactura = facturaData.ID_Factura.ToString();
                         string cliente = facturaData.NombreCliente + " " + facturaData.ApellidoCliente;
                         string fecha = facturaData.FechaCompra.ToString();
+                        string nombre = facturaData.Nombre;
+                        string cantidad=facturaData.Cantidad.ToString();
                         string subtotal = facturaData.SubTotal.ToString("N2");
                         string impuesto = facturaData.Impuesto.ToString("N2");
                         string total = facturaData.TotalCompra.ToString();
 
+                        List<string> productosCantidades = new List<string>();
+                        for (int i = 0; i < facturaData.NombreProducto.Count; i++)
+                        {
+                            string productoCantidad = $"<tr><td>{facturaData.NombreProducto[i]}</td><td>{facturaData.Cantidad[i]}</td><td>{facturaData.precio[i].ToString("N2")}</td></tr>";
+                            productosCantidades.Add(productoCantidad);
+                        }
+
                         html = html.Replace("@@Factura", numFactura);
                         html = html.Replace("@@Cliente", cliente);
                         html = html.Replace("@@Fecha", fecha);
+                        html = html.Replace("@@Producto", string.Join("", productosCantidades));
+                        html = html.Replace("@@Cantidad", "Cantidad");
+                        html = html.Replace("@@Precio", "Precio");
                         html = html.Replace("@@Subtotal", subtotal);
                         html = html.Replace("@@Impuesto", impuesto);
                         html = html.Replace("@@Total", total);

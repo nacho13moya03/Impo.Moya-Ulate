@@ -113,6 +113,7 @@ namespace ProyectoSC_601.Controllers
             Session["Img"] = entidad.Imagen;
 
 
+
             if (respuesta == "TRUE")
             {
                 var datosCorreo = modelFacturacion.ConsultarDatosEnviarCorreo(long.Parse(Session["ID_Usuario"].ToString()));
@@ -242,6 +243,7 @@ namespace ProyectoSC_601.Controllers
 
                     ViewData["IdTransaccion"] = objeto.purchase_units[0].payments.captures[0].id;
 
+                    Session["IdTransaccion"] = ViewData["IdTransaccion"];
                     PagarCarrito();
                 }
 
