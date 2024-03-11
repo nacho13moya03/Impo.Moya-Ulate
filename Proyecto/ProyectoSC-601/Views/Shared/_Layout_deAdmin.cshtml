@@ -86,12 +86,25 @@
 
 
                         </ul>
-                    </div
+                    </div>
 
                     <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Usuarios", "GestionUsuarios", "Usuario", new { area = "" }, new { @class = "nav-link" })</a></li>
+                    <div class="dropdown" style="margin-left:20px;">
+                        <button class="btn btn-primary dropdown-toggle"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-mdb-toggle="dropdown"
+                                aria-expanded="false">
+                            Ventas
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Pedidos", "ConsultarPedidos", "Pedidos", new { area = "" }, new { @class = "nav-link" })</a></li>
 
-                    <li><a class="nav-link scrollto" @Html.ActionLink("Facturación", "Facturacion", "Facturacion", new { area = "" }, new { @class = "nav-link" })</a></li>
+                            <li><a class="nav-link scrollto" @Html.ActionLink("Facturación", "Facturacion", "Facturacion", new { area = "" }, new { @class = "nav-link" })</a></li>
 
+                        </ul>
+                    </div>
+                   
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>

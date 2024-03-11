@@ -52,6 +52,16 @@ namespace ProyectoSC_601.Models
             }
         }
 
+        public long ConsultarFacturaRealizada(long q)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ConsultarFacturaRealizada?q=" + q;
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<long>().Result;
+            }
+        }
+
         //De aqui para abajo implementacion de PayPal
         //1era API
 

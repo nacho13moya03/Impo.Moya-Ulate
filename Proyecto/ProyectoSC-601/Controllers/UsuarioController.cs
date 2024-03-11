@@ -288,7 +288,9 @@ namespace ProyectoSC_601.Controllers
 
                     if (respuesta == "OK")
                     {
+                        Session["Direccion_Cliente"] = entidad.Direccion_Exacta;
                         return RedirectToAction("PerfilCliente", "Usuario");
+
                     }
                     else
                     {

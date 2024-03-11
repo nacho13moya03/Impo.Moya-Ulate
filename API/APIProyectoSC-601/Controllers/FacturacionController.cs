@@ -26,6 +26,42 @@ namespace APIProyectoSC_601.Controllers
         Utilitarios util = new Utilitarios();
 
         [HttpGet]
+        [Route("ConsultarFacturaRealizada")]
+        public long ConsultarFacturaRealizada(long q)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+
+                    var ultimaFactura = (from x in context.Factura_Encabezado
+                                         where x.ID_Usuario == q
+                                         orderby x.FechaCompra descending
+                                         select x.ID_Factura).FirstOrDefault();
+
+                    if (ultimaFactura != 0)
+                    {
+                        logExitos.Add("ConsultaUltimaFacturasCliente", $"Se consultó satisfactoriamente la última factura ({ultimaFactura}) para el cliente con ID {q}.");
+                    }
+                    else
+                    {
+                        logExitos.Add("ConsultaUltimaFacturasCliente", $"No se encontró factura para el cliente con ID {q}.");
+                    }
+
+                    return ultimaFactura;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ConsultaUltimaFacturasCliente: " + ex.Message);
+                return 0;
+            }
+        }
+
+
+
+        [HttpGet]
         [Route("ConsultaFacturasCliente")]
         public List<Factura_Encabezado> ConsultaFacturasCliente(long q)
         {

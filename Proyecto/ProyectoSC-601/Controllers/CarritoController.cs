@@ -14,6 +14,8 @@ using static ProyectoSC_601.Models.CarritoModel;
 using static ProyectoSC_601.Models.PayPal2Model;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Ajax.Utilities;
+using System.Data;
 /*PayPal*/
 
 namespace ProyectoSC_601.Controllers
@@ -23,6 +25,8 @@ namespace ProyectoSC_601.Controllers
 
 
         CarritoModel modelCarrito = new CarritoModel();
+        PedidosModel modelPedidos = new PedidosModel();
+        UsuarioModel modelUsuario = new UsuarioModel();
         FacturacionModel modelFacturacion = new FacturacionModel();
         InventarioModel modelInventario = new InventarioModel(); 
 
@@ -249,7 +253,24 @@ namespace ProyectoSC_601.Controllers
 
             }
 
-            return View();
+            
+                string idtransaccion = Session["IdTransaccion"].ToString();
+                long numfactura = modelCarrito.ConsultarFacturaRealizada(long.Parse(Session["ID_Usuario"].ToString()));
+                long idcliente = long.Parse(Session["ID_Usuario"].ToString());
+
+                PedidoEnt pedidoEnt = new PedidoEnt
+                {
+                    ID_Transaccion = idtransaccion,
+                    ID_Factura = numfactura,
+                    ID_Cliente = idcliente,
+                    Estado = 0
+                };
+
+                var respuestaRegistroPedido = modelPedidos.RegistrarPedido(pedidoEnt);
+                var respuestaConsultaPedido = modelPedidos.ConsultarPedido(idtransaccion);
+           
+           
+            return View(respuestaConsultaPedido);
         }
 
     }

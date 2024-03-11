@@ -1,33 +1,78 @@
-﻿
+﻿@model ProyectoSC_601.Entities.PedidoEnt
 @{
-    ViewBag.Title = "CheckPago";
+    ViewBag.Title = "CheckPago";    
 }
 
-<div class="row" style="margin:200px">
-    <div class="col-sm-12 text-center">
+<style>
+    body {
+        background-color: #f2f6fc;
+    }
+</style>
+
+<div class="row" style="margin: 200px;">
+    <div class="col-sm-10 offset-sm-1 text-center">
 
         @{
             if ((bool)ViewData["Status"])
             {
-                <br />
-                <h1 class="text-success">Gracias!</h1>
+                <i class="far fa-check-circle fa-6x text-success"></i>
 
-                <i class="far fa-check-circle fa-9x text-success"></i>
-
-                <h2 class="text-success"> Su pago fue realizado con exito</h2>
-                <h4> ID de Transacción : @ViewData["IdTransaccion"]</h4>
+                <h3 class="text-success" style="margin-top:3%;">¡Gracias!</h3>
+                <h5 class="text-success">Su pago fue procesado con éxito</h5>
                 <br />
-                <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Volver a la tienda</a>
+
+                <h5 style="margin-top:5%;">Detalles del Pedido</h5>
+                <div class="table-responsive">
+
+
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #6282a9; color: white; width: 20%!important;">ID Transacción</th>
+                                <th style="background-color: #6282a9; color: white; width: 20%!important;">ID Factura</th>
+                                <th style="background-color: #6282a9; color: white; width: 40%!important;">Dirección Envío</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+
+                                <td>@Model.ID_Transaccion</td>
+                                <td>@Model.ID_Factura</td>
+                                @if (@Model.direccionPedido != "")
+                                {
+                                    <td>@Model.direccionPedido</td>
+                                }
+                                else
+                                {
+                                    <td>El pedido será enviado a la dirección registrada en el sistema, favor actualizar los datos.</td>
+                                }
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+
+
+
+                    <br />
+                </div>
+                <a href="@Url.Action("Index","Home")" class="btn btn-primary" style="background-color: #6282A9;border:none">Volver a la tienda</a>
 
             }
             else
             {
+              
+                <i class="fas fa-exclamation-circle fa-6x text-danger"></i>
+
+                <h3 class="text-danger" style="margin-top:3%;">¡Lo sentimos!</h3>
+                <h5 class="text-danger">Su pago no se pudo realizar</h5>
                 <br />
-                <h1 class="text-danger">Lo sentimos</h1>
-                <i class="fas fa-exclamation-circle fa-9x text-danger"></i>
-                <h2 class="text-danger"> Su pago no fue realizado</h2>
-                <br />
-                <a href="@Url.Action("Index","Home")" class="btn btn-primary">Volver a la tienda</a>
+                <a href="@Url.Action("Index","Home")" class="btn btn-primary" style="background-color: #6282A9;border:none">Volver a la tienda</a>
             }
 
         }

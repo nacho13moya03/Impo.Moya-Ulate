@@ -384,7 +384,7 @@ namespace APIProyectoSC_601.Controllers
         //Devuelve la cantidad total de los recursos del inventario
         [HttpGet]
         [Route("TotalInventario")]
-        public String TotalInventario()
+        public string TotalInventario()
         {
             try
             {

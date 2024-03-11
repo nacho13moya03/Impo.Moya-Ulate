@@ -19,13 +19,15 @@ namespace ProyectoSC_601.Entities
         public string Identificacion_Usuario { get; set; }
 
         [Required(ErrorMessage = "Este campo es obligatorio.")]
-        [RegularExpression("^[a-zA-Z\\s]+$", ErrorMessage = "No debe contener números ni caracteres especiales.")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\\s]+$", ErrorMessage = "No debe contener números ni caracteres especiales.")]
         public string Nombre_Usuario { get; set; }
 
+
         [ApellidoRequerido(ErrorMessage = "Este campo es obligatorio.")]
-        [RegularExpression(@"^[[a-zA-Z]+$", ErrorMessage = "No debe contener números ni caracteres especiales.")]
+        [RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?![\s\S]*\s[\s\S]*$)", ErrorMessage = "Debe ingresar solo el primer apellido, sin números ni caracteres especiales")]
 
         public string Apellido_Usuario { get; set; }
+
 
         [Required(ErrorMessage = "Este campo es obligatorio.")]
         [StringLength(70, MinimumLength = 5, ErrorMessage = "El correo electrónico debe tener entre 5 y 70 caracteres.")]
