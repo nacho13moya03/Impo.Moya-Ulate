@@ -18,7 +18,6 @@ namespace APIProyectoSC_601
         public Factura_Encabezado()
         {
             this.Factura_Detalle = new HashSet<Factura_Detalle>();
-            this.Pedidos = new HashSet<Pedidos>();
         }
     
         public long ID_Factura { get; set; }
@@ -29,7 +28,5 @@ namespace APIProyectoSC_601
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Factura_Detalle> Factura_Detalle { get; set; }
         public virtual Usuario Usuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Pedidos> Pedidos { get; set; }
     }
 }

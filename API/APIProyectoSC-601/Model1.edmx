@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ImportadoraMoyaUlateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ImportadoraMoyaUlateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Canton">
           <Key>
             <PropertyRef Name="ID_Canton" />
@@ -329,18 +329,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pedidos_Factura">
-          <End Role="Factura_Encabezado" Type="Self.Factura_Encabezado" Multiplicity="1" />
-          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Factura_Encabezado">
-              <PropertyRef Name="ID_Factura" />
-            </Principal>
-            <Dependent Role="Pedidos">
-              <PropertyRef Name="ID_Factura" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Pedidos_Usuario">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
@@ -640,10 +628,6 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pedidos_Factura" Association="Self.FK_Pedidos_Factura">
-            <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
-            <End Role="Pedidos" EntitySet="Pedidos" />
-          </AssociationSet>
           <AssociationSet Name="FK_Pedidos_Usuario" Association="Self.FK_Pedidos_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Pedidos" EntitySet="Pedidos" />
@@ -685,7 +669,8 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ImportadoraMoyaUlateModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -805,7 +790,6 @@
           <Property Name="TotalCompra" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <NavigationProperty Name="Factura_Detalle" Relationship="Self.FK_Factura_Detalle_Factura_Encabezado" FromRole="Factura_Encabezado" ToRole="Factura_Detalle" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Factura_Encabezado_Usuario" FromRole="Factura_Encabezado" ToRole="Usuario" />
-          <NavigationProperty Name="Pedidos" Relationship="ImportadoraMoyaUlateModel.FK_Pedidos_Factura" FromRole="Factura_Encabezado" ToRole="Pedidos" />
         </EntityType>
         <EntityType Name="Identificacion">
           <Key>
@@ -815,6 +799,17 @@
           <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Proveedores" Relationship="Self.FK_Proveedores_Identificacion" FromRole="Identificacion" ToRole="Proveedores" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Identificacion" FromRole="Identificacion" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Pedidos">
+          <Key>
+            <PropertyRef Name="ID_Pedido" />
+          </Key>
+          <Property Name="ID_Pedido" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Cliente" Type="Int64" Nullable="false" />
+          <Property Name="ID_Transaccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Factura" Type="Int64" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Pedidos_Usuario" FromRole="Pedidos" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
@@ -890,8 +885,8 @@
           <NavigationProperty Name="Estado" Relationship="Self.FK_Usuario_Estado" FromRole="Usuario" ToRole="Estado" />
           <NavigationProperty Name="Factura_Encabezado" Relationship="Self.FK_Factura_Encabezado_Usuario" FromRole="Usuario" ToRole="Factura_Encabezado" />
           <NavigationProperty Name="Identificacion" Relationship="Self.FK_Usuario_Identificacion" FromRole="Usuario" ToRole="Identificacion" />
+          <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_Usuario" FromRole="Usuario" ToRole="Pedidos" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Usuario_Rol" FromRole="Usuario" ToRole="Roles" />
-          <NavigationProperty Name="Pedidos" Relationship="ImportadoraMoyaUlateModel.FK_Pedidos_Usuario" FromRole="Usuario" ToRole="Pedidos" />
         </EntityType>
         <Association Name="FK_Canton_Provincia">
           <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
@@ -1145,6 +1140,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pedidos_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Pedidos">
+              <PropertyRef Name="ID_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Usuario_Rol">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -1169,6 +1176,7 @@
           <EntitySet Name="Factura_Detalle" EntityType="Self.Factura_Detalle" />
           <EntitySet Name="Factura_Encabezado" EntityType="Self.Factura_Encabezado" />
           <EntitySet Name="Identificacion" EntityType="Self.Identificacion" />
+          <EntitySet Name="Pedidos" EntityType="Self.Pedidos" />
           <EntitySet Name="Producto" EntityType="Self.Producto" />
           <EntitySet Name="Proveedores" EntityType="Self.Proveedores" />
           <EntitySet Name="Provincia" EntityType="Self.Provincia" />
@@ -1258,6 +1266,10 @@
             <End Role="Identificacion" EntitySet="Identificacion" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pedidos_Usuario" Association="Self.FK_Pedidos_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Pedidos" EntitySet="Pedidos" />
+          </AssociationSet>
           <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Usuario" EntitySet="Usuario" />
@@ -1293,13 +1305,13 @@
             <Parameter Name="Ubicacion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ActualizarEstadoCategoriaSP">
-          <Parameter Name="ID_Categoria" Mode="In" Type="Int64" />
+            <Parameter Name="ID_Categoria" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="ActualizarEstadoProveedorSP">
-          <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
+            <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="ActualizarEstadoUsuarioSP">
-          <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
+            <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="ActualizarProveedorSP">
             <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
@@ -1311,29 +1323,29 @@
             <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ActualizarRolUsuarioSP">
-          <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
+            <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="EliminarCategoriaSP">
-          <Parameter Name="ID_Categoria" Mode="In" Type="Int64" />
+            <Parameter Name="ID_Categoria" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="EliminarEmpresaSP">
-          <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
+            <Parameter Name="ID_Empresa" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="EliminarProveedorSP">
-          <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
+            <Parameter Name="ID_Proveedor" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="InactivarUsuarioSP">
-          <Parameter Name="CodigoUsuario" Mode="In" Type="Int64" />
+            <Parameter Name="CodigoUsuario" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="IniciarSesionSP" ReturnType="Collection(ImportadoraMoyaUlateModel.IniciarSesionSP_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PagarCarritoSP" ReturnType="Collection(String)">
-          <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
+            <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="RecuperarCuentaUsuarioSP" ReturnType="Collection(ImportadoraMoyaUlateModel.RecuperarCuentaUsuarioSP_Result)">
-          <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="RegistrarCategoriaSP">
             <Parameter Name="Categoria" Mode="In" Type="String" />
@@ -1371,15 +1383,6 @@
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
             <Parameter Name="Telefono" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Pedidos" EntityType="ImportadoraMoyaUlateModel.Pedidos" />
-          <AssociationSet Name="FK_Pedidos_Factura" Association="ImportadoraMoyaUlateModel.FK_Pedidos_Factura">
-            <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
-            <End Role="Pedidos" EntitySet="Pedidos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Pedidos_Usuario" Association="ImportadoraMoyaUlateModel.FK_Pedidos_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Pedidos" EntitySet="Pedidos" />
-          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="IniciarSesionSP_Result">
           <Property Type="Int64" Name="ID_Usuario" Nullable="false" />
@@ -1400,42 +1403,6 @@
           <Property Type="String" Name="Correo_Usuario" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="Contrasenna_Usuario" Nullable="false" MaxLength="50" />
         </ComplexType>
-        <EntityType Name="Pedidos">
-          <Key>
-            <PropertyRef Name="ID_Pedido" />
-          </Key>
-          <Property Name="ID_Pedido" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_Cliente" Type="Int64" Nullable="false" />
-          <Property Name="ID_Transaccion" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ID_Factura" Type="Int64" Nullable="false" />
-          <Property Name="Estado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Factura_Encabezado" Relationship="ImportadoraMoyaUlateModel.FK_Pedidos_Factura" FromRole="Pedidos" ToRole="Factura_Encabezado" />
-          <NavigationProperty Name="Usuario" Relationship="ImportadoraMoyaUlateModel.FK_Pedidos_Usuario" FromRole="Pedidos" ToRole="Usuario" />
-        </EntityType>
-        <Association Name="FK_Pedidos_Factura">
-          <End Type="ImportadoraMoyaUlateModel.Factura_Encabezado" Role="Factura_Encabezado" Multiplicity="1" />
-          <End Type="ImportadoraMoyaUlateModel.Pedidos" Role="Pedidos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Factura_Encabezado">
-              <PropertyRef Name="ID_Factura" />
-            </Principal>
-            <Dependent Role="Pedidos">
-              <PropertyRef Name="ID_Factura" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Pedidos_Usuario">
-          <End Type="ImportadoraMoyaUlateModel.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="ImportadoraMoyaUlateModel.Pedidos" Role="Pedidos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="ID_Usuario" />
-            </Principal>
-            <Dependent Role="Pedidos">
-              <PropertyRef Name="ID_Cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1552,6 +1519,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Pedidos">
+            <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Pedidos">
+              <MappingFragment StoreEntitySet="Pedidos">
+                <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
+                <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
+                <ScalarProperty Name="ID_Transaccion" ColumnName="ID_Transaccion" />
+                <ScalarProperty Name="ID_Factura" ColumnName="ID_Factura" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Producto">
             <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Producto">
               <MappingFragment StoreEntitySet="Producto">
@@ -1662,17 +1640,6 @@
           <FunctionImportMapping FunctionImportName="RegistrarEmpresaSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarEmpresaSP" />
           <FunctionImportMapping FunctionImportName="RegistrarProveedorSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarProveedorSP" />
           <FunctionImportMapping FunctionImportName="RegistrarUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.RegistrarUsuarioSP" />
-          <EntitySetMapping Name="Pedidos">
-            <EntityTypeMapping TypeName="ImportadoraMoyaUlateModel.Pedidos">
-              <MappingFragment StoreEntitySet="Pedidos">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="ID_Factura" ColumnName="ID_Factura" />
-                <ScalarProperty Name="ID_Transaccion" ColumnName="ID_Transaccion" />
-                <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
-                <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1690,7 +1657,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

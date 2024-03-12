@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ProyectoSC_601.Entities
+﻿namespace ProyectoSC_601.Entities
 {
     public class PedidoEnt
     {
@@ -14,7 +9,7 @@ namespace ProyectoSC_601.Entities
 
         public long ID_Factura { get; set; }
 
-        public  int Estado { get; set; }
+        public int Estado { get; set; }
 
         public string direccionPedido { get; set; }
 

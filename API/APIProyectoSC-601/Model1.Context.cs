@@ -38,12 +38,12 @@ namespace APIProyectoSC_601
         public virtual DbSet<Factura_Detalle> Factura_Detalle { get; set; }
         public virtual DbSet<Factura_Encabezado> Factura_Encabezado { get; set; }
         public virtual DbSet<Identificacion> Identificacion { get; set; }
+        public virtual DbSet<Pedidos> Pedidos { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
         public virtual DbSet<Proveedores> Proveedores { get; set; }
         public virtual DbSet<Provincia> Provincia { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<Pedidos> Pedidos { get; set; }
     
         public virtual int ActualizarCategoriaSP(Nullable<int> iD_Categoria, string nombre_Categoria)
         {

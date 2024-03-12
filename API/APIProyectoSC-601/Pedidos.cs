@@ -20,7 +20,6 @@ namespace APIProyectoSC_601
         public long ID_Factura { get; set; }
         public int Estado { get; set; }
     
-        public virtual Factura_Encabezado Factura_Encabezado { get; set; }
         public virtual Usuario Usuario { get; set; }
     }
 }

@@ -224,7 +224,7 @@ namespace APIProyectoSC_601.Controllers
                         string cliente = facturaData.NombreCliente + " " + facturaData.ApellidoCliente;
                         string fecha = facturaData.FechaCompra.ToString();
                         string nombre = facturaData.Nombre;
-                        string cantidad=facturaData.Cantidad.ToString();
+                        string cantidad = facturaData.Cantidad.ToString();
                         string subtotal = facturaData.SubTotal.ToString("N2");
                         string impuesto = facturaData.Impuesto.ToString("N2");
                         string total = facturaData.TotalCompra.ToString("N2");

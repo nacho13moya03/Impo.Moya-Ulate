@@ -1,5 +1,4 @@
-﻿using APIProyectoSC_601.Entities;
-using ProyectoSC_601.Entities;
+﻿using ProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

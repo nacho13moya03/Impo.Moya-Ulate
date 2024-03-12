@@ -27,6 +27,6 @@ namespace APIProyectoSC_601.Entities
         public List<string> NombreProducto { get; set; }
         public List<int> Cantidad { get; set; }
 
-        public List<decimal> precio {  get; set; }
+        public List<decimal> precio { get; set; }
     }
 }

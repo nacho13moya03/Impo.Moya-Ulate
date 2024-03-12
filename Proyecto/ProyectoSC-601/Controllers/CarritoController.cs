@@ -1,21 +1,18 @@
-﻿using ProyectoSC_601.Entities;
+﻿using Newtonsoft.Json;
+using ProyectoSC_601.Entities;
 using ProyectoSC_601.Models;
 using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
-using System.Web.Mvc;
-
 /*PayPal*/
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using static ProyectoSC_601.Models.CarritoModel;
-using static ProyectoSC_601.Models.PayPal2Model;
-using System.Collections.Generic;
-using System.IO;
-using Microsoft.Ajax.Utilities;
-using System.Data;
 /*PayPal*/
 
 namespace ProyectoSC_601.Controllers
@@ -28,7 +25,7 @@ namespace ProyectoSC_601.Controllers
         PedidosModel modelPedidos = new PedidosModel();
         UsuarioModel modelUsuario = new UsuarioModel();
         FacturacionModel modelFacturacion = new FacturacionModel();
-        InventarioModel modelInventario = new InventarioModel(); 
+        InventarioModel modelInventario = new InventarioModel();
 
         private string ObtenerImagenProducto(long ID_Producto)
         {
@@ -150,7 +147,7 @@ namespace ProyectoSC_601.Controllers
             bool status = false;
             string respuesta = string.Empty;
 
-            using (var client  = new HttpClient())
+            using (var client = new HttpClient())
             {
                 var userName = "ASMuZ2JIH6RMroddxn_QDja6RoNSFyoAi3zJRoO4jxtqT0Vezq4fDAFQMP41krlWHkipksJ03aCPpniY";
                 var passwd = "EHdDA3W-uwKW9i34JrQ26bH_Cml16G-TJiAzSaWZBDuxhUETz4cdn8HftHYV3doZ2kMMq76L6GfH_4G4";
@@ -204,7 +201,7 @@ namespace ProyectoSC_601.Controllers
 
             }
 
-            return Json (new {status = status, respuesta = respuesta}, JsonRequestBehavior.AllowGet);
+            return Json(new { status = status, respuesta = respuesta }, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -253,23 +250,23 @@ namespace ProyectoSC_601.Controllers
 
             }
 
-            
-                string idtransaccion = Session["IdTransaccion"].ToString();
-                long numfactura = modelCarrito.ConsultarFacturaRealizada(long.Parse(Session["ID_Usuario"].ToString()));
-                long idcliente = long.Parse(Session["ID_Usuario"].ToString());
 
-                PedidoEnt pedidoEnt = new PedidoEnt
-                {
-                    ID_Transaccion = idtransaccion,
-                    ID_Factura = numfactura,
-                    ID_Cliente = idcliente,
-                    Estado = 0
-                };
+            string idtransaccion = Session["IdTransaccion"].ToString();
+            long numfactura = modelCarrito.ConsultarFacturaRealizada(long.Parse(Session["ID_Usuario"].ToString()));
+            long idcliente = long.Parse(Session["ID_Usuario"].ToString());
 
-                var respuestaRegistroPedido = modelPedidos.RegistrarPedido(pedidoEnt);
-                var respuestaConsultaPedido = modelPedidos.ConsultarPedido(idtransaccion);
-           
-           
+            PedidoEnt pedidoEnt = new PedidoEnt
+            {
+                ID_Transaccion = idtransaccion,
+                ID_Factura = numfactura,
+                ID_Cliente = idcliente,
+                Estado = 0
+            };
+
+            var respuestaRegistroPedido = modelPedidos.RegistrarPedido(pedidoEnt);
+            var respuestaConsultaPedido = modelPedidos.ConsultarPedido(idtransaccion);
+
+
             return View(respuestaConsultaPedido);
         }
 

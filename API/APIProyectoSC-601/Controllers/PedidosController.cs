@@ -1,5 +1,4 @@
 ﻿using APIProyectoSC_601.Entities;
-using ProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -134,7 +133,7 @@ namespace APIProyectoSC_601.Controllers
 
                     if (datos != null)
                     {
-                       
+
                         datos.Estado = 1;
                         context.SaveChanges();
                         logExitos.Add("ActualizarEstadoPedido", $"Se actualizó el estado del pedido con ID {entidad.ID_Pedido}.");
