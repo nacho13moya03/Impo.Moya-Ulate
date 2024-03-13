@@ -27,7 +27,7 @@ namespace ProyectoSC_601.Controllers
                 {
                     ViewBag.combo = modelCompras.ConsultaCompras();
                     ViewBag.Empresas = modelCompras.ConsultarEmpresas();  // Configurar ViewBag.Empresas
-                    return View();
+                    return View("Error");
                 }
             }
             catch (Exception ex)
@@ -156,7 +156,7 @@ namespace ProyectoSC_601.Controllers
                     if (respuesta == "OK")
                     {
                         TempData["ActualizacionExito"] = "Compra actualizada con éxito";
-                        return RedirectToAction("ConsultaCompra", "Compras", new { q = entidad.IdCompras });
+                        return RedirectToAction("ConsultaCompras", "Compras");
                     }
                 }
                 ViewBag.Empresas = modelCompras.ConsultarEmpresas();  // Configurar ViewBag.Empresas

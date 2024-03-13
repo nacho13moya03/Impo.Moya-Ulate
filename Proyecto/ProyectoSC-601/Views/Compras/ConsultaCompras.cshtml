@@ -63,7 +63,7 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>@item.IdCompras</td>
+                                            <td style="white-space: nowrap;">@item.IdCompras</td>
                                             <td>
                                                 @{
                                                     var idEmpresa = item.Empresa;
@@ -86,11 +86,9 @@
                                             <td class="visually-hidden">@item.Cantidad</td>
                                             <td class="visually-hidden">@item.Total.ToString("0.00")</td>
                                             <td class="text-center">
-                                                <a href="@Url.Action("ConsultaCompra", "Compras", new { q = item.IdCompras })" >
-                                                    <button class="btn btn-primary">
-                                                        Consultar
-                                                    </button>
-                                                </a>
+                                                <button class="btn btn-primary btn-consultar" onclick="mostrarModalConsulta(@item.IdCompras, '@item.Empresa', '@item.Fecha', '@item.Concepto', '@item.Cantidad', '@item.Total')">
+                                                    Consultar
+                                                </button>
                                             </td>
                                         </tr>
                                     }
@@ -117,11 +115,14 @@
     </div>
 </div>
 
+
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script>var $j = jQuery.noConflict();</script>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>var $j = jQuery.noConflict();</script>
 
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -132,6 +133,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+<!-- Modal -->
+<div class="modal fade" id="consultaModal" tabindex="-1" aria-labelledby="consultaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <!-- Agregar la clase modal-lg aquí -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="consultaModalLabel">Detalles de la Compra</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="consultaModalBody">
+                <!-- Aquí se cargarán los detalles de la compra -->
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     //Datatable de las compras
@@ -146,7 +163,7 @@
                 {
                     extend: 'copy',
                     exportOptions: {
-                        columns: [0, 1, 2,3,4,5]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
                 {
@@ -201,3 +218,73 @@
         });
     }
 </script>
+
+<script>
+    // Función para mostrar modal de consulta de compras
+    function mostrarModalConsulta(idCompra, empresa, fecha, concepto, cantidad, total) {
+        var myModal = new bootstrap.Modal(document.getElementById('consultaModal'), {
+            keyboard: false
+        });
+
+        var idEmpresa = empresa;
+        var nombreEmpresa = @Html.Raw(Json.Encode(ViewBag.Empresas as List<System.Web.Mvc.SelectListItem>));
+
+        var nombreEmpresaText = '';
+        if (nombreEmpresa != null && nombreEmpresa.length > 0) {
+            var empresaItem = nombreEmpresa.find(e => e.Value === idEmpresa);
+            nombreEmpresaText = empresaItem ? empresaItem.Text : 'No hay empresas disponibles';
+        }
+
+        $('#consultaModalBody').html(`
+        <div class="row justify-content-center">
+            <div class="col-lg-10 mb-5" style="margin:0%!important;">
+                <div class="h-250 position-relative" style="height: auto!important; padding:5%!important;">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="p-6">
+                                <table class="table table-bordered text-center">
+                                    <tr>
+                                        <td style="width: 30%;">ID de Compra:</td>
+                                        <td style="width: 70%;">${idCompra}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Empresa:</td>
+                                        <td>${nombreEmpresaText}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fecha:</td>
+                                        <td>${fecha}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Concepto:</td>
+                                        <td>${concepto}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cantidad:</td>
+                                        <td>${cantidad}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total:</td>
+                                        <td>₡${parseFloat(total).toFixed(2)}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <a href="@Url.Action("ActualizarCompra", "Compras", new { q = Model.FirstOrDefault().IdCompras })" class="btn btn-success" title="Modificar Compra">
+                <i class="fa fa-user fa-lg text-white" style="margin-right: 5px;"></i> Modificar Compra
+            </a>
+        </div>
+    `);
+
+        // Muestra el modal
+        myModal.show();
+    }
+</script>
+
+
+

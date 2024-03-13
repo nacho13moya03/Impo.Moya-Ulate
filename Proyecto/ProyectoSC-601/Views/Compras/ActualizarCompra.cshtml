@@ -55,7 +55,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small mb-1" for="concepto">Concepto</label>
-                                    @Html.TextBoxFor(m => m.Concepto, new { @class = "form-control", @placeholder = "Concepto", required = "required" })
+                                    @Html.TextAreaFor(m => m.Concepto, new { @class = "form-control", @placeholder = "Concepto", required = "required" })
                                 </div>
                                 <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                     <div id="errorConcepto" class="text-danger">@ViewBag.MensajeFecha</div>
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                         <div style="text-align:center; padding-top:4%;">
-                            <a href="@Url.Action("ConsultaCompra", "Compras", new { q = Model.IdCompras })" class="btn btn-danger">
+                            <a href="@Url.Action("ConsultaCompras", "Compras")" class="btn btn-danger">
                                 <i class="fa fa-arrow-left"></i> Volver
                             </a>
                             <span class="px-2"></span>
@@ -97,11 +97,12 @@
     </div>
 </div>
 
+<
 <script>
     function validarFormulario() {
         // Obtener los valores del formulario
         var empresaElement = document.getElementById("Empresa");
-        var fechaElement = document.getElementById("Fecha");
+        var fechaCompletaElement = document.getElementById("fechaCompleta");
         var conceptoElement = document.getElementById("Concepto");
         var cantidadElement = document.getElementById("Cantidad");
         var totalElement = document.getElementById("Total");
@@ -121,6 +122,11 @@
             valid = false;
         }
 
+        // Validar fecha
+        if (fechaCompletaElement !== null && fechaCompletaElement.value.trim() === "") {
+            document.getElementById("errorFecha").innerText = "Este campo es obligatorio";
+            valid = false;
+        }
 
         // Validar concepto
         if (conceptoElement !== null && conceptoElement.value.trim() === "") {
@@ -132,15 +138,25 @@
         if (cantidadElement !== null && cantidadElement.value.trim() === "") {
             document.getElementById("errorCantidad").innerText = "Este campo es obligatorio";
             valid = false;
+        } else if (parseFloat(cantidadElement.value) < 0) {
+            document.getElementById("errorCantidad").innerText = "La cantidad no puede ser negativa";
+            valid = false;
         }
 
         // Validar total
         if (totalElement !== null && totalElement.value.trim() === "") {
             document.getElementById("errorTotal").innerText = "Este campo es obligatorio";
             valid = false;
+        } else if (parseFloat(totalElement.value) < 0) {
+            document.getElementById("errorTotal").innerText = "El total no puede ser negativo";
+            valid = false;
         }
 
-        return valid;
+        if (!valid) {
+            // Si hay errores, evitar el envío del formulario
+            return false;
+        }
+        return true;
     }
 </script>
 

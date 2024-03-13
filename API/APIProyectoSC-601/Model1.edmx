@@ -329,6 +329,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pedidos_Factura">
+          <End Role="Factura_Encabezado" Type="Self.Factura_Encabezado" Multiplicity="1" />
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura_Encabezado">
+              <PropertyRef Name="ID_Factura" />
+            </Principal>
+            <Dependent Role="Pedidos">
+              <PropertyRef Name="ID_Factura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Pedidos_Usuario">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
@@ -628,6 +640,10 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pedidos_Factura" Association="Self.FK_Pedidos_Factura">
+            <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
+            <End Role="Pedidos" EntitySet="Pedidos" />
+          </AssociationSet>
           <AssociationSet Name="FK_Pedidos_Usuario" Association="Self.FK_Pedidos_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Pedidos" EntitySet="Pedidos" />
@@ -790,6 +806,7 @@
           <Property Name="TotalCompra" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <NavigationProperty Name="Factura_Detalle" Relationship="Self.FK_Factura_Detalle_Factura_Encabezado" FromRole="Factura_Encabezado" ToRole="Factura_Detalle" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Factura_Encabezado_Usuario" FromRole="Factura_Encabezado" ToRole="Usuario" />
+          <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_Factura" FromRole="Factura_Encabezado" ToRole="Pedidos" />
         </EntityType>
         <EntityType Name="Identificacion">
           <Key>
@@ -809,6 +826,7 @@
           <Property Name="ID_Transaccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID_Factura" Type="Int64" Nullable="false" />
           <Property Name="Estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Factura_Encabezado" Relationship="Self.FK_Pedidos_Factura" FromRole="Pedidos" ToRole="Factura_Encabezado" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Pedidos_Usuario" FromRole="Pedidos" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Producto">
@@ -1116,6 +1134,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pedidos_Factura">
+          <End Role="Factura_Encabezado" Type="Self.Factura_Encabezado" Multiplicity="1" />
+          <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura_Encabezado">
+              <PropertyRef Name="ID_Factura" />
+            </Principal>
+            <Dependent Role="Pedidos">
+              <PropertyRef Name="ID_Factura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Proveedores_Identificacion">
           <End Role="Identificacion" Type="Self.Identificacion" Multiplicity="1" />
           <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="*" />
@@ -1257,6 +1287,10 @@
           <AssociationSet Name="FK_Factura_Encabezado_Usuario" Association="Self.FK_Factura_Encabezado_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedidos_Factura" Association="Self.FK_Pedidos_Factura">
+            <End Role="Factura_Encabezado" EntitySet="Factura_Encabezado" />
+            <End Role="Pedidos" EntitySet="Pedidos" />
           </AssociationSet>
           <AssociationSet Name="FK_Proveedores_Identificacion" Association="Self.FK_Proveedores_Identificacion">
             <End Role="Identificacion" EntitySet="Identificacion" />
@@ -1657,7 +1691,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
