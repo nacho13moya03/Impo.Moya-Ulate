@@ -28,7 +28,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     var datos = (from x in context.Carrito
                                  where x.ID_Usuario == carrito.ID_Usuario
@@ -64,7 +64,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var result = (from x in context.Carrito
@@ -105,7 +105,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     var datos = (from x in context.Carrito
                                  where x.ID_Carrito == q
@@ -132,7 +132,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     string resultadoPago = context.PagarCarritoSP(carrito.ID_Usuario).FirstOrDefault();
 

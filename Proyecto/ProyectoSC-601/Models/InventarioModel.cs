@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using System.Web.Mvc;
 
 namespace ProyectoSC_601.Models
@@ -18,6 +20,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "ConsultarInventario";
                 var res = client.GetAsync(urlApi).Result;
                 return res.Content.ReadFromJsonAsync<List<InventarioEnt>>().Result;
@@ -28,6 +33,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "ConsultarInventarioCatalogo?categoria=" + categoria;
                 var res = client.GetAsync(urlApi).Result;
                 return res.Content.ReadFromJsonAsync<List<InventarioEnt>>().Result;
@@ -39,6 +47,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "ConsultarCategorias";
                 var res = client.GetAsync(urlApi).Result;
                 return res.Content.ReadFromJsonAsync<List<SelectListItem>>().Result;
@@ -50,6 +61,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "RegistrarProducto";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PostAsync(urlApi, jsonData).Result;
@@ -62,6 +76,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "ComprobarSKUExistente";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PostAsync(urlApi, jsonData).Result;
@@ -74,6 +91,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "ActualizarRutaProducto";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PutAsync(urlApi, jsonData).Result;
@@ -86,6 +106,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "ActualizarEstadoProducto";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PutAsync(urlApi, jsonData).Result;
@@ -98,6 +121,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "EliminarProducto";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PutAsync(urlApi, jsonData).Result;
@@ -110,6 +136,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "ConsultaProductoEspecifico?q=" + q;
                 var res = client.GetAsync(urlApi).Result;
                 return res.Content.ReadFromJsonAsync<InventarioEnt>().Result;
@@ -121,6 +150,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "ActualizarProducto";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PutAsync(urlApi, jsonData).Result;
@@ -133,6 +165,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "TotalInventario";
                 var res = client.GetAsync(urlApi).Result;
                 return res.Content.ReadFromJsonAsync<String>().Result;
@@ -144,6 +179,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "RegistrarCategoria";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PostAsync(urlApi, jsonData).Result;
@@ -156,6 +194,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "EliminarCategoria";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PutAsync(urlApi, jsonData).Result;
@@ -166,6 +207,9 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
                 var urlApi = rutaServidor + "VerificarFacturasVinculadas";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PostAsync(urlApi, jsonData).Result;

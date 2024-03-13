@@ -350,6 +350,8 @@
     <Content Include="Assets\vendor\remixicon\remixicon.woff2" />
     <Content Include="Assets\vendor\swiper\swiper-bundle.min.js.map" />
     <Content Include="Assets\css\catalogo.css" />
+    <None Include="Properties\PublishProfiles\nacho13-001-site1 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\nacho13-001-site1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

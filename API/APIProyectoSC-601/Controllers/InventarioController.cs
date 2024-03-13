@@ -30,7 +30,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
 
@@ -68,7 +68,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
 
@@ -108,7 +108,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
 
@@ -144,7 +144,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     var datos = (from x in context.Categorias
                                  select x).ToList();
@@ -181,7 +181,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     context.Producto.Add(producto);
                     context.SaveChanges();
@@ -205,7 +205,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     var datos = context.Producto.Where(x => x.ID_Producto == producto.ID_Producto).FirstOrDefault();
 
@@ -238,7 +238,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     var datos = context.Producto.Where(x => x.ID_Producto == producto.ID_Producto).FirstOrDefault();
 
@@ -279,7 +279,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     var productoAEliminar = context.Producto.Find(producto.ID_Producto);
 
@@ -312,7 +312,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var producto = (from x in context.Producto
@@ -343,7 +343,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     var datos = context.Producto.Where(x => x.ID_Producto == producto.ID_Producto).FirstOrDefault();
 
@@ -387,7 +387,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     decimal totalInventario = context.Producto.Sum(x => x.Precio * x.Cantidad);
@@ -408,7 +408,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomuEntities())
                 {
                     bool facturasVinculadas = context.Factura_Detalle.Any(p => p.ID_Producto == entidad.ID_Producto);
 
