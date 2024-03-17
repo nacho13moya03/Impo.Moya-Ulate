@@ -30,7 +30,7 @@
                             <div class="col-md-6">
                                 <label class="small mb-1" for="sku">Código del Producto</label>
                                 <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                    @Html.TextBoxFor(m => m.SKU, new { @class = "form-control", @placeholder = "Código del Producto", @type = "text", required = "required" })
+                                    @Html.TextBoxFor(m => m.SKU, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @placeholder = "Código del Producto", @type = "text", required = "required" })
                                     @Html.ValidationMessageFor(m => m.SKU, "", new { @style = "color: red;" })
                                 </div>
                             </div>

@@ -8,7 +8,21 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" rel="stylesheet">
+    <link href="~/Assets/css/gestionClientesStyle.css" rel="stylesheet">
 }
+<style>
+    #TablaPedidos_filter input[type="search"] {
+        width: 180px;
+        height: 30px;
+        margin-bottom: 7px;
+    }
+
+        #TablaPedidos_filter input[type="search"]:focus {
+            box-shadow: none; /* Quitar la sombra al enfocar */
+            border-color: #6282a9;
+        }
+</style>
+
 <div class="container mt-5 pt-4">
     <div class="row justify-content-center">
         <div class="col-12 grid-margin stretch-card">
@@ -19,11 +33,11 @@
                 <div class="card-body">
                     <div style="display:flex;">
                         <h4 class="card-title">Gestión de Pedidos</h4>
-                       
+
                     </div>
                     <div class="table-responsive">
                         <br>
-                       
+
                         <table id="TablaPedidos" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -40,10 +54,10 @@
                                 {
                                     <tr>
 
-                                        <td >@item.ID_Pedido</td>
+                                        <td>@item.ID_Pedido</td>
                                         <td>@item.ID_Transaccion</td>
-                                        <td >@item.ID_Factura</td>
-                                        <td >@item.identificacionCliente</td>
+                                        <td>@item.ID_Factura</td>
+                                        <td>@item.identificacionCliente</td>
                                         @if (item.Estado == 0)
                                         {
                                             <td style="text-align:center;color:darkred;">Pendiente</td>
@@ -52,10 +66,10 @@
                                         {
                                             <td style="text-align: center; color: forestgreen;">Entregado</td>
                                         }
-                                        
+
                                         <td class="text-center">
                                             <a href="@Url.Action("ActualizarEstadoPedido", "Pedidos", new { q = item.ID_Pedido })" title="Cambiar Estado"><i style="color: forestgreen;" class="fa fa-check fa-lg"></i></a>
-                                           
+
                                         </td>
                                     </tr>
                                 }
@@ -121,7 +135,7 @@
                     exportOptions: {
                         columns: [0, 1, 2, 3, 4]
                     }
-                 
+
                 },
                 {
                     extend: 'print',

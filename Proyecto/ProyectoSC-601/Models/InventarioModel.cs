@@ -217,6 +217,19 @@ namespace ProyectoSC_601.Models
             }
         }
 
+        public bool VerificarCarritoVinculado(InventarioEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
+                var urlApi = rutaServidor + "VerificarCarritoVinculado";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PostAsync(urlApi, jsonData).Result;
+                return res.Content.ReadFromJsonAsync<bool>().Result;
+            }
+        }
 
     }
 }

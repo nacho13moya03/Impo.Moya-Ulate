@@ -190,6 +190,20 @@ namespace ProyectoSC_601.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult VerificarCarritoVinculado(int idProducto)
+        {
+            var entidad = new InventarioEnt { ID_Producto = idProducto };
+
+            bool carritoVinculado = modelInventario.VerificarCarritoVinculado(entidad);
+
+            if (carritoVinculado)
+            {
+                return Json(new { success = false, message = "No se puede eliminar el producto porque se encuentra en el carrito de un cliente" }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

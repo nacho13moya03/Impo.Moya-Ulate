@@ -18,6 +18,18 @@
 @{
     var empresas = ViewBag.combo as List<SelectListItem>;
 }
+<style>
+    #TablaCompras_filter input[type="search"] {
+        width: 180px;
+        height: 30px;
+        margin-bottom: 7px;
+    }
+
+        #TablaCompras_filter input[type="search"]:focus {
+            box-shadow: none; /* Quitar la sombra al enfocar */
+            border-color: #6282a9;
+        }
+</style>
 
 <div class="container mt-5 pt-4">
     <div class="row justify-content-center">
@@ -275,10 +287,17 @@
             </div>
         </div>
         <div class="text-center">
-            <a href="@Url.Action("ActualizarCompra", "Compras", new { q = Model.FirstOrDefault().IdCompras })" class="btn btn-success" title="Modificar Compra">
-                <i class="fa fa-user fa-lg text-white" style="margin-right: 5px;"></i> Modificar Compra
-            </a>
-        </div>
+         @if (Model != null && Model.Any())
+        {
+<a href="@Url.Action("ActualizarCompra", "Compras", new { q = Model.FirstOrDefault().IdCompras })" class="btn btn-success" title="Modificar Compra">
+<i class="fa fa-user fa-lg text-white" style="margin-right: 5px;"></i> Modificar Compra
+</a>
+        }
+        else
+        {
+<span>No hay compras disponibles para modificar</span>
+        }
+</div>
     `);
 
         // Muestra el modal

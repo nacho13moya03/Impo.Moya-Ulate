@@ -427,5 +427,31 @@ namespace APIProyectoSC_601.Controllers
 
             }
         }
+        [HttpPost]
+        [Route("VerificarCarritoVinculado")]
+        public bool VerificarCarritoVinculado(ProductoEnt entidad)
+        {
+            try
+            {
+                using (var context = new db_aa61bd_impomuEntities())
+                {
+                    bool carritoVinculado = context.Carrito.Any(p => p.ID_Producto == entidad.ID_Producto);
+
+                    if (!carritoVinculado)
+                    {
+                        logExitos.Add("VerificarCarritoVinculado", $"No hay carrito vinculado al producto con ID {entidad.ID_Producto}.");
+                    }
+
+                    return carritoVinculado;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en VerificarCarritoVinculado: " + ex.Message);
+                return false;
+
+            }
+        }
+
     }
 }

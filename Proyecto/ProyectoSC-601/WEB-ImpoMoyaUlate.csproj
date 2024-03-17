@@ -413,7 +413,6 @@
     <Content Include="Views\Categoria\ModificarCategoria.cshtml" />
     <Content Include="Views\Compras\ConsultaCompras.cshtml" />
     <Content Include="Views\Compras\RegistrarCompra.cshtml" />
-    <Content Include="Views\Compras\ConsultaCompra.cshtml" />
     <Content Include="Views\Compras\ActualizarCompra.cshtml" />
     <Content Include="Views\Usuario\GestionDireccion.cshtml" />
     <Content Include="Views\Carrito\CheckPago.cshtml" />

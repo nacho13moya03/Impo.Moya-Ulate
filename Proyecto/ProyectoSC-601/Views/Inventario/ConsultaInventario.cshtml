@@ -114,67 +114,67 @@
 
 <script>
     $j(document).ready(function () {
-            var table = $j('#TablaInventario').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-                },
-                "pagingType": 'simple',
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 7]
-                        }
-                    },
-                    {
-                        extend: 'csv',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 7]
-                        }
-                    },
-                    {
-                        extend: 'excel',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 7]
-                        }
-                    },
-                    {
-                        extend: 'pdf',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 7]
-                        }
-                    },
-                    {
-                        extend: 'print',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 7]
-                        }
+        var table = $j('#TablaInventario').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            },
+            "pagingType": 'simple',
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 7]
                     }
-                ],
-                "columnDefs": [
-                    { "targets": [0, 3, 4, 5, 6, 7, 8], "searchable": false }
-                ]
-            });
-            // Ajustar los botones de exportación
-            table.buttons().container().prependTo('#TablaInventario_wrapper .dataTables_filter');
-            // Establecer la búsqueda por categoría y nombre
-            $j('#TablaInventario_filter input').unbind().bind('keyup', function () {
-                var searchTerm = this.value.toLowerCase();
-                // Realizar la búsqueda en las columnas específicas
-                table.columns([1, 2]).every(function () {
-                    var column = this;
-                    column.search(searchTerm, {
-                        'regex': true,
-                        'smart': false
-                    });
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 7]
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 7]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 7]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 7]
+                    }
+                }
+            ],
+            "columnDefs": [
+                { "targets": [0, 3, 4, 5, 6, 7, 8], "searchable": false }
+            ]
+        });
+        // Ajustar los botones de exportación
+        table.buttons().container().prependTo('#TablaInventario_wrapper .dataTables_filter');
+        // Establecer la búsqueda por categoría y nombre
+        $j('#TablaInventario_filter input').unbind().bind('keyup', function () {
+            var searchTerm = this.value.toLowerCase();
+            // Realizar la búsqueda en las columnas específicas
+            table.columns([1, 2]).every(function () {
+                var column = this;
+                column.search(searchTerm, {
+                    'regex': true,
+                    'smart': false
                 });
             });
         });
+    });
 </script>
 
 <script>
-    //Funcion para mostrar mensaje de alerta
+    //Función para mostrar mensaje de alerta
     function confirmarEliminarProducto(ID_Producto) {
         Swal.fire({
             title: '¿Estás seguro?',
@@ -193,8 +193,22 @@
                     type: 'GET',
                     success: function (response) {
                         if (response.success) {
-                            // Si la verificación es exitosa, redirigir para eliminar
-                            window.location.href = '/Inventario/EliminarProducto?q=' + ID_Producto;
+
+                            $.ajax({
+                                url: '/Inventario/VerificarCarritoVinculado?idProducto=' + ID_Producto,
+                                type: 'GET',
+                                success: function (responses) {
+                                    if (responses.success) {
+                                        window.location.href = '/Inventario/EliminarProducto?q=' + ID_Producto;
+                                    } else {
+
+                                        Swal.fire('Error', responses.message, 'error');
+                                    }
+                                },
+                                error: function () {
+                                    Swal.fire('Error', 'Se produjo un error al realizar la acción adicional', 'error');
+                                }
+                            });
                         } else {
                             // Si hay facturas vinculados, mostrar el mensaje de error
                             Swal.fire('Error', response.message, 'error');
@@ -209,6 +223,7 @@
         });
     }
 </script>
+
 
 <script>
     // Muestra el total del Inventario
