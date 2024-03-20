@@ -33,6 +33,7 @@ namespace APIProyectoSC_601
         public string Telefono_Usuario { get; set; }
         public int ID_Estado { get; set; }
         public int ID_Rol { get; set; }
+        public int C_esTemporal { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Carrito> Carrito { get; set; }

@@ -7,6 +7,12 @@
 
 <div class="container" id="container">
     <div class="form-container sign-in-container">
+        @if (ViewBag.MensajeExitoso != null)
+        {
+            <div class="alert alert-success" role="alert" style="text-align: center; margin: 10px 10px -30px 10px;">
+                @ViewBag.MensajeExitoso
+            </div>
+        }
         @if (ViewBag.MensajeNoExitoso != null)
         {
             <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px !important; margin-bottom: -60px !important;">
@@ -21,7 +27,7 @@
             <div style="align-self: flex-start;">
                 <label class="medium" for="identificacion">Correo Electrónico</label>
             </div>
-            @Html.TextBoxFor(m => m.Correo_Usuario, new { @placeholder = "usuario@ejemplo.com", @type = "text", required = "required" })
+            @Html.TextBoxFor(m => m.Correo_Usuario, new { @placeholder = "usuario@ejemplo.com", @type = "text", required = "required", @id = "Correo_Usuario" })
             <div style="align-self: flex-start;">
                 @Html.ValidationMessageFor(m => m.Correo_Usuario, "", new { @style = "color: red;" })
             </div>
@@ -49,6 +55,29 @@
             setTimeout(function () {
                 alertDiv.style.display = "none";
             }, 3000);
+        }
+
+        var alertDivOpcion2 = document.querySelector(".alert.alert-success");
+
+        if (alertDivOpcion2) {
+            alertDivOpcion2.style.display = "block";
+            setTimeout(function () {
+                alertDivOpcion2.style.display = "none";
+            }, 3000);
+        }
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    // Esta función se ejecutará después de que el DOM se haya cargado completamente
+    $(document).ready(function() {
+        // Verificar si hay un mensaje de éxito
+        var mensajeExitoso = "@ViewBag.MensajeExitoso";
+
+        if (mensajeExitoso !== "") {
+            // Limpiar el campo de correo electrónico
+            $("#Correo_Usuario").val("");
         }
     });
 </script>

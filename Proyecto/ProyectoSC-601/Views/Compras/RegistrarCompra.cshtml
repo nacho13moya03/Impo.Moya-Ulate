@@ -30,7 +30,7 @@
                                     @Html.DropDownListFor(m => m.Empresa, (ViewBag.Empresas as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @style = "background-color: #eee; border: none; padding: 12px 15px; margin: 8px 0; width: 100%;", required = "required" })
                                     <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                         <div id="errorEmpresa" class="text-danger">@ViewBag.MensajeEmpresa</div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -51,8 +51,8 @@
                             </div>
 
                         </div>
-                        <div class="row gx-3 mb-3">
-                            <div class="col-md-6">
+                        <div class="mb-3">
+                           
                                 <div class="form-group">
                                     <label class="small mb-1" for="concepto">Concepto</label>
                                     @Html.TextAreaFor(m => m.Concepto, new { @class = "form-control", @placeholder = "Concepto", required = "required" })
@@ -60,7 +60,10 @@
                                 <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                     <div id="errorConcepto" class="text-danger">@ViewBag.MensajeFecha</div>
                                 </div>
-                            </div>
+                         
+                        </div>
+                        <div class="row gx-3 mb-3">
+                          
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small mb-1" for="cantidad">Cantidad</label>
@@ -70,18 +73,19 @@
                                     <div id="errorCantidad" class="text-danger">@ViewBag.MensajeFecha</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row gx-3 mb-3">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="small mb-1" for="total">Total</label>
-                                    @Html.TextBoxFor(m => m.Total, new { @class = "form-control", @placeholder = "Total", @type = "number", required = "required", min = "1" })
+                           
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="total">Total</label>
+                                        @Html.TextBoxFor(m => m.Total, new { @class = "form-control", @placeholder = "Total", @type = "number", required = "required", min = "1" })
+                                    </div>
+                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                        <div id="errorTotal" class="text-danger">@ViewBag.MensajeFecha</div>
+                                    </div>
                                 </div>
-                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                    <div id="errorTotal" class="text-danger">@ViewBag.MensajeFecha</div>
-                                </div>
-                            </div>
+                          
                         </div>
+
                         <div style="text-align:center;padding-top:4%;">
                             <a href="@Url.Action("ConsultaCompras", "Compras")" class="btn btn-danger">
                                 <i class="fa fa-arrow-left"></i> Volver

@@ -172,6 +172,7 @@
           <Property Name="Telefono_Usuario" Type="varchar" MaxLength="20" />
           <Property Name="ID_Estado" Type="int" Nullable="false" />
           <Property Name="ID_Rol" Type="int" Nullable="false" />
+          <Property Name="C_esTemporal" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Canton_Provincia">
           <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
@@ -898,6 +899,7 @@
           <Property Name="Telefono_Usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ID_Estado" Type="Int32" Nullable="false" />
           <Property Name="ID_Rol" Type="Int32" Nullable="false" />
+          <Property Name="C_esTemporal" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Carrito" Relationship="Self.FK_Carrito_Usuario" FromRole="Usuario" ToRole="Carrito" />
           <NavigationProperty Name="Direcciones" Relationship="Self.FK_Usuario_Direccion" FromRole="Usuario" ToRole="Direcciones" />
           <NavigationProperty Name="Estado" Relationship="Self.FK_Usuario_Estado" FromRole="Usuario" ToRole="Estado" />
@@ -1430,6 +1432,7 @@
           <Property Type="String" Name="Telefono_Usuario" Nullable="true" MaxLength="20" />
           <Property Type="Int32" Name="ID_Estado" Nullable="false" />
           <Property Type="Int32" Name="ID_Rol" Nullable="false" />
+          <Property Type="Int32" Name="C_esTemporal" Nullable="false" />
         </ComplexType>
         <ComplexType Name="RecuperarCuentaUsuarioSP_Result">
           <Property Type="String" Name="Nombre_Usuario" Nullable="false" MaxLength="60" />
@@ -1625,6 +1628,7 @@
                 <ScalarProperty Name="Telefono_Usuario" ColumnName="Telefono_Usuario" />
                 <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
                 <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
+                <ScalarProperty Name="C_esTemporal" ColumnName="C_esTemporal" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1655,6 +1659,7 @@
                 <ScalarProperty Name="Telefono_Usuario" ColumnName="Telefono_Usuario" />
                 <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
                 <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
+                <ScalarProperty Name="C_esTemporal" ColumnName="C_esTemporal" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

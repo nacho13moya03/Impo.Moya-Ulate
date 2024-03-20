@@ -36,13 +36,13 @@ namespace ProyectoSC_601.Entities
         public string Correo_Usuario { get; set; }
 
         [Required(ErrorMessage = "Este campo es obligatorio.")]
-        [StringLength(15, MinimumLength = 8, ErrorMessage = "La contraseña debe tener entre 8 y 15 caracteres.")]
-        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$", ErrorMessage = "La contraseña debe tener entre 8 y 15 caracteres y contener números, letras y caracteres especiales.")]
+        [StringLength(int.MaxValue, MinimumLength = 6, ErrorMessage = "La contraseña debe tener al menos 6 caracteres.")]
+        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$", ErrorMessage = "La contraseña debe tener al menos 6 caracteres y contener números, letras y caracteres especiales.")]
 
         public string Contrasenna_Usuario { get; set; }
 
-        [StringLength(15, MinimumLength = 8, ErrorMessage = "La contraseña debe tener entre 8 y 15 caracteres.")]
-        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$", ErrorMessage = "La contraseña debe tener entre 8 y 15 caracteres y contener números, letras y caracteres especiales.")]
+        [StringLength(int.MaxValue, MinimumLength = 6, ErrorMessage = "La contraseña debe tener al menos 6 caracteres.")]
+        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$", ErrorMessage = "La contraseña debe tener al menos 6 caracteres y contener números, letras y caracteres especiales.")]
 
         public string NuevaContrasenna_Usuario { get; set; }
 
@@ -66,6 +66,8 @@ namespace ProyectoSC_601.Entities
         public string Telefono_Usuario { get; set; }
         public int ID_Estado { get; set; }
         public int ID_Rol { get; set; }
+        public int C_esTemporal { get; set; }
+        
 
     }
 }

@@ -294,12 +294,18 @@ CREATE TABLE [dbo].[Usuario](
 	[Telefono_Usuario] [varchar](20) NULL,
 	[ID_Estado] [int] NOT NULL,
 	[ID_Rol] [int] NOT NULL,
+	[C_esTemporal] [int] NOT NULL,
  CONSTRAINT [PK_Usuario] PRIMARY KEY CLUSTERED 
 (
 	[ID_Usuario] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
+ALTER TABLE [dbo].[Usuario]
+ADD [C_esTemporal] [int] NOT NULL;
+
+
 INSERT [dbo].[Canton] ([ID_Provincia], [ID_Canton], [Nombre]) VALUES (1, 101, N'San José')
 GO
 INSERT [dbo].[Canton] ([ID_Provincia], [ID_Canton], [Nombre]) VALUES (1, 102, N'Escazú')
@@ -2189,8 +2195,8 @@ CREATE PROCEDURE [dbo].[RegistrarUsuarioSP]
 AS
 BEGIN
 
-	INSERT INTO dbo.Usuario (ID_Identificacion,Identificacion_Usuario,Nombre_Usuario,Apellido_Usuario,Correo_Usuario,Contrasenna_Usuario,ID_Direccion,Telefono_Usuario,ID_Estado,ID_Rol)
-    VALUES (@tipo,@Identificacion,@Nombre,@Apellido,@Correo,@Contrasenna,null,@Telefono,1,2)
+	INSERT INTO dbo.Usuario (ID_Identificacion,Identificacion_Usuario,Nombre_Usuario,Apellido_Usuario,Correo_Usuario,Contrasenna_Usuario,ID_Direccion,Telefono_Usuario,ID_Estado,ID_Rol,C_esTemporal)
+    VALUES (@tipo,@Identificacion,@Nombre,@Apellido,@Correo,@Contrasenna,null,@Telefono,1,2,0)
 
 END
 GO

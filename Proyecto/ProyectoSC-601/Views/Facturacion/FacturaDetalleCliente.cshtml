@@ -19,7 +19,7 @@
                         <h4 class="card-title">Detalles Factura</h4>
                         <div style="margin-left:82%">
                             <div style="display:flex;">
-                                <a class="btn btn-primary" style="background-color: #6282a9;border:none; " href="@Url.Action("FacturacionCliente","Facturacion")" style="margin-left:5%;"><i style="color: white;" class="fa fa-arrow-left fa-lg"></i></a>
+                                <a class="btn btn-primary" style="background-color: #6282a9;border:none; " href="@Url.Action("FacturacionCliente","Facturacion")" title="Regresar" style="margin-left:5%;"><i style="color: white;" class="fa fa-arrow-left fa-lg"></i></a>
                             </div>
                         </div>
                     </div>
@@ -30,8 +30,8 @@
                             <table id="TablaClientes" class="table table-bordered table-hover">
                                 <thead class="table-info">
                                     <tr>
-                                        <th style="background-color: #6282a9; color:white;">Factura</th>
-                                        <th style="background-color: #6282a9; color:white;">Nombre</th>
+                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Factura</th>
+                                        <th style="background-color: #6282a9; color:white;">Producto</th>
                                         <th style="background-color: #6282a9; color:white;">Precio Unidad</th>
                                         <th style="background-color: #6282a9; color:white;">Impuesto Unidad</th>
                                         <th style="background-color: #6282a9; color:white;">Cantidad</th>
@@ -45,8 +45,8 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>@item.ID_Factura</td>
-                                            <td>@item.Nombre</td>
+                                            <td class="visually-hidden">@item.ID_Factura</td>
+                                            <td  style="border-left: 1px solid #ECECEC;">@item.Nombre</td>
                                             <td>₡ @item.PrecioPagado.ToString("N2")</td>
                                             <td>
                                                 ₡ @item.ImpuestoPagado.ToString("N2")

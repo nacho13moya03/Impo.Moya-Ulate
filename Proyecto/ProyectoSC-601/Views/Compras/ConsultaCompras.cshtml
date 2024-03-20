@@ -62,7 +62,7 @@
                             <table id="TablaCompras" class="table table-bordered table-hover">
                                 <thead class="table-info">
                                     <tr>
-                                        <th style="background-color: #6282a9; color:white;">ID</th>
+                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">ID</th>
                                         <th style="background-color: #6282a9; color:white;">Empresa</th>
                                         <th style="background-color: #6282a9; color:white;">Fecha</th>
                                         <th style="background-color: #6282a9; color:white;" class="visually-hidden">Concepto</th>
@@ -75,7 +75,7 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td style="white-space: nowrap;">@item.IdCompras</td>
+                                            <td style="white-space: nowrap;" class="visually-hidden">@item.IdCompras</td>
                                             <td>
                                                 @{
                                                     var idEmpresa = item.Empresa;
@@ -98,7 +98,7 @@
                                             <td class="visually-hidden">@item.Cantidad</td>
                                             <td class="visually-hidden">@item.Total.ToString("0.00")</td>
                                             <td class="text-center">
-                                                <button class="btn btn-primary btn-consultar" onclick="mostrarModalConsulta(@item.IdCompras, '@item.Empresa', '@item.Fecha', '@item.Concepto', '@item.Cantidad', '@item.Total')">
+                                                <button class="btn btn-primary btn-consultar" onclick="mostrarModalConsulta('@item.Empresa', '@item.Fecha', '@item.Concepto', '@item.Cantidad', '@item.Total')">
                                                     Consultar
                                                 </button>
                                             </td>
@@ -233,7 +233,7 @@
 
 <script>
     // Función para mostrar modal de consulta de compras
-    function mostrarModalConsulta(idCompra, empresa, fecha, concepto, cantidad, total) {
+    function mostrarModalConsulta(empresa, fecha, concepto, cantidad, total) {
         var myModal = new bootstrap.Modal(document.getElementById('consultaModal'), {
             keyboard: false
         });
@@ -255,10 +255,7 @@
                         <div class="col-md-8">
                             <div class="p-6">
                                 <table class="table table-bordered text-center">
-                                    <tr>
-                                        <td style="width: 30%;">ID de Compra:</td>
-                                        <td style="width: 70%;">${idCompra}</td>
-                                    </tr>
+                                   
                                     <tr>
                                         <td>Empresa:</td>
                                         <td>${nombreEmpresaText}</td>

@@ -677,5 +677,40 @@ namespace APIProyectoSC_601.Controllers
             }
         }
 
+       
+        [HttpPut]
+        [Route("ActualizarContrasenaTemporal")]
+        public string ActualizarContrasenaTemporal(Usuario usuario)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    var datos = context.Usuario.Where(x => x.ID_Usuario == usuario.ID_Usuario).FirstOrDefault();
+
+                    if (datos != null)
+                    {
+                        datos.Contrasenna_Usuario = usuario.Contrasenna_Usuario;
+                        datos.C_esTemporal = 0;
+                      
+                        context.SaveChanges();
+                        logExitos.Add("ActualizarContrasenaTemporal", $"Se actualizó exitosamente la contraseña del usuario con ID {usuario.ID_Usuario}.");
+                        return "Ok";
+                    }
+                    else
+                    {
+                        log.Add("Error en ActualizarContrasenaTemporal: Usuario no encontrado.");
+                        return string.Empty;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ActualizarContrasenaTemporal: " + ex.Message);
+                return string.Empty;
+            }
+        }
+
+
     }
 }

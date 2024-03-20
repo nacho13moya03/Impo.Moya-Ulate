@@ -11,6 +11,18 @@
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" rel="stylesheet">
 
 }
+<style>
+    #TablaCategorias_filter input[type="search"] {
+        width: 180px;
+        height: 30px;
+        margin-bottom: 7px;
+    }
+
+    #TablaCategorias_filter input[type="search"]:focus {
+        box-shadow: none; /* Quitar la sombra al enfocar */
+        border-color: #6282a9;
+    }
+</style>
 <div class="container mt-5 pt-4">
     <div class="row justify-content-center">
         <div class="col-12 grid-margin stretch-card">
@@ -23,7 +35,7 @@
                         <h4 class="card-title">Categorias Registradas</h4>
                         <div style="margin-left:75%">
                             <div style="display:flex;">
-                                <a class="btn btn-primary" href="@Url.Action("RegistrarCategoria","Categoria")" style="margin-left:5%;"><i style="color: white;" class="fa fa-plus fa-lg"></i></a>
+                                <a class="btn btn-primary" href="@Url.Action("RegistrarCategoria","Categoria")" style="margin-left:5%;" title="Agregar Categoría"><i style="color: white;" class="fa fa-plus fa-lg"></i></a>
                             </div>
                         </div>
                     </div>
@@ -38,7 +50,7 @@
                         <table id="TablaCategorias" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th style="background-color: #6282a9; color:white;">ID</th>
+                                    <th style="background-color: #6282a9; color:white;">#</th>
                                     <th style="background-color: #6282a9;color:white; ">Categoría</th>
                                     <th style="background-color: #6282a9;color:white;">Estado</th>
                                     <th style="background-color: #6282a9;color:white;">Opciones</th>

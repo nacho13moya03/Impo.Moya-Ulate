@@ -19,7 +19,7 @@
                         <h4 class="card-title">Historial de Compras</h4>
                         <div style="margin-left:78%">
                             <div style="display:flex;">
-                                <a class="btn btn-primary" style="background-color: #6282a9;border:none; " href="@Url.Action("PerfilCliente","Usuario")" style="margin-left:5%;"><i style="color: white;" class="fa fa-arrow-left fa-lg"></i></a>
+                                <a class="btn btn-primary" style="background-color: #6282a9;border:none; " href="@Url.Action("PerfilCliente", "Usuario");" title="Regresar" style="margin-left:5%;"><i style="color: white;" class="fa fa-arrow-left fa-lg"></i></a>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                                             <td>₡ @item.TotalCompra.ToString("N2")</td>
 
                                             <td style="text-align:center">
-                                                <a href="@Url.Action("FacturaDetalleCliente", "Facturacion", new { q = item.ID_Factura })"><i class="fa fa-search fa-lg" style="color:#6282a9;"></i></a>
+                                                <a href="@Url.Action("FacturaDetalleCliente", "Facturacion", new { q = item.ID_Factura })" title="Ver Detalle Factura"><i class="fa fa-eye fa-lg" style="color:#6282a9;"></i></a>
                                             </td>
 
                                         </tr>

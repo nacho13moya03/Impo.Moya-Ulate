@@ -92,35 +92,43 @@ namespace ProyectoSC_601.Controllers
             ModelState.Remove("ID_Distrito");
             ModelState.Remove("Direccion_Exacta");
             ModelState.Remove("Telefono_Usuario");
+            ModelState.Remove("Contrasenna_Usuario"); 
+
+            // Luego, aplicar la validación de campo obligatorio manualmente
+            if (string.IsNullOrEmpty(entidad.Contrasenna_Usuario))
+            {
+                ModelState.AddModelError("Contrasenna_Usuario", "Este campo es obligatorio.");
+            }
+
             if (ModelState.IsValid)
             {
-
+                // Verificar si las credenciales son válidas
                 var respuesta = modelUsuario.Login(entidad);
 
-                if (respuesta != null && respuesta.ID_Rol == 2)
+                if (respuesta != null)
                 {
-                    Session["ID_Usuario"] = respuesta.ID_Usuario;
-                    return RedirectToAction("Index", "Home");
+                    Session["Contrasena_Temporal"] = respuesta.C_esTemporal;
+                    Session["Rol"] = respuesta.ID_Rol;
+                    if (respuesta.ID_Rol == 2)
+                    {
+                        Session["ID_Usuario"] = respuesta.ID_Usuario;
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else if (respuesta.ID_Rol == 1)
+                    {
+                        Session["ID_Usuario"] = respuesta.ID_Usuario;
+                        return RedirectToAction("IndexAdmin", "Home");
+                    }
                 }
-                else if (respuesta != null && respuesta.ID_Rol == 1)
-                {
-                    Session["ID_Usuario"] = respuesta.ID_Usuario;
-                    return RedirectToAction("IndexAdmin", "Home");
 
-                }
-                else
-                {
-                    ViewBag.MensajeNoExitoso = "Credenciales Inválidos";
-                    return View();
-                }
+                // Si las credenciales no son válidas, mostrar mensaje de credenciales inválidos
+                ViewBag.MensajeNoExitoso = "Credenciales Inválidos o Usuario Inexistente";
+                return View();
             }
 
-            else
-            {
-                return View(entidad);
-            }
+            // Si el modelo no es válido, volver a mostrar el formulario con los errores
+            return View(entidad);
         }
-
         [HttpGet]
         public ActionResult RecuperarCuentaUsuario()
         {
@@ -149,7 +157,9 @@ namespace ProyectoSC_601.Controllers
 
                 if (respuesta == "OK")
                 {
-                    return RedirectToAction("Login", "Usuario");
+                    ViewBag.MensajeExitoso = "Se ha enviado un correo con la contraseña temporal";
+                    entidad.Correo_Usuario = string.Empty;
+                    return View();
                 }
                 else
                 {
@@ -438,5 +448,24 @@ namespace ProyectoSC_601.Controllers
                 return View();
             }
         }
+
+        [HttpPost]
+        public ActionResult CambiarContrasenaTemporal(string nuevaContrasena)
+        {
+            var entidad = new UsuarioEnt();
+            entidad.ID_Usuario = long.Parse(Session["ID_Usuario"].ToString());
+            entidad.Contrasenna_Usuario = nuevaContrasena;
+
+            string respuesta = modelUsuario.ActualizarContrasenaTemporal(entidad);
+            if(respuesta == "Ok") {
+                Session["Contrasena_Temporal"] = 0;
+            }
+            if (long.Parse(Session["Rol"].ToString()) == 1)
+            {
+                return RedirectToAction("IndexAdmin", "Home");
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

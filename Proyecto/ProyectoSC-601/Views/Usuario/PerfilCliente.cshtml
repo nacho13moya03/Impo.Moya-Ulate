@@ -96,9 +96,13 @@
                     </div>
                     <div class="col-xl-9">
                         <div class="card mb-4">
-                            <div class="card-header" style="background-color: #EEEEEE; ">Ubicación</div>
+                            <div class="card-header" style="background-color: #EEEEEE; ">
+                                Ubicación
+                            </div>
                             <div class="card-body ">
-                                <div class="row gx-3 mb-3">
+                                <span class="small" style="color: gray;font-style:italic;">La dirección ingresada será la dirección a la que se enviará el pedido</span>
+
+                                <div class="row gx-3 mb-3" style="margin-top:2.5%!important;">
                                     <div class="col-md-4">
                                         <label class="small mb-1" for="provincia">Provincia</label>
 
@@ -146,14 +150,6 @@
                             <div class="card-header" style="background-color: #EEEEEE; ">Seguridad</div>
                             <div class="card-body ">
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="password">Contraseña</label>
-                                    @Html.TextBoxFor(m => m.Contrasenna_Usuario, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @placeholder = "Contraseña", @type = "password" })
-
-                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                        @Html.ValidationMessageFor(m => m.Contrasenna_Usuario, "", new { @style = "color: red;" })
-                                    </div>
-                                </div>
-                                <div class="mb-3">
                                     <label class="small mb-1" for="password">Nueva Contraseña</label>
                                     @Html.TextBoxFor(m => m.NuevaContrasenna_Usuario, new { @class = "form-control", @placeholder = "Nueva Contraseña", @type = "password" })
 
@@ -166,10 +162,9 @@
                     </div>
                     <div class="col-xl-9">
                         <div class="text-center" style=" margin-bottom: 5%;">
-                            <button class="btn btn-success" type="submit" ><i class="bi bi-pencil-square"></i></button>
-                            <a href="javascript:void(0);" onclick="confirmarInactivarCliente(@Model.ID_Usuario)" class="btn btn-danger" style="color: white;"> <i class="bi bi-trash3"></i></a>
-                            <a href='@Url.Action("CerrarSesionUsuario", "Usuario")' class="btn btn-dark" style="color: white;"><i class="bi bi-box-arrow-left"></i></a>
-                        </div>
+                            <button class="btn btn-success" type="submit" ><i class="bi bi-pencil-square"></i> Guardar</button>
+                            <a href="javascript:void(0);" onclick="confirmarInactivarCliente(@Model.ID_Usuario)" class="btn btn-danger" style="color: white;margin-left:2%;"> <i class="bi bi-trash3"></i> Eliminar</a>
+                                </div>
                     </div>
                 </div>
                     }

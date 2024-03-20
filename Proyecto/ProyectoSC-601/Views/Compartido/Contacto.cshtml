@@ -2,6 +2,15 @@
 @{
     ViewBag.Title = "Contacto";
 }
+<style>
+
+    .invalid-feedback {
+        color: red;
+        font-size: 0.8em;
+        margin-top: 5px;
+    }
+   
+</style>
 
 <main id="main">
     @*CONTACTO*@
@@ -47,24 +56,28 @@
                             @ViewBag.MensajeNoExitoso
                         </div>
                     }
-                    @using (Html.BeginForm("Contacto", "Compartido", FormMethod.Post, new { @class = "pt-3" }))
+                    @using (Html.BeginForm("Contacto", "Compartido", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate" }))
                     {
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 @Html.TextBoxFor(m => m.Nombre_Completo, new { @class = "form-control", @placeholder = "Nombre Completo", @type = "text", required = "required" })
+                                <div id="errorNombre" class="text-danger" style="font-size:12px;"></div>
                             </div>
                             <div class="col-md-6 form-group mt-3 mt-md-0">
                                 @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @placeholder = "Correo Electrónico", @type = "email", required = "required" })
+                                <div id="errorCorreo" class="text-danger" style="font-size:12px;"></div>
                             </div>
                         </div>
                         <div class="form-group mt-3">
                             @Html.TextBoxFor(m => m.Asunto, new { @class = "form-control", @placeholder = "Asunto", @type = "text", required = "required" })
+                            <div id="errorAsunto" class="text-danger" style="font-size:12px;"></div>
                         </div>
                         <div class="form-group mt-3">
                             @Html.TextAreaFor(m => m.Mensaje, new { rows = 5, cols = 20, @class = "form-control", @placeholder = "Mensaje", @type = "text", required = "required" })
+                            <div id="errorMensaje" class="text-danger" style="font-size:12px;"></div>
                         </div>
-
-                        <div class="text-center"><button type="submit" style="border-radius: 20px; border: 1px solid #6282a9; background-color: #6282a9; color: #FFFFFF;padding:10px;padding-left:20px;padding-right:20px; margin-top:15px; ">Enviar</button></div>
+                        
+                        <div class="text-center"><button type="submit"  onclick="return validarFormulario()" style="border-radius: 20px; border: 1px solid #6282a9; background-color: #6282a9; color: #FFFFFF;padding:10px;padding-left:20px;padding-right:20px; margin-top:15px; ">Enviar</button></div>
                     }
                 </div>
             </div>
@@ -75,3 +88,57 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="~/Assets/js/ContactoIndex.js"></script>
+
+
+<script>
+    function validarFormulario() {
+        // Obtener los valores del formulario
+        var nombreElement = document.getElementById("Nombre_Completo");
+        var correoElement = document.getElementById("Correo");
+        var asuntoElement = document.getElementById("Asunto");
+        var mensajeElement = document.getElementById("Mensaje");
+     
+        submitted = true;
+
+
+        // Activar el evento si el campo está vacío
+        document.getElementById("errorNombre").innerText = "";
+        document.getElementById("errorCorreo").innerText = "";
+        document.getElementById("errorAsunto").innerText = "";
+        document.getElementById("errorMensaje").innerText = "";
+
+        var valid = true;
+
+        // Validar el nombre, que no contenga números o caracteres especiales
+        if (nombreElement !== null && nombreElement.value.trim() === "") {
+            document.getElementById("errorNombre").innerText = "Este campo es obligatorio";
+            valid = false;
+        }
+
+        // Validar que la dirección no esté vacía
+        if (asuntoElement !== null && asuntoElement.value.trim() === "") {
+            document.getElementById("errorAsunto").innerText = "Este campo es obligatorio";
+            valid = false;
+        }
+        // Validar que la dirección no esté vacía
+        if (mensajeElement !== null && mensajeElement.value.trim() === "") {
+            document.getElementById("errorMensaje").innerText = "Este campo es obligatorio";
+            valid = false;
+        }
+
+        // Validar el correo, debe contener un @@ y un punto con información
+        if (correoElement !== null && correoElement.value.trim() === "") {
+            document.getElementById("errorCorreo").innerText = "Este campo es obligatorio";
+            valid = false;
+        } else if (correoElement !== null && !/\S+@@\S+\.\S+/.test(correoElement.value)) {
+            document.getElementById("errorCorreo").innerText = "Ingrese una dirección de correo electrónico válida";
+            valid = false;
+        }
+
+        if (!valid) {
+            // Si hay errores, evitar el envío del formulario
+            return false;
+        }
+        return true;
+    };
+</script>

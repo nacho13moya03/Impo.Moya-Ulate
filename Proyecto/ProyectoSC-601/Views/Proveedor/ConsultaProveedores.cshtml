@@ -50,7 +50,7 @@
                             <table id="TablaProveedores" class="table table-bordered table-hover">
                                 <thead class="table-info">
                                     <tr>
-                                        <th style="background-color: #6282a9; color:white;">ID</th>
+                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">ID</th>
                                         <th style="background-color: #6282a9; color:white;">Nombre</th>
                                         <th style="background-color: #6282a9; color:white;">Tipo</th>
                                         <th style="background-color: #6282a9; color:white;">Cédula</th>
@@ -67,8 +67,8 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>@item.ID_Proveedor</td>
-                                            <td>@($"{item.Nombre_Proveedor} {item.Apellido_Proveedor}")</td>
+                                            <td class="visually-hidden">@item.ID_Proveedor</td>
+                                            <td  style="border-left: 1px solid #ECECEC;">@($"{item.Nombre_Proveedor} {item.Apellido_Proveedor}")</td>
                                             <td>@item.Nombre_Identificacion</td>
                                             <td>@item.Cedula_Proveedor</td>
                                             <td>@item.Direccion_Exacta</td>
@@ -90,7 +90,7 @@
                                                 <td style="text-align:center;"><span class="badge bg-danger">Inactivo</span></td>
                                             }
                                             <td class="text-center">
-                                                <a href="@Url.Action("ActualizarEstadoProveedor", "Proveedor", new { q = item.ID_Proveedor })" title="Cambiar Estado">
+                                                <a href="@Url.Action("ActualizarEstadoProveedor", "Proveedor", new { q = item.ID_Proveedor })" title="Cambiar Estado" style="color: #6282a9;">
                                                     <i class="fa fa-exchange fa-lg text-primary"></i>
                                                 </a>
                                                 <a href="@Url.Action("ActualizarProveedor", "Proveedor", new { q = item.ID_Proveedor })" title="Modificar Proveedor">
