@@ -182,8 +182,8 @@ namespace ProyectoSC_601.Controllers
                         brand_name = "Importadora Moya y Ulate SA",
                         landing_page = "NO_PREFERENCE",
                         user_action = "PAY_NOW", //Accion para que paypal muestre el monto de pago
-                        return_url = "http://nacho02-001-site1.ktempurl.com/Carrito/CheckPago",// cuando se aprovo la solicitud del cobro
-                        cancel_url = "http://nacho02-001-site1.ktempurl.com/"// cuando cancela la operacion
+                        return_url = "https://localhost:44353/Carrito/CheckPago",// cuando se aprovo la solicitud del cobro
+                        cancel_url = "https://localhost:44353/"// cuando cancela la operacion
                     }
                 };
 

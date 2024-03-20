@@ -15,10 +15,10 @@ namespace APIProyectoSC_601
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class db_aa61bd_impomuEntities : DbContext
+    public partial class ImportadoraMoyaUlateEntities : DbContext
     {
-        public db_aa61bd_impomuEntities()
-            : base("name=db_aa61bd_impomuEntities")
+        public ImportadoraMoyaUlateEntities()
+            : base("name=ImportadoraMoyaUlateEntities")
         {
         }
     

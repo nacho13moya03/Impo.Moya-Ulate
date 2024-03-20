@@ -34,7 +34,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomuEntities())
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
 
                     context.RegistrarEmpresaSP(entidad.Nombre_empresa, entidad.Descripcion, entidad.Ubicacion);
@@ -60,7 +60,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomuEntities())
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.ActualizarEmpresaSP(entidad.ID_Empresa, entidad.Nombre_empresa, entidad.Descripcion, entidad.Ubicacion);
                     logExitos.Add("ActualizarEmpresa", $"Información de la empresa '{entidad.Nombre_empresa}' actualizada exitosamente.");
@@ -86,7 +86,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomuEntities())
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     var empresaAEliminar = context.Empresa.FirstOrDefault(p => p.ID_Empresa == q);
 
@@ -119,7 +119,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomuEntities())
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     // Verificar si hay proveedores vinculados a la empresa específica
                     bool hayProveedoresVinculados = context.Proveedores.Any(p => p.Empresa == entidad.ID_Empresa);
@@ -152,7 +152,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomuEntities())
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var empresas = (from x in context.Empresa
@@ -185,7 +185,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomuEntities())
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var empresa = (from x in context.Empresa

@@ -29,7 +29,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomuEntities())
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Pedidos.Add(pedido);
                     context.SaveChanges();
@@ -50,7 +50,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomuEntities())
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var usuario = (from p in context.Pedidos
@@ -89,7 +89,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomuEntities())
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var usuario = (from p in context.Pedidos
@@ -127,7 +127,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomuEntities())
+                using (var context = new ImportadoraMoyaUlateEntities())
                 {
                     var datos = context.Pedidos.Where(x => x.ID_Pedido == entidad.ID_Pedido).FirstOrDefault();
 
