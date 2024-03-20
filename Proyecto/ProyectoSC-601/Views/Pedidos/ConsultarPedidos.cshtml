@@ -61,17 +61,16 @@
                                         @if (item.Estado == 0)
                                         {
                                             <td style="text-align:center;color:darkred;">Pendiente</td>
-                                        }
-                                        else
-                                        {
+                                            <td class="text-center">
+                                                <a href="@Url.Action("ActualizarEstadoPedido", "Pedidos", new { q = item.ID_Pedido })" title="Cambiar Estado"><i style="color: forestgreen;" class="fa fa-check fa-lg"></i></a>
+                                            </td>
+                                            }
+                                            else
+                                            {
                                             <td style="text-align: center; color: forestgreen;">Entregado</td>
-                                        }
-
-                                        <td class="text-center">
-                                            <a href="@Url.Action("ActualizarEstadoPedido", "Pedidos", new { q = item.ID_Pedido })" title="Cambiar Estado"><i style="color: forestgreen;" class="fa fa-check fa-lg"></i></a>
-
-                                        </td>
-                                    </tr>
+                                            <td></td>
+                                            }
+                                        </tr>
                                 }
                             </tbody>
                         </table>

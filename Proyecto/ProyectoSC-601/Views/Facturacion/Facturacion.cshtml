@@ -6,7 +6,21 @@
     <link href="~/Assets/css/gestionClientesStyle.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" rel="stylesheet">
+    <link href="~/Assets/css/gestionClientesStyle.css" rel="stylesheet">
 }
+<style>
+    #TTablaClientes_filter input[type="search"] {
+        width: 180px;
+        height: 30px;
+        margin-bottom: 7px;
+    }
+
+        #TTablaClientes_filter input[type="search"]:focus {
+            box-shadow: none; /* Quitar la sombra al enfocar */
+            border-color: #6282a9;
+        }
+</style>
 <div class="container mt-5 pt-4">
     <div class="row justify-content-center">
         <div class="col-12 grid-margin stretch-card">
@@ -16,55 +30,55 @@
             <div class="card" style="margin-bottom:80px;">
                 <div class="card-body">
                     <h4 class="card-title">Facturas Registrados</h4><br />
-                        <div class="table-responsive">
+                    <div class="table-responsive">
 
-                            @if (Model.Count() > 0)
-                            {
+                        @if (Model.Count() > 0)
+                        {
 
-                                <table id="TablaClientes" class="table table-bordered table-hover">
-                                    <thead class="table table-bordered table-hover">
+                            <table id="TablaClientes" class="table table-bordered table-hover">
+                                <thead class="table table-bordered table-hover">
+                                    <tr>
+                                        <th style="background-color: #6282a9; color:white;">Número de Factura</th>
+                                        <th style="background-color: #6282a9; color:white;">Cliente</th>
+                                        <th style="background-color: #6282a9; color:white;">Fecha de Compra</th>
+                                        <th style="background-color: #6282a9; color:white;">Total de la compra</th>
+                                        <th style="background-color: #6282a9; color:white;">Ver detalle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
                                         <tr>
-                                            <th  style="background-color: #6282a9; color:white;">Número de Factura</th>
-                                            <th  style="background-color: #6282a9; color:white;">Cliente</th>
-                                            <th  style="background-color: #6282a9; color:white;">Fecha de Compra</th>
-                                            <th  style="background-color: #6282a9; color:white;">Total de la compra</th>
-                                            <th  style="background-color: #6282a9; color:white;">Ver detalle</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model)
-                                        {
-                                            <tr>
-                                                <td># @item.ID_Factura</td>
-                                                <td>@item.NombreCliente @item.ApellidoCliente</td>
-                                                <td>@item.FechaCompra</td>
-                                                <td>₡ @item.TotalCompra.ToString("N2")</td>
+                                            <td># @item.ID_Factura</td>
+                                            <td>@item.NombreCliente @item.ApellidoCliente</td>
+                                            <td>@item.FechaCompra</td>
+                                            <td>₡ @item.TotalCompra.ToString("N2")</td>
 
-                                                <td style="text-align:center">
-                                                    <a href="@Url.Action("FacturaDetalle", "Facturacion", new { q = item.ID_Factura })"><i class="fa fa-search fa-lg" style="color:#6282a9;"></i></a>
-                                                </td>
+                                            <td style="text-align:center">
+                                                <a href="@Url.Action("FacturaDetalle", "Facturacion", new { q = item.ID_Factura })"><i class="fa fa-search fa-lg" style="color:#6282a9;"></i></a>
+                                            </td>
 
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            }
-                            else
-                            {
-                                <table id="TablaClientes" class="table table-bordered table-hover">
-                                    <thead class="table table-bordered table-hover">
-                                        <tr>
-                                            <th style="background-color: #6282a9; color:white;">Número de Factura</th>
-                                            <th style="background-color: #6282a9; color:white;">Cliente</th>
-                                            <th style="background-color: #6282a9; color:white;">Fecha de Compra</th>
-                                            <th style="background-color: #6282a9; color:white;">Total de la compra</th>
-                                            <th style="background-color: #6282a9; color:white;">Ver detalle</th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            }
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <table id="TablaClientes" class="table table-bordered table-hover">
+                                <thead class="table table-bordered table-hover">
+                                    <tr>
+                                        <th style="background-color: #6282a9; color:white;">Número de Factura</th>
+                                        <th style="background-color: #6282a9; color:white;">Cliente</th>
+                                        <th style="background-color: #6282a9; color:white;">Fecha de Compra</th>
+                                        <th style="background-color: #6282a9; color:white;">Total de la compra</th>
+                                        <th style="background-color: #6282a9; color:white;">Ver detalle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        }
 
                         <br>
                     </div>
@@ -74,24 +88,85 @@
     </div>
 </div>
 
-@*Se agrega un data table para la consulta de clientes*@
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script>var $j = jQuery.noConflict();</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+@*<script>
+        $j(document).ready(function () {
+
+            var tabla = $j('#TablaClientes').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "pagingType": 'simple'
+            });
+
+            // Se quita el ordenamiento por defecto del dataTable para que se vea reflejado el orden de la lista
+            tabla.order([]).draw();
+        });
+
+    </script>*@
 <script>
     $j(document).ready(function () {
-
-        var tabla = $j('#TablaClientes').DataTable({
+        $j('#TablaClientes').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
             },
-            "pagingType": 'simple'
+            "pagingType": 'simple',
+            "order": [],
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    }
+                }
+            ]
         });
 
-        // Se quita el ordenamiento por defecto del dataTable para que se vea reflejado el orden de la lista
+        // Ajustar los botones de exportación
         tabla.order([]).draw();
+        table.buttons().container().prependTo('#TablaClientes_wrapper .dataTables_filter');
     });
-
 </script>

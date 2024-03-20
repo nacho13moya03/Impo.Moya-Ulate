@@ -146,7 +146,7 @@ namespace APIProyectoSC_601.Controllers
             {
                 using (var context = new db_aa61bd_impomuEntities())
                 {
-                    var datos = (from x in context.Categorias
+                    var datos = (from x in context.Categorias where x.Estado_Categoria == 1
                                  select x).ToList();
 
                     List<System.Web.Mvc.SelectListItem> categorias = new List<System.Web.Mvc.SelectListItem>();
