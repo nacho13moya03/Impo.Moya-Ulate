@@ -22,6 +22,34 @@ namespace APIProyectoSC_601.Controllers
             logExitos = new LogExitos(rutaExitos);
         }
 
+        [HttpGet]
+        [Route("ObtenerCantidadProductosEnCarrito")]
+        public int ObtenerCantidadProductosEnCarrito(long ID_Usuario)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    int cantidadCarrito = context.Carrito.Where(x => x.ID_Usuario == ID_Usuario)
+                                                 .Select(x => x.ID_Producto)
+                                                 .Distinct()
+                                                 .Count();
+
+
+                    logExitos.Add("ObtenerCantidadProductosEnCarrito", $"Se contaron {cantidadCarrito} productos diferentes en el carrito");
+
+                    return cantidadCarrito;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ObtenerCantidadProductosEnCarrito: " + ex.Message);
+                return 0;
+            }
+        }
+
         [HttpPost]
         [Route("RegistrarCarrito")]
         public string RegistrarCarrito(Carrito carrito)

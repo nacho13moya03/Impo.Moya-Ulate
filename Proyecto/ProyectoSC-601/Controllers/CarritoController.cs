@@ -26,6 +26,7 @@ namespace ProyectoSC_601.Controllers
         UsuarioModel modelUsuario = new UsuarioModel();
         FacturacionModel modelFacturacion = new FacturacionModel();
         InventarioModel modelInventario = new InventarioModel();
+        IndexModel modelIndex = new IndexModel();
 
         private string ObtenerImagenProducto(long ID_Producto)
         {
@@ -50,7 +51,7 @@ namespace ProyectoSC_601.Controllers
             return "nombre_del_archivo_imagen.jpg";
         }
 
-
+     
 
         [HttpGet]
         public ActionResult RegistrarCarrito(int cantidad, long ID_Producto)
@@ -75,7 +76,14 @@ namespace ProyectoSC_601.Controllers
         [HttpGet]
         public ActionResult Carrito()
         {
+            if (Session["ID_Usuario"] != null && Session["Rol"] != null && long.Parse(Session["Rol"].ToString()) == 2)
+            {
+                // Obtiene la cantidad de productos diferentes en el carrito
+                int cantidadProductos = modelIndex.ObtenerCantidadProductosEnCarrito(long.Parse(Session["ID_Usuario"].ToString()));
 
+                // Pasa la cantidad de productos a la vista
+                ViewBag.CantidadProductosEnCarrito = cantidadProductos;
+            }
             var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Usuario"].ToString()));
             Session["SumaSubTotal"] = datos.AsEnumerable().Sum(x => x.SubTotal);
             Session["TotalPago"] = datos.AsEnumerable().Sum(x => x.Total);
@@ -284,6 +292,8 @@ namespace ProyectoSC_601.Controllers
         }
 
     }
+
+    
 }
 
 

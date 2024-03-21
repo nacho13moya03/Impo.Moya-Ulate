@@ -13,6 +13,20 @@ namespace ProyectoSC_601.Models
         //Se hace referencia a la ruta del servidor configurada en Web.config
         public string rutaServidor = ConfigurationManager.AppSettings["RutaApi"];
 
+        public int ObtenerCantidadProductosEnCarrito(long ID_Usuario)
+        {
+            using (var client = new HttpClient())
+            {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
+                var urlApi = rutaServidor + "ObtenerCantidadProductosEnCarrito?ID_Usuario=" + ID_Usuario;
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<int>().Result;
+            }
+        }
+
+
 
         //Funcion para enviar la informacion de contactenos
         public string EnviarInformacion(InfoIndex entidad)

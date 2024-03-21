@@ -19,7 +19,7 @@
                         <h4 class="card-title">Historial de Compras</h4>
                         <div style="margin-left:78%">
                             <div style="display:flex;">
-                                <a class="btn btn-primary" style="background-color: #6282a9;border:none; " href="@Url.Action("PerfilCliente", "Usuario");" title="Regresar" style="margin-left:5%;"><i style="color: white;" class="fa fa-arrow-left fa-lg"></i></a>
+                                <a class="btn btn-primary" style="background-color: #6282a9;border:none; " href="@Url.Action("PerfilCliente", "Usuario")" title="Regresar" style="margin-left:5%;"><i style="color: white;" class="fa fa-arrow-left fa-lg"></i></a>
                             </div>
                         </div>
                     </div>
@@ -96,6 +96,29 @@
 
         // Se quita el ordenamiento por defecto del dataTable para que se vea reflejado el orden de la lista
         tabla.order([]).draw();
+    });
+
+</script>
+
+<script>
+    // Función para actualizar el contador de productos en el carrito
+    function actualizarContadorCarrito() {
+        $.ajax({
+            url: '/Producto/Catalogo',
+            type: 'GET',
+            success: function (data) {
+                // Actualizar el valor del contador en el HTML
+                $('#contador-carrito').text(data);
+            },
+            error: function () {
+                console.log('Error al actualizar el contador del carrito.');
+            }
+        });
+    }
+
+    // Llamar a la función de actualización cuando se cargue la página
+    $(document).ready(function () {
+        actualizarContadorCarrito();
     });
 
 </script>

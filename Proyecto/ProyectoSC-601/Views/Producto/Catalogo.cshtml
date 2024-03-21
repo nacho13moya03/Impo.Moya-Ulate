@@ -8,7 +8,16 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
 }
-
+<style>
+    .badge-custom {
+        background-color: red; /* Fondo rojo */
+        color: white; /* Texto blanco */
+        border: 2px solid red; /* Borde rojo */
+        border-radius: 50%; /* Borde redondeado para formar un círculo */
+        padding: 2px 6px; /* Espaciado interno */
+        font-size: 12px; /* Tamaño de fuente */
+    }
+</style>
 
 <section id="cata">
     <div class="container">
@@ -251,5 +260,28 @@
 
       }
   }
+
+</script>
+
+<script>
+    // Función para actualizar el contador de productos en el carrito
+    function actualizarContadorCarrito() {
+        $.ajax({
+            url: '/Producto/Catalogo',
+            type: 'GET',
+            success: function (data) {
+                // Actualizar el valor del contador en el HTML
+                $('#contador-carrito').text(data);
+            },
+            error: function () {
+                console.log('Error al actualizar el contador del carrito.');
+            }
+        });
+    }
+
+    // Llamar a la función de actualización cuando se cargue la página
+    $(document).ready(function () {
+        actualizarContadorCarrito();
+    });
 
 </script>

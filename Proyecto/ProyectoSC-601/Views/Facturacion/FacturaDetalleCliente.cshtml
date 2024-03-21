@@ -105,3 +105,26 @@
 
     });
 </script>
+
+<script>
+    // Función para actualizar el contador de productos en el carrito
+    function actualizarContadorCarrito() {
+        $.ajax({
+            url: '/Producto/Catalogo',
+            type: 'GET',
+            success: function (data) {
+                // Actualizar el valor del contador en el HTML
+                $('#contador-carrito').text(data);
+            },
+            error: function () {
+                console.log('Error al actualizar el contador del carrito.');
+            }
+        });
+    }
+
+    // Llamar a la función de actualización cuando se cargue la página
+    $(document).ready(function () {
+        actualizarContadorCarrito();
+    });
+
+</script>

@@ -10,6 +10,7 @@ namespace ProyectoSC_601.Controllers
     {
 
         UsuarioModel modelUsuario = new UsuarioModel();
+        IndexModel modelIndex = new IndexModel();
 
         [HttpGet]
         public ActionResult RegistroUsuario()
@@ -209,6 +210,15 @@ namespace ProyectoSC_601.Controllers
         [HttpGet]
         public ActionResult PerfilCliente()
         {
+            if (Session["ID_Usuario"] != null && Session["Rol"] != null && long.Parse(Session["Rol"].ToString()) == 2)
+            {
+                // Obtiene la cantidad de productos diferentes en el carrito
+                int cantidadProductos = modelIndex.ObtenerCantidadProductosEnCarrito(long.Parse(Session["ID_Usuario"].ToString()));
+
+                // Pasa la cantidad de productos a la vista
+                ViewBag.CantidadProductosEnCarrito = cantidadProductos;
+            }
+
             long q = long.Parse(Session["ID_Usuario"].ToString());
 
             var datos = modelUsuario.ConsultaClienteEspecifico(q);
@@ -270,6 +280,7 @@ namespace ProyectoSC_601.Controllers
         [HttpPost]
         public ActionResult PerfilCliente(UsuarioEnt entidad)
         {
+            ModelState.Remove("Contrasenna_Usuario");
             if (ModelState.IsValid)
             {
 
@@ -299,6 +310,7 @@ namespace ProyectoSC_601.Controllers
                     if (respuesta == "OK")
                     {
                         Session["Direccion_Cliente"] = entidad.Direccion_Exacta;
+                      
                         return RedirectToAction("PerfilCliente", "Usuario");
 
                     }

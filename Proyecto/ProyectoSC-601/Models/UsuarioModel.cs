@@ -261,7 +261,7 @@ namespace ProyectoSC_601.Models
 
                 var urlApi = rutaServidor + "ActualizarCuentaCliente";
                 var jsonData = JsonContent.Create(entidad);
-                var res = client.PutAsync(urlApi, jsonData).Result;
+                 var res = client.PutAsync(urlApi, jsonData).Result;
                 return res.Content.ReadFromJsonAsync<string>().Result;
             }
         }

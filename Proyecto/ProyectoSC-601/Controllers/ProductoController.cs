@@ -10,11 +10,19 @@ namespace ProyectoSC_601.Controllers
     public class ProductoController : Controller
     {
         InventarioModel modelInventario = new InventarioModel();
+        IndexModel modelIndex = new IndexModel();
 
         [HttpGet]
         public ActionResult Catalogo(int pagina = 1, int tamanoPagina = 9, string categorias = null)
         {
+            if (Session["ID_Usuario"] != null && Session["Rol"] != null && long.Parse(Session["Rol"].ToString()) == 2)
+            {
+                // Obtiene la cantidad de productos diferentes en el carrito
+                int cantidadProductos = modelIndex.ObtenerCantidadProductosEnCarrito(long.Parse(Session["ID_Usuario"].ToString()));
 
+                // Pasa la cantidad de productos a la vista
+                ViewBag.CantidadProductosEnCarrito = cantidadProductos;
+            }
             // Consultar productos
             var datos = modelInventario.ConsultarInventario();
             // Obtener info categorías

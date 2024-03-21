@@ -35,6 +35,16 @@
 
 </head>
 
+<style>
+    .badge-custom {
+        background-color: red; /* Fondo rojo */
+        color: white; /* Texto blanco */
+        border: 2px solid red; /* Borde rojo */
+        border-radius: 50%; /* Borde redondeado para formar un círculo */
+        padding: 2px 6px; /* Espaciado interno */
+        font-size: 12px; /* Tamaño de fuente */
+    }
+</style>
 <body>
 
     @*HEADER*@
@@ -68,8 +78,14 @@
             @if (Session["ID_Usuario"] != null)
             {
                 <div class="nav-links">
-                    <a href="@Url.Action("carrito", "carrito", new { area = "" })" class="get-started-btn scrollto nav-link" title="Carrito de Compras">
-                        <i class="fa fa-shopping-cart"></i>
+                    <a href="@Url.Action("carrito", "carrito", new { area = "" })" class="get-started-btn scrollto nav-link" title="Carrito de Compras" style="border: none !important; background-color: transparent !important; ">
+                        <i class="fa fa-shopping-cart fa-lg"></i>
+                       
+                            @if (ViewBag.CantidadProductosEnCarrito > 0)
+                            {
+                                <span class="badge badge-custom top-0 start-100 translate-middle mr-1">@ViewBag.CantidadProductosEnCarrito</span>
+                            }
+                      
                     </a>
                     @Html.ActionLink("Cerrar Sesión", "CerrarSesionUsuario", "Usuario", new { area = "" }, new { @class = "get-started-btn scrollto nav-link" })
                 </div>
@@ -173,3 +189,26 @@
 </body>
 
 </html>
+
+<script>
+    // Función para actualizar el contador de productos en el carrito
+    function actualizarContadorCarrito() {
+        $.ajax({
+            url: '/Home/Index',
+            type: 'GET',
+            success: function (data) {
+                // Actualizar el valor del contador en el HTML
+                $('#contador-carrito').text(data);
+            },
+            error: function () {
+                console.log('Error al actualizar el contador del carrito.');
+            }
+        });
+    }
+
+    // Llamar a la función de actualización cuando se cargue la página
+    $(document).ready(function () {
+        actualizarContadorCarrito();
+    });
+
+</script>
