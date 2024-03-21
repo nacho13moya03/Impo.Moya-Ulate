@@ -143,7 +143,6 @@ namespace ProyectoSC_601.Controllers
         [HttpPost]
         public async Task<JsonResult> Paypal(string precio, string producto)
         {
-
             bool status = false;
             string respuesta = string.Empty;
 
@@ -157,53 +156,67 @@ namespace ProyectoSC_601.Controllers
                 var authToken = Encoding.ASCII.GetBytes($"{userName}:{passwd}");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authToken));
 
-                var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Usuario"].ToString()));
+                // Obtener el tipo de cambio del dólar de Costa Rica
+                var tdcResponse = await client.GetAsync("https://apis.gometa.org/tdc/tdc.json");
 
-                var total = datos.AsEnumerable().Sum(x => x.Total);
-
-                var valortotal = Math.Round(total / 522, 2).ToString();
-
-                var orden = new PaypalOrder()
+                if (tdcResponse.IsSuccessStatusCode)
                 {
-                    intent = "CAPTURE",
-                    purchase_units = new List<Models.CarritoModel.PurchaseUnit>() {
+                    var tdcJson = await tdcResponse.Content.ReadAsStringAsync();
+                    var tdcData = JsonConvert.DeserializeObject<dynamic>(tdcJson);
 
-                        new Models.CarritoModel.PurchaseUnit() {
+                    // Obtener el valor de venta del dólar de Costa Rica
+                    var tipoCambioVenta = Convert.ToDecimal(tdcData.venta);
 
-                            amount = new Models.CarritoModel.Amount() {
-                                currency_code = "USD",
-                                value = valortotal
-                            },
-                            description = producto
-                        }
-                    },
-                    application_context = new ApplicationContext()
+                    // Calcular el valor total usando el tipo de cambio obtenido
+                    var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Usuario"].ToString()));
+                    var total = datos.AsEnumerable().Sum(x => x.Total);
+                    var valortotal = Math.Round(total / tipoCambioVenta, 2).ToString();
+
+                    // Crear la orden de PayPal con el valor calculado
+                    var orden = new PaypalOrder()
                     {
-                        brand_name = "Importadora Moya y Ulate SA",
-                        landing_page = "NO_PREFERENCE",
-                        user_action = "PAY_NOW", //Accion para que paypal muestre el monto de pago
-                        return_url = "https://localhost:44353/Carrito/CheckPago",// cuando se aprovo la solicitud del cobro
-                        cancel_url = "https://localhost:44353/"// cuando cancela la operacion
+                        intent = "CAPTURE",
+                        purchase_units = new List<Models.CarritoModel.PurchaseUnit>() {
+                    new Models.CarritoModel.PurchaseUnit() {
+                        amount = new Models.CarritoModel.Amount() {
+                            currency_code = "USD",
+                            value = valortotal
+                        },
+                        description = producto
                     }
-                };
+                },
+                        application_context = new ApplicationContext()
+                        {
+                            brand_name = "Importadora Moya y Ulate SA",
+                            landing_page = "NO_PREFERENCE",
+                            user_action = "PAY_NOW",
+                            return_url = "https://localhost:44353/Carrito/CheckPago",
+                            cancel_url = "https://localhost:44353/"
+                        }
+                    };
 
-                var json = JsonConvert.SerializeObject(orden);
-                var data = new StringContent(json, Encoding.UTF8, "application/json");
+                    var json = JsonConvert.SerializeObject(orden);
+                    var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await client.PostAsync("/v2/checkout/orders", data);
+                    // Realizar la solicitud a la API de PayPal
+                    HttpResponseMessage response = await client.PostAsync("/v2/checkout/orders", data);
 
-                status = response.IsSuccessStatusCode;
+                    status = response.IsSuccessStatusCode;
 
-                if (status)
-                {
-                    respuesta = response.Content.ReadAsStringAsync().Result;
+                    if (status)
+                    {
+                        respuesta = response.Content.ReadAsStringAsync().Result;
+                    }
                 }
-
+                else
+                {
+                    // Si no se puede obtener el tipo de cambio, manejar el error aquí
+                }
             }
 
             return Json(new { status = status, respuesta = respuesta }, JsonRequestBehavior.AllowGet);
-
         }
+
 
         public async Task<ActionResult> CheckPago()
         {
