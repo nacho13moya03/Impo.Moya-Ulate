@@ -28,7 +28,7 @@
             <PropertyRef Name="ID_Categoria" />
           </Key>
           <Property Name="ID_Categoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre_Categoria" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Nombre_Categoria" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Estado_Categoria" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="compras">
@@ -719,7 +719,7 @@
             <PropertyRef Name="ID_Categoria" />
           </Key>
           <Property Name="ID_Categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre_Categoria" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre_Categoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Estado_Categoria" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Estado" Relationship="Self.FK_Estado_Categoria" FromRole="Categorias" ToRole="Estado" />
           <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Categoria" FromRole="Categorias" ToRole="Producto" />

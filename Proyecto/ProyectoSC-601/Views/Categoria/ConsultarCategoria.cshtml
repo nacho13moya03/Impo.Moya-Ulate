@@ -18,10 +18,10 @@
         margin-bottom: 7px;
     }
 
-    #TablaCategorias_filter input[type="search"]:focus {
-        box-shadow: none; /* Quitar la sombra al enfocar */
-        border-color: #6282a9;
-    }
+        #TablaCategorias_filter input[type="search"]:focus {
+            box-shadow: none; /* Quitar la sombra al enfocar */
+            border-color: #6282a9;
+        }
 </style>
 <div class="container mt-5 pt-4">
     <div class="row justify-content-center">
@@ -31,22 +31,24 @@
             <br>
             <div class="card" style="margin-bottom:80px;">
                 <div class="card-body">
+                    @if (ViewBag.Mensaje != null)
+                    {
+                        <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px !important;margin-bottom:10px!important;">
+                            @ViewBag.Mensaje
+                        </div>
+                    }  <br>
                     <div style="display:flex;">
                         <h4 class="card-title">Categorias Registradas</h4>
                         <div style="margin-left:75%">
                             <div style="display:flex;">
-                                <a class="btn btn-primary" href="@Url.Action("RegistrarCategoria","Categoria")" style="margin-left:5%;" title="Agregar Categoría"><i style="color: white;" class="fa fa-plus fa-lg"></i></a>
+                                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarCategoria" title="Agregar Categoría"><i style="color: white;" class="fa fa-plus fa-lg"></i></a>
+
                             </div>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <br>
-                        @if (ViewBag.Mensaje != null)
-                        {
-                            <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px !important;margin-bottom:-40px!important;">
-                                @ViewBag.Mensaje
-                            </div>
-                        }
+
                         <table id="TablaCategorias" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -70,11 +72,11 @@
                                         {
                                             <td style="text-align:center;"><span class="badge bg-danger">Inactivo</span></td>
                                         }
-                                        <td class="text-center">
-                                            <a href="@Url.Action("ActualizarEstadoCategoria", "Categoria", new { q = item.ID_Categoria })" title="Cambiar Estado"><i style="color: #6282a9;" class="fa fa-exchange fa-lg"></i></a>
-                                            <a href="@Url.Action("ModificarCategoria", "Categoria", new { q = item.ID_Categoria })" title="Modificar Categoría"><i style="color: forestgreen;padding-left: 10px;" class="fa fa-edit fa-lg"></i></a>
-                                            <a href="javascript:void(0);" onclick="confirmarEliminarCategoria(@item.ID_Categoria)" title="Eliminar Categoría"><i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i></a>
-                                        </td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("ActualizarEstadoCategoria", "Categoria", new { q = item.ID_Categoria })" title="Cambiar Estado"><i style="color: #6282a9;" class="fa fa-exchange fa-lg"></i></a>
+                                        <a href="javascript:void(0);" onclick="abrirModalModificar('@item.ID_Categoria', '@item.Nombre_Categoria')" title="Modificar Categoría"><i style="color: forestgreen;padding-left: 10px;" class="fa fa-edit fa-lg"></i></a>
+                                        <a href="javascript:void(0);" onclick="confirmarEliminarCategoria(@item.ID_Categoria)" title="Eliminar Categoría"><i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i></a>
+                                    </td>
                                     </tr>
                                 }
                             </tbody>
@@ -104,7 +106,130 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
+<div class="modal fade" id="agregarCategoria" tabindex="-1" aria-labelledby="agregarCategoriaLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarCategoriaLabel">Agregar Categoría</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí va el formulario para agregar la categoría -->
+                <form id="agregarCategoriaForm" action="/Categoria/RegistrarCategoria" method="POST">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre">
+                        <div id="errorNombre" class="text-danger" style="font-size:12px;"></div>
+                    </div>
+                    <div style="text-align:center;">
+                        <button type="submit" class="btn btn-info" style="background-color: #6282a9; border:none; color:white;">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade" id="modificarCategoria" tabindex="-1" aria-labelledby="modificarCategoriaLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modificarCategoriaLabel">Modificar Categoría</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario para modificar la categoría -->
+                <form id="modificarCategoriaForm">
+                    <input type="hidden" id="idCategoriaModificar" name="idCategoriaModificar" />
+                    <div class="mb-3">
+                        <label for="nombreModificar" class="form-label">Nuevo Nombre:</label>
+                        <input type="text" class="form-control" id="nombreModificar" name="nombreModificar">
+                        <div id="errorNombreModificar" class="text-danger" style="font-size:12px;"></div>
+                    </div>
+                    <div style="text-align:center;">
+                        <button type="button" class="btn btn-info" style="background-color: #6282a9; border:none; color:white;" onclick="guardarModificacion()">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Función para abrir el modal de modificación y pasar el ID de la categoría
+    function abrirModalModificar(idCategoria,nombreCategoria) {
+        $j('#idCategoriaModificar').val(idCategoria); // Establecer el ID de la categoría en el campo oculto del formulario
+        $j('#nombreModificar').val(nombreCategoria); // Establecer el nombre actual de la categoría en el campo de entrada
+        $j('#errorNombreModificar').text(''); // Limpiar cualquier mensaje de error previo
+        $j('#modificarCategoria').modal('show'); // Mostrar el modal de modificación
+    }
+
+    // Función para enviar la modificación al controlador
+    function guardarModificacion() {
+        var idCategoria = $('#idCategoriaModificar').val();
+        var nuevoNombre = $('#nombreModificar').val();
+
+        // Realizar las validaciones
+        if (nuevoNombre.length == 0) {
+            $('#errorNombreModificar').text('Este campo es obligatorio.');
+        } else {
+            // Si pasa todas las validaciones, enviar la solicitud al controlador
+            $('#errorNombreModificar').text('');
+            $.ajax({
+                url: '/Categoria/ModificarCategoria',
+                type: 'POST',
+                data: {
+                    ID_Categoria: idCategoria,
+                    Nombre_Categoria: nuevoNombre
+                },
+                success: function (response) {
+                    // Manejar la respuesta del controlador si es necesario
+                    if (response.success) {
+                        window.location.href = '/Categoria/ConsultarCategoria';
+                    } else {
+                        // Si hay algún error, mostrar el mensaje de error devuelto por el controlador
+                        $('#errorNombreModificar').text(response.message);
+                    }
+                },
+                error: function () {
+                    // Manejar errores en la llamada AJAX si es necesario
+                    $('#errorNombreModificar').text('Se produjo un error al procesar la solicitud.');
+                }
+            });
+        }
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Asociar el evento submit al formulario una vez que el documento esté listo
+        $('#agregarCategoriaForm').submit(function (event) {
+            event.preventDefault();
+
+            // Obtener el valor del nombre de la categoría
+            var nombre = $('#nombre').val();
+            document.getElementById("errorNombre").innerText = "";
+
+            // Realizar las validaciones
+            if (nombre.length == 0) {
+                document.getElementById("errorNombre").innerText = "Este campo es obligatorio.";
+            } else {
+                // Si pasa todas las validaciones, agregar el campo oculto y enviar el formulario
+                document.getElementById("errorNombre").innerText = "";
+                $('<input />').attr('type', 'hidden')
+                    .attr('name', 'nombre')
+                    .attr('value', nombre)
+                    .appendTo('#agregarCategoriaForm');
+
+                // Enviar el formulario
+                this.submit();
+
+                // Cerrar el modal después de enviar el formulario
+                $('#agregarCategoria').modal('hide');
+            }
+        });
+    });
+</script>
 
 <script>
     //Datatable de los proveedores
@@ -190,4 +315,17 @@
         });
     }
 
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var alertDiv = document.querySelector(".alert.alert-danger");
+
+        if (alertDiv) {
+            alertDiv.style.display = "block";
+            setTimeout(function () {
+                alertDiv.style.display = "none";
+            }, 3000); // Ocultar el mensaje después de 2 segundos (2000 milisegundos)
+        }
+    });
 </script>

@@ -58,10 +58,22 @@ namespace APIProyectoSC_601.Controllers
             {
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
-                    context.Categorias.Add(categoria);
-                    context.SaveChanges();
-                    logExitos.Add("RegistrarCategoria", $"Registro de categoría '{categoria.Nombre_Categoria}' realizado exitosamente");
-                    return "OK";
+                    // Verificar si ya existe una categoría con el mismo nombre
+                    var categoriaExistente = context.Categorias.FirstOrDefault(c => c.Nombre_Categoria == categoria.Nombre_Categoria);
+
+                    // Si la categoría no existe, la registramos
+                    if (categoriaExistente == null)
+                    {
+                        context.Categorias.Add(categoria);
+                        context.SaveChanges();
+                        logExitos.Add("RegistrarCategoria", $"Registro de categoría '{categoria.Nombre_Categoria}' realizado exitosamente");
+                        return "OK";
+                    }
+                    else
+                    {
+                        // Devolvemos vacío si la categoría ya existe
+                        return "Repetida";
+                    }
                 }
             }
             catch (Exception ex)
@@ -70,6 +82,7 @@ namespace APIProyectoSC_601.Controllers
                 return string.Empty;
             }
         }
+
 
 
         //Actualiza el estado de la categoria en la base de datos
@@ -185,12 +198,25 @@ namespace APIProyectoSC_601.Controllers
 
                     if (datos != null)
                     {
-                        datos.Nombre_Categoria = categoria.Nombre_Categoria;
+                        var categoriaExistente = context.Categorias.FirstOrDefault(c => c.Nombre_Categoria == categoria.Nombre_Categoria);
 
-                        context.SaveChanges();
-                        logExitos.Add("ActualizarCategoria", "Actualización exitosa de la categoría con ID: " + categoria.ID_Categoria);
+                        // Si la categoría no existe, la registramos
+                        if (categoriaExistente == null)
+                        {
+                            datos.Nombre_Categoria = categoria.Nombre_Categoria;
 
-                        return categoria.ID_Categoria;
+                            context.SaveChanges();
+                            logExitos.Add("RegistrarCategoria", $"Registro de categoría '{categoria.Nombre_Categoria}' realizado exitosamente");
+                            logExitos.Add("ActualizarCategoria", "Actualización exitosa de la categoría con ID: " + categoria.ID_Categoria);
+
+                            return categoria.ID_Categoria;
+                        }
+                        else
+                        {
+                            // Devolvemos vacío si la categoría ya existe
+                            return 0;
+                        }
+
                     }
                     else
                     {

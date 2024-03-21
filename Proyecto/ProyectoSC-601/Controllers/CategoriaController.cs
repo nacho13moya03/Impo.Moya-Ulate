@@ -2,6 +2,7 @@
 using ProyectoSC_601.Models;
 using System;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
 
 
@@ -15,8 +16,12 @@ namespace ProyectoSC_601.Controllers
 
         /* Consulta todas las categorias registrados en el sistema */
         [HttpGet]
-        public ActionResult ConsultarCategoria()
+        public ActionResult ConsultarCategoria(string mensaje)
         {
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                ViewBag.Mensaje = mensaje;
+            }
             var datos = modelCategoria.ConsultarCategoria();
             return View(datos);
         }
@@ -32,34 +37,29 @@ namespace ProyectoSC_601.Controllers
 
         //Registra un producto 
         [HttpPost]
-        public ActionResult RegistrarCategoria(CategoriaEnt entidad)
+        public ActionResult RegistrarCategoria(string nombre)
         {
+            var entidad = new CategoriaEnt();
+            entidad.Nombre_Categoria = nombre;
+            entidad.Estado_Categoria = 1;
 
-            if (ModelState.IsValid)
+            string ID_Categoria = modelCategoria.RegistrarCategoria(entidad);
+
+            if (ID_Categoria == "OK")
             {
-                entidad.Estado_Categoria = 1;
-
-                string ID_Categoria = modelCategoria.RegistrarCategoria(entidad);
-
-                if (ID_Categoria == "OK")
-                {
-
-                    //entidad.ID_Categoria = ID_Categoria;
-
-
-                    return RedirectToAction("ConsultarCategoria", "Categoria");
-                }
-                else
-                {
-                    ViewBag.Mensaje = "No se ha podido registrar la categoria";
-                    return View();
-                }
+                return RedirectToAction("ConsultarCategoria", "Categoria");
+            }
+            else if(ID_Categoria == "Repetida")
+            {
+                ViewBag.Mensaje = "La categoría ya se encuentra registrada";
+                return RedirectToAction("ConsultarCategoria", "Categoria", new { mensaje = ViewBag.Mensaje });
 
             }
-
             else
             {
-                return View(entidad);
+                ViewBag.Mensaje = "No se ha podido registrar la categoría";
+                return RedirectToAction("ConsultarCategoria", "Categoria", new { mensaje = ViewBag.Mensaje });
+
             }
         }
 
@@ -148,12 +148,12 @@ namespace ProyectoSC_601.Controllers
 
             if (ID_Categoria > 0)
             {
-                return RedirectToAction("ConsultarCategoria", "Categoria");
+                return Json(new { success = true });
             }
             else
             {
-                ViewBag.Mensaje = "No se ha podido actualizar la categoria";
-                return View();
+                return Json(new { success = false, message = "No se ha podido actualizar la categoría." });
+
             }
         }
 
