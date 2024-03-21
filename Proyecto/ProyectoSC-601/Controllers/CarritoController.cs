@@ -73,6 +73,27 @@ namespace ProyectoSC_601.Controllers
             return Json("OK", JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public ActionResult ActualizarCarrito(long idCarrito, long idProducto, int nuevaCantidad)
+        {
+            var entidad = new CarritoEnt();
+            entidad.ID_Carrito = idCarrito;
+            entidad.ID_Usuario = long.Parse(Session["ID_Usuario"].ToString());
+            entidad.ID_Producto = idProducto;
+            entidad.Cantidad = nuevaCantidad;
+
+            modelCarrito.ActualizarCarrito(entidad);
+
+            entidad.Imagen = ObtenerImagenProducto(idProducto);
+
+            var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["ID_Usuario"].ToString()));
+            Session["Cant"] = datos.AsEnumerable().Sum(x => x.Cantidad);
+            Session["SubT"] = datos.AsEnumerable().Sum(x => x.SubTotal);
+            Session["Img"] = entidad.Imagen;
+
+            return Json("OK", JsonRequestBehavior.AllowGet);
+        }
+
         [HttpGet]
         public ActionResult Carrito()
         {

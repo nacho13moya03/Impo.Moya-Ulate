@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Linq;
 using System.Web.Http;
+using WebGrease.Activities;
 
 namespace APIProyectoSC_601.Controllers
 {
@@ -81,6 +82,40 @@ namespace APIProyectoSC_601.Controllers
             catch (Exception ex)
             {
                 log.Add("Error en RegistrarCarrito: " + ex.Message);
+                return "Error: " + ex.Message;
+            }
+        }
+
+        [HttpPut]
+        [Route("ActualizarCarrito")]
+        public string ActualizarCarrito(Carrito carrito)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    var datos = (from x in context.Carrito
+                                 where x.ID_Usuario == carrito.ID_Usuario
+                                    && x.ID_Producto == carrito.ID_Producto
+                                 select x).FirstOrDefault();
+
+                    if (datos != null)
+                    {
+                        datos.Cantidad = carrito.Cantidad;
+                        context.SaveChanges();
+                        logExitos.Add("ActualizarCarrito", "Actualización en el carrito realizado exitosamente");
+                    }
+                    else
+                    {             
+                        log.Add(" Fallo en la actualización del carrito realizada");
+                        return string.Empty;
+                    }
+                    return "OK";
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ActualizarCarrito: " + ex.Message);
                 return "Error: " + ex.Message;
             }
         }

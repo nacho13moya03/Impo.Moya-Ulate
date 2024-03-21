@@ -9,6 +9,14 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"></script>
 }
+
+<style>
+    input[type="number"]:focus {
+        outline: none; /* Eliminar el borde de enfoque */
+        border-color: transparent; /* Hacer que el borde sea transparente */
+        box-shadow: none; /* Eliminar cualquier sombra */
+    }
+</style>
 <div class="container mt-5 pt-4">
     <div class="row justify-content-center">
         <div class="col-12 grid-margin stretch-card">
@@ -22,7 +30,7 @@
                     </div>
                     <div class="table-responsive">
                         <br><br>
-                      
+
                         @if (Model.Count() > 0)
                         {
                             <table id="TablaInventario" class="table table-bordered table-hover">
@@ -30,9 +38,9 @@
                                     <tr>
                                         <th style="background-color: #6282a9; color:white;">Producto</th>
                                         <th style="background-color: #6282a9; color:white;">Nombre</th>
-                                        <th style="background-color: #6282a9;color:white;" >Precio Unitario</th>
+                                        <th style="background-color: #6282a9;color:white;">Precio Unitario</th>
                                         <th style="background-color: #6282a9;color:white; ">Cantidad</th>
-                                        <th style="background-color: #6282a9;color:white;" >SubTotal</th>
+                                        <th style="background-color: #6282a9;color:white;">SubTotal</th>
                                         <th style="background-color: #6282a9;color:white;" class=" visually-hidden">Impuesto</th>
                                         <th style="background-color: #6282a9;color:white;" class="visually-hidden">Total</th>
                                         <th style="background-color: #6282a9;color:white;">Opciones</th>
@@ -49,13 +57,17 @@
                                                 <img src="@item.Imagen" alt="Imagen del Producto" style="max-width: 100px; max-height: 100px;" />
                                             </td>
                                             <td>@item.Nombre</td>
-                                            <td >@item.Precio.ToString("N2")</td>
-                                            <td>@item.Cantidad</td>
-                                            <td >@item.SubTotal.ToString("N2")</td>
+                                            <td>@item.Precio.ToString("N2")</td>
+                                            <td>
+                                                <input type="number" min="1" value="@item.Cantidad" id="cantidad-@item.ID_Carrito" style="border:none;background-color:none;width:60px;" />
+                                            </td>
+                                            <td>@item.SubTotal.ToString("N2")</td>
                                             <td class="visually-hidden">@item.Impuesto.ToString("N2")</td>
                                             <td class="visually-hidden">@item.Total.ToString("N2")</td>
                                             <td style="text-align:center">
-                                                <a href="@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.ID_Carrito })"><i class="fa fa-times fa-lg" style="color:#6282a9;"></i></a>
+                                                <a href="javascript:void(0);" onclick="actualizarCantidad('@item.ID_Carrito', '@item.ID_Producto')" title="Actualizar Cantidad"><i class="fa fa-pen" style="color:forestgreen;"></i></a>
+
+                                                <a href="@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.ID_Carrito })" title="Quitar del Carrito"><i class="fa fa-times fa-lg" style="color:#6282a9;margin-left:2%;"></i></a>
                                             </td>
                                         </tr>
                                     }
@@ -64,11 +76,11 @@
 
 
                             <div style="margin-top: 2%; text-align: center;">
-                                <div class="col-12" >
+                                <div class="col-12">
                                     <p style="font-weight: bold; line-height: 25px;">Total sin IVA: </p>
                                     <p style="font-size: 15px; color: #333;"> ₡@decimal.Parse(Session["SumaSubTotal"].ToString()).ToString("N2")</p>
 
-                             
+
                                     <p style="font-weight: bold; line-height: 25px;">Total a Pagar (IVA. Incl.): </p>
                                     <p style="font-size: 15px; color: #333;"> ₡@decimal.Parse(Session["TotalPago"].ToString()).ToString("N2")</p>
                                 </div>
@@ -200,5 +212,33 @@
     $(document).ready(function () {
         actualizarContadorCarrito();
     });
+
+</script>
+
+<script>
+   function actualizarCantidad(idCarrito, idProducto) {
+    // Obtener el valor actualizado de la cantidad
+    var nuevaCantidad = $("#cantidad-" + idCarrito).val();
+
+    // Realizar la solicitud AJAX al controlador para actualizar la cantidad
+    $.ajax({
+        url: '@Url.Action("ActualizarCarrito", "carrito")',
+        type: "POST",
+        data: {
+            idCarrito: idCarrito,
+            idProducto: idProducto,
+            nuevaCantidad: nuevaCantidad // Cambiar 'cantidad' a 'nuevaCantidad' para que coincida con el parámetro del controlador
+        },
+        success: function (data) {
+           window.location.href = '@Url.Action("carrito", "carrito")';
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            // Mostrar el mensaje de error en la consola del navegador
+            console.error("Error al actualizar la cantidad del producto:", textStatus, errorThrown);
+            // Mostrar un mensaje de error al usuario
+            alert("Ocurrió un error al actualizar la cantidad del producto. Por favor, inténtalo de nuevo más tarde.");
+        }
+    });
+}
 
 </script>

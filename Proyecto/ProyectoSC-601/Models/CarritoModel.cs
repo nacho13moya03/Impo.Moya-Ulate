@@ -26,6 +26,19 @@ namespace ProyectoSC_601.Models
                 return res.Content.ReadFromJsonAsync<string>().Result;
             }
         }
+        public string ActualizarCarrito(CarritoEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
+                var urlApi = rutaServidor + "ActualizarCarrito";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PutAsync(urlApi, jsonData).Result;
+                return res.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
 
         public List<CarritoEnt> ConsultarCarrito(long q)
         {
