@@ -136,6 +136,7 @@
 
                                 <div class="mb-3">
                                     <label class="small mb-1" for="direccion">Dirección Exacta</label>
+
                                     @Html.TextAreaFor(m => m.Direccion_Exacta, new { rows = 3, cols = 20, @class = "form-control", @placeholder = "Ubicación Exacta", @type = "text", required = "required" })
 
                                     <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
@@ -150,7 +151,9 @@
                         <div class="card mb-4">
                             <div class="card-header" style="background-color: #EEEEEE; ">Seguridad</div>
                             <div class="card-body ">
-                                <div class="mb-3">
+                                <span class="small" style="color: gray;font-style:italic;">En este espacio se puede cambiar la contraseña</span>
+
+                                <div class="mb-3" style="margin-top:2.5%!important;">
                                     <label class="small mb-1" for="password">Nueva Contraseña</label>
                                     @Html.TextBoxFor(m => m.NuevaContrasenna_Usuario, new { @class = "form-control", @placeholder = "Nueva Contraseña", @type = "password" })
 
@@ -163,7 +166,7 @@
                     </div>
                     <div class="col-xl-9">
                         <div class="text-center" style=" margin-bottom: 5%;">
-                            <button class="btn btn-success" type="submit" ><i class="bi bi-pencil-square"></i> Guardar</button>
+                            <button class="btn btn-success" type="submit" ><i class="bi bi-floppy"></i> Guardar</button>
                             <a href="javascript:void(0);" onclick="confirmarInactivarCliente(@Model.ID_Usuario)" class="btn btn-danger" style="color: white;margin-left:2%;"> <i class="bi bi-trash3"></i> Eliminar</a>
                                 </div>
                     </div>
