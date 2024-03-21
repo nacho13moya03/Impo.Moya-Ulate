@@ -15,6 +15,13 @@
         outline: none; /* Eliminar el borde de enfoque */
         border-color: transparent; /* Hacer que el borde sea transparente */
         box-shadow: none; /* Eliminar cualquier sombra */
+        background-color: transparent;
+    }
+    input[type="number"]:hover {
+        outline: none; /* Eliminar el borde de enfoque */
+        border-color: transparent; /* Hacer que el borde sea transparente */
+        box-shadow: none; /* Eliminar cualquier sombra */
+        background-color: transparent;
     }
 </style>
 <div class="container mt-5 pt-4">
@@ -59,7 +66,7 @@
                                             <td>@item.Nombre</td>
                                             <td>@item.Precio.ToString("N2")</td>
                                             <td>
-                                                <input type="number" min="1" value="@item.Cantidad" id="cantidad-@item.ID_Carrito" style="border:none;background-color:none;width:60px;" />
+                                                <input type="number" min="1" value="@item.Cantidad" id="cantidad-@item.ID_Carrito" style="border:none;background-color:transparent;width:60px;" />
                                             </td>
                                             <td>@item.SubTotal.ToString("N2")</td>
                                             <td class="visually-hidden">@item.Impuesto.ToString("N2")</td>
@@ -67,7 +74,7 @@
                                             <td style="text-align:center">
                                                 <a href="javascript:void(0);" onclick="actualizarCantidad('@item.ID_Carrito', '@item.ID_Producto')" title="Actualizar Cantidad"><i class="fa fa-pen" style="color:forestgreen;"></i></a>
 
-                                                <a href="@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.ID_Carrito })" title="Quitar del Carrito"><i class="fa fa-times fa-lg" style="color:#6282a9;margin-left:2%;"></i></a>
+                                                <a href="@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.ID_Carrito })" title="Quitar del Carrito"><i class="fa fa-times fa-lg" style="color:#6282a9;margin-left:10%;"></i></a>
                                             </td>
                                         </tr>
                                     }
