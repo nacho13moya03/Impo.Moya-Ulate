@@ -1,25 +1,64 @@
 ﻿@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
-
 }
 
-@*BIENVENIDA*@
-<h1>BIENVENIDO ADMIN</h1>
-<section id="hero" class="d-flex align-items-center justify-content-center">
-    <div class="container" data-aos="fade-up">
+<style>
 
-        <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
-            <div class="col-xl-6 col-lg-8">
-                <h1 style="margin-top: -100px!important;">Administración de Importadora Moya y Ulate</h1>
-            </div>
+    .invalid-feedback {
+        color: red;
+        font-size: 0.8em;
+        margin-top: 5px;
+    }
+</style>
+
+@*BIENVENIDA*@
+<section id="hero" class="d-flex align-items-center justify-content-center">
+<div class="container" data-aos="fade-up">
+
+    <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
+        <div class="col-xl-6 col-lg-8">
+            <h1>Administración de Importadora Moya y Ulate</h1>
+            @*<h2>Lentes que te hacen ver el mundo de una manera totalmente nueva, <span>¡Adquiere los tuyos!</span></h2>*@
+
         </div>
     </div>
-</section>
 
+    <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
+        <div class="col-xl-2 col-md-4">
+            <div class="icon-box">
+                <i class="ri-product-hunt-line"></i>
+                <h3>Administracion de Inventario</h3>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+            <div class="icon-box">
+                <i class="ri-user-line"></i>
+                <h3>Administracion de Usuarios</h3>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+            <div class="icon-box">
+                <i class="ri-shake-hands-line"></i>
+                <h3>Administracion de Proveedores</h3>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+            <div class="icon-box">
+                <i class="ri-calculator-line"></i>
+                <h3>Administracion de Facturas</h3>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</section>
+@*BIENVENIDA*@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+@*CAMBIO_CLAVE*@
 <div class="modal fade" id="cambiarContrasenaModal" tabindex="-1" aria-labelledby="cambiarContrasenaModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -44,15 +83,7 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function () {
-        $('#cambiarContrasenaModal').modal({
-            backdrop: 'static',
-            keyboard: false
-        });
-    });
-</script>
+@*CAMBIO_CLAVE*@
 
 <script>
     $(document).ready(function () {

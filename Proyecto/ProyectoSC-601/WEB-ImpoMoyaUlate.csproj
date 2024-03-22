@@ -215,6 +215,8 @@
     <Content Include="Assets\css\ProductosAdminStyle.css" />
     <Content Include="Assets\css\perfilClienteStyle.css" />
     <Content Include="Assets\css\registroStyle.css" />
+    <Content Include="Assets\css\responsive_admin.css" />
+    <Content Include="Assets\css\responsive.css" />
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\img\about.jpg" />
     <Content Include="Assets\img\apple-touch-icon.png" />

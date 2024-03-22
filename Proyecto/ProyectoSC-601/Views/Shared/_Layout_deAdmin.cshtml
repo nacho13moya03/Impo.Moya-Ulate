@@ -17,9 +17,6 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     <!-- CSS Files -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-
     <link href="~/Assets/vendor/aos/aos.css" rel="stylesheet">
     <link href="~/Assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/Assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -28,19 +25,9 @@
     <link href="~/Assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="~/Assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
     <link href="~/Assets/css/style.css" rel="stylesheet">
+    <link href="~/Assets/css/responsive_admin.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .btn-primary {
-            --bs-btn-bg: #6282a9 !important;
-            --bs-btn-border-color: #6282a9 !important;
-        }
 
-        .dropdown:hover .btn-primary {
-            background-color: #6282a9 !important;
-            --bs-btn-bg: #6282a9 !important;
-            --bs-btn-border-color: #354461 !important;
-        }
-    </style>
 
 </head>
 
@@ -54,57 +41,37 @@
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     <li> <a class="nav-link scrollto active" @Html.ActionLink("Inicio", "IndexAdmin", "Home", new { area = "" }, new { @class = "nav-link" })</a></li>
-                    <div class="dropdown" style="margin-left:20px;">
-                        <button class="btn btn-primary dropdown-toggle"
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-mdb-toggle="dropdown"
-                                aria-expanded="false">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownInventario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Inventariado
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Categoria", "ConsultarCategoria", "Categoria", new { area = "" }, new { @class = "nav-link" })</a></li>
-
-                            <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Inventario", "ConsultaInventario", "Inventario", new { area = "" }, new { @class = "nav-link" })</a></li>
-
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownInventario">
+                            <li><a class="dropdown-item" @Html.ActionLink("Gestionar Categoria", "ConsultarCategoria", "Categoria", new { area = "" }, new { @class = "nav-link" })</a></li>
+                            <li><a class="dropdown-item" @Html.ActionLink("Gestionar Inventario", "ConsultaInventario", "Inventario", new { area = "" }, new { @class = "nav-link" })</a></li>
                         </ul>
-                    </div>
-                    <div class="dropdown" style="margin-left: 20px">
-                        <button class="btn btn-primary dropdown-toggle"
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-mdb-toggle="dropdown"
-                                aria-expanded="false">
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProveeduria" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Proveeduria
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Empresas", "ConsultaEmpresas", "Empresa", new { area = "" }, new { @class = "nav-link" })</a></li>
-
-                            <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Proveedores", "ConsultaProveedores", "Proveedor", new { area = "" }, new { @class = "nav-link" })</a></li>
-
-                            <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Compras", "ConsultaCompras", "Compras", new { area = "" }, new { @class = "nav-link" })</a></li>
-
-
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownProveeduria">
+                            <li><a class="dropdown-item" @Html.ActionLink("Gestionar Empresas", "ConsultaEmpresas", "Empresa", new { area = "" }, new { @class = "nav-link" })</a></li>
+                            <li><a class="dropdown-item" @Html.ActionLink("Gestionar Proveedores", "ConsultaProveedores", "Proveedor", new { area = "" }, new { @class = "nav-link" })</a></li>
+                            <li><a class="dropdown-item" @Html.ActionLink("Gestionar Compras", "ConsultaCompras", "Compras", new { area = "" }, new { @class = "nav-link" })</a></li>
                         </ul>
-                    </div>
-
+                    </li>
                     <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Usuarios", "GestionUsuarios", "Usuario", new { area = "" }, new { @class = "nav-link" })</a></li>
-                    <div class="dropdown" style="margin-left:20px;">
-                        <button class="btn btn-primary dropdown-toggle"
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-mdb-toggle="dropdown"
-                                aria-expanded="false">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownVentas" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Ventas
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="nav-link scrollto" @Html.ActionLink("Gestionar Pedidos", "ConsultarPedidos", "Pedidos", new { area = "" }, new { @class = "nav-link" })</a></li>
-
-                            <li><a class="nav-link scrollto" @Html.ActionLink("Facturación", "Facturacion", "Facturacion", new { area = "" }, new { @class = "nav-link" })</a></li>
-
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownVentas">
+                            <li><a class="dropdown-item" @Html.ActionLink("Gestionar Pedidos", "ConsultarPedidos", "Pedidos", new { area = "" }, new { @class = "nav-link" })</a></li>
+                            <li><a class="dropdown-item" @Html.ActionLink("Facturación", "Facturacion", "Facturacion", new { area = "" }, new { @class = "nav-link" })</a></li>
                         </ul>
-                    </div>
-                   
+                    </li>
+
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
@@ -114,9 +81,9 @@
     </header>
     @*HEADER*@
 
-    @*MENU PRINCIPAL*@
+
     @RenderBody()
-    @*MENU PRINCIPAL*@
+
 
     @*FOOTER*@
     <footer id="footer">
@@ -128,10 +95,10 @@
                         <div class="footer-info">
                             <h3>IMPORTADORA <span>MOYA </span> Y <span>ULATE </span></h3>
                             <p>
-                                Grecia, Provincia Alajuela <br>
+                                Grecia, Alajuela <br>
                                 Costa Rica<br><br>
                                 <strong>Teléfono:</strong> +506 8438 0251<br>
-                                <strong>Correo:</strong> importadoraM&U@gmail.com<br>
+                                <strong>Correo:</strong> impomoyaulate@hotmail.com<br>
                             </p>
                             <div class="social-links mt-3">
                                 <a title="Ir a WhatsApp" href="https://api.whatsapp.com/send?phone=50684380251&text=Buen%20d%C3%ADa%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20productos%20que%20ofrecen%20" class="whatsapp"><i class="bx bxl-whatsapp"></i></a>
@@ -164,7 +131,7 @@
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <!-- JS Files -->
-    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="~/Assets/vendor/purecounter/purecounter_vanilla.js"></script>
     <script src="~/Assets/vendor/aos/aos.js"></script>
     <script src="~/Assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
