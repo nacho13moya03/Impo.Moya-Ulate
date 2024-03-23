@@ -1,8 +1,10 @@
 ﻿using ProyectoSC_601.Entities;
 using ProyectoSC_601.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using WEB_ImpoMoyaUlate.Models;
 
 namespace ProyectoSC_601.Controllers
 {
@@ -11,6 +13,7 @@ namespace ProyectoSC_601.Controllers
 
         UsuarioModel modelUsuario = new UsuarioModel();
         IndexModel modelIndex = new IndexModel();
+        Seguridad seguridad = new Seguridad();
 
         [HttpGet]
         public ActionResult RegistroUsuario()
@@ -49,6 +52,7 @@ namespace ProyectoSC_601.Controllers
                     }
                     else
                     {
+                        entidad.Contrasenna_Usuario = seguridad.Encrypt(entidad.Contrasenna_Usuario);
                         string respuesta = modelUsuario.RegistroUsuario(entidad);
 
                         if (respuesta == "OK")
@@ -93,7 +97,7 @@ namespace ProyectoSC_601.Controllers
             ModelState.Remove("ID_Distrito");
             ModelState.Remove("Direccion_Exacta");
             ModelState.Remove("Telefono_Usuario");
-            ModelState.Remove("Contrasenna_Usuario"); 
+            ModelState.Remove("Contrasenna_Usuario");
 
             // Luego, aplicar la validación de campo obligatorio manualmente
             if (string.IsNullOrEmpty(entidad.Contrasenna_Usuario))
@@ -103,13 +107,19 @@ namespace ProyectoSC_601.Controllers
 
             if (ModelState.IsValid)
             {
-                // Verificar si las credenciales son válidas
+
+                entidad.Contrasenna_Usuario = seguridad.Encrypt(entidad.Contrasenna_Usuario);
+
                 var respuesta = modelUsuario.Login(entidad);
 
                 if (respuesta != null)
                 {
+
+
                     Session["Contrasena_Temporal"] = respuesta.C_esTemporal;
                     Session["Rol"] = respuesta.ID_Rol;
+                    Session["Token"] = respuesta.Token;
+
                     if (respuesta.ID_Rol == 2)
                     {
                         Session["ID_Usuario"] = respuesta.ID_Usuario;
@@ -130,6 +140,8 @@ namespace ProyectoSC_601.Controllers
             // Si el modelo no es válido, volver a mostrar el formulario con los errores
             return View(entidad);
         }
+
+
         [HttpGet]
         public ActionResult RecuperarCuentaUsuario()
         {
@@ -299,6 +311,11 @@ namespace ProyectoSC_601.Controllers
                     {
                         entidad.NuevaContrasenna_Usuario = entidad.Contrasenna_Usuario;
                     }
+                    else
+                    {
+                        // Encriptar la nueva contraseña antes de guardarla
+                        entidad.NuevaContrasenna_Usuario = seguridad.Encrypt(entidad.NuevaContrasenna_Usuario);
+                    }
 
                     if (entidad.Apellido_Usuario == null || entidad.Apellido_Usuario.Length == 0)
                     {
@@ -310,7 +327,7 @@ namespace ProyectoSC_601.Controllers
                     if (respuesta == "OK")
                     {
                         Session["Direccion_Cliente"] = entidad.Direccion_Exacta;
-                      
+
                         return RedirectToAction("PerfilCliente", "Usuario");
 
                     }
@@ -468,8 +485,10 @@ namespace ProyectoSC_601.Controllers
             entidad.ID_Usuario = long.Parse(Session["ID_Usuario"].ToString());
             entidad.Contrasenna_Usuario = nuevaContrasena;
 
+            entidad.Contrasenna_Usuario = seguridad.Encrypt(entidad.Contrasenna_Usuario);
             string respuesta = modelUsuario.ActualizarContrasenaTemporal(entidad);
-            if(respuesta == "Ok") {
+            if (respuesta == "Ok")
+            {
                 Session["Contrasena_Temporal"] = 0;
             }
             if (long.Parse(Session["Rol"].ToString()) == 1)

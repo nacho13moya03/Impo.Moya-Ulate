@@ -529,6 +529,9 @@
           <Parameter Name="Correo" Type="varchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ObtenerTemporal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="PagarCarritoSP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_Usuario" Type="bigint" Mode="In" />
         </Function>
@@ -1377,6 +1380,9 @@
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="ObtenerTemporal" ReturnType="Collection(Int32)">
+            <Parameter Name="Correo" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="PagarCarritoSP" ReturnType="Collection(String)">
             <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
           </FunctionImport>
@@ -1663,6 +1669,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerTemporal" FunctionName="ImportadoraMoyaUlateModel.Store.ObtenerTemporal" />
           <FunctionImportMapping FunctionImportName="PagarCarritoSP" FunctionName="ImportadoraMoyaUlateModel.Store.PagarCarritoSP" />
           <FunctionImportMapping FunctionImportName="RecuperarCuentaUsuarioSP" FunctionName="ImportadoraMoyaUlateModel.Store.RecuperarCuentaUsuarioSP">
             <ResultMapping>
@@ -1696,7 +1703,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

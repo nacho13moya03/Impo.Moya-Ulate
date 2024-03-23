@@ -6,7 +6,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
+using System.Web;
 using System.Web.Mvc;
+using static System.Collections.Specialized.BitVector32;
 
 namespace ProyectoSC_601.Models
 {
@@ -261,7 +263,7 @@ namespace ProyectoSC_601.Models
 
                 var urlApi = rutaServidor + "ActualizarCuentaCliente";
                 var jsonData = JsonContent.Create(entidad);
-                 var res = client.PutAsync(urlApi, jsonData).Result;
+                var res = client.PutAsync(urlApi, jsonData).Result;
                 return res.Content.ReadFromJsonAsync<string>().Result;
             }
         }
