@@ -179,6 +179,7 @@
     <Compile Include="Controllers\FacturacionController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
     <Compile Include="Controllers\PedidosController.cs" />
+    <Compile Include="Controllers\Seguridad.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\ContactoController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />

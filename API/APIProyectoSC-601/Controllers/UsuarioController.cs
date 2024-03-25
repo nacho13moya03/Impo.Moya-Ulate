@@ -13,6 +13,7 @@ namespace APIProyectoSC_601.Controllers
 
         private readonly Errores log;
         private readonly LogExitos logExitos;
+        Seguridad seguridad = new Seguridad();
 
         public UsuarioController()
         {
@@ -95,12 +96,19 @@ namespace APIProyectoSC_601.Controllers
             {
                 using (var context = new ImportadoraMoyaUlateEntities())
                 {
+                    var temporal = context.ObtenerTemporal(entidad.Correo_Usuario).FirstOrDefault();
+
+                    if (temporal == 1)
+                    {
+                        entidad.Contrasenna_Usuario = seguridad.Decrypt(entidad.Contrasenna_Usuario);
+                    }
                     var resultado = context.IniciarSesionSP(entidad.Correo_Usuario, entidad.Contrasenna_Usuario).FirstOrDefault();
 
                     if (resultado != null)
                     {
                         logExitos.Add("Login", $"Inicio de sesión exitoso para el usuario con correo: {entidad.Correo_Usuario}");
                     }
+
                     else
                     {
                         logExitos.Add("Login", $"Inicio de sesión fallido para el usuario con correo: {entidad.Correo_Usuario}");

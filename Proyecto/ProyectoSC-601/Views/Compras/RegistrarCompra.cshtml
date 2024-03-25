@@ -52,18 +52,18 @@
 
                         </div>
                         <div class="mb-3">
-                           
-                                <div class="form-group">
-                                    <label class="small mb-1" for="concepto">Concepto</label>
-                                    @Html.TextAreaFor(m => m.Concepto, new { @class = "form-control", @placeholder = "Concepto", required = "required" })
-                                </div>
-                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                    <div id="errorConcepto" class="text-danger">@ViewBag.MensajeFecha</div>
-                                </div>
-                         
+
+                            <div class="form-group">
+                                <label class="small mb-1" for="concepto">Concepto</label>
+                                @Html.TextAreaFor(m => m.Concepto, new { @class = "form-control", @placeholder = "Concepto", required = "required" })
+                            </div>
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                <div id="errorConcepto" class="text-danger">@ViewBag.MensajeFecha</div>
+                            </div>
+
                         </div>
                         <div class="row gx-3 mb-3">
-                          
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small mb-1" for="cantidad">Cantidad</label>
@@ -73,17 +73,17 @@
                                     <div id="errorCantidad" class="text-danger">@ViewBag.MensajeFecha</div>
                                 </div>
                             </div>
-                           
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="total">Total</label>
-                                        @Html.TextBoxFor(m => m.Total, new { @class = "form-control", @placeholder = "Total", @type = "number", required = "required", min = "1" })
-                                    </div>
-                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                        <div id="errorTotal" class="text-danger">@ViewBag.MensajeFecha</div>
-                                    </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small mb-1" for="total">Total</label>
+                                    @Html.TextBoxFor(m => m.Total, new { @class = "form-control", @placeholder = "Total", @type = "number", required = "required", min = "1" })
                                 </div>
-                          
+                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                    <div id="errorTotal" class="text-danger">@ViewBag.MensajeFecha</div>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div style="text-align:center;padding-top:4%;">
@@ -100,7 +100,7 @@
     </div>
 </div>
 
-<<script>
+<script>
     function validarFormulario() {
         // Obtener los valores del formulario
         var empresaElement = document.getElementById("Empresa");
@@ -125,7 +125,8 @@
         }
 
         // Validar fecha
-        if (fechaCompletaElement !== null && fechaCompletaElement.value.trim() === "") {
+        var datePickerElement = document.getElementById("datepicker");
+        if (!datePickerElement.value.trim()) { // Verifica si el campo de fecha está vacío
             document.getElementById("errorFecha").innerText = "Este campo es obligatorio";
             valid = false;
         }
@@ -166,15 +167,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
 
 <script>
-    $(function () {
-        var fechaCompletaElement = $("#fechaCompleta");
+    document.addEventListener("DOMContentLoaded", function () {
+        var fechaCompletaElement = document.getElementById("fechaCompleta");
 
-        $("#datepicker").flatpickr({
+        flatpickr("#datepicker", {
             enableTime: true,
             dateFormat: "Y-m-d H:i",
             time_24hr: true,
+            locale: "es",
             onClose: function (selectedDates, dateStr, instance) {
                 // Aquí asignamos la fecha y hora al campo oculto
                 fechaCompletaElement.val(dateStr);
@@ -182,7 +185,3 @@
         });
     });
 </script>
-
-
-
-

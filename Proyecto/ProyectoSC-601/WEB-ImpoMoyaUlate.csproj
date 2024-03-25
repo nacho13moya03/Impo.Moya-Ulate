@@ -197,6 +197,7 @@
     <Compile Include="Models\PedidosModel.cs" />
     <Compile Include="Models\ProductoModel.cs" />
     <Compile Include="Models\ComprasModel.cs" />
+    <Compile Include="Models\Seguridad.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="Models\EmpresaModel.cs" />
     <Compile Include="Models\ProveedorModel.cs" />
