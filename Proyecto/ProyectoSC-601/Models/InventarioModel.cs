@@ -1,6 +1,7 @@
 ﻿using ProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -13,14 +14,16 @@ namespace ProyectoSC_601.Models
     public class InventarioModel
     {
         //Se hace referencia a la ruta del servidor configurada en Web.config
-        public string rutaServidor = ConfigurationManager.AppSettings["RutaApi"];
+        public string rutaServidor { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["RutaApi"];
+        public string CredentialsSmarter { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["Credentials"];
+        public string HeaderlsSmarter { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["AuthorizationHeader"];
 
         //Funcion para consultar todos los productos por parte del administrador
         public List<InventarioEnt> ConsultarInventario()
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "ConsultarInventario";
@@ -33,7 +36,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "ConsultarInventarioCatalogo?categoria=" + categoria;
@@ -47,7 +50,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "ConsultarCategorias";
@@ -61,7 +64,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "RegistrarProducto";
@@ -76,7 +79,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "ComprobarSKUExistente";
@@ -91,7 +94,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "ActualizarRutaProducto";
@@ -106,7 +109,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "ActualizarEstadoProducto";
@@ -121,7 +124,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "EliminarProducto";
@@ -136,7 +139,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "ConsultaProductoEspecifico?q=" + q;
@@ -150,7 +153,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "ActualizarProducto";
@@ -165,7 +168,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "TotalInventario";
@@ -179,7 +182,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "RegistrarCategoria";
@@ -194,7 +197,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "EliminarCategoria";
@@ -207,7 +210,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "VerificarFacturasVinculadas";
@@ -221,7 +224,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "VerificarCarritoVinculado";

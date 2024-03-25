@@ -1,6 +1,7 @@
 ﻿using APIProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -13,10 +14,13 @@ namespace APIProyectoSC_601.Controllers
         private readonly Errores log;
         private readonly LogExitos logExitos;
 
+        public string RutaErrores { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["RutaErrores"];
+        public string RutaExitos { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["RutaExitos"];
+
         public FacturacionController()
         {
-            string rutaErrores = ConfigurationManager.AppSettings["RutaErrores"];
-            string rutaExitos = ConfigurationManager.AppSettings["RutaExitos"];
+            string rutaErrores = RutaErrores;
+            string rutaExitos = RutaExitos;
 
 
             log = new Errores(rutaErrores);

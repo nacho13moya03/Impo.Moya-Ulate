@@ -3,6 +3,8 @@ using ProyectoSC_601.Entities;
 using ProyectoSC_601.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -28,6 +30,12 @@ namespace ProyectoSC_601.Controllers
         FacturacionModel modelFacturacion = new FacturacionModel();
         InventarioModel modelInventario = new InventarioModel();
         IndexModel modelIndex = new IndexModel();
+        
+        public string PayPalUserName { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["PayPalUserName"];
+        public string PayPalPassword { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["PayPalPassword"];
+
+
+
 
         [AuthorizeCliente(2)]
         private string ObtenerImagenProducto(long ID_Producto)
@@ -189,8 +197,8 @@ namespace ProyectoSC_601.Controllers
 
             using (var client = new HttpClient())
             {
-                var userName = "ASMuZ2JIH6RMroddxn_QDja6RoNSFyoAi3zJRoO4jxtqT0Vezq4fDAFQMP41krlWHkipksJ03aCPpniY";
-                var passwd = "EHdDA3W-uwKW9i34JrQ26bH_Cml16G-TJiAzSaWZBDuxhUETz4cdn8HftHYV3doZ2kMMq76L6GfH_4G4";
+                var userName = PayPalUserName;
+                var passwd = PayPalPassword;
 
                 client.BaseAddress = new Uri("https://api-m.sandbox.paypal.com");
 
@@ -272,8 +280,8 @@ namespace ProyectoSC_601.Controllers
 
             using (var client = new HttpClient())
             {
-                var userName = "ASMuZ2JIH6RMroddxn_QDja6RoNSFyoAi3zJRoO4jxtqT0Vezq4fDAFQMP41krlWHkipksJ03aCPpniY";
-                var passwd = "EHdDA3W-uwKW9i34JrQ26bH_Cml16G-TJiAzSaWZBDuxhUETz4cdn8HftHYV3doZ2kMMq76L6GfH_4G4";
+                var userName = PayPalUserName;
+                var passwd = PayPalPassword;
 
                 client.BaseAddress = new Uri("https://api-m.sandbox.paypal.com");
 

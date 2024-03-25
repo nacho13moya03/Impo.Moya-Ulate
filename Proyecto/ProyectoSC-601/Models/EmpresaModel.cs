@@ -1,6 +1,7 @@
 ﻿using ProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -11,7 +12,9 @@ namespace ProyectoSC_601.Models
 {
     public class EmpresaModel
     {
-        public string rutaServidor = ConfigurationManager.AppSettings["RutaApi"];
+        public string rutaServidor { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["RutaApi"];
+        public string CredentialsSmarter { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["Credentials"];
+        public string HeaderlsSmarter { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["AuthorizationHeader"];
 
 
         /*Esto envía una solicitud HTTP POST a una API para registrar una empresa, 
@@ -22,7 +25,7 @@ namespace ProyectoSC_601.Models
             {
                 using (var client = new HttpClient())
                 {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                    var credentials = CredentialsSmarter;
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                     var urlApi = rutaServidor + "RegistrarEmpresa";
@@ -46,7 +49,7 @@ namespace ProyectoSC_601.Models
             {
                 using (var client = new HttpClient())
                 {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                    var credentials = CredentialsSmarter;
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                     var urlApi = rutaServidor + "ConsultaEmpresas";
@@ -69,7 +72,7 @@ namespace ProyectoSC_601.Models
             {
                 using (var client = new HttpClient())
                 {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                    var credentials = CredentialsSmarter;
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                     var urlApi = rutaServidor + "ConsultaEmpresa?q=" + q;
@@ -91,7 +94,7 @@ namespace ProyectoSC_601.Models
             {
                 using (var client = new HttpClient())
                 {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                    var credentials = CredentialsSmarter;
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                     var urlApi = rutaServidor + "ActualizarEmpresa";
@@ -116,7 +119,7 @@ namespace ProyectoSC_601.Models
             {
                 using (var client = new HttpClient())
                 {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                    var credentials = CredentialsSmarter;
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                     var urlApi = rutaServidor + $"EliminarEmpresa?q={idEmpresa}";
@@ -152,7 +155,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "VerificarProveedoresVinculados";
@@ -167,7 +170,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "VerificarComprasVinculadas";

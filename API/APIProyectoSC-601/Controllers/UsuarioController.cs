@@ -1,6 +1,7 @@
 ﻿using APIProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -15,10 +16,14 @@ namespace APIProyectoSC_601.Controllers
         private readonly LogExitos logExitos;
         Seguridad seguridad = new Seguridad();
 
+        public string RutaErrores { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["RutaErrores"];
+        public string RutaExitos { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["RutaExitos"];
+
+
         public UsuarioController()
         {
-            string rutaErrores = ConfigurationManager.AppSettings["RutaErrores"];
-            string rutaExitos = ConfigurationManager.AppSettings["RutaExitos"];
+            string rutaErrores = RutaErrores;
+            string rutaExitos = RutaExitos;
 
 
             log = new Errores(rutaErrores);

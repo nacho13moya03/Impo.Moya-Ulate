@@ -1,6 +1,7 @@
 ﻿using ProyectoSC_601.Entities;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -12,13 +13,15 @@ namespace ProyectoSC_601.Models
 {
     public class ProveedorModel
     {
-        public string rutaServidor = ConfigurationManager.AppSettings["RutaApi"];
+        public string rutaServidor { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["RutaApi"];
+        public string CredentialsSmarter { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["Credentials"];
+        public string HeaderlsSmarter { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["AuthorizationHeader"];
 
         public List<SelectListItem> ConsultarIdentificacionesProveedor()
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "ConsultarIdentificacionesProveedor";
@@ -31,7 +34,7 @@ namespace ProyectoSC_601.Models
         {
             using (var client = new HttpClient())
             {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                var credentials = CredentialsSmarter;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                 var urlApi = rutaServidor + "ComprobarCedulaProveedor";
@@ -49,7 +52,7 @@ namespace ProyectoSC_601.Models
             {
                 using (var client = new HttpClient())
                 {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                    var credentials = CredentialsSmarter;
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                     var urlApi = rutaServidor + "RegistrarProveedor";
@@ -74,7 +77,7 @@ namespace ProyectoSC_601.Models
             {
                 using (var client = new HttpClient())
                 {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                    var credentials = CredentialsSmarter;
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                     var urlApi = rutaServidor + "ConsultarEmpresas";
@@ -97,7 +100,7 @@ namespace ProyectoSC_601.Models
             {
                 using (var client = new HttpClient())
                 {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                    var credentials = CredentialsSmarter;
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                     var urlApi = rutaServidor + "ConsultaProveedores";
@@ -121,7 +124,7 @@ namespace ProyectoSC_601.Models
             {
                 using (var client = new HttpClient())
                 {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                    var credentials = CredentialsSmarter;
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                     var urlApi = rutaServidor + "ActualizarEstadoProveedor";
@@ -145,7 +148,7 @@ namespace ProyectoSC_601.Models
             {
                 using (var client = new HttpClient())
                 {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                    var credentials = CredentialsSmarter;
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                     var urlApi = rutaServidor + "ActualizarProveedor";
@@ -170,7 +173,7 @@ namespace ProyectoSC_601.Models
             {
                 using (var client = new HttpClient())
                 {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                    var credentials = CredentialsSmarter;
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                     var urlApi = rutaServidor + "ConsultaProveedor?q=" + q;
@@ -194,7 +197,7 @@ namespace ProyectoSC_601.Models
             {
                 using (var client = new HttpClient())
                 {
-                    var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes("11166141:60-dayfreetrial"));
+                    var credentials = CredentialsSmarter;
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
 
                     var urlApi = rutaServidor + $"EliminarProveedor?q={idProveedor}";

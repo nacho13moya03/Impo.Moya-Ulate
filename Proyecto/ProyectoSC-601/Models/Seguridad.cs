@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace WEB_ImpoMoyaUlate.Models
 {
     public class Seguridad
     {
-        string SecretKey = ConfigurationManager.AppSettings["SecretKey"];
+        public string SecretKey { get; } = ((NameValueCollection)ConfigurationManager.GetSection("secureAppSettings"))["SecretKey"];
 
         public string Encrypt(string texto)
         {
