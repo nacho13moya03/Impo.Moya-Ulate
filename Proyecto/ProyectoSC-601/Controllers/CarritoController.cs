@@ -12,6 +12,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using WEB_ImpoMoyaUlate.Filters;
 using static ProyectoSC_601.Models.CarritoModel;
 /*PayPal*/
 
@@ -28,6 +29,7 @@ namespace ProyectoSC_601.Controllers
         InventarioModel modelInventario = new InventarioModel();
         IndexModel modelIndex = new IndexModel();
 
+        [AuthorizeCliente(2)]
         private string ObtenerImagenProducto(long ID_Producto)
         {
             var producto = modelInventario.ConsultaProductoEspecifico(ID_Producto);
@@ -51,8 +53,9 @@ namespace ProyectoSC_601.Controllers
             return "nombre_del_archivo_imagen.jpg";
         }
 
-     
 
+
+        [AuthorizeCliente(2)]
         [HttpGet]
         public ActionResult RegistrarCarrito(int cantidad, long ID_Producto)
         {
@@ -73,6 +76,7 @@ namespace ProyectoSC_601.Controllers
             return Json("OK", JsonRequestBehavior.AllowGet);
         }
 
+        [AuthorizeCliente(2)]
         [HttpPost]
         public ActionResult ActualizarCarrito(long idCarrito, long idProducto, int nuevaCantidad)
         {
@@ -94,6 +98,8 @@ namespace ProyectoSC_601.Controllers
             return Json("OK", JsonRequestBehavior.AllowGet);
         }
 
+
+        [AuthorizeCliente(2)]
         [HttpGet]
         public ActionResult Carrito()
         {
@@ -112,6 +118,8 @@ namespace ProyectoSC_601.Controllers
 
         }
 
+
+        [AuthorizeCliente(2)]
         [HttpGet]
         public ActionResult MetodoPago()
         {
@@ -119,6 +127,7 @@ namespace ProyectoSC_601.Controllers
         }
 
 
+        [AuthorizeCliente(2)]
         [HttpGet]
         public ActionResult EliminarRegistroCarrito(long q)
         {
@@ -130,6 +139,8 @@ namespace ProyectoSC_601.Controllers
             return RedirectToAction("Carrito", "Carrito");
         }
 
+
+        [AuthorizeCliente(2)]
         [HttpPost]
         public ActionResult PagarCarrito()
         {
@@ -169,6 +180,7 @@ namespace ProyectoSC_601.Controllers
 
         //De aqui para abajo implementacion de PayPal
 
+        [AuthorizeCliente(2)]
         [HttpPost]
         public async Task<JsonResult> Paypal(string precio, string producto)
         {
@@ -247,6 +259,7 @@ namespace ProyectoSC_601.Controllers
         }
 
 
+        [AuthorizeCliente(2)]
         public async Task<ActionResult> CheckPago()
         {
 
