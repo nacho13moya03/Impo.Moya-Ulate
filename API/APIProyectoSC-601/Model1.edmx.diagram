@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e99e9f098074431d9d53721636545f5b" Name="Diagram1">
+      <Diagram DiagramId="45a6cd981a6f4e4486bb675182a927ca" Name="Diagram1">
         <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Canton" Width="1.5" PointX="1.5" PointY="18.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Carrito" Width="1.5" PointX="7.5" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ImportadoraMoyaUlateModel.Categorias" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />

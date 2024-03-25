@@ -30,7 +30,7 @@ namespace ProyectoSC_601.Controllers
                     return View("Error");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return View("Error");
             }
@@ -65,7 +65,7 @@ namespace ProyectoSC_601.Controllers
                     return View();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return View("Error");
             }

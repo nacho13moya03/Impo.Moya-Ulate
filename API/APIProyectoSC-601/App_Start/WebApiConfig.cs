@@ -1,5 +1,4 @@
-﻿using Microsoft.Owin.Builder;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace APIProyectoSC_601
 {
@@ -11,8 +10,6 @@ namespace APIProyectoSC_601
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-            var startup = new Startup();
-            startup.Configuration(new AppBuilder());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -20,6 +17,5 @@ namespace APIProyectoSC_601
                 defaults: new { id = RouteParameter.Optional }
             );
         }
-
     }
 }

@@ -67,8 +67,7 @@ namespace ProyectoSC_601.Entities
         public int ID_Estado { get; set; }
         public int ID_Rol { get; set; }
         public int C_esTemporal { get; set; }
-
-        public string Token { get; set; }
+        
 
     }
 }
