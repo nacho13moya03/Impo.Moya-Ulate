@@ -2,6 +2,7 @@
 using ProyectoSC_601.Models;
 using System;
 using System.Web.Mvc;
+using WEB_ImpoMoyaUlate.Filters;
 
 
 
@@ -15,6 +16,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /*Esto devuelve la vista para registrar una empresa*/
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult RegistrarEmpresa()
         {
@@ -32,6 +34,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /*Se llama cuando se envía el formulario para registrar un proveedor*/
+        [AuthorizeRol(1)]
         [HttpPost]
         public ActionResult RegistrarEmpresa(EmpresaEnt entidad)
         {
@@ -59,6 +62,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /* Se llama cuando se solicita la página de consulta de empresas para mostrar los datos de todas las empresas*/
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ConsultaEmpresas()
         {
@@ -77,6 +81,7 @@ namespace ProyectoSC_601.Controllers
 
         /*Se llama cuando se desea actualizar la información de una empresa modificada
           Este sirve para Visualizar los datos de la empresa*/
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ActualizarEmpresa(long q)
         {
@@ -93,6 +98,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /*Este procesa la actualización de datos de un proveedor desde un formulario y redirige.*/
+        [AuthorizeRol(1)]
         [HttpPost]
         public ActionResult ActualizarEmpresa(EmpresaEnt entidad)
         {
@@ -120,6 +126,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /*Se llama cuando se solicita eliminar un proveedor.*/
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult EliminarEmpresa(long q)
         {
@@ -146,6 +153,7 @@ namespace ProyectoSC_601.Controllers
 
 
 
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult VerificarEliminarEmpresa(int idEmpresa)
         {

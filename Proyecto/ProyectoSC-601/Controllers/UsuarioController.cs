@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using WEB_ImpoMoyaUlate.Filters;
 using WEB_ImpoMoyaUlate.Models;
 
 namespace ProyectoSC_601.Controllers
@@ -186,6 +187,7 @@ namespace ProyectoSC_601.Controllers
         }
 
         //Muestra los datos de todos los clientes en el administrador
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult GestionUsuarios()
         {
@@ -196,6 +198,7 @@ namespace ProyectoSC_601.Controllers
 
 
         //Muestra los datos de todos los clientes en el administrador
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult GestionDireccion(long q)
         {
@@ -281,9 +284,6 @@ namespace ProyectoSC_601.Controllers
 
             return View(datos);
         }
-
-
-
 
 
         //Actualiza los datos del cliente
@@ -416,6 +416,7 @@ namespace ProyectoSC_601.Controllers
 
         }
 
+
         //Inactiva el usuario segun el id del cliente recibido
         [HttpGet]
         public ActionResult InactivarUsuario(long q)
@@ -427,6 +428,7 @@ namespace ProyectoSC_601.Controllers
 
         }
 
+
         //Limpia los datos de la sesion y lo redirije al index
         [HttpGet]
         public ActionResult CerrarSesionUsuario()
@@ -436,8 +438,8 @@ namespace ProyectoSC_601.Controllers
         }
 
 
-
         //Cambia el estado del cliente desde el admnistrador
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ActualizarEstadoUsuario(long q)
         {
@@ -457,6 +459,7 @@ namespace ProyectoSC_601.Controllers
             }
         }
 
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ActualizarRolUsuario(long q)
         {
@@ -475,6 +478,8 @@ namespace ProyectoSC_601.Controllers
                 return View();
             }
         }
+
+
 
         [HttpPost]
         public ActionResult CambiarContrasenaTemporal(string nuevaContrasena)

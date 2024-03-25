@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "NoAcceso";
+}
+<style>
+    /* Estilos para el mensaje */
+    .mensaje {
+        color: white;
+        background-color: red;
+        text-align: center;
+        padding: 20px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+    }
+</style>
+<body>
+    <section id="hero" class="d-flex align-items-center justify-content-center">
+        <div class="container" data-aos="fade-up">
+            <div id="mensaje" class="mensaje">
+                <h1>Error</h1>
+                <h2>NO TIENE ACCESO</h2>
+                <h2 style="color: red; font-weight: bold;">Será enviado al login para que se identifique correctamente</h2>
+                <h3 id="countdown">Redirigiendo en 10 segundos...</h3>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Definir el tiempo de espera en segundos
+        var countdownTime = 10;
+
+        // Actualizar la cuenta regresiva cada segundo
+        var countdownInterval = setInterval(function() {
+            countdownTime--;
+            document.getElementById("countdown").textContent = "Redirigiendo en " + countdownTime + " segundos...";
+
+            // Si el tiempo llega a cero, redirigir al usuario al login
+            if (countdownTime <= 0) {
+                clearInterval(countdownInterval); // Detener el intervalo
+                window.location.href = '@Url.Action("Login", "Usuario")';
+            }
+        }, 1000); // 1000 milisegundos = 1 segundo
+    </script>
+</body>
+

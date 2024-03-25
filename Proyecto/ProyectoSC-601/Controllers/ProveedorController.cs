@@ -2,6 +2,7 @@
 using ProyectoSC_601.Models;
 using System;
 using System.Web.Mvc;
+using WEB_ImpoMoyaUlate.Filters;
 
 
 
@@ -15,6 +16,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /*Esto devuelve la vista para registrar un proveedor*/
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult RegistrarProveedor()
         {
@@ -53,6 +55,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /*Se llama cuando se envía el formulario para registrar un proveedor*/
+        [AuthorizeRol(1)]
         [HttpPost]
         public ActionResult RegistrarProveedor(ProveedorEnt entidad)
         {
@@ -103,6 +106,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /* Se llama cuando se solicita la página de consulta de proveedores para mostrar los datos de todos los proveedores*/
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ConsultaProveedores()
         {
@@ -122,6 +126,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /*Se llama cuando se desea actualizar el estado de un proveedor.*/
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ActualizarEstadoProveedor(long q)
         {
@@ -155,6 +160,7 @@ namespace ProyectoSC_601.Controllers
 
         /* Se llama cuando se desea actualizar la información de un proveedor modificada
            Este sirve para Visualizar los datos del proveedor y la lista de empresas. */
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ActualizarProveedor(long q)
         {
@@ -175,6 +181,7 @@ namespace ProyectoSC_601.Controllers
         }
 
         /* Este procesa la actualización de datos de un proveedor desde un formulario y redirige. */
+        [AuthorizeRol(1)]
         [HttpPost]
         public ActionResult ActualizarProveedor(ProveedorEnt entidad)
         {
@@ -218,6 +225,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /*Se llama cuando se solicita eliminar un proveedor.*/
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult EliminarProveedor(long q)
         {

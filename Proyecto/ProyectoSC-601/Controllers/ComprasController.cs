@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using WEB_ImpoMoyaUlate.Filters;
 
 namespace ProyectoSC_601.Controllers
 {
@@ -13,6 +14,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /*Se llama cuando se envía el formulario para registrar un proveedor*/
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult RegistrarCompra()
         {
@@ -37,6 +39,7 @@ namespace ProyectoSC_601.Controllers
         }
 
         /*Se llama cuando se envía el formulario para registrar un proveedor*/
+        [AuthorizeRol(1)]
         [HttpPost]
         public ActionResult RegistrarCompra(ComprasEnt entidad)
         {
@@ -73,6 +76,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /* Se llama cuando se solicita la página de consulta de proveedores para mostrar los datos de todos los proveedores*/
+        [AuthorizeRol(1)]
         public ActionResult ConsultaCompras()
         {
             try
@@ -99,14 +103,9 @@ namespace ProyectoSC_601.Controllers
 
 
 
-
-
-
-
-
-
         /* Se llama cuando se desea actualizar la información de un proveedor modificada
    Este sirve para Visualizar los datos del proveedor y la lista de empresas. */
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ConsultaCompra(long q)
         {
@@ -125,6 +124,7 @@ namespace ProyectoSC_601.Controllers
 
 
 
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ActualizarCompra(long q)
         {
@@ -142,6 +142,8 @@ namespace ProyectoSC_601.Controllers
         }
 
 
+
+        [AuthorizeRol(1)]
         [HttpPost]
         public ActionResult ActualizarCompra(ComprasEnt entidad)
         {
@@ -174,6 +176,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /*Se llama cuando se solicita eliminar un proveedor.*/
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult EliminarCompra(long q)
         {

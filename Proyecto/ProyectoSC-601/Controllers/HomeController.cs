@@ -1,6 +1,7 @@
 ﻿using ProyectoSC_601.Entities;
 using ProyectoSC_601.Models;
 using System.Web.Mvc;
+using WEB_ImpoMoyaUlate.Filters;
 
 namespace ProyectoSC_601.Controllers
 {
@@ -78,6 +79,7 @@ namespace ProyectoSC_601.Controllers
             }
         }
 
+        [AuthorizeRol(1)]
         public ActionResult IndexAdmin()
         {
             return View();

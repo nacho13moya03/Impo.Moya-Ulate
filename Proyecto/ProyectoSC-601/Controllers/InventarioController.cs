@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using WEB_ImpoMoyaUlate.Filters;
 
 
 
@@ -16,6 +17,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /* Consulta todos los productos registrados en el sistema */
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ConsultaInventario()
         {
@@ -25,6 +27,7 @@ namespace ProyectoSC_601.Controllers
         }
 
         //Devuele la vista de registrar productos con las categorias 
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult RegistrarProducto()
         {
@@ -33,6 +36,7 @@ namespace ProyectoSC_601.Controllers
         }
 
         //Registra un producto 
+        [AuthorizeRol(1)]
         [HttpPost]
         public ActionResult RegistrarProducto(HttpPostedFileBase Imagen_Nueva, InventarioEnt entidad)
         {
@@ -79,6 +83,7 @@ namespace ProyectoSC_601.Controllers
         }
 
         //Cambia el estado de un producto
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ActualizarEstadoProducto(long q)
         {
@@ -98,7 +103,9 @@ namespace ProyectoSC_601.Controllers
             }
         }
 
+
         //Cambia el estado de un producto
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult EliminarProducto(long q)
         {
@@ -118,7 +125,9 @@ namespace ProyectoSC_601.Controllers
             }
         }
 
+
         //Muestra una vista con los datos del producto seleccionado para modificarlo
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ModificarProducto(long q)
         {
@@ -129,6 +138,7 @@ namespace ProyectoSC_601.Controllers
 
 
         //Actualiza el producto con los nuevos datos ingresados
+        [AuthorizeRol(1)]
         [HttpPost]
         public ActionResult ModificarProducto(HttpPostedFileBase Imagen_Nueva, InventarioEnt entidad)
         {
@@ -169,6 +179,7 @@ namespace ProyectoSC_601.Controllers
             }
         }
 
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult VerificarEliminarProducto(int idProducto)
         {
@@ -185,11 +196,13 @@ namespace ProyectoSC_601.Controllers
         }
 
         // GET: Categoria
+        [AuthorizeRol(1)]
         public ActionResult ConsultarCategoria()
         {
             return View();
         }
 
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult VerificarCarritoVinculado(int idProducto)
         {

@@ -3,6 +3,7 @@ using ProyectoSC_601.Models;
 using System;
 using System.Web.Mvc;
 using System.Web.Services.Description;
+using WEB_ImpoMoyaUlate.Filters;
 
 
 
@@ -15,6 +16,7 @@ namespace ProyectoSC_601.Controllers
 
 
         /* Consulta todas las categorias registrados en el sistema */
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ConsultarCategoria(string mensaje)
         {
@@ -28,6 +30,7 @@ namespace ProyectoSC_601.Controllers
 
 
         //Devuele la vista de registrar productos con las categorias 
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult RegistrarCategoria()
         {
@@ -36,6 +39,7 @@ namespace ProyectoSC_601.Controllers
         }
 
         //Registra un producto 
+        [AuthorizeRol(1)]
         [HttpPost]
         public ActionResult RegistrarCategoria(string nombre)
         {
@@ -64,6 +68,7 @@ namespace ProyectoSC_601.Controllers
         }
 
         //Cambia el estado de un producto
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ActualizarEstadoCategoria(int q)
         {
@@ -83,6 +88,7 @@ namespace ProyectoSC_601.Controllers
             }
         }
 
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult EliminarCategoria(int q)
         {
@@ -111,6 +117,7 @@ namespace ProyectoSC_601.Controllers
         }
 
 
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult VerificarEliminarCategoria(int idCategoria)
         {
@@ -130,6 +137,7 @@ namespace ProyectoSC_601.Controllers
 
 
         //Muestra una vista con los datos del producto seleccionado para modificarlo
+        [AuthorizeRol(1)]
         [HttpGet]
         public ActionResult ModificarCategoria(long q)
         {
@@ -140,6 +148,7 @@ namespace ProyectoSC_601.Controllers
 
 
         //Actualiza el producto con los nuevos datos ingresados
+        [AuthorizeRol(1)]
         [HttpPost]
         public ActionResult ModificarCategoria(CategoriaEnt entidad)
         {
@@ -158,6 +167,7 @@ namespace ProyectoSC_601.Controllers
         }
 
         // GET: Categoria
+        [AuthorizeRol(1)]
         public ActionResult ConsultarCategorias()
         {
             return View();
