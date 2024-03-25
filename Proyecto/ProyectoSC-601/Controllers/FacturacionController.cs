@@ -11,7 +11,7 @@ namespace ProyectoSC_601.Controllers
         IndexModel modelIndex = new IndexModel();
 
         //Historial de Compras Cliente
-
+        [AuthorizeCliente(2)]
         [HttpGet]
         public ActionResult FacturacionCliente()
         {
@@ -27,6 +27,7 @@ namespace ProyectoSC_601.Controllers
             return View(datos);
         }
 
+        [AuthorizeCliente(2)]
         [HttpGet]
         public ActionResult FacturaDetalleCliente(long q)
         {

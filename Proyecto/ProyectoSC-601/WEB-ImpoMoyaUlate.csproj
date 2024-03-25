@@ -186,6 +186,7 @@
     <Compile Include="Entities\InfoIndex.cs" />
     <Compile Include="Entities\EmpresaEnt.cs" />
     <Compile Include="Entities\ProveedorEnt.cs" />
+    <Compile Include="Filters\AuthorizeCliente.cs" />
     <Compile Include="Filters\AuthorizeRol.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

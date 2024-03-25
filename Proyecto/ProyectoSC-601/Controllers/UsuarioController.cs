@@ -220,6 +220,7 @@ namespace ProyectoSC_601.Controllers
         }
 
         //Devuelve la vista de perfil con los datos del cliente
+        [AuthorizeCliente(2)]
         [HttpGet]
         public ActionResult PerfilCliente()
         {
@@ -287,6 +288,7 @@ namespace ProyectoSC_601.Controllers
 
 
         //Actualiza los datos del cliente
+        [AuthorizeCliente(2)]
         [HttpPost]
         public ActionResult PerfilCliente(UsuarioEnt entidad)
         {
@@ -418,6 +420,7 @@ namespace ProyectoSC_601.Controllers
 
 
         //Inactiva el usuario segun el id del cliente recibido
+        [AuthorizeCliente(2)]
         [HttpGet]
         public ActionResult InactivarUsuario(long q)
         {

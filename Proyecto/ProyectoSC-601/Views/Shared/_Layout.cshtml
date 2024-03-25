@@ -143,8 +143,8 @@
                     <div class="col-lg-3 col-md-6 footer-links" style="margin-top:6%;margin-left:-9%;">
                         <h4>Servicios</h4>
                         <ul>
-                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Registro", "RegistroCliente", "Cliente", new { area = "" }, new { @class = "nav-link" })</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Inicio Sesión", "Login", "Cliente", new { area = "" }, new { @class = "nav-link" })</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Registro", "RegistroUsuario", "Usuario", new { area = "" }, new { @class = "nav-link" })</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a @Html.ActionLink("Inicio Sesión", "Login", "Usuario", new { area = "" }, new { @class = "nav-link" })</a></li>
                             @if (Session["ID_Usuario"] != null)
                             {
 
