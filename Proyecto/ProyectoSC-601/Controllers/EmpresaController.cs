@@ -144,6 +144,8 @@ namespace ProyectoSC_601.Controllers
             }
         }
 
+
+
         [HttpGet]
         public ActionResult VerificarEliminarEmpresa(int idEmpresa)
         {
@@ -151,14 +153,31 @@ namespace ProyectoSC_601.Controllers
 
             // Verificar si hay proveedores vinculados a la empresa usando el API
             bool hayProveedoresVinculados = modelEmpresa.VerificarProveedoresVinculados(entidad);
+            bool hayComprasVinculadas = modelEmpresa.VerificarComprasVinculadas(entidad);
 
-            if (hayProveedoresVinculados)
+            if (hayProveedoresVinculados || hayComprasVinculadas)
             {
-                return Json(new { success = false, message = "No se puede eliminar la empresa porque tiene proveedores vinculados. Elimina los proveedores primero." }, JsonRequestBehavior.AllowGet);
+                string message = "No se puede eliminar la empresa porque ";
+
+                if (hayProveedoresVinculados && hayComprasVinculadas)
+                {
+                    message += "tiene proveedores y compras vinculados. Elimina los proveedores y las compras primero.";
+                }
+                else if (hayProveedoresVinculados)
+                {
+                    message += "tiene proveedores vinculados. Elimina los proveedores primero.";
+                }
+                else // hayComprasVinculadas
+                {
+                    message += "tiene compras vinculadas. Elimina las compras primero.";
+                }
+
+                return Json(new { success = false, message }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
+
 
 
 

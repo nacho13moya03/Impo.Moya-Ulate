@@ -213,6 +213,39 @@ namespace APIProyectoSC_601.Controllers
 
 
 
+        [HttpPost]
+        [Route("VerificarComprasVinculadas")]
+        public bool VerificarComprasVinculadas(EmpresaEnt entidad)
+        {
+            try
+            {
+                using (var context = new ImportadoraMoyaUlateEntities())
+                {
+                    // Verificar si hay proveedores vinculados a la empresa específica
+                    bool hayComprasVinculadas = context.compras.Any(p => p.Empresa == entidad.ID_Empresa);
+
+                    if (hayComprasVinculadas)
+                    {
+                        logExitos.Add("VerificarComprasVinculadas", $"Existen compras vinculados a la empresa con ID {entidad.ID_Empresa}.");
+                    }
+                    else
+                    {
+                        logExitos.Add("VerificarComprasVinculadas", $"No hay compras vinculados a la empresa con ID {entidad.ID_Empresa}.");
+                    }
+
+                    return hayComprasVinculadas;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en VerificarComprasVinculadas: " + ex.Message);
+                return false;
+            }
+        }
+
+
+
+
 
     }
 }
