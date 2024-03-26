@@ -8,7 +8,7 @@
 <div class="container-xl px-4 mt-4">
     <hr class="mt-0 mb-4">
     <div class="row">
-        <div class="col-xl-8" style="margin-left:18%;margin-top:5%; margin-bottom:2%;">
+        <div class="col-xl-8" style="margin-left:auto;margin-top:10%; margin-bottom:2%; margin-right: auto">
             <div class="card mb-4">
                 @if (ViewBag.MensajeUsuario != null)
                 {
@@ -33,18 +33,18 @@
                                     @Html.TextBoxFor(m => m.Nombre_Proveedor, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
                                     <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                         <div id="errorNombre" class="text-danger"></div>
-                                        </div>
                                     </div>
                                 </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="small mb-1" for="apellido">Apellido</label>
                                     @Html.TextBoxFor(m => m.Apellido_Proveedor, new { @class = "form-control", @placeholder = "Apellido", @type = "text", @id = "apellido" })
                                     <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                         <div id="errorApellido" class="text-danger"></div>
-                                        </div>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                         <div style="align-self: flex-start;">
                             <label class="medium" for="tipo">Tipo de Identificación</label>
@@ -58,51 +58,51 @@
                             @Html.TextBoxFor(m => m.Cedula_Proveedor, new { @class = "form-control", @placeholder = "Cédula", @type = "text" })
                             <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                 <div id="errorCedula" class="text-danger">@ViewBag.MensajeCedulaExistente</div>
-                                </div>
                             </div>
-                            <br />
-                            <div class="form-group">
-                                <label class="small mb-1" for="direccion">Dirección Exacta</label>
-                                @Html.TextBoxFor(m => m.Direccion_Exacta, new { @class = "form-control", @placeholder = "Dirección Exacta", @type = "text" })
-                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                    <div id="errorDireccion" class="text-danger"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <br>
-                                    <label class="small mb-1" for="empresa">Empresa</label>
-                                    @Html.DropDownListFor(m => m.Empresa, (ViewBag.combo as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @style = "background-color: #eee; border: none; padding: 12px 15px; margin: 8px 0; width: 100%;", required = "required" })
-                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                        <div id="errorEmpresa" class="text-danger"></div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <label class="small mb-1" for="telefono">Teléfono</label>
-                                    @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", @placeholder = "Teléfono", @type = "text" })
-                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                        <div id="errorTelefono" class="text-danger"></div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="correo">Correo</label>
-                                        @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @placeholder = "Correo", @type = "mail" })
-                                        <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                            <div id="errorCorreo" class="text-danger"></div>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div style="text-align:center;padding-top:4%;">
-                                            <a href="@Url.Action("ConsultaProveedores", "Proveedor")" class="btn btn-danger">
-                                                <i class="fa fa-arrow-left"></i> Volver
-                                            </a>
-                                            <span class="px-2"></span>
-                                            <button class="btn btn-success" type="submit" onclick="return validarFormulario()">REGISTRAR<i class="bi bi-pencil-square"></i></button>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label class="small mb-1" for="direccion">Dirección Exacta</label>
+                            @Html.TextBoxFor(m => m.Direccion_Exacta, new { @class = "form-control", @placeholder = "Dirección Exacta", @type = "text" })
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                <div id="errorDireccion" class="text-danger"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <br>
+                            <label class="small mb-1" for="empresa">Empresa</label>
+                            @Html.DropDownListFor(m => m.Empresa, (ViewBag.combo as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @style = "background-color: #eee; border: none; padding: 12px 15px; margin: 8px 0; width: 100%;", required = "required" })
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                <div id="errorEmpresa" class="text-danger"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label class="small mb-1" for="telefono">Teléfono</label>
+                            @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control", @placeholder = "Teléfono", @type = "text" })
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                <div id="errorTelefono" class="text-danger"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label class="small mb-1" for="correo">Correo</label>
+                            @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @placeholder = "Correo", @type = "mail" })
+                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                <div id="errorCorreo" class="text-danger"></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div style="text-align:center;padding-top:4%;">
+                            <a href="@Url.Action("ConsultaProveedores", "Proveedor")" class="btn btn-danger">
+                                <i class="fa fa-arrow-left"></i> Volver
+                            </a>
+                            <span class="px-2"></span>
+                            <button class="btn btn-success" type="submit" onclick="return validarFormulario()">REGISTRAR<i class="bi bi-pencil-square"></i></button>
 
-                                        </div>
-                                        }
-                                    </div>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
