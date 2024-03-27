@@ -72,6 +72,10 @@
                             <li><a class="dropdown-item" @Html.ActionLink("Facturación", "Facturacion", "Facturacion", new { area = "" }, new { @class = "nav-link" })</a></li>
                         </ul>
                     </li>
+                    @if (Session["ID_Usuario"] != null)
+                    {
+                        @Html.ActionLink("Perfil", "PerfilAdmin", "Usuario", new { area = "" }, new { @class = "nav-link" })
+                    }
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>

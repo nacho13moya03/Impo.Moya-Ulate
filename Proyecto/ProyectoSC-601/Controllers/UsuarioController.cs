@@ -220,7 +220,7 @@ namespace ProyectoSC_601.Controllers
         }
 
         //Devuelve la vista de perfil con los datos del cliente
-
+        [AuthorizeCliente(2)]
         [HttpGet]
         public ActionResult PerfilCliente()
         {
@@ -297,6 +297,7 @@ namespace ProyectoSC_601.Controllers
 
 
         //Actualiza los datos del cliente
+        [AuthorizeCliente(2)]
         [HttpPost]
         public ActionResult PerfilCliente(UsuarioEnt entidad)
         {
@@ -428,6 +429,7 @@ namespace ProyectoSC_601.Controllers
 
 
         //Inactiva el usuario segun el id del cliente recibido
+
         [HttpGet]
         public ActionResult InactivarUsuario(long q)
         {
@@ -511,5 +513,212 @@ namespace ProyectoSC_601.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //Devuelve la vista de perfil con los datos del cliente
+        [AuthorizeRol(1)]
+        [HttpGet]
+        public ActionResult PerfilAdmin()
+        {
+            try
+            {
+                if (Session["ID_Usuario"] != null && Session["Rol"] != null && long.Parse(Session["Rol"].ToString()) == 2)
+                {
+                    // Obtiene la cantidad de productos diferentes en el carrito
+                    int cantidadProductos = modelIndex.ObtenerCantidadProductosEnCarrito(long.Parse(Session["ID_Usuario"].ToString()));
+
+                    // Pasa la cantidad de productos a la vista
+                    ViewBag.CantidadProductosEnCarrito = cantidadProductos;
+                }
+
+                long q = long.Parse(Session["ID_Usuario"].ToString());
+
+                var datos = modelUsuario.ConsultaClienteEspecifico(q);
+
+                // Consultar todas las provincias y cargarlas en el ViewBag
+                ViewBag.Provincias = modelUsuario.ConsultarProvincias();
+
+                // Verificar si el usuario tiene una dirección
+                if (datos.ID_Direccion != 0)
+                {
+                    int idProvinciaSeleccionada = datos.ID_Provincia;
+                    int idCantonSeleccionado = datos.ID_Canton;
+                    int idDistritoSeleccionado = datos.ID_Distrito;
+
+                    // Modificar la lista de provincias para establecer la seleccionada
+                    ViewBag.Provincias = ((IEnumerable<SelectListItem>)ViewBag.Provincias)
+                        .Select(p => new SelectListItem
+                        {
+                            Value = p.Value,
+                            Text = p.Text,
+                            Selected = (p.Value == idProvinciaSeleccionada.ToString())
+                        }).ToList();
+
+                    // Consultar los cantones de la provincia seleccionada
+                    var cantones = modelUsuario.cargarCantones(idProvinciaSeleccionada);
+                    ViewBag.Cantones = cantones
+                        .Select(c => new SelectListItem
+                        {
+                            Value = c.Value,
+                            Text = c.Text,
+                            Selected = (c.Value == idCantonSeleccionado.ToString())
+                        }).ToList();
+
+                    // Consultar los distritos del cantón seleccionado
+                    var distritos = modelUsuario.cargarDistritos(idCantonSeleccionado);
+                    ViewBag.Distritos = distritos
+                        .Select(d => new SelectListItem
+                        {
+                            Value = d.Value,
+                            Text = d.Text,
+                            Selected = (d.Value == idDistritoSeleccionado.ToString())
+                        }).ToList();
+                }
+                else
+                {
+                    // Si no tiene dirección, establecer los cantones y distritos como cadena vacía
+                    ViewBag.Cantones = "";
+                    ViewBag.Distritos = "";
+                }
+
+                return View(datos);
+            }
+            catch (Exception ex)
+            {
+                // Si salta esta excepcion es porque un usuario esta intentando ingresar por url entonces lo envia a la vista de no acceso
+                return RedirectToAction("NoAcceso", "Seguridad");
+            }
+        }
+
+
+
+        //Actualiza los datos del cliente
+        [AuthorizeRol(1)]
+        [HttpPost]
+        public ActionResult PerfilAdmin(UsuarioEnt entidad)
+        {
+            ModelState.Remove("Contrasenna_Usuario");
+            if (ModelState.IsValid)
+            {
+
+                string correoExistente = modelUsuario.ComprobarCorreoExistenteUsuario(entidad);
+                if (correoExistente == "Existe")
+                {
+                    ViewBag.MensajeNoExitoso = "Ese correo está asociado a otra cuenta";
+                    long q = long.Parse(Session["ID_Usuario"].ToString());
+                    var datos = modelUsuario.ConsultaClienteEspecifico(q);
+                    Session["ID_Usuario"] = datos.ID_Usuario;
+                    return View(datos);
+                }
+                else
+                {
+                    if (entidad.NuevaContrasenna_Usuario == null || entidad.NuevaContrasenna_Usuario.Length == 0)
+                    {
+                        entidad.NuevaContrasenna_Usuario = entidad.Contrasenna_Usuario;
+                    }
+                    else
+                    {
+                        // Encriptar la nueva contraseña antes de guardarla
+                        entidad.NuevaContrasenna_Usuario = seguridad.Encrypt(entidad.NuevaContrasenna_Usuario);
+                    }
+
+                    if (entidad.Apellido_Usuario == null || entidad.Apellido_Usuario.Length == 0)
+                    {
+                        entidad.Apellido_Usuario = string.Empty;
+                    }
+
+                    string respuesta = modelUsuario.ActualizarCuentaCliente(entidad);
+
+                    if (respuesta == "OK")
+                    {
+                        Session["Direccion_Cliente"] = entidad.Direccion_Exacta;
+
+                        return RedirectToAction("PerfilAdmin", "Usuario");
+
+                    }
+                    else
+                    {
+                        ViewBag.MensajeNoExitoso = "No se ha podido actualizar su información";
+                        return View();
+                    }
+
+                }
+            }
+            else
+            {
+                if (entidad.ID_Direccion != 0)
+                {
+                    var datos = modelUsuario.ConsultaClienteEspecifico(entidad.ID_Usuario);
+
+                    ViewBag.Provincias = modelUsuario.ConsultarProvincias();
+
+                    if (datos.ID_Direccion != 0)
+                    {
+                        int idProvinciaSeleccionada = datos.ID_Provincia;
+                        int idCantonSeleccionado = datos.ID_Canton;
+                        int idDistritoSeleccionado = datos.ID_Distrito;
+
+                        ViewBag.Provincias = ((IEnumerable<SelectListItem>)ViewBag.Provincias)
+                            .Select(p => new SelectListItem
+                            {
+                                Value = p.Value,
+                                Text = p.Text,
+                                Selected = (p.Value == idProvinciaSeleccionada.ToString())
+                            }).ToList();
+
+                        var cantones = modelUsuario.cargarCantones(idProvinciaSeleccionada);
+                        ViewBag.Cantones = cantones
+                            .Select(c => new SelectListItem
+                            {
+                                Value = c.Value,
+                                Text = c.Text,
+                                Selected = (c.Value == idCantonSeleccionado.ToString())
+                            }).ToList();
+
+                        var distritos = modelUsuario.cargarDistritos(idCantonSeleccionado);
+                        ViewBag.Distritos = distritos
+                            .Select(d => new SelectListItem
+                            {
+                                Value = d.Value,
+                                Text = d.Text,
+                                Selected = (d.Value == idDistritoSeleccionado.ToString())
+                            }).ToList();
+                        return View(entidad);
+                    }
+                }
+
+
+                ViewBag.Provincias = modelUsuario.ConsultarProvincias();
+                int idProvinciaS = entidad.ID_Provincia;
+                int idCantonS = entidad.ID_Canton;
+                int idDistritoS = entidad.ID_Distrito;
+
+                ViewBag.Provincias = ((IEnumerable<SelectListItem>)ViewBag.Provincias)
+                    .Select(p => new SelectListItem
+                    {
+                        Value = p.Value,
+                        Text = p.Text,
+                        Selected = (p.Value == idProvinciaS.ToString())
+                    }).ToList();
+
+                var cantones2 = modelUsuario.cargarCantones(idProvinciaS);
+                ViewBag.Cantones = cantones2
+                    .Select(c => new SelectListItem
+                    {
+                        Value = c.Value,
+                        Text = c.Text,
+                        Selected = (c.Value == idCantonS.ToString())
+                    }).ToList();
+
+                var distritos2 = modelUsuario.cargarDistritos(idCantonS);
+                ViewBag.Distritos = distritos2
+                    .Select(d => new SelectListItem
+                    {
+                        Value = d.Value,
+                        Text = d.Text,
+                        Selected = (d.Value == idDistritoS.ToString())
+                    }).ToList();
+                return View(entidad);
+            }
+
+        }
     }
 }

@@ -219,6 +219,7 @@
     <Content Include="Assets\css\ProductosAdminStyle.css" />
     <Content Include="Assets\css\perfilClienteStyle.css" />
     <Content Include="Assets\css\registroStyle.css" />
+    <Content Include="Assets\css\responsive_login.css" />
     <Content Include="Assets\css\responsive_admin.css" />
     <Content Include="Assets\css\responsive.css" />
     <Content Include="Assets\css\style.css" />
@@ -424,6 +425,7 @@
     <Content Include="Views\Carrito\CheckPago.cshtml" />
     <Content Include="Views\Pedidos\ConsultarPedidos.cshtml" />
     <Content Include="Views\Seguridad\NoAcceso.cshtml" />
+    <Content Include="Views\Usuario\PerfilAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
