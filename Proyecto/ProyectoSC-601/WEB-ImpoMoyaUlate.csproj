@@ -207,6 +207,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\css\customizer.css" />
+    <Content Include="Assets\css\dark.css" />
+    <Content Include="Assets\css\custom.css" />
+    <Content Include="Assets\css\rtl.css" />
+    <Content Include="Assets\css\hope-ui.css" />
+    <Content Include="Assets\css\core\libs.min.css" />
     <Content Include="Assets\css\facturacion.css" />
     <Content Include="Assets\css\ConsultaCategoria.css" />
     <Content Include="Assets\css\metodopago.css" />
@@ -236,11 +242,28 @@
     <Content Include="Assets\img\testimonials\testimonials-3.jpg" />
     <Content Include="Assets\img\testimonials\testimonials-4.jpg" />
     <Content Include="Assets\img\testimonials\testimonials-5.jpg" />
+    <Content Include="Assets\js\charts\apexcharts.js" />
+    <Content Include="Assets\js\charts\dashboard.js" />
+    <Content Include="Assets\js\charts\vectore-chart.js" />
+    <Content Include="Assets\js\charts\widgetcharts.js" />
     <Content Include="Assets\js\ContactoIndex.js" />
+    <Content Include="Assets\js\core\external.min.js" />
+    <Content Include="Assets\js\core\libs.min.js" />
+    <Content Include="Assets\js\hope-ui.js" />
     <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\loginjs.js" />
     <Content Include="Assets\js\main.js" />
     <Content Include="Assets\js\Cliente.js" />
+    <Content Include="Assets\js\plugins\calender.js" />
+    <Content Include="Assets\js\plugins\circle-progress.js" />
+    <Content Include="Assets\js\plugins\countdown.js" />
+    <Content Include="Assets\js\plugins\flatpickr.js" />
+    <Content Include="Assets\js\plugins\form-wizard.js" />
+    <Content Include="Assets\js\plugins\fslightbox.js" />
+    <Content Include="Assets\js\plugins\kanban.js" />
+    <Content Include="Assets\js\plugins\prism.mini.js" />
+    <Content Include="Assets\js\plugins\setting.js" />
+    <Content Include="Assets\js\plugins\slider-tabs.js" />
     <Content Include="Assets\js\popper.js" />
     <Content Include="Assets\scss\Readme.txt" />
     <Content Include="Assets\vendor\aos\aos.cjs.js" />
@@ -429,6 +452,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Assets\vendor\aos\dist\" />
     <Folder Include="Views\MetodoPago\" />
     <Folder Include="Views\PayPal2Model\" />
     <Folder Include="Views\paypalmodel\" />
