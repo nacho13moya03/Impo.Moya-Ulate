@@ -40,7 +40,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
 
                     context.RegistrarProveedorSP(entidad.Nombre_Proveedor, entidad.Apellido_Proveedor, entidad.ID_Identificacion, entidad.Cedula_Proveedor, entidad.Direccion_Exacta, entidad.Estado_Proveedor, entidad.Empresa, entidad.Telefono, entidad.Correo);
@@ -67,7 +67,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var contexto = new ImportadoraMoyaUlateEntities())
+                using (var contexto = new db_aa61bd_impomyuEntities())
                 {
                     var datos = (from x in contexto.Empresa
                                  select x).ToList();
@@ -105,7 +105,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
 
@@ -147,7 +147,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
 
@@ -192,7 +192,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     context.ActualizarEstadoProveedorSP(entidad.ID_Proveedor);
                     logExitos.Add("ActualizarEstadoProveedor", $"Actualización de estado del proveedor con ID {entidad.ID_Proveedor} realizada exitosamente");
@@ -215,7 +215,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     if (entidad.Nombre_Identificacion.Equals("Cédula Jurídica"))
                     {
@@ -244,7 +244,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     var proveedorAEliminar = context.Proveedores.FirstOrDefault(p => p.ID_Proveedor == q);
 
@@ -274,7 +274,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     var datos = (from x in context.Identificacion
                                  select x).ToList();
@@ -307,7 +307,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
 

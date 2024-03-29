@@ -34,7 +34,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var categorias = context.Categorias.ToList();
@@ -60,7 +60,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     // Verificar si ya existe una categoría con el mismo nombre
                     var categoriaExistente = context.Categorias.FirstOrDefault(c => c.Nombre_Categoria == categoria.Nombre_Categoria);
@@ -96,7 +96,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     var datos = context.Categorias.Where(x => x.ID_Categoria == categoria.ID_Categoria).FirstOrDefault();
 
@@ -136,7 +136,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     var categoriaAEliminar = context.Categorias.Find(categoria.ID_Categoria);
 
@@ -168,7 +168,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     bool productosVinculados = context.Producto.Any(p => p.ID_Categoria == entidad.ID_Categoria);
 
@@ -196,7 +196,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     var datos = context.Categorias.Where(x => x.ID_Categoria == categoria.ID_Categoria).FirstOrDefault();
 
@@ -244,7 +244,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new ImportadoraMoyaUlateEntities())
+                using (var context = new db_aa61bd_impomyuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var categoria = (from x in context.Categorias
