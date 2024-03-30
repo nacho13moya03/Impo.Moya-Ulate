@@ -55,6 +55,9 @@
 
 /*Ajuste de eliminar y colocar colocar imagen*/
 @media (max-width: 749px) {
+    .row-check{
+        margin: 50px 0;
+    }
     .logo {
         display: none;
     }

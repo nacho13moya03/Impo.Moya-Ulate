@@ -210,6 +210,7 @@
     <Content Include="Assets\css\customizer.css" />
     <Content Include="Assets\css\dark.css" />
     <Content Include="Assets\css\custom.css" />
+    <Content Include="Assets\css\responsive_check.css" />
     <Content Include="Assets\css\rtl.css" />
     <Content Include="Assets\css\hope-ui.css" />
     <Content Include="Assets\css\core\libs.min.css" />

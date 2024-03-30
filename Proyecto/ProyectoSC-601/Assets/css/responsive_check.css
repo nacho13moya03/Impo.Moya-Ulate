@@ -1,0 +1,51 @@
+/**
+ * Por aca se encuentran las configuraciones desarrolladas
+ * dentro del proyecto para Importadora Moya y Ulate
+ * que permiten el responsive del proyecto para una mejora
+ * en las funciones tanto en telefono como en computadora
+ */
+
+body {
+    background-color: #f2f6fc;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 767px) {
+    .row {
+        margin: 20px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    h5 {
+        font-size: 1.2rem;
+    }
+
+    i.fa-6x {
+        font-size: 4rem;
+    }
+}
+
+/* Centrar texto en tablas */
+.table thead th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table tbody td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Limitar el ancho máximo de la tabla */
+.table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
