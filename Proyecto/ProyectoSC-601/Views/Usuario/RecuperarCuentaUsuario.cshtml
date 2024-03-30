@@ -2,50 +2,71 @@
 @{
     ViewBag.Title = "RecuperarCuentaUsuario";
     Layout = "~/Views/Shared/_Layout_Login.cshtml";
-    <link href="~/Assets/css/logstyle.css" rel="stylesheet">
+    <link href="~/Assets/css/registroStyle.css" rel="stylesheet">
 }
-
-<div class="container" id="container">
-    <div class="form-container sign-in-container">
-        @if (ViewBag.MensajeExitoso != null)
-        {
-            <div class="alert alert-success" role="alert" style="text-align: center; margin: 10px 10px -30px 10px;">
-                @ViewBag.MensajeExitoso
-            </div>
-        }
-        @if (ViewBag.MensajeNoExitoso != null)
-        {
-            <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px !important; margin-bottom: -60px !important;">
-                @ViewBag.MensajeNoExitoso
-            </div>
-        }
-
-        @using (Html.BeginForm("RecuperarCuentaUsuario", "Usuario", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate" }))
-        {
-            <h1 style="font-size:30px!important;">Recuperar Cuenta</h1>
-            <br />
-            <div style="align-self: flex-start;">
-                <label class="medium" for="identificacion">Correo Electrónico</label>
-            </div>
-            @Html.TextBoxFor(m => m.Correo_Usuario, new { @placeholder = "usuario@ejemplo.com", @type = "text", required = "required", @id = "Correo_Usuario" })
-            <div style="align-self: flex-start;">
-                @Html.ValidationMessageFor(m => m.Correo_Usuario, "", new { @style = "color: red;" })
-            </div>
-            <br />
-            <button type="submit" style=" margin-top: 8%;">Recuperar</button>
-        }
-    </div>
-    <div class="overlay-container">
-        <div class="overlay">
-            <div class="overlay-panel overlay-right">
-                <h3>¿Ya tienes una cuenta?</h3><br />
-                <button class="ghost" id="signUp" onclick="location.href='@Url.Action("Login", "Usuario")'">Iniciar Sesión</button>
-
-            </div>
+<div class="" data-bs-spy="scroll" data-bs-target="#elements-section" data-bs-offset="0" tabindex="0">
+    <!-- loader Start -->
+    <div id="loading">
+        <div class="loader simple-loader">
+            <div class="loader-body"></div>
         </div>
     </div>
-</div>
+    <!-- loader END -->
 
+    <div class="wrapper">
+        <section class="login-content vh-100 d-flex align-items-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card card-transparent shadow-none d-flex justify-content-center mb-0 auth-card blur-background">
+                            <div class="card-body">
+                                @if (ViewBag.MensajeExitoso != null)
+                                {
+                                    <div class="alert alert-success" role="alert" style="text-align: center; margin: 10px 10px -30px 10px;">
+                                        @ViewBag.MensajeExitoso
+                                    </div>
+                                }
+                                @if (ViewBag.MensajeNoExitoso != null)
+                                {
+                                    <div class="alert alert-danger" role="alert" style="text-align: center; margin: 10px !important; margin-bottom: -60px !important;">
+                                        @ViewBag.MensajeNoExitoso
+                                    </div>
+                                }
+                                <h2 class="mb-2 text-center">Recuperar Cuenta</h2>
+
+
+                                @using (Html.BeginForm("RecuperarCuentaUsuario", "Usuario", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate" }))
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div style="align-self: flex-start;">
+                                                <label class="medium" for="identificacion">Correo Electrónico</label>
+                                            </div>
+                                            @Html.TextBoxFor(m => m.Correo_Usuario, new { @placeholder = "usuario@ejemplo.com", @type = "text", required = "required", @id = "Correo_Usuario" })
+                                            <div style="align-self: flex-start;">
+                                                @Html.ValidationMessageFor(m => m.Correo_Usuario, "", new { @style = "color: red;" })
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-center" style="margin-top:2%;">
+                                            <button type="submit" style="margin-top: 8%">Recuperar</button>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+
+                                            <a href='@Url.Action("Login", "Usuario")' style="margin-top: 8%;">Ya tienes cuenta, ¡Inicia Sesión!</a>
+                                        </div>
+                                    </div>
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var alertDiv = document.querySelector(".alert.alert-danger");

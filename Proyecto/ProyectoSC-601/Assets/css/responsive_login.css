@@ -6,3 +6,44 @@
 *    en esta localizacion especifica se encuentra el del Login y Registro
 */
 
+body {
+    background-image: url('/Assets/img/fondo-login.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+/*    animation: scale-bg-animation 30s infinite;*/
+}
+
+.blur-background {
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 767px) {
+    body {
+        background-image: none;
+        animation: none;
+        background-color: #FFFFFF;
+    }
+    .blur-background{
+        backdrop-filter: none;
+        background-color: none;
+    }
+    .card-body{
+        background-color: #FFFFFF;
+    }
+}
+
+@keyframes scale-bg-animation {
+    0% {
+        background-size: 100% auto; /* Ajuste inicial */
+    }
+
+    50% {
+        background-size: auto 100%; /* Se ajusta para mantener la altura al 100% */
+    }
+
+    100% {
+        background-size: 100% auto; /* Se ajusta nuevamente al 100% del ancho */
+    }
+}

@@ -236,6 +236,7 @@
     <Content Include="Assets\img\favicon.png" />
     <Content Include="Assets\img\features.jpg" />
     <Content Include="Assets\img\hero-bg.jpg" />
+    <Content Include="Assets\img\icono.png" />
     <Content Include="Assets\img\testimonials-bg.jpg" />
     <Content Include="Assets\img\testimonials\testimonials-1.jpg" />
     <Content Include="Assets\img\testimonials\testimonials-2.jpg" />
