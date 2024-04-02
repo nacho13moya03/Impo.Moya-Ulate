@@ -17,6 +17,7 @@
         box-shadow: none; /* Eliminar cualquier sombra */
         background-color: transparent;
     }
+
     input[type="number"]:hover {
         outline: none; /* Eliminar el borde de enfoque */
         border-color: transparent; /* Hacer que el borde sea transparente */
@@ -72,7 +73,7 @@
                                             <td class="visually-hidden">@item.Impuesto.ToString("N2")</td>
                                             <td class="visually-hidden">@item.Total.ToString("N2")</td>
                                             <td style="text-align:center">
-                                                <a href="javascript:void(0);" onclick="actualizarCantidad('@item.ID_Carrito', '@item.ID_Producto')" title="Actualizar Cantidad"><i class="fa fa-pen" style="color:forestgreen;"></i></a>
+                                                <a href="javascript:void(0);" onclick="actualizarCantidad('@item.ID_Carrito', '@item.ID_Producto','@item.Cantidad')" title="Actualizar Cantidad"><i class="fa fa-pen" style="color:forestgreen;"></i></a>
 
                                                 <a href="@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.ID_Carrito })" title="Quitar del Carrito"><i class="fa fa-times fa-lg" style="color:#6282a9;margin-left:10%;"></i></a>
                                             </td>
@@ -223,29 +224,52 @@
 </script>
 
 <script>
-   function actualizarCantidad(idCarrito, idProducto) {
+function actualizarCantidad(idCarrito, idProducto, disponible) {
     // Obtener el valor actualizado de la cantidad
-    var nuevaCantidad = $("#cantidad-" + idCarrito).val();
+    let nuevaCantidad = $("#cantidad-" + idCarrito).val();
+    let cantidadOriginal = disponible; // Almacenar la cantidad original
 
-    // Realizar la solicitud AJAX al controlador para actualizar la cantidad
+    // Realizar la solicitud AJAX para obtener la cantidad disponible del producto
     $.ajax({
-        url: '@Url.Action("ActualizarCarrito", "carrito")',
-        type: "POST",
-        data: {
-            idCarrito: idCarrito,
-            idProducto: idProducto,
-            nuevaCantidad: nuevaCantidad // Cambiar 'cantidad' a 'nuevaCantidad' para que coincida con el parámetro del controlador
+        url: '@Url.Action("ObtenerCantidadDisponible", "carrito")',
+        type: 'GET',
+        data: { idProducto: idProducto },
+        success: function (cantidadDisponible) {
+            if (parseInt(nuevaCantidad) > parseInt(cantidadDisponible)) {
+                // Mostrar un mensaje de error si la cantidad solicitada es mayor que la disponible
+                Swal.fire({
+                    title: 'Error en la Solicitud',
+                    text: 'No hay suficiente cantidad disponible del producto',
+                    icon: 'info',
+                    confirmButtonColor: '#6282a9',
+                    confirmButtonText: 'Ok'
+                });
+                $("#cantidad-" + idCarrito).val(cantidadOriginal);
+            } else {
+                // Realizar la solicitud AJAX al controlador para actualizar la cantidad
+                $.ajax({
+                    url: '@Url.Action("ActualizarCarrito", "carrito")',
+                    type: "POST",
+                    data: {
+                        idCarrito: idCarrito,
+                        idProducto: idProducto,
+                        nuevaCantidad: nuevaCantidad // Cambiar 'cantidad' a 'nuevaCantidad' para que coincida con el parámetro del controlador
+                    },
+                    success: function (data) {
+                        window.location.href = '@Url.Action("carrito", "carrito")';
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        // Mostrar el mensaje de error en la consola del navegador
+                        console.error("Error al actualizar la cantidad del producto:", textStatus, errorThrown);
+                        // Mostrar un mensaje de error al usuario
+                        alert("Ocurrió un error al actualizar la cantidad del producto. Por favor, inténtalo de nuevo más tarde.");
+                    }
+                });
+            }
         },
-        success: function (data) {
-           window.location.href = '@Url.Action("carrito", "carrito")';
-        },
-        error: function (xhr, textStatus, errorThrown) {
-            // Mostrar el mensaje de error en la consola del navegador
-            console.error("Error al actualizar la cantidad del producto:", textStatus, errorThrown);
-            // Mostrar un mensaje de error al usuario
-            alert("Ocurrió un error al actualizar la cantidad del producto. Por favor, inténtalo de nuevo más tarde.");
+        error: function () {
+            console.log('Error al obtener la cantidad disponible del producto.');
         }
     });
 }
-
 </script>

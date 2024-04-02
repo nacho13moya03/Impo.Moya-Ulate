@@ -3,8 +3,6 @@
 
 @{
     ViewBag.Title = "Catalogo";
-    <link href="~/Assets/css/style.css" rel="stylesheet">
-    <link href="~/Assets/css/catalogo.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
 }
@@ -65,7 +63,7 @@
 
                                         @foreach (var currentItem in Model.Skip(row * itemsPerRow * 4).Take(itemsPerRow * 4))
                                         {
-                                            if (currentItem.Estado == 1)
+                                            if (currentItem.Estado == 1 && currentItem.Cantidad > 0)
                                             {
                                                 <div class="col mb-4" data-categoria="@currentItem.ID_Categoria">
                                                     <div class="card h-100">

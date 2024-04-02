@@ -147,6 +147,15 @@ namespace ProyectoSC_601.Controllers
             return RedirectToAction("Carrito", "Carrito");
         }
 
+        [AuthorizeCliente(2)]
+        [HttpGet]
+        public JsonResult ObtenerCantidadDisponible(int idProducto)
+        {
+            // Aquí obtienes la cantidad disponible del producto desde tu base de datos u otra fuente de datos
+            // Supongamos que obtienes la cantidad disponible del producto con id igual a idProducto
+            int cantidadDisponible = modelCarrito.ObtenerCantidadDisponibleProd(idProducto);
+            return Json(cantidadDisponible, JsonRequestBehavior.AllowGet);
+        }
 
         [AuthorizeCliente(2)]
         [HttpPost]
@@ -239,8 +248,8 @@ namespace ProyectoSC_601.Controllers
                             brand_name = "Importadora Moya y Ulate SA",
                             landing_page = "NO_PREFERENCE",
                             user_action = "PAY_NOW",
-                            return_url = "http://nacho02-001-site1.ktempurl.com/Carrito/CheckPago",
-                            cancel_url = "http://nacho02-001-site1.ktempurl.com/"
+                            return_url = "https://localhost:44353/Carrito/CheckPago",
+                            cancel_url = "https://localhost:44353/"
                         }
                     };
 

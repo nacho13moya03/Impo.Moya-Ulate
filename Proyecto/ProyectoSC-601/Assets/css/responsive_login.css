@@ -21,7 +21,6 @@ body {
 
 @media (max-width: 767px) {
     body {
-        background-image: none;
         animation: none;
         background-color: #FFFFFF;
     }

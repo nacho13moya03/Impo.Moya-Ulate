@@ -29,6 +29,30 @@ namespace APIProyectoSC_601.Controllers
         }
 
         [HttpGet]
+        [Route("ObtenerCantidadDisponible")]
+        public int ObtenerCantidadDisponible(int idProducto)
+        {
+            try
+            {
+                using (var context = new db_aa61bd_impomyuEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    int cantidad = context.Producto.Where(x => x.ID_Producto == idProducto)
+                                                 .Select(x => x.Cantidad)
+                                                 .FirstOrDefault();
+                    logExitos.Add("ObtenerCantidadDisponible", $"Se obtiene la cantidad disponible del producto");
+
+                    return cantidad;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Add("Error en ObtenerCantidadDisponible: " + ex.Message);
+                return 0;
+            }
+        }
+
+        [HttpGet]
         [Route("ObtenerCantidadProductosEnCarrito")]
         public int ObtenerCantidadProductosEnCarrito(long ID_Usuario)
         {

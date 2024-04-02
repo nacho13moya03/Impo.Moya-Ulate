@@ -29,6 +29,18 @@ namespace ProyectoSC_601.Models
                 return res.Content.ReadFromJsonAsync<string>().Result;
             }
         }
+        public int ObtenerCantidadDisponibleProd(int idProducto)
+        {
+            using (var client = new HttpClient())
+            {
+                var credentials = CredentialsSmarter;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
+                var urlApi = rutaServidor + "ObtenerCantidadDisponible?idProducto=" + idProducto;
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<int>().Result;
+            }
+        }
         public string ActualizarCarrito(CarritoEnt entidad)
         {
             using (var client = new HttpClient())
@@ -42,6 +54,8 @@ namespace ProyectoSC_601.Models
                 return res.Content.ReadFromJsonAsync<string>().Result;
             }
         }
+
+
 
         public List<CarritoEnt> ConsultarCarrito(long q)
         {
