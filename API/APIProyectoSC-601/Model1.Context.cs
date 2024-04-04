@@ -15,10 +15,10 @@ namespace APIProyectoSC_601
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class db_aa61bd_impomyuEntities : DbContext
+    public partial class db_aa7345_impomuEntities : DbContext
     {
-        public db_aa61bd_impomyuEntities()
-            : base("name=db_aa61bd_impomyuEntities")
+        public db_aa7345_impomuEntities()
+            : base("name=db_aa7345_impomuEntities")
         {
         }
     

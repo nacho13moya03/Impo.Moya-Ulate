@@ -248,8 +248,8 @@ namespace ProyectoSC_601.Controllers
                             brand_name = "Importadora Moya y Ulate SA",
                             landing_page = "NO_PREFERENCE",
                             user_action = "PAY_NOW",
-                            return_url = "https://localhost:44353/Carrito/CheckPago",
-                            cancel_url = "https://localhost:44353/"
+                            return_url = "http://nacho13-002-site1.ltempurl.com/Carrito/CheckPago",
+                            cancel_url = "http://nacho13-002-site1.ltempurl.com/"
                         }
                     };
 

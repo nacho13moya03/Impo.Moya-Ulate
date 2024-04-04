@@ -235,7 +235,17 @@ function actualizarCantidad(idCarrito, idProducto, disponible) {
         type: 'GET',
         data: { idProducto: idProducto },
         success: function (cantidadDisponible) {
-            if (parseInt(nuevaCantidad) > parseInt(cantidadDisponible)) {
+            if (parseInt(nuevaCantidad) == 0) {
+                // Mostrar un mensaje de error si la cantidad solicitada es mayor que la disponible
+                Swal.fire({
+                    title: 'Error en la Solicitud',
+                    text: 'La cantidad no puede ser menor o igual a 0',
+                    icon: 'info',
+                    confirmButtonColor: '#6282a9',
+                    confirmButtonText: 'Ok'
+                });
+                $("#cantidad-" + idCarrito).val(cantidadOriginal);
+            } else if (parseInt(nuevaCantidad) > parseInt(cantidadDisponible)) {
                 // Mostrar un mensaje de error si la cantidad solicitada es mayor que la disponible
                 Swal.fire({
                     title: 'Error en la Solicitud',

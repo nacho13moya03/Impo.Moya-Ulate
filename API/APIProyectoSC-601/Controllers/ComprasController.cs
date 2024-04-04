@@ -36,7 +36,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
 
                     context.RegistrarCompra(entidad.Empresa, entidad.Fecha, entidad.Concepto, entidad.Cantidad, entidad.Total);
@@ -58,7 +58,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     context.ActualizarCompra(entidad.IdCompras, entidad.Empresa, entidad.Fecha, entidad.Concepto, entidad.Cantidad, entidad.Total);
                     logExitos.Add("ActualizarCompra", $"Actualización de la compra con ID {entidad.IdCompras} realizada exitosamente");
@@ -83,7 +83,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     var compraAEliminar = context.compras.FirstOrDefault(p => p.id_compras == q);
 
@@ -115,7 +115,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var compras = context.compras
@@ -157,7 +157,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var compraEntity = context.compras.FirstOrDefault(c => c.id_compras == q);

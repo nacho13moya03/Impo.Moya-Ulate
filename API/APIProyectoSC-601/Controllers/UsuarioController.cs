@@ -39,7 +39,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     var datos = (from x in context.Identificacion
                                  select x).ToList();
@@ -75,7 +75,7 @@ namespace APIProyectoSC_601.Controllers
                 //Se asgina inicialmente la direccion y telefono como vacio
 
                 entidad.Telefono_Usuario = string.Empty;
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
 
                     context.RegistrarUsuarioSP(entidad.ID_Identificacion, entidad.Identificacion_Usuario, entidad.Nombre_Usuario, entidad.Apellido_Usuario, entidad.Correo_Usuario, entidad.Contrasenna_Usuario, entidad.Telefono_Usuario);
@@ -99,7 +99,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     var temporal = context.ObtenerTemporal(entidad.Correo_Usuario).FirstOrDefault();
 
@@ -138,7 +138,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     var datos = context.RecuperarCuentaUsuarioSP(Correo).FirstOrDefault();
 
@@ -177,7 +177,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     int cantidadUsuarios = context.Usuario.Count(x => x.ID_Rol == 2);
@@ -203,7 +203,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
 
@@ -241,7 +241,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
 
@@ -279,7 +279,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var usuarios = (from u in context.Usuario
@@ -338,7 +338,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var usuario = (from u in context.Usuario
@@ -390,7 +390,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     context.ActualizarEstadoUsuarioSP(entidad.ID_Usuario);
                     logExitos.Add("ActualizarEstadoUsuario", $"Estado del usuario con ID {entidad.ID_Usuario} actualizado exitosamente.");
@@ -412,7 +412,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     context.ActualizarRolUsuarioSP(entidad.ID_Usuario);
                     logExitos.Add("ActualizarRolUsuario", $"Rol del usuario con ID {entidad.ID_Usuario} actualizado exitosamente.");
@@ -435,7 +435,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var usuario = (from u in context.Usuario
@@ -486,7 +486,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     var datos = (from x in context.Provincia
                                  select x).ToList();
@@ -519,7 +519,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     var datos = (from x in context.Canton
                                  select x).ToList();
@@ -553,7 +553,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     var datos = (from x in context.Canton
                                  where x.ID_Provincia == q
@@ -587,7 +587,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     var datos = (from x in context.Distrito
                                  select x).ToList();
@@ -621,7 +621,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     var datos = (from x in context.Distrito
                                  where x.ID_Canton == q
@@ -655,7 +655,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     context.InactivarUsuarioSP(entidad.ID_Usuario);
                     log.Add($"Usuario con ID {entidad.ID_Usuario} inactivado exitosamente.");
@@ -676,7 +676,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     context.ActualizarCuentaUsuarioSP(entidad.ID_Usuario, entidad.Nombre_Usuario, entidad.Apellido_Usuario, entidad.Correo_Usuario, entidad.NuevaContrasenna_Usuario, entidad.Telefono_Usuario, entidad.ID_Provincia, entidad.ID_Canton, entidad.ID_Distrito, entidad.Direccion_Exacta);
                     log.Add($"Datos del cliente con ID {entidad.ID_Usuario} actualizados exitosamente.");
@@ -697,7 +697,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa61bd_impomyuEntities())
+                using (var context = new db_aa7345_impomuEntities())
                 {
                     var datos = context.Usuario.Where(x => x.ID_Usuario == usuario.ID_Usuario).FirstOrDefault();
 

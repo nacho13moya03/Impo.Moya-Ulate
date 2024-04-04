@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="db_aa61bd_impomyuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="db_aa7345_impomuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Canton">
           <Key>
             <PropertyRef Name="ID_Canton" />
@@ -574,7 +574,7 @@
           <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
           <Parameter Name="Telefono" Type="varchar" Mode="In" />
         </Function>
-        <EntityContainer Name="db_aa61bd_impomyuModelStoreContainer">
+        <EntityContainer Name="db_aa7345_impomuModelStoreContainer">
           <EntitySet Name="Canton" EntityType="Self.Canton" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrito" EntityType="Self.Carrito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
@@ -693,7 +693,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="db_aa61bd_impomyuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="db_aa7345_impomuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Canton">
           <Key>
             <PropertyRef Name="ID_Canton" />
@@ -1199,7 +1199,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="db_aa61bd_impomyuEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="db_aa7345_impomuEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Canton" EntityType="Self.Canton" />
           <EntitySet Name="Carrito" EntityType="Self.Carrito" />
           <EntitySet Name="Categorias" EntityType="Self.Categorias" />
@@ -1376,7 +1376,7 @@
           <FunctionImport Name="InactivarUsuarioSP">
             <Parameter Name="CodigoUsuario" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="IniciarSesionSP" ReturnType="Collection(db_aa61bd_impomyuModel.IniciarSesionSP_Result)">
+          <FunctionImport Name="IniciarSesionSP" ReturnType="Collection(db_aa7345_impomuModel.IniciarSesionSP_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
             <Parameter Name="Contrasenna" Mode="In" Type="String" />
           </FunctionImport>
@@ -1386,7 +1386,7 @@
           <FunctionImport Name="PagarCarritoSP" ReturnType="Collection(String)">
             <Parameter Name="ID_Usuario" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="RecuperarCuentaUsuarioSP" ReturnType="Collection(db_aa61bd_impomyuModel.RecuperarCuentaUsuarioSP_Result)">
+          <FunctionImport Name="RecuperarCuentaUsuarioSP" ReturnType="Collection(db_aa7345_impomuModel.RecuperarCuentaUsuarioSP_Result)">
             <Parameter Name="Correo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="RegistrarCategoriaSP">
@@ -1451,9 +1451,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="db_aa61bd_impomyuModelStoreContainer" CdmEntityContainer="db_aa61bd_impomyuEntities">
+        <EntityContainerMapping StorageEntityContainer="db_aa7345_impomuModelStoreContainer" CdmEntityContainer="db_aa7345_impomuEntities">
           <EntitySetMapping Name="Canton">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Canton">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Canton">
               <MappingFragment StoreEntitySet="Canton">
                 <ScalarProperty Name="ID_Provincia" ColumnName="ID_Provincia" />
                 <ScalarProperty Name="ID_Canton" ColumnName="ID_Canton" />
@@ -1462,7 +1462,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Carrito">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Carrito">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Carrito">
               <MappingFragment StoreEntitySet="Carrito">
                 <ScalarProperty Name="ID_Carrito" ColumnName="ID_Carrito" />
                 <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
@@ -1473,7 +1473,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Categorias">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Categorias">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Categorias">
               <MappingFragment StoreEntitySet="Categorias">
                 <ScalarProperty Name="ID_Categoria" ColumnName="ID_Categoria" />
                 <ScalarProperty Name="Nombre_Categoria" ColumnName="Nombre_Categoria" />
@@ -1482,7 +1482,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="compras">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.compras">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.compras">
               <MappingFragment StoreEntitySet="compras">
                 <ScalarProperty Name="id_compras" ColumnName="id_compras" />
                 <ScalarProperty Name="Empresa" ColumnName="Empresa" />
@@ -1494,7 +1494,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Direcciones">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Direcciones">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Direcciones">
               <MappingFragment StoreEntitySet="Direcciones">
                 <ScalarProperty Name="ID_Direccion" ColumnName="ID_Direccion" />
                 <ScalarProperty Name="ID_Provincia" ColumnName="ID_Provincia" />
@@ -1505,7 +1505,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Distrito">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Distrito">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Distrito">
               <MappingFragment StoreEntitySet="Distrito">
                 <ScalarProperty Name="ID_Provincia" ColumnName="ID_Provincia" />
                 <ScalarProperty Name="ID_Canton" ColumnName="ID_Canton" />
@@ -1515,7 +1515,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Empresa">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Empresa">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Empresa">
               <MappingFragment StoreEntitySet="Empresa">
                 <ScalarProperty Name="ID_Empresa" ColumnName="ID_Empresa" />
                 <ScalarProperty Name="Nombre_empresa" ColumnName="Nombre_empresa" />
@@ -1525,7 +1525,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Estado">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Estado">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Estado">
               <MappingFragment StoreEntitySet="Estado">
                 <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
                 <ScalarProperty Name="Tipo_Estado" ColumnName="Tipo_Estado" />
@@ -1533,7 +1533,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Factura_Detalle">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Factura_Detalle">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Factura_Detalle">
               <MappingFragment StoreEntitySet="Factura_Detalle">
                 <ScalarProperty Name="ID_Detalle" ColumnName="ID_Detalle" />
                 <ScalarProperty Name="ID_Factura" ColumnName="ID_Factura" />
@@ -1545,7 +1545,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Factura_Encabezado">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Factura_Encabezado">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Factura_Encabezado">
               <MappingFragment StoreEntitySet="Factura_Encabezado">
                 <ScalarProperty Name="ID_Factura" ColumnName="ID_Factura" />
                 <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
@@ -1555,7 +1555,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Identificacion">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Identificacion">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Identificacion">
               <MappingFragment StoreEntitySet="Identificacion">
                 <ScalarProperty Name="ID_Identificacion" ColumnName="ID_Identificacion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1563,7 +1563,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pedidos">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Pedidos">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Pedidos">
               <MappingFragment StoreEntitySet="Pedidos">
                 <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
                 <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
@@ -1574,7 +1574,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Producto">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Producto">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Producto">
               <MappingFragment StoreEntitySet="Producto">
                 <ScalarProperty Name="ID_Producto" ColumnName="ID_Producto" />
                 <ScalarProperty Name="ID_Categoria" ColumnName="ID_Categoria" />
@@ -1589,7 +1589,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Proveedores">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Proveedores">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Proveedores">
               <MappingFragment StoreEntitySet="Proveedores">
                 <ScalarProperty Name="ID_Proveedor" ColumnName="ID_Proveedor" />
                 <ScalarProperty Name="ID_Identificacion" ColumnName="ID_Identificacion" />
@@ -1605,7 +1605,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Provincia">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Provincia">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Provincia">
               <MappingFragment StoreEntitySet="Provincia">
                 <ScalarProperty Name="ID_Provincia" ColumnName="ID_Provincia" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1613,7 +1613,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Roles">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Roles">
               <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
                 <ScalarProperty Name="Nombre_Rol" ColumnName="Nombre_Rol" />
@@ -1621,7 +1621,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="db_aa61bd_impomyuModel.Usuario">
+            <EntityTypeMapping TypeName="db_aa7345_impomuModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
                 <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
                 <ScalarProperty Name="ID_Identificacion" ColumnName="ID_Identificacion" />
@@ -1638,22 +1638,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="ActualizarCategoriaSP" FunctionName="db_aa61bd_impomyuModel.Store.ActualizarCategoriaSP" />
-          <FunctionImportMapping FunctionImportName="ActualizarCompra" FunctionName="db_aa61bd_impomyuModel.Store.ActualizarCompra" />
-          <FunctionImportMapping FunctionImportName="ActualizarCuentaUsuarioSP" FunctionName="db_aa61bd_impomyuModel.Store.ActualizarCuentaUsuarioSP" />
-          <FunctionImportMapping FunctionImportName="ActualizarEmpresaSP" FunctionName="db_aa61bd_impomyuModel.Store.ActualizarEmpresaSP" />
-          <FunctionImportMapping FunctionImportName="ActualizarEstadoCategoriaSP" FunctionName="db_aa61bd_impomyuModel.Store.ActualizarEstadoCategoriaSP" />
-          <FunctionImportMapping FunctionImportName="ActualizarEstadoProveedorSP" FunctionName="db_aa61bd_impomyuModel.Store.ActualizarEstadoProveedorSP" />
-          <FunctionImportMapping FunctionImportName="ActualizarEstadoUsuarioSP" FunctionName="db_aa61bd_impomyuModel.Store.ActualizarEstadoUsuarioSP" />
-          <FunctionImportMapping FunctionImportName="ActualizarProveedorSP" FunctionName="db_aa61bd_impomyuModel.Store.ActualizarProveedorSP" />
-          <FunctionImportMapping FunctionImportName="ActualizarRolUsuarioSP" FunctionName="db_aa61bd_impomyuModel.Store.ActualizarRolUsuarioSP" />
-          <FunctionImportMapping FunctionImportName="EliminarCategoriaSP" FunctionName="db_aa61bd_impomyuModel.Store.EliminarCategoriaSP" />
-          <FunctionImportMapping FunctionImportName="EliminarEmpresaSP" FunctionName="db_aa61bd_impomyuModel.Store.EliminarEmpresaSP" />
-          <FunctionImportMapping FunctionImportName="EliminarProveedorSP" FunctionName="db_aa61bd_impomyuModel.Store.EliminarProveedorSP" />
-          <FunctionImportMapping FunctionImportName="InactivarUsuarioSP" FunctionName="db_aa61bd_impomyuModel.Store.InactivarUsuarioSP" />
-          <FunctionImportMapping FunctionImportName="IniciarSesionSP" FunctionName="db_aa61bd_impomyuModel.Store.IniciarSesionSP">
+          <FunctionImportMapping FunctionImportName="ActualizarCategoriaSP" FunctionName="db_aa7345_impomuModel.Store.ActualizarCategoriaSP" />
+          <FunctionImportMapping FunctionImportName="ActualizarCompra" FunctionName="db_aa7345_impomuModel.Store.ActualizarCompra" />
+          <FunctionImportMapping FunctionImportName="ActualizarCuentaUsuarioSP" FunctionName="db_aa7345_impomuModel.Store.ActualizarCuentaUsuarioSP" />
+          <FunctionImportMapping FunctionImportName="ActualizarEmpresaSP" FunctionName="db_aa7345_impomuModel.Store.ActualizarEmpresaSP" />
+          <FunctionImportMapping FunctionImportName="ActualizarEstadoCategoriaSP" FunctionName="db_aa7345_impomuModel.Store.ActualizarEstadoCategoriaSP" />
+          <FunctionImportMapping FunctionImportName="ActualizarEstadoProveedorSP" FunctionName="db_aa7345_impomuModel.Store.ActualizarEstadoProveedorSP" />
+          <FunctionImportMapping FunctionImportName="ActualizarEstadoUsuarioSP" FunctionName="db_aa7345_impomuModel.Store.ActualizarEstadoUsuarioSP" />
+          <FunctionImportMapping FunctionImportName="ActualizarProveedorSP" FunctionName="db_aa7345_impomuModel.Store.ActualizarProveedorSP" />
+          <FunctionImportMapping FunctionImportName="ActualizarRolUsuarioSP" FunctionName="db_aa7345_impomuModel.Store.ActualizarRolUsuarioSP" />
+          <FunctionImportMapping FunctionImportName="EliminarCategoriaSP" FunctionName="db_aa7345_impomuModel.Store.EliminarCategoriaSP" />
+          <FunctionImportMapping FunctionImportName="EliminarEmpresaSP" FunctionName="db_aa7345_impomuModel.Store.EliminarEmpresaSP" />
+          <FunctionImportMapping FunctionImportName="EliminarProveedorSP" FunctionName="db_aa7345_impomuModel.Store.EliminarProveedorSP" />
+          <FunctionImportMapping FunctionImportName="InactivarUsuarioSP" FunctionName="db_aa7345_impomuModel.Store.InactivarUsuarioSP" />
+          <FunctionImportMapping FunctionImportName="IniciarSesionSP" FunctionName="db_aa7345_impomuModel.Store.IniciarSesionSP">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="db_aa61bd_impomyuModel.IniciarSesionSP_Result">
+              <ComplexTypeMapping TypeName="db_aa7345_impomuModel.IniciarSesionSP_Result">
                 <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
                 <ScalarProperty Name="ID_Identificacion" ColumnName="ID_Identificacion" />
                 <ScalarProperty Name="Identificacion_Usuario" ColumnName="Identificacion_Usuario" />
@@ -1669,11 +1669,11 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ObtenerTemporal" FunctionName="db_aa61bd_impomyuModel.Store.ObtenerTemporal" />
-          <FunctionImportMapping FunctionImportName="PagarCarritoSP" FunctionName="db_aa61bd_impomyuModel.Store.PagarCarritoSP" />
-          <FunctionImportMapping FunctionImportName="RecuperarCuentaUsuarioSP" FunctionName="db_aa61bd_impomyuModel.Store.RecuperarCuentaUsuarioSP">
+          <FunctionImportMapping FunctionImportName="ObtenerTemporal" FunctionName="db_aa7345_impomuModel.Store.ObtenerTemporal" />
+          <FunctionImportMapping FunctionImportName="PagarCarritoSP" FunctionName="db_aa7345_impomuModel.Store.PagarCarritoSP" />
+          <FunctionImportMapping FunctionImportName="RecuperarCuentaUsuarioSP" FunctionName="db_aa7345_impomuModel.Store.RecuperarCuentaUsuarioSP">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="db_aa61bd_impomyuModel.RecuperarCuentaUsuarioSP_Result">
+              <ComplexTypeMapping TypeName="db_aa7345_impomuModel.RecuperarCuentaUsuarioSP_Result">
                 <ScalarProperty Name="Nombre_Usuario" ColumnName="Nombre_Usuario" />
                 <ScalarProperty Name="Apellido_Usuario" ColumnName="Apellido_Usuario" />
                 <ScalarProperty Name="Correo_Usuario" ColumnName="Correo_Usuario" />
@@ -1681,11 +1681,11 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RegistrarCategoriaSP" FunctionName="db_aa61bd_impomyuModel.Store.RegistrarCategoriaSP" />
-          <FunctionImportMapping FunctionImportName="RegistrarCompra" FunctionName="db_aa61bd_impomyuModel.Store.RegistrarCompra" />
-          <FunctionImportMapping FunctionImportName="RegistrarEmpresaSP" FunctionName="db_aa61bd_impomyuModel.Store.RegistrarEmpresaSP" />
-          <FunctionImportMapping FunctionImportName="RegistrarProveedorSP" FunctionName="db_aa61bd_impomyuModel.Store.RegistrarProveedorSP" />
-          <FunctionImportMapping FunctionImportName="RegistrarUsuarioSP" FunctionName="db_aa61bd_impomyuModel.Store.RegistrarUsuarioSP" />
+          <FunctionImportMapping FunctionImportName="RegistrarCategoriaSP" FunctionName="db_aa7345_impomuModel.Store.RegistrarCategoriaSP" />
+          <FunctionImportMapping FunctionImportName="RegistrarCompra" FunctionName="db_aa7345_impomuModel.Store.RegistrarCompra" />
+          <FunctionImportMapping FunctionImportName="RegistrarEmpresaSP" FunctionName="db_aa7345_impomuModel.Store.RegistrarEmpresaSP" />
+          <FunctionImportMapping FunctionImportName="RegistrarProveedorSP" FunctionName="db_aa7345_impomuModel.Store.RegistrarProveedorSP" />
+          <FunctionImportMapping FunctionImportName="RegistrarUsuarioSP" FunctionName="db_aa7345_impomuModel.Store.RegistrarUsuarioSP" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
