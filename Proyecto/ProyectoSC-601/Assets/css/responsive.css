@@ -37,6 +37,15 @@
         display: none;
     }
 
+    #TablaInventario td, #TablaInventario th {
+        width: 100%;
+    }
+
+    #TablaInventario_filter,
+    #TablaInventario_length {
+        display: none;
+}
+
 @media (min-width: 768px) {
   /* Estilos para PC */
   .navbar-nav {
@@ -52,6 +61,9 @@
     margin-top: 6%;
     margin-left: 0;
   }
+    #TablaInventario td, #TablaInventario th {
+        width: auto;
+    }
 }
 
 /*Ajuste de eliminar y colocar colocar imagen*/

@@ -9,6 +9,7 @@ using WEB_ImpoMoyaUlate.Filters;
 
 namespace ProyectoSC_601.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0)]
     public class CategoriaController : Controller
     {
 

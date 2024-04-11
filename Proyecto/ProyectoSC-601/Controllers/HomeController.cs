@@ -5,6 +5,7 @@ using WEB_ImpoMoyaUlate.Filters;
 
 namespace ProyectoSC_601.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0)]
     public class HomeController : Controller
     {
 
@@ -26,20 +27,6 @@ namespace ProyectoSC_601.Controllers
             return View();
         }
 
-        //[HttpGet]
-        //public ActionResult ObtenerCantidadProductosEnCarrito()
-        //{
-        //   if (Session["ID_Usuario"] != null && Session["Rol"] != null && long.Parse(Session["Rol"].ToString()) == 2)
-        //    {
-        //        // Obtiene la cantidad de productos diferentes en el carrito
-        //        int cantidadProductos = modelIndex.ObtenerCantidadProductosEnCarrito(long.Parse(Session["ID_Usuario"].ToString()));
-
-        //        // Pasa la cantidad de productos a la vista
-        //        ViewBag.CantidadProductosEnCarrito = cantidadProductos;
-        //        return Json(new { success = true });
-        //    }
-        //    return Json(new { success = false });
-        //}
 
         //Se llama al modelo para enviar la informacion de la seccion contactenos
         [HttpPost]

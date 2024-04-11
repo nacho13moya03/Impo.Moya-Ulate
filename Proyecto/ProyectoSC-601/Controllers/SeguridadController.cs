@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace WEB_ImpoMoyaUlate.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0)]
     public class SeguridadController : Controller
     {
         // GET: Seguridad

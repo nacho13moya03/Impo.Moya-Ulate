@@ -9,6 +9,7 @@ using WEB_ImpoMoyaUlate.Models;
 
 namespace ProyectoSC_601.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0)]
     public class UsuarioController : Controller
     {
 

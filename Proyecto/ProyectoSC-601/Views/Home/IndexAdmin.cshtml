@@ -14,77 +14,80 @@
 
 @*BIENVENIDA*@
 <section id="hero" class="d-flex align-items-center justify-content-center">
-<div class="container" data-aos="fade-up">
+    <div class="container" data-aos="fade-up">
 
-    <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
-        <div class="col-xl-6 col-lg-8">
-            <h1>Administración de Importadora Moya y Ulate</h1>
-            @*<h2>Lentes que te hacen ver el mundo de una manera totalmente nueva, <span>¡Adquiere los tuyos!</span></h2>*@
+        <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
+            <div class="col-xl-6 col-lg-8">
+                <h1>Administración de Importadora Moya y Ulate</h1>
+                @*<h2>Lentes que te hacen ver el mundo de una manera totalmente nueva, <span>¡Adquiere los tuyos!</span></h2>*@
+
+            </div>
+        </div>
+
+        <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-product-hunt-line"></i>
+                    <h3>Administracion de Inventario</h3>
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-user-line"></i>
+                    <h3>Administracion de Usuarios</h3>
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-shake-hands-line"></i>
+                    <h3>Administracion de Proveedores</h3>
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-4">
+                <div class="icon-box">
+                    <i class="ri-calculator-line"></i>
+                    <h3>Administracion de Facturas</h3>
+                </div>
+            </div>
 
         </div>
+
     </div>
-
-    <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
-        <div class="col-xl-2 col-md-4">
-            <div class="icon-box">
-                <i class="ri-product-hunt-line"></i>
-                <h3>Administracion de Inventario</h3>
-            </div>
-        </div>
-        <div class="col-xl-2 col-md-4">
-            <div class="icon-box">
-                <i class="ri-user-line"></i>
-                <h3>Administracion de Usuarios</h3>
-            </div>
-        </div>
-        <div class="col-xl-2 col-md-4">
-            <div class="icon-box">
-                <i class="ri-shake-hands-line"></i>
-                <h3>Administracion de Proveedores</h3>
-            </div>
-        </div>
-        <div class="col-xl-2 col-md-4">
-            <div class="icon-box">
-                <i class="ri-calculator-line"></i>
-                <h3>Administracion de Facturas</h3>
-            </div>
-        </div>
-
-    </div>
-
-</div>
 </section>
 @*BIENVENIDA*@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-@*CAMBIO_CLAVE*@
+@*CAMBIO DE CLAVE*@
 <div class="modal fade" id="cambiarContrasenaModal" tabindex="-1" aria-labelledby="cambiarContrasenaModalLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="cambiarContrasenaModalLabel">Cambiar Contraseña</h5>
-                <!-- Opcionalmente, puedes agregar un botón para cerrar el modal -->
             </div>
             <div class="modal-body">
-                <!-- Aquí va el formulario para cambiar la contraseña -->
                 <form id="cambiarContrasenaForm" action="/Usuario/CambiarContrasenaTemporal" method="POST">
                     <div class="mb-3">
                         <label for="nuevaContrasena" class="form-label">Nueva Contraseña</label>
-                        <input type="password" class="form-control" id="nuevaContrasena" name="nuevaContrasena">
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="nuevaContrasena" name="nuevaContrasena">
+                            @*<div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('nuevaContrasena')">
+                                    <i class="bi bi-eye-slash" id="nuevaContrasenaEyeIcon"></i>
+                                </button>
+                            </div>*@
+                        </div>
                         <div id="errorNuevaContra" class="text-danger" style="font-size:12px;"></div>
                     </div>
                     <div style="text-align:center;">
                         <button type="submit" class="btn btn-info" style="background-color: #6282a9;border:none;color:white;">Guardar</button>
                     </div>
-
                 </form>
             </div>
         </div>
     </div>
 </div>
-@*CAMBIO_CLAVE*@
-
+@*CAMBIO DE CLAVE*@
 
 <script>
     $(document).ready(function () {
@@ -93,6 +96,7 @@
             keyboard: false
         });
     });
+
 </script>
 
 
@@ -121,7 +125,7 @@
                 // Validar que la contraseña cumpla con los criterios requeridos
                 if (nuevaContrasena.length < 6 || !/[a-zA-Z]/.test(nuevaContrasena) || !/\d/.test(nuevaContrasena) || !/[^a-zA-Z0-9]/.test(nuevaContrasena)) {
                     // La contraseña no cumple con los criterios, mostrar mensaje de error
-                    document.getElementById("errorNuevaContra").innerText = "La contraseña debe tener al menos 6 caracteres y contener números, letras y caracteres especiales.";
+                    document.getElementById("errorNuevaContra").innerText = "La contraseña debe tener al menos 6 caracteres y contener números, letras y caracteres especiales ('@@#$%!&()')";
                   } else {
                     document.getElementById("errorNuevaContra").innerText = "";
                     $('<input />').attr('type', 'hidden')

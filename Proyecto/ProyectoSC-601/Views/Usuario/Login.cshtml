@@ -4,6 +4,9 @@
     Layout = "~/Views/Shared/_Layout_Login.cshtml";
     <link href="~/Assets/css/registroStyle.css" rel="stylesheet">
 }
+
+
+
 <div class="" data-bs-spy="scroll" data-bs-target="#elements-section" data-bs-offset="0" tabindex="0">
     <!-- loader Start -->
     <div id="loading">
@@ -43,7 +46,8 @@
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="contrasenna" class="medium">Contraseña</label>
-                                                @Html.TextBoxFor(m => m.Contrasenna_Usuario, new { @class = "form-control", @placeholder = "● ● ● ● ● ● ● ● ● ● ●", @type = "password" })
+                                                @Html.PasswordFor(m => m.Contrasenna_Usuario, new { @class = "form-control", @placeholder = "● ● ● ● ● ● ● ● ● ● ●", @type = "password" })
+                                              
                                                 @if (ViewData.ModelState["Contrasenna_Usuario"]?.Errors.Count > 0)
                                                 {
                                                     var errors = ViewData.ModelState["Contrasenna_Usuario"].Errors;

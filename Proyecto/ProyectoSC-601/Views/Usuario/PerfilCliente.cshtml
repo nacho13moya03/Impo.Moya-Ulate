@@ -155,8 +155,7 @@
 
                                 <div class="mb-3" style="margin-top:2.5%!important;">
                                     <label class="small mb-1" for="password">Nueva Contraseña</label>
-                                    @Html.TextBoxFor(m => m.NuevaContrasenna_Usuario, new { @class = "form-control", @placeholder = "Nueva Contraseña", @type = "password" })
-
+                                    @Html.PasswordFor(m => m.NuevaContrasenna_Usuario, new { @class = "form-control", @placeholder = "Nueva Contraseña" })
                                     <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                         @Html.ValidationMessageFor(m => m.NuevaContrasenna_Usuario, "", new { @style = "color: red;" })
                                     </div>

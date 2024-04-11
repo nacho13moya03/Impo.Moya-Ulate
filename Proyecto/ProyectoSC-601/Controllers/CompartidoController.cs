@@ -4,6 +4,7 @@ using System.Web.Mvc;
 
 namespace ProyectoSC_601.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0)]
     public class CompartidoController : Controller
     {
 
