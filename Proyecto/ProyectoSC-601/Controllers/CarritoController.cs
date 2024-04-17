@@ -250,7 +250,7 @@ namespace ProyectoSC_601.Controllers
                             landing_page = "NO_PREFERENCE",
                             user_action = "PAY_NOW",
                             return_url = "https://www.impomucr.com/Carrito/CheckPago",
-                            cancel_url = "https://www.impomucr.com/"
+                            cancel_url = "https://www.impomucr.com/carrito/carrito"
                         }
                     };
 

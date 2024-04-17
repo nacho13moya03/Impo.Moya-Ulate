@@ -48,15 +48,11 @@
                                         <th style="background-color: #6282a9;color:white;">Precio Unitario</th>
                                         <th style="background-color: #6282a9;color:white; ">Cantidad</th>
                                         <th style="background-color: #6282a9;color:white;">SubTotal</th>
-                                        <th style="background-color: #6282a9;color:white;" class=" visually-hidden">Impuesto</th>
-                                        <th style="background-color: #6282a9;color:white;" class="visually-hidden">Total</th>
+                                        <th style="background-color: #6282a9;color:white;">Total</th>
                                         <th style="background-color: #6282a9;color:white;">Opciones</th>
                                     </tr>
                                 </thead>
-
-
                                 <tbody>
-
                                     @foreach (var item in Model)
                                     {
                                         <tr>
@@ -69,17 +65,16 @@
                                                 <input type="number" min="1" value="@item.Cantidad" id="cantidad-@item.ID_Carrito" style="border: 1px solid #6282a9; padding:2%;background-color: transparent; width: 60px;" />
                                             </td>
                                             <td>@item.SubTotal.ToString("N2")</td>
-                                            <td class="visually-hidden">@item.Impuesto.ToString("N2")</td>
-                                            <td class="visually-hidden">@item.Total.ToString("N2")</td>
+                                            <td>@item.Total.ToString("N2")</td>
                                             <td style="text-align:center">
                                                 <a href="javascript:void(0);" onclick="actualizarCantidad('@item.ID_Carrito', '@item.ID_Producto','@item.Cantidad')" title="Actualizar Cantidad"><i class="fa fa-pen" style="color:forestgreen;"></i></a>
-
                                                 <a href="@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.ID_Carrito })" title="Quitar del Carrito"><i class="fa fa-times fa-lg" style="color:#6282a9;margin-left:10%;"></i></a>
                                             </td>
                                         </tr>
                                     }
                                 </tbody>
                             </table>
+
 
 
 

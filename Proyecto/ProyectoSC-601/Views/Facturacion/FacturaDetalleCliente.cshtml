@@ -28,7 +28,6 @@
                             <table id="TablaClientes" class="table table-bordered table-hover">
                                 <thead class="table-info">
                                     <tr>
-                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Factura</th>
                                         <th style="background-color: #6282a9; color:white;">Producto</th>
                                         <th style="background-color: #6282a9; color:white;">Precio Unidad</th>
                                         <th style="background-color: #6282a9; color:white;">Impuesto Unidad</th>
@@ -43,7 +42,6 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td class="visually-hidden">@item.ID_Factura</td>
                                             <td  style="border-left: 1px solid #ECECEC;">@item.Nombre</td>
                                             <td>₡ @item.PrecioPagado.ToString("N2")</td>
                                             <td>

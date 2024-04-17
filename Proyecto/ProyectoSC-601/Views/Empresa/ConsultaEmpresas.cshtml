@@ -54,7 +54,6 @@
                             <table id="TablaEmpresa" class="table table-bordered table-hover">
                                 <thead class="table-info">
                                     <tr>
-                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">ID</th>
                                         <th style="background-color: #6282a9; color:white;">Nombre</th>
                                         <th style="background-color: #6282a9; color:white;">Descripción</th>
                                         <th style="background-color: #6282a9; color:white;">Ubicación</th>
@@ -65,7 +64,6 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td class="visually-hidden">@item.ID_Empresa</td>
                                             <td style="border-left: 1px solid #ECECEC;">@item.Nombre_empresa</td>
                                             <td>@item.Descripcion</td>
                                             <td>@item.Ubicacion</td>

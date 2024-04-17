@@ -50,7 +50,6 @@
                             <table id="TablaProveedores" class="table table-bordered table-hover">
                                 <thead class="table-info">
                                     <tr>
-                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">ID</th>
                                         <th style="background-color: #6282a9; color:white;">Nombre</th>
                                         <th style="background-color: #6282a9; color:white;">Tipo</th>
                                         <th style="background-color: #6282a9; color:white;">Cédula</th>
@@ -67,7 +66,6 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td class="visually-hidden">@item.ID_Proveedor</td>
                                             <td  style="border-left: 1px solid #ECECEC;">@($"{item.Nombre_Proveedor} {item.Apellido_Proveedor}")</td>
                                             <td>@item.Nombre_Identificacion</td>
                                             <td>@item.Cedula_Proveedor</td>

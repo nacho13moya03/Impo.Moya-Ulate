@@ -31,10 +31,6 @@
                                         <th style="background-color: #6282a9; color:white;">Identificación</th>
                                         <th style="background-color: #6282a9; color:white;">Nombre</th>
                                         <th style="background-color: #6282a9; color:white;">Correo Electrónico</th>
-                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Provincia</th>
-                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Cantón</th>
-                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Distrito</th>
-                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Dirección</th>
                                         <th style="background-color: #6282a9; color:white;">Teléfono</th>
                                         <th style="background-color: #6282a9; color:white;">Dirección</th>
                                         <th style="background-color: #6282a9; color:white;">Detalles</th>
@@ -49,10 +45,6 @@
                                             <td>@item.Identificacion_Usuario</td>
                                             <td>@($"{item.Nombre_Usuario} {item.Apellido_Usuario}")</td>
                                             <td>@item.Correo_Usuario</td>
-                                            <td class="visually-hidden">@item.Nombre_Provincia</td>
-                                            <td class="visually-hidden">@item.Nombre_Canton</td>
-                                            <td class="visually-hidden">@item.Nombre_Distrito</td>
-                                            <td class="visually-hidden" style="max-width:120px;">@item.Direccion_Exacta</td>
                                             <td>@item.Telefono_Usuario</td>
                                             <td style="text-align:center;">
                                                 <a href="@Url.Action("GestionDireccion", "Usuario", new { q = item.ID_Usuario })" title="Ver dirección">

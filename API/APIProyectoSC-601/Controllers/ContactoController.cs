@@ -46,7 +46,9 @@ namespace APIProyectoSC_601.Controllers
                     html = html.Replace("@@Mensaje", entidad.Mensaje);
                     html = html.Replace("@@correo", entidad.Correo);
 
-                    util.EnviarCorreo("angelicavalerin13@gmail.com", "Solicitud de Contacto", html);
+                    util.EnviarCorreo("impomucr@outlook.com", "Solicitud de Contacto", html);
+
+
 
                     logExitos.Add("EnviarInformacion", "Correo de contacto enviado exitosamente");
                     return "OK";

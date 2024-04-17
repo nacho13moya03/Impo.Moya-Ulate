@@ -62,12 +62,8 @@
                             <table id="TablaCompras" class="table table-bordered table-hover">
                                 <thead class="table-info">
                                     <tr>
-                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">ID</th>
                                         <th style="background-color: #6282a9; color:white;">Empresa</th>
                                         <th style="background-color: #6282a9; color:white;">Fecha</th>
-                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Concepto</th>
-                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Cantidad</th>
-                                        <th style="background-color: #6282a9; color:white;" class="visually-hidden">Total</th>
                                         <th style="background-color: #6282a9; color:white;">Opciones</th>
                                     </tr>
                                 </thead>
@@ -75,7 +71,6 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td style="white-space: nowrap;" class="visually-hidden">@item.IdCompras</td>
                                             <td>
                                                 @{
                                                     var idEmpresa = item.Empresa;
@@ -94,9 +89,6 @@
                                             </td>
 
                                             <td>@item.Fecha</td>
-                                            <td class="visually-hidden">@item.Concepto</td>
-                                            <td class="visually-hidden">@item.Cantidad</td>
-                                            <td class="visually-hidden">@item.Total.ToString("0.00")</td>
                                             <td class="text-center">
                                                 <span class="btn-consultar" onclick="mostrarModalConsulta('@item.Empresa', '@item.Fecha', '@item.Concepto', '@item.Cantidad', '@item.Total')" title="Consultar Compra">
                                                     <i class="fa fa-eye fa-lg" style="color: #6282a9; cursor: pointer; "></i>
