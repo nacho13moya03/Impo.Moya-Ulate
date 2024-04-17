@@ -38,7 +38,7 @@
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label class="medium" for="correo">Correo Electrónico</label>
-                                                @Html.TextBoxFor(m => m.Correo_Usuario, new { @class = "form-control", @placeholder = "usuario@ejemplo.com", @type = "email" })
+                                                @Html.TextBoxFor(m => m.Correo_Usuario, new {  @placeholder = "usuario@ejemplo.com", @type = "email", @style = "background-color: #EEEEEE!important;" })
                                                 @Html.ValidationMessageFor(m => m.Correo_Usuario, "", new { @style = "color: red;" })
                                             </div>
                                         </div>
@@ -46,7 +46,7 @@
                                         <div class="col-lg-12">
                                             <div class="form-group position-relative">
                                                 <label for="contrasenna" class="medium">Contraseña</label>
-                                                @Html.PasswordFor(m => m.Contrasenna_Usuario, new { @class = "form-control", @placeholder = "● ● ● ● ● ● ● ● ● ● ●", @type = "password" })
+                                                @Html.PasswordFor(m => m.Contrasenna_Usuario, new {  @placeholder = "● ● ● ● ● ● ● ● ● ● ●", @type = "password", @style = "background-color: #EEEEEE!important;" })
                                                 <i class="bi bi-eye-slash toggle-password" style="cursor: pointer; position: absolute; right: 15px; top: 70%; transform: translateY(-50%); font-size: 1.5em;"></i>
                                             </div>
                                             @if (ViewData.ModelState["Contrasenna_Usuario"]?.Errors.Count > 0)

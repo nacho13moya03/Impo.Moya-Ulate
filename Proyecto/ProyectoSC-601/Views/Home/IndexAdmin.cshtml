@@ -68,14 +68,10 @@
             <div class="modal-body">
                 <form id="cambiarContrasenaForm" action="/Usuario/CambiarContrasenaTemporal" method="POST">
                     <div class="mb-3">
-                        <label for="nuevaContrasena" class="form-label">Nueva Contraseña</label>
-                        <div class="input-group">
+                        <div class="form-group position-relative">
+                            <label for="nuevaContrasena" class="form-label">Nueva Contraseña</label>
                             <input type="password" class="form-control" id="nuevaContrasena" name="nuevaContrasena">
-                            @*<div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('nuevaContrasena')">
-                                    <i class="bi bi-eye-slash" id="nuevaContrasenaEyeIcon"></i>
-                                </button>
-                            </div>*@
+                            <i class="bi bi-eye-slash toggle-password" style="cursor: pointer; position: absolute; right: 15px; top: 72%; transform: translateY(-50%); font-size: 1.5em;"></i>
                         </div>
                         <div id="errorNuevaContra" class="text-danger" style="font-size:12px;"></div>
                     </div>
@@ -141,4 +137,31 @@
 
 });
 
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("click", function (event) {
+            if (event.target.classList.contains("toggle-password")) {
+                var passwordInput = event.target.parentNode.querySelector("input[type='password']");
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    event.target.className = "bi bi-eye";
+                } else {
+                    passwordInput.type = "password";
+                    event.target.className = "bi bi-eye-slash";
+                }
+
+                event.target.addEventListener("click", function () {
+                    if (passwordInput.type === "password") {
+                        passwordInput.type = "text";
+                        event.target.className = "bi bi-eye";
+                    } else {
+                        passwordInput.type = "password";
+                        event.target.className = "bi bi-eye-slash";
+                    }
+                });
+            }
+        });
+    });
 </script>

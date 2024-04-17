@@ -154,8 +154,11 @@
                                 <span class="small" style="color: gray;font-style:italic;">En este espacio se puede cambiar la contraseña</span>
 
                                 <div class="mb-3" style="margin-top:2.5%!important;">
-                                    <label class="small mb-1" for="password">Nueva Contraseña</label>
-                                    @Html.PasswordFor(m => m.NuevaContrasenna_Usuario, new { @class = "form-control", @placeholder = "Nueva Contraseña" })
+                                    <div class="form-group position-relative">
+                                        <label class="small mb-1" for="password">Nueva Contraseña</label>
+                                        @Html.PasswordFor(m => m.NuevaContrasenna_Usuario, new { @class = "form-control", @placeholder = "Nueva Contraseña" })
+                                        <i class="bi bi-eye-slash toggle-password" style="cursor: pointer; position: absolute; right: 15px; top: 70%; transform: translateY(-50%); font-size: 1.5em;"></i>
+                                    </div>
                                     <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                         @Html.ValidationMessageFor(m => m.NuevaContrasenna_Usuario, "", new { @style = "color: red;" })
                                     </div>
@@ -341,4 +344,30 @@
         actualizarContadorCarrito();
     });
 
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("click", function (event) {
+            if (event.target.classList.contains("toggle-password")) {
+                var passwordInput = event.target.parentNode.querySelector("input[type='password']");
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    event.target.className = "bi bi-eye";
+                } else {
+                    passwordInput.type = "password";
+                    event.target.className = "bi bi-eye-slash";
+                }
+
+                event.target.addEventListener("click", function () {
+                    if (passwordInput.type === "password") {
+                        passwordInput.type = "text";
+                        event.target.className = "bi bi-eye";
+                    } else {
+                        passwordInput.type = "password";
+                        event.target.className = "bi bi-eye-slash";
+                    }
+                });
+            }
+        });
+    });
 </script>
