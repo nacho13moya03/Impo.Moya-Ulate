@@ -44,23 +44,23 @@
                                         </div>
 
                                         <div class="col-lg-12">
-                                            <div class="form-group">
+                                            <div class="form-group position-relative">
                                                 <label for="contrasenna" class="medium">Contraseña</label>
                                                 @Html.PasswordFor(m => m.Contrasenna_Usuario, new { @class = "form-control", @placeholder = "● ● ● ● ● ● ● ● ● ● ●", @type = "password" })
-                                              
-                                                @if (ViewData.ModelState["Contrasenna_Usuario"]?.Errors.Count > 0)
+                                                <i class="bi bi-eye-slash toggle-password" style="cursor: pointer; position: absolute; right: 15px; top: 70%; transform: translateY(-50%); font-size: 1.5em;"></i>
+                                            </div>
+                                            @if (ViewData.ModelState["Contrasenna_Usuario"]?.Errors.Count > 0)
+                                            {
+                                                var errors = ViewData.ModelState["Contrasenna_Usuario"].Errors;
+                                                foreach (var error in errors)
                                                 {
-                                                    var errors = ViewData.ModelState["Contrasenna_Usuario"].Errors;
-                                                    foreach (var error in errors)
+                                                    if (error.ErrorMessage == "Este campo es obligatorio.")
                                                     {
-                                                        if (error.ErrorMessage == "Este campo es obligatorio.")
-                                                        {
-                                                            <span style="color: red;">@error.ErrorMessage</span>
-                                                            break;
-                                                        }
+                                                        <span style="color: red;">@error.ErrorMessage</span>
+                                                        break;
                                                     }
                                                 }
-                                            </div>
+                                            }
                                         </div>
 
                                         <div class="col-lg-12 d-flex justify-content-center">
@@ -103,3 +103,31 @@
         }
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("click", function (event) {
+            if (event.target.classList.contains("toggle-password")) {
+                var passwordInput = event.target.parentNode.querySelector("input[type='password']");
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    event.target.className = "bi bi-eye";
+                } else {
+                    passwordInput.type = "password";
+                    event.target.className = "bi bi-eye-slash";
+                }
+
+                event.target.addEventListener("click", function () {
+                    if (passwordInput.type === "password") {
+                        passwordInput.type = "text";
+                        event.target.className = "bi bi-eye";
+                    } else {
+                        passwordInput.type = "password";
+                        event.target.className = "bi bi-eye-slash";
+                    }
+                });
+            }
+        });
+    });
+</script>
+
