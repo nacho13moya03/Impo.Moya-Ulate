@@ -41,6 +41,9 @@ namespace ProyectoSC_601.Entities
 
         public string Contrasenna_Usuario { get; set; }
 
+        [StringLength(int.MaxValue, MinimumLength = 6, ErrorMessage = "La contraseña debe tener al menos 6 caracteres.")]
+        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$", ErrorMessage = "La contraseña debe tener al menos 6 caracteres y contener números, letras y caracteres especiales ('@#$%!&()')")]
+
         public string ConfirContra { get; set; }
 
         [StringLength(int.MaxValue, MinimumLength = 6, ErrorMessage = "La contraseña debe tener al menos 6 caracteres.")]
