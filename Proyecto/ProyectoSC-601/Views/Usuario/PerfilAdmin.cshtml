@@ -14,7 +14,7 @@
         <div class="col-xl-8" style="margin-left:auto;margin-top:10%; margin-bottom:2%; margin-right: auto">
             <div class="card mb-4" style="border: none; box-shadow: none; background-color: transparent">
                 <div class="card-body ">
-                    @using (Html.BeginForm("PerfilAdmin", "Usuario", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate" }))
+                    @using (Html.BeginForm("PerfilAdmin", "Usuario", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate", onsubmit = "return validarContrasenas();" }))
                     {
                         <div class="row">
                             <div class="col-xl-12">
@@ -151,6 +151,13 @@
                                                 @Html.ValidationMessageFor(m => m.NuevaContrasenna_Usuario, "", new { @style = "color: red;" })
                                             </div>
                                         </div>
+                                        <div class="mb-3" style="margin-top:2.5%!important;">
+                                            <div class="form-group position-relative">
+                                                <label class="small mb-1" for="password">Confirmar Contraseña</label>
+                                                @Html.PasswordFor(m => m.ConfirContra, new { @class = "form-control", @placeholder = "Confirmar Contraseña" })
+                                                <i class="bi bi-eye-slash toggle-password" style="cursor: pointer; position: absolute; right: 15px; top: 70%; transform: translateY(-50%); font-size: 1.5em;"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -170,6 +177,31 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="~/Assets/js/Cliente.js"></script>
 
+    <script>
+
+        function validarContrasenas() {
+            var nuevaContrasena = document.getElementById("NuevaContrasenna_Usuario").value.trim();
+            var confirmarContrasena = document.getElementById("ConfirContra").value.trim();
+
+            // Si ambos campos están vacíos, no hay necesidad de validar
+            if (nuevaContrasena === "" && confirmarContrasena === "") {
+                return true; // Permitir el envío del formulario
+            }
+
+            // Si al menos uno de los campos tiene un valor, validar que coincidan
+            if (nuevaContrasena !== confirmarContrasena) {
+                Swal.fire({
+                    title: "Contraseñas no coinciden",
+                    text: "Las contraseñas ingresadas no coinciden. Por favor, verifícalas e inténtalo de nuevo.",
+                    icon: "error"
+                });
+                return false; // Evitar el envío del formulario
+            }
+
+            return true; // Permitir el envío del formulario
+        }
+
+    </script>
     <script>
         //Funcion para mostrar mensaje de alerta
         function confirmarInactivarCliente(idCliente) {
