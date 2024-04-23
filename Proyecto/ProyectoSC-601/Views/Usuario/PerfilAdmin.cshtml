@@ -157,6 +157,13 @@
                                                 @Html.PasswordFor(m => m.ConfirContra, new { @class = "form-control", @placeholder = "Confirmar Contraseña" })
                                                 <i class="bi bi-eye-slash toggle-password" style="cursor: pointer; position: absolute; right: 15px; top: 70%; transform: translateY(-50%); font-size: 1.5em;"></i>
                                             </div>
+                                            <span style="height: 5px; display: block;"></span>
+                                            <div class="error-container">
+                                                <span id="confirm-password-error" style="color: red; font-size: 10px; display: none;margin-left:5px;">Este campo es obligatorio.</span>
+                                            </div>
+                                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                                @Html.ValidationMessageFor(m => m.ConfirContra, "", new { @style = "color: red;" })
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -178,30 +185,44 @@
     <script src="~/Assets/js/Cliente.js"></script>
 
     <script>
-
         function validarContrasenas() {
             var nuevaContrasena = document.getElementById("NuevaContrasenna_Usuario").value.trim();
             var confirmarContrasena = document.getElementById("ConfirContra").value.trim();
+            var confirmarContrasenaError = document.getElementById("confirm-password-error");
 
-            // Si ambos campos están vacíos, no hay necesidad de validar
+            // Si ambos campos están vacíos, permitir el envío del formulario
             if (nuevaContrasena === "" && confirmarContrasena === "") {
-                return true; // Permitir el envío del formulario
+                // Ocultar el texto de error
+                confirmarContrasenaError.style.display = "none";
+                return true;
             }
 
-            // Si al menos uno de los campos tiene un valor, validar que coincidan
+            // Si el campo de nueva contraseña tiene datos pero el de confirmar contraseña está vacío
+            if (nuevaContrasena !== "" && confirmarContrasena === "") {
+                confirmarContrasenaError.innerText = "Este campo es obligatorio.";
+                confirmarContrasenaError.style.display = "block";
+                return false;
+            }
+
+            // Si ambos campos tienen información, verificar que coincidan
             if (nuevaContrasena !== confirmarContrasena) {
+                confirmarContrasenaError.style.display = "none";
                 Swal.fire({
                     title: "Contraseñas no coinciden",
                     text: "Las contraseñas ingresadas no coinciden. Por favor, verifícalas e inténtalo de nuevo.",
                     icon: "error"
                 });
-                return false; // Evitar el envío del formulario
+                return false;
             }
 
-            return true; // Permitir el envío del formulario
+            // Si llega aquí, ambas contraseñas son iguales, permitir el envío del formulario
+            // Ocultar el texto de error
+            confirmarContrasenaError.style.display = "none";
+            return true;
         }
 
     </script>
+
     <script>
         //Funcion para mostrar mensaje de alerta
         function confirmarInactivarCliente(idCliente) {

@@ -26,197 +26,214 @@
         <div class="col-md-9" style="margin-top: 4%;">
             @using (Html.BeginForm("PerfilCliente", "Usuario", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate", onsubmit = "return validarContrasenas();" }))
             {
-                    <div class="row">
-                        <div class="col-xl-9">
-                            <div class="card mb-4">
-                                <div class="card-header" style="background-color: #EEEEEE; ">Información Personal</div>
-                                <div class="card-body ">
-                                    @Html.HiddenFor(m => m.ID_Usuario)
-                                    @Html.HiddenFor(m => m.Contrasenna_Usuario)
-                                    @Html.HiddenFor(m => m.ID_Direccion)
-                                    <div class="row gx-3 mb-3">
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="tipo">Tipo</label>
-                                            @Html.TextBoxFor(m => m.Nombre_Identificacion, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @type = "text" })
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="identificacion">Identificación</label>
-                                            @Html.TextBoxFor(m => m.Identificacion_Usuario, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @type = "text" })
+                <div class="row">
+                    <div class="col-xl-9">
+                        <div class="card mb-4">
+                            <div class="card-header" style="background-color: #EEEEEE; ">Información Personal</div>
+                            <div class="card-body ">
+                                @Html.HiddenFor(m => m.ID_Usuario)
+                                @Html.HiddenFor(m => m.Contrasenna_Usuario)
+                                @Html.HiddenFor(m => m.ID_Direccion)
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="tipo">Tipo</label>
+                                        @Html.TextBoxFor(m => m.Nombre_Identificacion, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @type = "text" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="identificacion">Identificación</label>
+                                        @Html.TextBoxFor(m => m.Identificacion_Usuario, new { @readOnly = "readOnly", @style = "background-color: #eeeeee", @class = "form-control", @type = "text" })
+                                    </div>
+                                </div>
+                                @if (Model.Nombre_Identificacion.Equals("Cédula Jurídica"))
+                                {
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="nombre">Nombre</label>
+                                        @Html.TextBoxFor(m => m.Nombre_Usuario, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
+                                        <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                            @Html.ValidationMessageFor(m => m.Nombre_Usuario, "", new { @style = "color: red;" })
                                         </div>
                                     </div>
-                                    @if (Model.Nombre_Identificacion.Equals("Cédula Jurídica"))
-                                    {
-                                        <div class="mb-3">
+                                }
+                                else
+                                {
+                                    <div class="row gx-3 mb-3">
+                                        <div class="col-md-6">
                                             <label class="small mb-1" for="nombre">Nombre</label>
                                             @Html.TextBoxFor(m => m.Nombre_Usuario, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
-                                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                            <div style="align-self: flex-start; font-size: 10px !important;margin-top:2px!important;margin-left:3px!important;">
                                                 @Html.ValidationMessageFor(m => m.Nombre_Usuario, "", new { @style = "color: red;" })
                                             </div>
                                         </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="row gx-3 mb-3">
-                                            <div class="col-md-6">
-                                                <label class="small mb-1" for="nombre">Nombre</label>
-                                                @Html.TextBoxFor(m => m.Nombre_Usuario, new { @class = "form-control", @placeholder = "Nombre", @type = "text" })
-                                                <div style="align-self: flex-start; font-size: 10px !important;margin-top:2px!important;margin-left:3px!important;">
-                                                    @Html.ValidationMessageFor(m => m.Nombre_Usuario, "", new { @style = "color: red;" })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="small mb-1" for="apellido">Primer Apellido</label>
-                                                @Html.TextBoxFor(m => m.Apellido_Usuario, new { @class = "form-control", @placeholder = "Primer Apellido", @type = "text" })
-                                                <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                                    @Html.ValidationMessageFor(m => m.Apellido_Usuario, "", new { @style = "color: red;" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                    <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="correo">Correo Electrónico</label>
-                                            @Html.TextBoxFor(m => m.Correo_Usuario, new { @class = "form-control", @placeholder = "Correo Electrónico", @type = "email", required = "required" })
+                                            <label class="small mb-1" for="apellido">Primer Apellido</label>
+                                            @Html.TextBoxFor(m => m.Apellido_Usuario, new { @class = "form-control", @placeholder = "Primer Apellido", @type = "text" })
                                             <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                                @Html.ValidationMessageFor(m => m.Correo_Usuario, "", new { @style = "color: red;" })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="telefono">Teléfono</label>
-                                            @Html.TextBoxFor(m => m.Telefono_Usuario, new { @class = "form-control", @placeholder = "Teléfono", @type = "text", required = "required" })
-                                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;;">
-                                                @Html.ValidationMessageFor(m => m.Telefono_Usuario, "", new { @style = "color: red;" })
+                                                @Html.ValidationMessageFor(m => m.Apellido_Usuario, "", new { @style = "color: red;" })
                                             </div>
                                         </div>
                                     </div>
-
-
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-9">
-                            <div class="card mb-4">
-                                <div class="card-header" style="background-color: #EEEEEE; ">
-                                    Ubicación
-                                </div>
-                                <div class="card-body ">
-                                    <span class="small" style="color: gray;font-style:italic;">La dirección ingresada será la dirección a la que se enviará el pedido</span>
-
-                                    <div class="row gx-3 mb-3" style="margin-top:2.5%!important;">
-                                        <div class="col-md-4">
-                                            <label class="small mb-1" for="provincia">Provincia</label>
-
-                                            @Html.DropDownListFor(m => m.ID_Provincia, (ViewBag.Provincias as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control provincia-dropdown", required = "required" })
-
-                                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                                @Html.ValidationMessageFor(m => m.ID_Provincia, "", new { @style = "color: red;" })
-
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <label class="small mb-1" for="canton">Cantón</label>
-                                            @Html.DropDownListFor(m => m.ID_Canton, (ViewBag.Cantones as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control canton-dropdown", required = "required", disabled = ViewBag.Provincias == null ? "disabled" : "" })
-
-                                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                                @Html.ValidationMessageFor(m => m.ID_Canton, "", new { @style = "color: red;" })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="small mb-1" for="distrito">Distrito</label>
-                                            @Html.DropDownListFor(m => m.ID_Distrito, (ViewBag.Distritos as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control distrito-dropdown", required = "required", disabled = ViewBag.Cantones == null ? "disabled" : "" })
-
-                                            <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                                @Html.ValidationMessageFor(m => m.ID_Distrito, "", new { @style = "color: red;" })
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="direccion">Dirección Exacta</label>
-
-                                        @Html.TextAreaFor(m => m.Direccion_Exacta, new { rows = 3, cols = 20, @class = "form-control", @placeholder = "Ubicación Exacta", @type = "text", required = "required" })
-
+                                }
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="correo">Correo Electrónico</label>
+                                        @Html.TextBoxFor(m => m.Correo_Usuario, new { @class = "form-control", @placeholder = "Correo Electrónico", @type = "email", required = "required" })
                                         <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                            @Html.ValidationMessageFor(m => m.Direccion_Exacta, "", new { @style = "color: red;" })
+                                            @Html.ValidationMessageFor(m => m.Correo_Usuario, "", new { @style = "color: red;" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="telefono">Teléfono</label>
+                                        @Html.TextBoxFor(m => m.Telefono_Usuario, new { @class = "form-control", @placeholder = "Teléfono", @type = "text", required = "required" })
+                                        <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;;">
+                                            @Html.ValidationMessageFor(m => m.Telefono_Usuario, "", new { @style = "color: red;" })
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="col-xl-9">
-                            <div class="card mb-4">
-                                <div class="card-header" style="background-color: #EEEEEE; ">Seguridad</div>
-                                <div class="card-body ">
-                                    <span class="small" style="color: gray;font-style:italic;">En este espacio se puede cambiar la contraseña</span>
 
-                                    <div class="mb-3" style="margin-top:2.5%!important;">
-                                        <div class="form-group position-relative">
-                                            <label class="small mb-1" for="password">Nueva Contraseña</label>
-                                            @Html.PasswordFor(m => m.NuevaContrasenna_Usuario, new { @class = "form-control", @placeholder = "Nueva Contraseña" })
-                                            <i class="bi bi-eye-slash toggle-password" style="cursor: pointer; position: absolute; right: 15px; top: 70%; transform: translateY(-50%); font-size: 1.5em;"></i>
-                                        </div>
-                                        <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                            @Html.ValidationMessageFor(m => m.NuevaContrasenna_Usuario, "", new { @style = "color: red;" })
-                                        </div>
-                                    </div>
-                                    <div class="mb-3" style="margin-top:2.5%!important;">
-                                        <div class="form-group position-relative">
-                                            <label class="small mb-1" for="password">Confirmar Contraseña</label>
-                                            @Html.PasswordFor(m => m.ConfirContra, new { @class = "form-control", @placeholder = "Confirmar Contraseña" })
-                                            <i class="bi bi-eye-slash toggle-password" style="cursor: pointer; position: absolute; right: 15px; top: 70%; transform: translateY(-50%); font-size: 1.5em;"></i>
-                                        </div>
-                                        <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
-                                            @Html.ValidationMessageFor(m => m.ConfirContra, "", new { @style = "color: red;" })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-9">
-                            <div class="text-center" style=" margin-bottom: 5%;">
-                                <button class="btn btn-success" type="submit"><i class="bi bi-floppy"></i> Guardar</button>
-                                <a href="javascript:void(0);" onclick="confirmarInactivarCliente(@Model.ID_Usuario)" class="btn btn-danger" style="color: white;margin-left:2%;"> <i class="bi bi-trash3"></i> Eliminar</a>
+
                             </div>
                         </div>
                     </div>
-                }
+                    <div class="col-xl-9">
+                        <div class="card mb-4">
+                            <div class="card-header" style="background-color: #EEEEEE; ">
+                                Ubicación
+                            </div>
+                            <div class="card-body ">
+                                <span class="small" style="color: gray;font-style:italic;">La dirección ingresada será la dirección a la que se enviará el pedido</span>
 
-            </div>
+                                <div class="row gx-3 mb-3" style="margin-top:2.5%!important;">
+                                    <div class="col-md-4">
+                                        <label class="small mb-1" for="provincia">Provincia</label>
+
+                                        @Html.DropDownListFor(m => m.ID_Provincia, (ViewBag.Provincias as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control provincia-dropdown", required = "required" })
+
+                                        <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                            @Html.ValidationMessageFor(m => m.ID_Provincia, "", new { @style = "color: red;" })
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="small mb-1" for="canton">Cantón</label>
+                                        @Html.DropDownListFor(m => m.ID_Canton, (ViewBag.Cantones as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control canton-dropdown", required = "required", disabled = ViewBag.Provincias == null ? "disabled" : "" })
+
+                                        <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                            @Html.ValidationMessageFor(m => m.ID_Canton, "", new { @style = "color: red;" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="small mb-1" for="distrito">Distrito</label>
+                                        @Html.DropDownListFor(m => m.ID_Distrito, (ViewBag.Distritos as IEnumerable<SelectListItem>) ?? Enumerable.Empty<SelectListItem>(), "Seleccione una opción", new { @class = "form-control distrito-dropdown", required = "required", disabled = ViewBag.Cantones == null ? "disabled" : "" })
+
+                                        <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                            @Html.ValidationMessageFor(m => m.ID_Distrito, "", new { @style = "color: red;" })
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="direccion">Dirección Exacta</label>
+
+                                    @Html.TextAreaFor(m => m.Direccion_Exacta, new { rows = 3, cols = 20, @class = "form-control", @placeholder = "Ubicación Exacta", @type = "text", required = "required" })
+
+                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                        @Html.ValidationMessageFor(m => m.Direccion_Exacta, "", new { @style = "color: red;" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-9">
+                        <div class="card mb-4">
+                            <div class="card-header" style="background-color: #EEEEEE; ">Seguridad</div>
+                            <div class="card-body ">
+                                <span class="small" style="color: gray;font-style:italic;">En este espacio se puede cambiar la contraseña</span>
+
+                                <div class="mb-3" style="margin-top:2.5%!important;">
+                                    <div class="form-group position-relative">
+                                        <label class="small mb-1" for="password">Nueva Contraseña</label>
+                                        @Html.PasswordFor(m => m.NuevaContrasenna_Usuario, new { @class = "form-control", @placeholder = "Nueva Contraseña" })
+                                        <i class="bi bi-eye-slash toggle-password" style="cursor: pointer; position: absolute; right: 15px; top: 70%; transform: translateY(-50%); font-size: 1.5em;"></i>
+                                    </div>
+                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                        @Html.ValidationMessageFor(m => m.NuevaContrasenna_Usuario, "", new { @style = "color: red;" })
+                                    </div>
+                                </div>
+                                <div class="mb-3" style="margin-top:2.5%!important;">
+                                    <div class="form-group position-relative">
+                                        <label class="small mb-1" for="password">Confirmar Contraseña</label>
+                                        @Html.PasswordFor(m => m.ConfirContra, new { @class = "form-control", @placeholder = "Confirmar Contraseña" })
+                                        <i class="bi bi-eye-slash toggle-password" style="cursor: pointer; position: absolute; right: 15px; top: 70%; transform: translateY(-50%); font-size: 1.5em;"></i>
+                                    </div>
+                                    <span style="height: 5px; display: block;"></span> 
+                                    <div class="error-container">
+                                        <span id="confirm-password-error" style="color: red; font-size: 10px; display: none;margin-left:5px;">Este campo es obligatorio.</span>
+                                    </div>
+                                    <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
+                                        @Html.ValidationMessageFor(m => m.ConfirContra, "", new { @style = "color: red;" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-9">
+                        <div class="text-center" style=" margin-bottom: 5%;">
+                            <button class="btn btn-success" type="submit"><i class="bi bi-floppy"></i> Guardar</button>
+                            <a href="javascript:void(0);" onclick="confirmarInactivarCliente(@Model.ID_Usuario)" class="btn btn-danger" style="color: white;margin-left:2%;"> <i class="bi bi-trash3"></i> Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
         </div>
     </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="~/Assets/js/Cliente.js"></script>
 
 <script>
-
     function validarContrasenas() {
         var nuevaContrasena = document.getElementById("NuevaContrasenna_Usuario").value.trim();
         var confirmarContrasena = document.getElementById("ConfirContra").value.trim();
+        var confirmarContrasenaError = document.getElementById("confirm-password-error");
 
-        // Si ambos campos están vacíos, no hay necesidad de validar
+        // Si ambos campos están vacíos, permitir el envío del formulario
         if (nuevaContrasena === "" && confirmarContrasena === "") {
-            return true; // Permitir el envío del formulario
+            // Ocultar el texto de error
+            confirmarContrasenaError.style.display = "none";
+            return true;
         }
 
-        // Si al menos uno de los campos tiene un valor, validar que coincidan
+        // Si el campo de nueva contraseña tiene datos pero el de confirmar contraseña está vacío
+        if (nuevaContrasena !== "" && confirmarContrasena === "") {
+            confirmarContrasenaError.innerText = "Este campo es obligatorio.";
+            confirmarContrasenaError.style.display = "block";
+            return false;
+        }
+
+        // Si ambos campos tienen información, verificar que coincidan
         if (nuevaContrasena !== confirmarContrasena) {
+            confirmarContrasenaError.style.display = "none";
             Swal.fire({
                 title: "Contraseñas no coinciden",
                 text: "Las contraseñas ingresadas no coinciden. Por favor, verifícalas e inténtalo de nuevo.",
                 icon: "error"
             });
-            return false; // Evitar el envío del formulario
+            return false;
         }
 
-        return true; // Permitir el envío del formulario
+        // Si llega aquí, ambas contraseñas son iguales, permitir el envío del formulario
+        // Ocultar el texto de error
+        confirmarContrasenaError.style.display = "none";
+        return true;
     }
-
 </script>
+
 
 <script>
     //Funcion para mostrar mensaje de alerta
