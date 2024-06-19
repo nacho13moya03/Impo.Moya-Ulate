@@ -44,40 +44,57 @@ namespace ProyectoSC_601.Controllers
             ModelState.Remove("Imagen");
             ModelState.Remove("SKU");
 
+            int maxFileSize = 6 * 1024 * 1024;
+
+            if (Imagen_Nueva != null && Imagen_Nueva.ContentLength > maxFileSize)
+            {
+                ViewBag.Categorias = modelInventario.ConsultarCategorias();
+                ViewBag.MensajeNoExitoso = "El tamaño de la imagen no debe exceder los 6MB.";
+                return View(entidad);
+            }
+
             entidad.Imagen = string.Empty;
             entidad.Estado = 1;
             entidad.Imagen_Nueva = null;
 
-
-            if (ModelState.IsValid)
+            try
             {
-                string skuExistente = modelInventario.ComprobarSKUExistente(entidad);
-                if (skuExistente == "Existe")
+                if (ModelState.IsValid)
                 {
-                    ViewBag.Categorias = modelInventario.ConsultarCategorias();
-                    ViewBag.Mensaje = "No se ha podido registrar el producto, SKU Repetido";
-                    return View();
+                    string skuExistente = modelInventario.ComprobarSKUExistente(entidad);
+                    if (skuExistente == "Existe")
+                    {
+                        ViewBag.Categorias = modelInventario.ConsultarCategorias();
+                        ViewBag.Mensaje = "No se ha podido registrar el producto, SKU Repetido";
+                        return View();
+                    }
+                    else
+                    {
+                        long ID_Producto = modelInventario.RegistrarProducto(entidad);
+                        string extension = Path.GetExtension(Path.GetFileName(Imagen_Nueva.FileName));
+                        string ruta = AppDomain.CurrentDomain.BaseDirectory + "Images\\" + ID_Producto + extension;
+                        Imagen_Nueva.SaveAs(ruta);
+
+                        entidad.Imagen = "/Images/" + ID_Producto + extension;
+                        entidad.ID_Producto = ID_Producto;
+
+                        modelInventario.ActualizarRutaProducto(entidad);
+
+                        return RedirectToAction("ConsultaInventario", "Inventario");
+                    }
+
                 }
+
                 else
                 {
-                    long ID_Producto = modelInventario.RegistrarProducto(entidad);
-                    string extension = Path.GetExtension(Path.GetFileName(Imagen_Nueva.FileName));
-                    string ruta = AppDomain.CurrentDomain.BaseDirectory + "Images\\" + ID_Producto + extension;
-                    Imagen_Nueva.SaveAs(ruta);
-
-                    entidad.Imagen = "/Images/" + ID_Producto + extension;
-                    entidad.ID_Producto = ID_Producto;
-
-                    modelInventario.ActualizarRutaProducto(entidad);
-
-                    return RedirectToAction("ConsultaInventario", "Inventario");
+                    ViewBag.Categorias = modelInventario.ConsultarCategorias();
+                    return View(entidad);
                 }
-
             }
-
-            else
+            catch (HttpException ex) when (ex.WebEventCode == System.Web.Management.WebEventCodes.RuntimeErrorPostTooLarge)
             {
                 ViewBag.Categorias = modelInventario.ConsultarCategorias();
+                ViewBag.MensajeNoExitoso = "El tamaño del archivo no debe exceder los 6MB.";
                 return View(entidad);
             }
 
@@ -149,28 +166,46 @@ namespace ProyectoSC_601.Controllers
 
             if (ModelState.IsValid)
             {
-                entidad.Imagen_Nueva = null;
 
-                if (Imagen_Nueva != null)
+                int maxFileSize = 6 * 1024 * 1024;
+
+                if (Imagen_Nueva != null && Imagen_Nueva.ContentLength > maxFileSize)
                 {
-                    string extension = Path.GetExtension(Imagen_Nueva.FileName);
-                    string rutaNuevaImagen = Path.Combine(Server.MapPath("~/Images/"), entidad.ID_Producto + extension);
-
-                    Imagen_Nueva.SaveAs(rutaNuevaImagen);
-
-                    entidad.Imagen = "/Images/" + entidad.ID_Producto + extension;
+                    ViewBag.Categorias = modelInventario.ConsultarCategorias();
+                    ViewBag.MensajeNoExitoso = "El tamaño de la imagen no debe exceder los 6MB.";
+                    return View(entidad);
                 }
-
-                long ID_Producto = modelInventario.ActualizarProducto(entidad);
-
-                if (ID_Producto > 0)
+                try
                 {
-                    return RedirectToAction("ConsultaInventario", "Inventario");
+                    entidad.Imagen_Nueva = null;
+
+                    if (Imagen_Nueva != null)
+                    {
+                        string extension = Path.GetExtension(Imagen_Nueva.FileName);
+                        string rutaNuevaImagen = Path.Combine(Server.MapPath("~/Images/"), entidad.ID_Producto + extension);
+
+                        Imagen_Nueva.SaveAs(rutaNuevaImagen);
+
+                        entidad.Imagen = "/Images/" + entidad.ID_Producto + extension;
+                    }
+
+                    long ID_Producto = modelInventario.ActualizarProducto(entidad);
+
+                    if (ID_Producto > 0)
+                    {
+                        return RedirectToAction("ConsultaInventario", "Inventario");
+                    }
+                    else
+                    {
+                        ViewBag.Mensaje = "No se ha podido actualizar el producto";
+                        return View();
+                    }
                 }
-                else
+                catch (HttpException ex) when (ex.WebEventCode == System.Web.Management.WebEventCodes.RuntimeErrorPostTooLarge)
                 {
-                    ViewBag.Mensaje = "No se ha podido actualizar el producto";
-                    return View();
+                    ViewBag.Categorias = modelInventario.ConsultarCategorias();
+                    ViewBag.MensajeNoExitoso = "El tamaño del archivo no debe exceder los 6MB.";
+                    return View(entidad);
                 }
             }
             else

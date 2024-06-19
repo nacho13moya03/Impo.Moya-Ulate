@@ -85,7 +85,7 @@
 
                         <div class="form-group">
                             <label>Imagen</label>
-                            <input type="file" class="form-control" id="Imagen_Nueva" name="Imagen_Nueva" required>
+                            <input type="file" class="form-control" id="Imagen_Nueva" name="Imagen_Nueva" required accept=".png, .jpg" onchange="validateFileSize(this)">
                             <div style="align-self: flex-start; font-size: 10px !important; margin-top: 2px !important; margin-left: 3px !important;">
                                 @Html.ValidationMessageFor(m => m.Imagen_Nueva, "", new { @style = "color: red;" })
                             </div>
@@ -104,4 +104,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    function validateFileSize(input) {
+        const maxFileSize = 6 * 1024 * 1024;
+        if (input.files[0].size > maxFileSize) {
+            Swal.fire({
+                title: 'Error',
+                text: 'El tamaño de la imagen no debe exceder los 6MB.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    input.value = ""; 
+                }
+            });
+        }
+    }
+</script>
 
