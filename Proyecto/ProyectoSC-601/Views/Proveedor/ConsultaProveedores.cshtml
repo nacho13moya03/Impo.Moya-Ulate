@@ -89,10 +89,10 @@
                                             }
                                             <td class="text-center">
                                                 <a href="@Url.Action("ActualizarEstadoProveedor", "Proveedor", new { q = item.ID_Proveedor })" title="Cambiar Estado" style="color: #6282a9;">
-                                                    <i class="fa fa-exchange fa-lg text-primary"></i>
+                                                    <i class="fa fa-exchange fa-lg text-primary" style="color: #6282a9;"></i>
                                                 </a>
                                                 <a href="@Url.Action("ActualizarProveedor", "Proveedor", new { q = item.ID_Proveedor })" title="Modificar Proveedor">
-                                                    <i class="fa fa-user fa-lg text-success" style="padding-left: 10px;"></i>
+                                                    <i style="color: forestgreen;padding-left: 10px;" class="fa fa-edit fa-lg"></i>
                                                 </a>
                                                 <a href="javascript:void(0);" onclick="confirmarEliminarProveedor(@item.ID_Proveedor)" title="Eliminar Proveedor"><i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i></a>
                                             </td>

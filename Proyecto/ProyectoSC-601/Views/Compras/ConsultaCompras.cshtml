@@ -90,13 +90,15 @@
 
                                             <td>@item.Fecha</td>
                                             <td class="text-center">
-                                                <span class="btn-consultar" onclick="mostrarModalConsulta('@item.Empresa', '@item.Fecha', '@item.Concepto', '@item.Cantidad', '@item.Total')" title="Consultar Compra">
+                                                <span class="btn-consultar" onclick="mostrarModalConsulta('@item.Empresa', '@item.Fecha', '@item.Concepto', '@item.Cantidad', '@item.Total', '@item.IdCompras')" title="Consultar Compra">
                                                     <i class="fa fa-eye fa-lg" style="color: #6282a9; cursor: pointer; "></i>
                                                 </span>
                                             </td>
                                         </tr>
                                     }
                                 </tbody>
+
+
                             </table>
                         }
                         else
@@ -120,6 +122,7 @@
 </div>
 
 
+
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
@@ -138,6 +141,55 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
+<script>
+    // Datatable de las compras
+    $j(document).ready(function () {
+        var table = $j('#TablaCompras').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            },
+            "pagingType": 'simple',
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    exportOptions: {
+                        columns: [0, 1, 2]
+                    }
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: [0, 1, 2]
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [0, 1, 2]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [0, 1, 2]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2]
+                    }
+                }
+            ]
+        });
+
+        // Ajustar los botones de exportación
+        table.buttons().container().prependTo('#TablaCompras_wrapper .dataTables_filter');
+    });
+</script>
+
+
 <!-- Modal -->
 <div class="modal fade" id="consultaModal" tabindex="-1" aria-labelledby="consultaModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -153,54 +205,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    //Datatable de las compras
-    $j(document).ready(function () {
-        var table = $j('#TablaCompras').DataTable({
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-            },
-            "pagingType": 'simple',
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'copy',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5]
-                    }
-                },
-                {
-                    extend: 'csv',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5]
-                    }
-                },
-                {
-                    extend: 'excel',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5]
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5]
-                    }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5]
-                    }
-                }
-            ]
-        });
-
-        // Ajustar los botones de exportación
-        table.buttons().container().prependTo('#TablaCompras_wrapper .dataTables_filter');
-    });
-</script>
 
 <script>
     //Funcion para mostrar mensaje de alerta
@@ -225,7 +229,7 @@
 
 <script>
     // Función para mostrar modal de consulta de compras
-    function mostrarModalConsulta(empresa, fecha, concepto, cantidad, total) {
+    function mostrarModalConsulta(empresa, fecha, concepto, cantidad, total, idCompra) {
         var myModal = new bootstrap.Modal(document.getElementById('consultaModal'), {
             keyboard: false
         });
@@ -247,7 +251,7 @@
                         <div class="col-md-8">
                             <div class="p-6">
                                 <table class="table table-bordered text-center">
-                                   
+
                                     <tr>
                                         <td>Empresa:</td>
                                         <td>${nombreEmpresaText}</td>
@@ -276,23 +280,17 @@
             </div>
         </div>
         <div class="text-center">
-         @if (Model != null && Model.Any())
-        {
-<a href="@Url.Action("ActualizarCompra", "Compras", new { q = Model.FirstOrDefault().IdCompras })" class="btn btn-success" title="Modificar Compra">
-<i class="fa fa-user fa-lg text-white" style="margin-right: 5px;"></i> Modificar Compra
-</a>
-        }
-        else
-        {
-<span>No hay compras disponibles para modificar</span>
-        }
-</div>
+            <a href="/Compras/ActualizarCompra?q=${idCompra}" class="btn btn-success" title="Modificar Compra">
+                <i style="color: white;" class="fa fa-edit fa-lg" style="margin-right: 5px;"></i> Modificar Compra
+            </a>
+        </div>
     `);
 
         // Muestra el modal
         myModal.show();
     }
 </script>
+
 
 
 
