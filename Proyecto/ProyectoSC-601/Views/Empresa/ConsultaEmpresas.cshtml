@@ -69,7 +69,7 @@
                                             <td>@item.Ubicacion</td>
                                             <td class="text-center">
                                                 <a href="@Url.Action("ActualizarEmpresa", "Empresa", new { q = item.ID_Empresa })" title="Modificar Empresa">
-                                                    <i class="fa fa-user fa-lg text-success" style="padding-left: 10px;"></i>
+                                                    <i style="color: forestgreen;padding-left: 10px;" class="fa fa-edit fa-lg"></i>
                                                 </a>
                                                 <a href="javascript:void(0);" onclick="confirmarEliminarEmpresa(@item.ID_Empresa)" title="Eliminar Empresa"><i style="color: darkred; padding-left: 8px;" class="fa fa-trash fa-lg"></i></a>
                                             </td>

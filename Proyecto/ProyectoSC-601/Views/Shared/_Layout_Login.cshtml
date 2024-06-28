@@ -25,6 +25,18 @@
 
     @RenderBody()
 
+    @RenderSection("scripts", required: false)
+
+    <script>
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                document.querySelectorAll('form').forEach(form => form.reset());
+            }
+        });
+    </script>
+
+
+
     <footer></footer>
 
     <script src="~/Assets/js/core/libs.min.js"></script>

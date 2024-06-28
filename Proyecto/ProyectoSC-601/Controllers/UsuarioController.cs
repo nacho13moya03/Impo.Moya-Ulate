@@ -83,6 +83,7 @@ namespace ProyectoSC_601.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            Session.Clear();
             return View();
         }
 

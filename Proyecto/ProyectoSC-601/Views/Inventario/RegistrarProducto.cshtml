@@ -148,3 +148,12 @@
         }
     });
 </script>
+
+<script>
+    window.addEventListener('pageshow', function (event) {
+        var form = document.getElementById('registroForm');
+        if (form) {
+            form.reset(); 
+        }
+    });
+</script>
