@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css" />
 }
 
+<!-- Overlay de carga -->
+<div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(200, 200, 200, 0.7); z-index: 9999;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Cargando...</span>
+        </div>
+    </div>
+</div>
+
 <div class="container-xl px-4 mt-4">
     <hr class="mt-0 mb-4">
     <div class="row">
@@ -21,7 +30,7 @@
                 }
                 <div class="card-header">Registrar Compra</div>
                 <div class="card-body">
-                    @using (Html.BeginForm("RegistrarCompra", "Compras", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate" }))
+                    @using (Html.BeginForm("RegistrarCompra", "Compras", FormMethod.Post, new { @class = "pt-3", @novalidate = "novalidate", @id = "compraForm" }))
                     {
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
@@ -91,7 +100,7 @@
                                 <i class="fa fa-arrow-left"></i> Volver
                             </a>
                             <span class="px-2"></span>
-                            <button class="btn btn-success" type="submit" onclick="return validarFormulario()">REGISTRAR<i class="bi bi-pencil-square"></i></button>
+                            <button class="btn btn-success" type="submit" id="submitButton">REGISTRAR<i class="bi bi-pencil-square"></i></button>
                         </div>
                     }
                 </div>
@@ -101,6 +110,31 @@
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var fechaCompletaElement = document.getElementById("fechaCompleta");
+
+        flatpickr("#datepicker", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
+            locale: "es",
+            onClose: function (selectedDates, dateStr, instance) {
+                fechaCompletaElement.value = dateStr;
+            }
+        });
+
+        const form = document.getElementById('compraForm');
+        const submitButton = document.getElementById('submitButton');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            if (validarFormulario()) {
+                submitButton.disabled = true;
+                document.getElementById('loadingOverlay').style.display = 'block';
+                form.submit();
+            }
+        });
+    });
     function validarFormulario() {
         // Obtener los valores del formulario
         var empresaElement = document.getElementById("Empresa");

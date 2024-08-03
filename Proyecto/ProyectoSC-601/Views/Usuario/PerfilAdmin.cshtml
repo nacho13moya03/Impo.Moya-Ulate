@@ -6,8 +6,17 @@
     <!-- Sweet Alert -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
-
 }
+
+<!-- Overlay de carga -->
+<div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(200, 200, 200, 0.7); z-index: 9999;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Cargando...</span>
+        </div>
+    </div>
+</div>
+
 <div class="container-xl px-4 mt-4">
     <hr class="mt-0 mb-4">
     <div class="row justify-content-center">
@@ -181,109 +190,109 @@
         </div>
     </div>
 </div>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="~/Assets/js/Cliente.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="~/Assets/js/Cliente.js"></script>
 
-    <script>
-        function validarContrasenas() {
-            var nuevaContrasena = document.getElementById("NuevaContrasenna_Usuario").value.trim();
-            var confirmarContrasena = document.getElementById("ConfirContra").value.trim();
-            var confirmarContrasenaError = document.getElementById("confirm-password-error");
+<script>
+    function validarContrasenas() {
+        var nuevaContrasena = document.getElementById("NuevaContrasenna_Usuario").value.trim();
+        var confirmarContrasena = document.getElementById("ConfirContra").value.trim();
+        var confirmarContrasenaError = document.getElementById("confirm-password-error");
 
-            // Si ambos campos están vacíos, permitir el envío del formulario
-            if (nuevaContrasena === "" && confirmarContrasena === "") {
-                // Ocultar el texto de error
-                confirmarContrasenaError.style.display = "none";
-                return true;
-            }
-
-            // Si el campo de nueva contraseña tiene datos pero el de confirmar contraseña está vacío
-            if (nuevaContrasena !== "" && confirmarContrasena === "") {
-                confirmarContrasenaError.innerText = "Este campo es obligatorio.";
-                confirmarContrasenaError.style.display = "block";
-                return false;
-            }
-
-            // Si ambos campos tienen información, verificar que coincidan
-            if (nuevaContrasena !== confirmarContrasena) {
-                confirmarContrasenaError.style.display = "none";
-                Swal.fire({
-                    title: "Contraseñas no coinciden",
-                    text: "Las contraseñas ingresadas no coinciden. Por favor, verifícalas e inténtalo de nuevo.",
-                    icon: "error"
-                });
-                return false;
-            }
-
-            // Si llega aquí, ambas contraseñas son iguales, permitir el envío del formulario
+        // Si ambos campos están vacíos, permitir el envío del formulario
+        if (nuevaContrasena === "" && confirmarContrasena === "") {
             // Ocultar el texto de error
             confirmarContrasenaError.style.display = "none";
             return true;
         }
 
-    </script>
-
-    <script>
-        //Funcion para mostrar mensaje de alerta
-        function confirmarInactivarCliente(idCliente) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: 'Si deseas recuperar la cuenta deberás contactar a la Importadora',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#6282a9',
-                cancelButtonColor: '#354461',
-                confirmButtonText: 'Sí, Inactivar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Si el usuario confirma, redirige a la acción de inactivar cliente
-                    window.location.href = '/Usuario/InactivarUsuario?q=' + idCliente;
-                }
-            });
+        // Si el campo de nueva contraseña tiene datos pero el de confirmar contraseña está vacío
+        if (nuevaContrasena !== "" && confirmarContrasena === "") {
+            confirmarContrasenaError.innerText = "Este campo es obligatorio.";
+            confirmarContrasenaError.style.display = "block";
+            return false;
         }
-    </script>
 
-    <script>
-        $(document).ready(function () {
-            // Variables para los dropdowns
-            var provinciaDropdown = $('.provincia-dropdown');
-            var cantonDropdown = $('.canton-dropdown');
-            var distritoDropdown = $('.distrito-dropdown');
+        // Si ambos campos tienen información, verificar que coincidan
+        if (nuevaContrasena !== confirmarContrasena) {
+            confirmarContrasenaError.style.display = "none";
+            Swal.fire({
+                title: "Contraseñas no coinciden",
+                text: "Las contraseñas ingresadas no coinciden. Por favor, verifícalas e inténtalo de nuevo.",
+                icon: "error"
+            });
+            return false;
+        }
 
-            // Función para habilitar o deshabilitar dropdowns
-            function toggleDropdowns() {
-                var provinciaSelected = provinciaDropdown.val();
-                var cantonSelected = cantonDropdown.val();
+        // Si llega aquí, ambas contraseñas son iguales, permitir el envío del formulario
+        // Ocultar el texto de error
+        confirmarContrasenaError.style.display = "none";
+        return true;
+    }
 
-                // Verificar que tanto la provincia como el cantón tengan opciones válidas
-                var enableCanton = provinciaSelected !== "";
-                var enableDistrito = provinciaSelected && cantonSelected;
+</script>
 
-                cantonDropdown.prop('disabled', !enableCanton);
-                distritoDropdown.prop('disabled', !enableDistrito);
+<script>
+    //Funcion para mostrar mensaje de alerta
+    function confirmarInactivarCliente(idCliente) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Si deseas recuperar la cuenta deberás contactar a la Importadora',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#6282a9',
+            cancelButtonColor: '#354461',
+            confirmButtonText: 'Sí, Inactivar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, redirige a la acción de inactivar cliente
+                window.location.href = '/Usuario/InactivarUsuario?q=' + idCliente;
+            }
+        });
+    }
+</script>
 
-                // Restablecer los valores a la opción predeterminada si la provincia no tiene una opción válida
-                if (!enableCanton) {
-                    cantonDropdown.val("");
-                    distritoDropdown.val("");
-                }
+<script>
+    $(document).ready(function () {
+        // Variables para los dropdowns
+        var provinciaDropdown = $('.provincia-dropdown');
+        var cantonDropdown = $('.canton-dropdown');
+        var distritoDropdown = $('.distrito-dropdown');
 
-                // Restablecer el valor del distrito si el cantón no tiene una opción válida
-                if (!enableDistrito) {
-                    distritoDropdown.val("");
-                }
+        // Función para habilitar o deshabilitar dropdowns
+        function toggleDropdowns() {
+            var provinciaSelected = provinciaDropdown.val();
+            var cantonSelected = cantonDropdown.val();
 
+            // Verificar que tanto la provincia como el cantón tengan opciones válidas
+            var enableCanton = provinciaSelected !== "";
+            var enableDistrito = provinciaSelected && cantonSelected;
+
+            cantonDropdown.prop('disabled', !enableCanton);
+            distritoDropdown.prop('disabled', !enableDistrito);
+
+            // Restablecer los valores a la opción predeterminada si la provincia no tiene una opción válida
+            if (!enableCanton) {
+                cantonDropdown.val("");
+                distritoDropdown.val("");
             }
 
-            // Asociar la función al cambio de selección en los dropdowns
-            $('.provincia-dropdown, .canton-dropdown').change(toggleDropdowns);
+            // Restablecer el valor del distrito si el cantón no tiene una opción válida
+            if (!enableDistrito) {
+                distritoDropdown.val("");
+            }
 
-            // Llamar a la función inicialmente para configurar el estado inicial
-            toggleDropdowns();
-        });
-    </script>
-    <script>
+        }
+
+        // Asociar la función al cambio de selección en los dropdowns
+        $('.provincia-dropdown, .canton-dropdown').change(toggleDropdowns);
+
+        // Llamar a la función inicialmente para configurar el estado inicial
+        toggleDropdowns();
+    });
+</script>
+<script>
     $(document).ready(function () {
         var provinciaDropdown = $('.provincia-dropdown');
         var cantonDropdown = $('.canton-dropdown');
@@ -362,35 +371,44 @@
         //cargarCantones();
         //cargarDistritos();
     });
-    </script>
+</script>
 
-    <script>
-        // Función para actualizar el contador de productos en el carrito
-        function actualizarContadorCarrito() {
-            $.ajax({
-                url: '/Producto/Catalogo',
-                type: 'GET',
-                success: function (data) {
-                    // Actualizar el valor del contador en el HTML
-                    $('#contador-carrito').text(data);
-                },
-                error: function () {
-                    console.log('Error al actualizar el contador del carrito.');
-                }
-            });
-        }
-
-        // Llamar a la función de actualización cuando se cargue la página
-        $(document).ready(function () {
-            actualizarContadorCarrito();
+<script>
+    // Función para actualizar el contador de productos en el carrito
+    function actualizarContadorCarrito() {
+        $.ajax({
+            url: '/Producto/Catalogo',
+            type: 'GET',
+            success: function (data) {
+                // Actualizar el valor del contador en el HTML
+                $('#contador-carrito').text(data);
+            },
+            error: function () {
+                console.log('Error al actualizar el contador del carrito.');
+            }
         });
+    }
 
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.addEventListener("click", function (event) {
-                if (event.target.classList.contains("toggle-password")) {
-                    var passwordInput = event.target.parentNode.querySelector("input[type='password']");
+    // Llamar a la función de actualización cuando se cargue la página
+    $(document).ready(function () {
+        actualizarContadorCarrito();
+    });
+
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("click", function (event) {
+            if (event.target.classList.contains("toggle-password")) {
+                var passwordInput = event.target.parentNode.querySelector("input[type='password']");
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    event.target.className = "bi bi-eye";
+                } else {
+                    passwordInput.type = "password";
+                    event.target.className = "bi bi-eye-slash";
+                }
+
+                event.target.addEventListener("click", function () {
                     if (passwordInput.type === "password") {
                         passwordInput.type = "text";
                         event.target.className = "bi bi-eye";
@@ -398,17 +416,28 @@
                         passwordInput.type = "password";
                         event.target.className = "bi bi-eye-slash";
                     }
-
-                    event.target.addEventListener("click", function () {
-                        if (passwordInput.type === "password") {
-                            passwordInput.type = "text";
-                            event.target.className = "bi bi-eye";
-                        } else {
-                            passwordInput.type = "password";
-                            event.target.className = "bi bi-eye-slash";
-                        }
-                    });
-                }
-            });
+                });
+            }
         });
-    </script>
+    });
+</script>
+<script>
+    // Código para manejar el overlay de carga
+    const form = document.querySelector('form');
+    const submitButton = form.querySelector('button[type="submit"]');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        submitButton.disabled = true;
+        document.getElementById('loadingOverlay').style.display = 'block';
+        form.submit();
+    });
+
+    // Ocultar el overlay de carga cuando la página se carga completamente
+    window.addEventListener('load', function () {
+        document.getElementById('loadingOverlay').style.display = 'none';
+        const submitButton = document.querySelector('button[type="submit"]');
+        if (submitButton) {
+            submitButton.disabled = false;
+        }
+    });
+</script>

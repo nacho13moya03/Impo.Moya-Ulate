@@ -2,12 +2,20 @@
 @{
     ViewBag.Title = "RegistrarEmpresa";
     Layout = "~/Views/Shared/_Layout_deAdmin.cshtml";
-    <link href="~/Assets/css/responsive_admin.css" rel="stylesheet">
 }
+
+<link href="~/Assets/css/responsive_admin.css" rel="stylesheet">
 
 <div class="container-xl px-4 mt-4">
     <hr class="mt-0 mb-4">
     <div class="row">
+        <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(200, 200, 200, 0.7); z-index: 9999;">
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Cargando...</span>
+                </div>
+            </div>
+        </div>
         <div class="col-xl-8" style="margin-left:auto;margin-top:10%; margin-bottom:2%; margin-right: auto">
             <div class="card mb-4">
                 @if (ViewBag.MensajeUsuario != null)
@@ -54,7 +62,7 @@
                                 <i class="fa fa-arrow-left"></i> Volver
                             </a>
                             <span class="px-2"></span>
-                            <button class="btn btn-success" type="submit" onclick="return validarFormulario()">REGISTRAR<i class="bi bi-pencil-square"></i></button>
+                            <button class="btn btn-success" type="submit" id="submitButton">REGISTRAR<i class="bi bi-pencil-square"></i></button>
                         </div>
                     }
                 </div>
@@ -63,43 +71,55 @@
     </div>
 </div>
 
-<!--Validaciones de los campos en el formulario-->
 <script>
-    function validarFormulario() {
-        //Obtener los valores del formulario
-        var nombre = document.getElementById("Nombre_empresa").value;
-        var apellido = document.getElementById("Descripcion").value;
-        var cedula = document.getElementById("Ubicacion").value;
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('registroForm');
+        const submitButton = document.getElementById('submitButton');
+        const loadingOverlay = document.getElementById('loadingOverlay');
 
-        //Activar el evento si el campo esta vacio
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            if (validarFormulario()) {
+                submitButton.disabled = true;
+                loadingOverlay.style.display = 'block';
+                form.submit();
+            }
+        });
+
+        window.addEventListener('pageshow', function (event) {
+            loadingOverlay.style.display = 'none';
+            if (submitButton) {
+                submitButton.disabled = false;
+            }
+        });
+    });
+
+    function validarFormulario() {
+        var nombre = document.getElementById("Nombre_empresa").value;
+        var descripcion = document.getElementById("Descripcion").value;
+        var ubicacion = document.getElementById("Ubicacion").value;
+
         document.getElementById("errorNombre").innerText = "";
         document.getElementById("errorDescripcion").innerText = "";
         document.getElementById("errorUbicacion").innerText = "";
 
-
         var valid = true;
 
-        //Validar el nombre
         if (nombre.trim() === "") {
             document.getElementById("errorNombre").innerText = "Este campo es obligatorio";
             valid = false;
         }
 
-        //Validar el la descripción
-        if (apellido.trim() === "") {
+        if (descripcion.trim() === "") {
             document.getElementById("errorDescripcion").innerText = "Este campo es obligatorio";
             valid = false;
         }
 
-
-        //Validar la ubicación
-        if (cedula.trim() === "") {
+        if (ubicacion.trim() === "") {
             document.getElementById("errorUbicacion").innerText = "Este campo es obligatorio";
             valid = false;
         }
 
-
         return valid;
     }
 </script>
-
