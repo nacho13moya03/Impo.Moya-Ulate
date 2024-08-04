@@ -3,26 +3,31 @@
     ViewBag.Title = "Contacto";
 }
 <style>
-
     .invalid-feedback {
         color: red;
         font-size: 0.8em;
         margin-top: 5px;
     }
-   
 </style>
 
+<!-- Overlay de carga -->
+<div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(200, 200, 200, 0.7); z-index: 9999;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Cargando...</span>
+        </div>
+    </div>
+</div>
+
 <main id="main">
-    @*CONTACTO*@
     <section id="contact" class="contact" style="margin-top:70px;">
         <div class="container" data-aos="fade-up">
-
             <div class="section-title">
                 <h2>Contacto</h2>
                 <p>Contáctanos</p>
             </div>
             <div class="row mt-5">
-                <div class="col-lg-4" >
+                <div class="col-lg-4">
                     <div class="info" style="background-color: #F2F6FC!important;">
                         <div class="address">
                             <i class="bi bi-geo-alt"></i>
@@ -40,7 +45,6 @@
                             <p>+506 8438 0251</p>
                         </div>
                     </div>
-
                 </div>
                 <div class="col-lg-8 mt-5 mt-lg-0">
                     @if (ViewBag.MensajeExitoso != null)
@@ -76,19 +80,17 @@
                             @Html.TextAreaFor(m => m.Mensaje, new { rows = 5, cols = 20, @class = "form-control", @placeholder = "Mensaje", @type = "text", required = "required" })
                             <div id="errorMensaje" class="text-danger" style="font-size:12px;"></div>
                         </div>
-                        
-                        <div class="text-center"><button type="submit"  onclick="return validarFormulario()" style="border-radius: 20px; border: 1px solid #6282a9; background-color: #6282a9; color: #FFFFFF;padding:10px;padding-left:20px;padding-right:20px; margin-top:15px; ">Enviar</button></div>
+
+                        <div class="text-center"><button type="submit" onclick="return validarFormulario()" style="border-radius: 20px; border: 1px solid #6282a9; background-color: #6282a9; color: #FFFFFF;padding:10px;padding-left:20px;padding-right:20px; margin-top:15px; ">Enviar</button></div>
                     }
                 </div>
             </div>
         </div>
     </section>
-    @*CONTACTO*@
 </main>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="~/Assets/js/ContactoIndex.js"></script>
-
 
 <script>
     function validarFormulario() {
@@ -97,7 +99,7 @@
         var correoElement = document.getElementById("Correo");
         var asuntoElement = document.getElementById("Asunto");
         var mensajeElement = document.getElementById("Mensaje");
-     
+
         submitted = true;
 
 
@@ -139,6 +141,8 @@
             // Si hay errores, evitar el envío del formulario
             return false;
         }
+        // Si el formulario es válido, mostrar el overlay de carga
+        document.getElementById('loadingOverlay').style.display = 'block';
         return true;
     };
 </script>
@@ -161,6 +165,14 @@
     // Llamar a la función de actualización cuando se cargue la página
     $(document).ready(function () {
         actualizarContadorCarrito();
-    });
+        // Ocultar el overlay de carga cuando la página se carga completamente
+        document.getElementById('loadingOverlay').style.display = 'none';
 
+    });
+    // Mostrar el overlay de carga cuando se envía el formulario
+    $('form').submit(function () {
+        if (validarFormulario()) {
+            document.getElementById('loadingOverlay').style.display = 'block';
+        }
+    });
 </script>
