@@ -210,7 +210,7 @@ namespace ProyectoSC_601.Controllers
                 var userName = PayPalUserName;
                 var passwd = PayPalPassword;
 
-                client.BaseAddress = new Uri("https://api-m.sandbox.paypal.com");
+                client.BaseAddress = new Uri("https://api-m.paypal.com");
 
                 var authToken = Encoding.ASCII.GetBytes($"{userName}:{passwd}");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authToken));
@@ -293,7 +293,7 @@ namespace ProyectoSC_601.Controllers
                 var userName = PayPalUserName;
                 var passwd = PayPalPassword;
 
-                client.BaseAddress = new Uri("https://api-m.sandbox.paypal.com");
+                client.BaseAddress = new Uri("https://api-m.paypal.com");
 
                 var authToken = Encoding.ASCII.GetBytes($"{userName}:{passwd}");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authToken));

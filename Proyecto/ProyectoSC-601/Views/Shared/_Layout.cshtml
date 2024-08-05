@@ -76,12 +76,12 @@
                 <div class="nav-links d-flex">
                     <a href="@Url.Action("carrito", "carrito", new { area = "" })" class="get-started-btn scrollto nav-link carrito-btn" title="Carrito de Compras" style="border: none !important; background-color: transparent !important; ">
                         <i class="fa fa-shopping-cart fa-lg"></i>
-                       
-                            @if (ViewBag.CantidadProductosEnCarrito > 0)
-                            {
-                                <span class="badge badge-custom top-0 start-100 translate-middle mr-1">@ViewBag.CantidadProductosEnCarrito</span>
-                            }
-                      
+
+                        @if (ViewBag.CantidadProductosEnCarrito > 0)
+                        {
+                            <span class="badge badge-custom top-0 start-100 translate-middle mr-1">@ViewBag.CantidadProductosEnCarrito</span>
+                        }
+
                     </a>
                     @Html.ActionLink("Cerrar Sesión", "CerrarSesionUsuario", "Usuario", new { area = "" }, new { @class = "get-started-btn scrollto nav-link" })
                 </div>
@@ -96,9 +96,11 @@
     </header>
     @*HEADER*@
 
+    <main>
 
-    @RenderBody()
+        @RenderBody()
 
+    </main>
 
     @*FOOTER*@
     <footer id="footer">
@@ -116,7 +118,7 @@
                                 <strong>Correo:</strong> impomoyaulate@hotmail.com<br>
                             </p>
                             <div class="social-links mt-3">
-                                <a  title="Ir a WhatsApp" href="https://api.whatsapp.com/send?phone=50684380251&text=Buen%20d%C3%ADa%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20productos%20que%20ofrecen%20" class="whatsapp"><i class="bx bxl-whatsapp"></i></a>
+                                <a title="Ir a WhatsApp" href="https://api.whatsapp.com/send?phone=50684380251&text=Buen%20d%C3%ADa%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20productos%20que%20ofrecen%20" class="whatsapp"><i class="bx bxl-whatsapp"></i></a>
                             </div>
                         </div>
                     </div>
@@ -149,10 +151,10 @@
 
                                 <li>
                                     <i class="bx bx-chevron-right"></i> @Html.ActionLink("Carrito", "carrito", "carrito", new { area = "" }, new { @class = "nav-link" })
-                                    
+
                                 </li>
-                              }
-                            </ul>
+                            }
+                        </ul>
                     </div>
 
                 </div>
