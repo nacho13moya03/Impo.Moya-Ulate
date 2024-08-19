@@ -4,48 +4,48 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e8e6b3079f3b4af6bff3e42bfb7cdec2" Name="Diagram1">
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Canton" Width="1.5" PointX="1.5" PointY="18.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Carrito" Width="1.5" PointX="7.5" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Categorias" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.compras" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Direcciones" Width="1.5" PointX="0.75" PointY="13.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Distrito" Width="1.5" PointX="1.5" PointY="24.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Empresa" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Estado" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Factura_Detalle" Width="1.5" PointX="7.5" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Factura_Encabezado" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Identificacion" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Pedidos" Width="1.5" PointX="7.5" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Producto" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Proveedores" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Provincia" Width="1.5" PointX="1.5" PointY="21.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Roles" Width="1.5" PointX="0.75" PointY="27.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_aa7345_impomuModel.Usuario" Width="1.5" PointX="3" PointY="12.875" IsExpanded="true" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Canton_Provincia" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Direccion_Canton" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Distrito_Canton" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Carrito_Producto" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Carrito_Usuario" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Estado_Categoria" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Producto_Categoria" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_compras_Empresa" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Direccion_Distrito" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Direccion_Provincia" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Usuario_Direccion" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Distrito_Provincia" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Proveedores_Empresa" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Producto_Estado" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Proveedores_Estado" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Usuario_Estado" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Factura_Detalle_Factura_Encabezado" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Factura_Detalle_Producto" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Factura_Encabezado_Usuario" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Pedidos_Factura" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Proveedores_Identificacion" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Usuario_Identificacion" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Pedidos_Usuario" ManuallyRouted="false" />
-        <AssociationConnector Association="db_aa7345_impomuModel.FK_Usuario_Rol" ManuallyRouted="false" />
+      <Diagram DiagramId="c2785af2ea714b058288bbce3651b30f" Name="Diagram1">
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Canton" Width="1.5" PointX="1.5" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Carrito" Width="1.5" PointX="7.5" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Categorias" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.compras" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Direcciones" Width="1.5" PointX="0.75" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Distrito" Width="1.5" PointX="1.5" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Empresa" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Estado" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Factura_Detalle" Width="1.5" PointX="7.5" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Factura_Encabezado" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Identificacion" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Pedidos" Width="1.5" PointX="7.5" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Producto" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Proveedores" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Provincia" Width="1.5" PointX="1.5" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Roles" Width="1.5" PointX="0.75" PointY="27.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_aa7345_impomucrModel.Usuario" Width="1.5" PointX="3" PointY="12.875" IsExpanded="true" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Canton_Provincia" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Direccion_Canton" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Distrito_Canton" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Carrito_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Carrito_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Estado_Categoria" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Producto_Categoria" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_compras_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Direccion_Distrito" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Direccion_Provincia" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Usuario_Direccion" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Distrito_Provincia" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Proveedores_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Producto_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Proveedores_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Usuario_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Factura_Detalle_Factura_Encabezado" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Factura_Detalle_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Factura_Encabezado_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Pedidos_Factura" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Proveedores_Identificacion" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Usuario_Identificacion" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Pedidos_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="db_aa7345_impomucrModel.FK_Usuario_Rol" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

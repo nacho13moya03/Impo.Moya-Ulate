@@ -34,7 +34,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa7345_impomuEntities())
+                using (var context = new db_aa7345_impomucrEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     int cantidad = context.Producto.Where(x => x.ID_Producto == idProducto)
@@ -58,7 +58,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa7345_impomuEntities())
+                using (var context = new db_aa7345_impomucrEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     int cantidadCarrito = context.Carrito.Where(x => x.ID_Usuario == ID_Usuario)
@@ -86,7 +86,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa7345_impomuEntities())
+                using (var context = new db_aa7345_impomucrEntities())
                 {
                     var datos = (from x in context.Carrito
                                  where x.ID_Usuario == carrito.ID_Usuario
@@ -121,7 +121,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa7345_impomuEntities())
+                using (var context = new db_aa7345_impomucrEntities())
                 {
                     var datos = (from x in context.Carrito
                                  where x.ID_Usuario == carrito.ID_Usuario
@@ -156,7 +156,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa7345_impomuEntities())
+                using (var context = new db_aa7345_impomucrEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var result = (from x in context.Carrito
@@ -197,7 +197,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa7345_impomuEntities())
+                using (var context = new db_aa7345_impomucrEntities())
                 {
                     var datos = (from x in context.Carrito
                                  where x.ID_Carrito == q
@@ -224,7 +224,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa7345_impomuEntities())
+                using (var context = new db_aa7345_impomucrEntities())
                 {
                     string resultadoPago = context.PagarCarritoSP(carrito.ID_Usuario).FirstOrDefault();
 

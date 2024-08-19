@@ -35,7 +35,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa7345_impomuEntities())
+                using (var context = new db_aa7345_impomucrEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
 
@@ -71,7 +71,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa7345_impomuEntities())
+                using (var context = new db_aa7345_impomucrEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var facturas = (from x in context.Factura_Encabezado
@@ -104,7 +104,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa7345_impomuEntities())
+                using (var context = new db_aa7345_impomucrEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var facturasAdmin = (from x in context.Factura_Encabezado
@@ -144,7 +144,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa7345_impomuEntities())
+                using (var context = new db_aa7345_impomucrEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     var detalleFactura = (from x in context.Factura_Detalle
@@ -189,7 +189,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa7345_impomuEntities())
+                using (var context = new db_aa7345_impomucrEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
 
@@ -277,7 +277,7 @@ namespace APIProyectoSC_601.Controllers
         {
             try
             {
-                using (var context = new db_aa7345_impomuEntities())
+                using (var context = new db_aa7345_impomucrEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     int cantidadVentas = context.Factura_Encabezado.Count();
