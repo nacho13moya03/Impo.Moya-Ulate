@@ -12,7 +12,7 @@ namespace ProyectoSC_601.Entities
         [Required(ErrorMessage = "Este campo es obligatorio.")]
         public string Nombre { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio.")]
-        [StringLength(300, MinimumLength = 10, ErrorMessage = "La dirección debe tener entre 10 y 50 caracteres.")]
+        [StringLength(50, MinimumLength = 10, ErrorMessage = "La dirección debe tener entre 10 y 50 caracteres.")]
         public string Descripcion { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio.")]
         [Range(1, 99999, ErrorMessage = "La cantidad debe ser superior a 0")]
